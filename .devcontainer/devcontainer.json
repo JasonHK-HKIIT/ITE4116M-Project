@@ -24,6 +24,14 @@
 		"ghcr.io/devcontainers-extra/features/composer:1": {
 			"version": "latest"
 		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"onecentlin.laravel-blade",
+				"xdebug.php-pack"
+			]
+		}
 	}
 
 	// Use 'postCreateCommand' to run commands after the container is created.
