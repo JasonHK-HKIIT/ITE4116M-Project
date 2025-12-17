@@ -11,8 +11,8 @@
 
 	// For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
 	"forwardPorts": [
-		8080,
-		3306
+		3306,
+		8000
 	],
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {
@@ -31,6 +31,20 @@
 				"onecentlin.laravel-blade",
 				"xdebug.php-pack"
 			]
+		}
+	},
+	"portsAttributes": {
+		"3306": {
+			"label": "MariaDB",
+			"onAutoForward": "silent"
+		},
+		"8000": {
+			"label": "Laravel",
+			"onAutoForward": "notify"
+		},
+		"9000": {
+			"label": "Xdebug",
+			"onAutoForward": "ignore"
 		}
 	}
 
