@@ -4,6 +4,9 @@ FROM mcr.microsoft.com/devcontainers/php:1-8.4-bookworm
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y mariadb-client
 
+RUN docker-php-ext-configure pcntl --enable-pcntl && \
+    docker-php-ext-install pcntl
+
 # Install php-mysql driver
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
