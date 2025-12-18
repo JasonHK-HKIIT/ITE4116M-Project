@@ -13,7 +13,7 @@
     {{-- NAVBAR mobile only --}}
     <x-nav sticky class="lg:hidden">
         <x-slot:brand>
-            <x-app-brand />
+            <livewire:brand />
         </x-slot:brand>
         <x-slot:actions>
             <label for="main-drawer" class="lg:hidden me-3">
@@ -28,7 +28,7 @@
         <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
 
             {{-- BRAND --}}
-            <x-app-brand class="px-5 pt-4" />
+            <livewire:brand class="px-5 pt-4" />
 
             {{-- MENU --}}
             <x-menu activate-by-route>

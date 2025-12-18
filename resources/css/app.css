@@ -1,7 +1,7 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../views';
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+/* @source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php'; */
 
 /**
     The lines above are intact.
@@ -13,11 +13,31 @@
     themes: light --default, dark --prefersdark;
 }
 
+@plugin "daisyui/theme" {
+    name: "light";
+    default: true;
+    prefersdark: false;
+    color-scheme: "light";
+    --color-primary: oklch(0.288 0.0862 270.27);
+    --color-primary-content: oklch(93% 0.034 272.788);
+}
+
+@plugin "daisyui/theme" {
+    name: "dark";
+    default: false;
+    prefersdark: true;
+    color-scheme: "dark";
+    --color-primary: oklch(0.388 0.0862 270.27);
+    --color-primary-content: oklch(96% 0.018 272.314);
+}
+
+/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
+
 /* maryUI */
 @source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
 
 /* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
+/* @custom-variant dark (&:where(.dark, .dark *)); */
 
 /**
 * Paginator - Traditional style
@@ -32,214 +52,7 @@
     @apply cursor-pointer
 }
 
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
-
-
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
-
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
-
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
-
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
-
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
-
-
-
-/**
-    The lines above are intact.
-    The lines below were added by maryUI installer.
-*/
-
-/** daisyUI */
-@plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
-}
-
-/* maryUI */
-@source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
-
-/* Theme toggle */
-@custom-variant dark (&:where(.dark, .dark *));
-
-/**
-* Paginator - Traditional style
-* Because Laravel defaults does not match well the design of daisyUI.
-*/
-
-.mary-table-pagination span[aria-current="page"] > span {
-    @apply bg-primary text-base-100
-}
-
-.mary-table-pagination button {
-    @apply cursor-pointer
-}
+/* .brand
+{
+    @apply text-primary;
+} */

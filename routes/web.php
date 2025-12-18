@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::livewire('/', 'users.index');
 
+Route::livewire("/login", "pages::login")->name("login");
+
 Route::get("/logout", function ()
 {
     Auth::logout();
