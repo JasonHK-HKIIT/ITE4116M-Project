@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
@@ -9,9 +11,33 @@ new
 #[Title("Login")]
 class extends Component
 {
-    //
-};
-?>
+    #[Rule("required")]
+    public string $username = "";
+
+    #[Rule("required")]
+    public string $password = "";
+
+    public function mount()
+    {
+        if (Auth::user())
+        {
+            return redirect("/");
+        }
+    }
+
+    public function login()
+    {
+        $credentials = $this->validate();
+
+        if (Auth::attempt($credentials))
+        {
+            request()->session()->regenerate();
+            return redirect()->intended("/");
+        }
+
+        $this->addError("username", "The provided username/password was incorrect.");
+    }
+}; ?>
 
 <div class="md:w-96 mx-auto mt-20">
     <div class="mb-10">

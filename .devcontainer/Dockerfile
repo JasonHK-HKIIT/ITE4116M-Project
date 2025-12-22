@@ -1,16 +1,13 @@
 FROM mcr.microsoft.com/devcontainers/php:1-8.4-bookworm
 
-# Install MariaDB client
+# Install packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y mariadb-client
+    && apt-get install -y libicu-dev mariadb-client
 
+# Install and enable PHP extensions
 RUN docker-php-ext-configure pcntl --enable-pcntl && \
-    docker-php-ext-install pcntl
-
-# Install php-mysql driver
-RUN docker-php-ext-install mysqli pdo pdo_mysql
-
-RUN docker-php-ext-enable xdebug
+    docker-php-ext-install intl mysqli pcntl pdo pdo_mysql && \
+    docker-php-ext-enable xdebug
 
 # [Optional] Uncomment this section to install additional OS packages.
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \

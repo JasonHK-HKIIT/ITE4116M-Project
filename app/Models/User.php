@@ -3,16 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
-class User extends Authenticatable
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+use Illuminate\Support\Str;
+
+class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
+    use Authenticatable, Authorizable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,9 +21,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        "username",
+        "password",
     ];
 
     /**
@@ -31,10 +31,8 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'two_factor_secret',
-        'two_factor_recovery_codes',
-        'remember_token',
+        "password",
+        "remember_token",
     ];
 
     /**
@@ -45,20 +43,19 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            "password" => "hashed",
         ];
     }
 
     /**
-     * Get the user's initials
+     * Get the user"s initials
      */
     public function initials(): string
     {
         return Str::of($this->name)
-            ->explode(' ')
+            ->explode(" ")
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
-            ->implode('');
+            ->implode("");
     }
 }
