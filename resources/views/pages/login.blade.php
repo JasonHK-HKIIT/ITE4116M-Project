@@ -35,22 +35,32 @@ class extends Component
             return redirect()->intended("/");
         }
 
-        $this->addError("username", "The provided username/password was incorrect.");
+        $this->addError("username", __("The provided username/password was incorrect."));
     }
 }; ?>
 
 <div class="md:w-96 mx-auto mt-20">
-    <div class="mb-10">
+    <div class="flex justify-between items-end mb-10">
         <livewire:brand />
+
+        <x-dropdown right>
+            <x-slot:trigger>
+                <x-button :title="__('Language')" icon="o-globe-alt" :aria-label="__('Language')" class="btn-square" />
+            </x-slot:trigger>
+
+            <x-menu-item title="English" lang="en" />
+            <x-menu-item title="中文（繁體）" lang="zh-HK" />
+            <x-menu-item title="中文（简体）" lang="zh-CN" />
+        </x-dropdown>
     </div>
 
     <x-form wire:submit="login">
-        <x-input placeholder="CNA / Student ID" wire:model="username" icon="o-envelope" />
-        <x-input placeholder="Password" wire:model="password" type="password" icon="o-key" />
+        <x-input :label="__('CNA / Student ID')" wire:model="username" icon="o-user" :placeholder="__('CNA / Student ID')" inline />
+        <x-input :label="__('Password')" wire:model="password" type="password" icon="o-key" :placeholder="__('Password')" inline />
 
         <x-slot:actions>
             <x-button label="Create an account" class="btn-ghost" link="/register" />
-            <x-button label="Login" type="submit" icon="o-paper-airplane" class="btn-primary" spinner="login" />
+            <x-button :label="__('Login')" type="submit" icon="o-paper-airplane" class="btn-primary" spinner="login" />
         </x-slot:actions>
     </x-form>
 </div>
