@@ -16,5 +16,5 @@ Route::get("/logout", function ()
 
 Route::middleware("auth")->group(function ()
 {
-    Route::livewire('/', 'users.index');
+    Route::livewire("/", "pages::portal.home");
 });
