@@ -45,7 +45,7 @@ class extends Component
 
         <x-dropdown right>
             <x-slot:trigger>
-                <x-button :title="__('Language')" icon="o-globe-alt" :aria-label="__('Language')" class="btn-square" />
+                <x-button icon="o-globe-alt" :tooltip-left="__('Language')" :aria-label="__('Language')" class="btn-square" />
             </x-slot:trigger>
 
             <x-menu-item title="English" lang="en" />
