@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreignId('news_article_id');
             $table->enum('language', ['en', 'zh_HK', 'zh_CN']);
             $table->tinyText('title');
+            $table->tinyText('thumbnail');
             $table->mediumText('content');
             $table->unique(['news_article_id', 'language']);
             $table->cascadeOnDelete();
