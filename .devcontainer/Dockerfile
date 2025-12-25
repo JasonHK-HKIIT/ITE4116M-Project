@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/php:1-8.4-bookworm
+FROM mcr.microsoft.com/devcontainers/php:3-8.5-trixie
 
 # Install packages
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
