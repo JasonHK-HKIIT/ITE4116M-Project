@@ -21,5 +21,10 @@ class DatabaseSeeder extends Seeder
                 'password' => 'letmein',
             ]
         );
+
+        $this->call(
+            [
+                NewsArticleSeeder::class
+            ]);
     }
 }

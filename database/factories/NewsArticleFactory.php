@@ -17,7 +17,17 @@ class NewsArticleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'is_published' => true,
+            'published_on' => fake()->date(),
         ];
+    }
+
+    public function unpublished(): static
+    {
+        return $this->state(fn (array $attributes) =>
+            [
+                'is_published' => false,
+                'published_on' => null,
+            ]);
     }
 }

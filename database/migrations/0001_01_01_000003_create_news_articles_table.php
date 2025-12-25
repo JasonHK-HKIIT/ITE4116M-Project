@@ -22,13 +22,13 @@ return new class extends Migration
         Schema::create('news_article_contents', function (Blueprint $table)
         {
             $table->id();
-            $table->foreignId('news_article_id');
+            $table->foreignId('news_article_id')->constrained()->onDelete("cascade");
             $table->enum('language', ['en', 'zh_HK', 'zh_CN']);
-            $table->tinyText('title');
             $table->tinyText('thumbnail');
+            $table->tinyText('title');
             $table->mediumText('content');
             $table->unique(['news_article_id', 'language']);
-            $table->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
