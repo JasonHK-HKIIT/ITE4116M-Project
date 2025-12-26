@@ -29,7 +29,7 @@
                 <x-menu-separator />
             @endif
 
-            <x-button label="Chat with Valo" link="/chat" icon="o-sparkles" class="btn-primary btn-block mb-2" />
+            <x-button label="Chat with Valo" link="/assistant" icon="o-sparkles" class="btn-primary btn-block mb-2" />
             <x-menu-item title="Home" icon="o-home" link="/" />
             <x-menu-item title="Calendar" icon="o-calendar-days" link="/calendar" />
             <x-menu-item title="Profile" icon="o-user-circle" link="/profile" />
