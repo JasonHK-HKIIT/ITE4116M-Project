@@ -16,9 +16,13 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::firstOrCreate(
-            ['username' => '240141706'],
+            [
+                'username' => '240141706',
+            ],
             [
                 'password' => 'letmein',
+                'family_name' => 'KWOK',
+                'given_name' => 'Chi Leong'
             ]
         );
 

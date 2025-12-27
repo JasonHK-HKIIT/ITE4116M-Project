@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Language;
 use App\Models\NewsArticle;
 use App\Models\NewsArticleContent;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,9 +21,9 @@ class NewsArticleSeeder extends Seeder
             ->has(NewsArticleContent::factory()
                 ->count(3)
                 ->sequence(
-                    ['language' => "en"],
-                    ['language' => "zh_HK"],
-                    ['language' => "zh_CN"]))
+                    ['language' => Language::en->value],
+                    ['language' => Language::zh_HK->value],
+                    ['language' => Language::zh_CN->value]))
             ->create();
         
         NewsArticle::factory()
@@ -31,9 +32,9 @@ class NewsArticleSeeder extends Seeder
             ->has(NewsArticleContent::factory()
                 ->count(3)
                 ->sequence(
-                    ['language' => "en"],
-                    ['language' => "zh_HK"],
-                    ['language' => "zh_CN"]))
+                    ['language' => Language::en->value],
+                    ['language' => Language::zh_HK->value],
+                    ['language' => Language::zh_CN->value]))
             ->create();
     }
 }

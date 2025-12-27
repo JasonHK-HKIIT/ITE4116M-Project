@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Language;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,8 +23,8 @@ return new class extends Migration
         Schema::create('news_article_contents', function (Blueprint $table)
         {
             $table->id();
-            $table->foreignId('news_article_id')->constrained()->onDelete("cascade");
-            $table->enum('language', ['en', 'zh_HK', 'zh_CN']);
+            $table->foreignId('news_article_id')->constrained()->onDelete('cascade');
+            $table->enum('language', Language::values());
             $table->tinyText('thumbnail');
             $table->tinyText('title');
             $table->mediumText('content');
