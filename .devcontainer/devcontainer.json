@@ -29,9 +29,10 @@
 	"customizations": {
 		"vscode": {
 			"extensions": [
+				"bmewburn.vscode-intelephense-client",
+				"namesmt.blade-php",
 				"onecentlin.laravel-blade",
-				"xdebug.php-pack",
-				"namesmt.blade-php"
+				"xdebug.php-debug"
 			]
 		}
 	},
