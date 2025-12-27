@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('institute_id');
+            $table->tinyText('module_code');
             $table->timestamps();
+            $table->unique(['institute_id', 'module_code']);
         });
     }
 

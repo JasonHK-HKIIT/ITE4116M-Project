@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('programmes', function (Blueprint $table) {
+        Schema::create('campuses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('institute_id');
-            $table->tinyText('programme_code')->unique();
-            $table->tinyText('name_en');
-            $table->tinyText('name_zh_HK');
-            $table->tinyText('name_zh_CN');
             $table->timestamps();
-            $table->unique(['institute_id', 'programme_code']);
         });
     }
 
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('programmes');
+        Schema::dropIfExists('campuses');
     }
 };
