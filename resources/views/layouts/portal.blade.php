@@ -7,7 +7,7 @@
     </x-slot:brand>
     <x-slot:actions>
         <label for="main-drawer" class="lg:hidden me-3">
-            <x-icon name="o-bars-3" class="cursor-pointer" />
+            <x-icon name="fal.bars" class="cursor-pointer" />
         </label>
     </x-slot:actions>
 </x-nav>
@@ -22,19 +22,24 @@
 
                 <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
                     <x-slot:actions>
-                        <x-button icon="o-power" class="btn-circle btn-ghost btn-xs" tooltip-left="Sign Out" no-wire-navigate link="/logout" />
+                        <x-button icon="fal.right-from-bracket" class="btn-circle btn-ghost btn-xs" tooltip-left="Sign Out" no-wire-navigate link="/logout" />
                     </x-slot:actions>
                 </x-list-item>
 
                 <x-menu-separator />
             @endif
 
-            <x-button label="Chat with Valo" link="/assistant" icon="o-sparkles" class="btn-primary btn-block mb-2" />
-            <x-menu-item title="Home" icon="o-home" link="/" />
-            <x-menu-item title="Calendar" icon="o-calendar-days" link="/calendar" />
-            <x-menu-item title="Profile" icon="o-user-circle" link="/profile" />
-            <x-menu-item title="Student Activities" icon="o-sparkles" link="/activities" />
-            <x-menu-item title="News and Announcement" icon="o-newspaper" link="/news" />
+            <x-button label="Chat with Valo" link="/assistant" icon="fal.sparkles" class="btn-primary btn-block mb-2" />
+            <x-menu-item title="Home" icon="fal.house" link="/" />
+            <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
+            <x-menu-sub title="Profile" icon="fal.address-card">
+                <x-menu-item title="Personal Particular" link="/profile/personal-particular" />
+                <x-menu-item title="Programme & Modules" link="/profile/programme-modules" />
+            </x-menu-sub>
+            <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/activities" />
+            <x-menu-item title="News and Announcement" icon="fal.newspaper" link="/news" />
+            <x-menu-item title="Information Centre" icon="fal.circle-info" link="/info" />
+            <div class="grow"></div>
         </x-menu>
     </x-slot:sidebar>
 

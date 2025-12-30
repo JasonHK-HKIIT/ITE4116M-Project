@@ -45,7 +45,7 @@ class extends Component
 
         <x-dropdown right>
             <x-slot:trigger>
-                <x-button icon="o-globe-alt" :tooltip-left="__('Language')" :aria-label="__('Language')" class="btn-square" />
+                <x-button icon="fal.language" :tooltip-left="__('Language')" :aria-label="__('Language')" class="btn-square" />
             </x-slot:trigger>
 
             <x-menu-item title="English" lang="en" />
@@ -55,12 +55,12 @@ class extends Component
     </div>
 
     <x-form wire:submit="login">
-        <x-input :label="__('CNA / Student ID')" wire:model="username" icon="o-user" :placeholder="__('CNA / Student ID')" inline />
-        <x-input :label="__('Password')" wire:model="password" type="password" icon="o-key" :placeholder="__('Password')" inline />
+        <x-input :label="__('CNA / Student ID')" wire:model="username" icon="fal.user" :placeholder="__('CNA / Student ID')" inline />
+        <x-input :label="__('Password')" wire:model="password" type="password" icon="fal.key" :placeholder="__('Password')" inline />
 
         <x-slot:actions>
             <x-button label="Create an account" class="btn-ghost" link="/register" />
-            <x-button :label="__('Login')" type="submit" icon="o-paper-airplane" class="btn-primary" spinner="login" />
+            <x-button :label="__('Login')" type="submit" icon="fal.left-to-bracket" class="btn-primary" spinner="login" />
         </x-slot:actions>
     </x-form>
 </div>
