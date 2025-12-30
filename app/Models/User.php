@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\Role;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -45,6 +46,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return [
             "password" => "hashed",
+            "role" => Role::class,
         ];
     }
 
@@ -58,6 +60,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode("");
+    }
+
+    public function hasRole(string|Role $role): bool
+    {
+        if (is_string($role)) { $role = Role::from($role); }
+        return ($this->role == $role);
     }
 
     public function student(): HasOne

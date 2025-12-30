@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,8 +17,10 @@ return new class extends Migration
             $table->string("username")->unique();
             $table->string("password");
             $table->rememberToken();
+            $table->enum('role', Role::values())->default(Role::STUDENT->value);
             $table->tinyText('family_name');
             $table->tinyText('given_name');
+            $table->tinyText('chinese_name')->nullable();
             $table->timestamps();
         });
 
