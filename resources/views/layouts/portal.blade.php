@@ -29,7 +29,7 @@
                 <x-menu-separator />
             @endif
 
-            <x-button label="Chat with Valo" link="/assistant" icon="fal.sparkles" class="btn-primary btn-block mb-2" />
+            <x-button label="Chat with Valo" link="/assistant" icon="fal.sparkles" class="btn-primary btn-block mt-0.5 mb-1" />
             <x-menu-item title="Home" icon="fal.house" link="/" />
             <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
             <x-menu-sub title="Profile" icon="fal.address-card">
@@ -37,9 +37,12 @@
                 <x-menu-item title="Programme & Modules" link="/profile/programme-modules" />
             </x-menu-sub>
             <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/activities" />
-            <x-menu-item title="News and Announcement" icon="fal.newspaper" link="/news" />
+            <x-menu-item title="News & Announcement" icon="fal.newspaper" link="/news" />
             <x-menu-item title="Information Centre" icon="fal.circle-info" link="/info" />
-            <div class="grow"></div>
+            
+            <x-menu-separator />
+
+            <x-menu-item title="Dashboard" icon="fal.gauge-high" link="/dashboard" />
         </x-menu>
     </x-slot:sidebar>
 

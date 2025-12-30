@@ -14,15 +14,16 @@ Route::get('/logout', function ()
     return redirect('/');
 });
 
-Route::middleware('auth')->group(function ()
+Route::name('portal.')->middleware('auth')->group(function ()
 {
-    Route::livewire('/', 'pages::portal.home')->name('portal.home');
+    Route::livewire('/', 'pages::portal.home')->name('home');
+});
 
-    Route::livewire('/news', 'pages::portal.news.list');
-    Route::livewire('/news/{id}', 'pages::portal.news.view');
+Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()
+{
+    Route::livewire('/', 'pages::dashboard.home')->name('home');
 
-    Route::middleware('role:admin')->prefix('/dashboard')->group(function ()
-    {
-        Route::livewire('/', 'pages::dashboard.home');
-    });
+    Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
+    Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
+    Route::livewire('/news/{id}', 'pages::dashboard.news.edit')->whereNumber('id')->name('news.edit');
 });
