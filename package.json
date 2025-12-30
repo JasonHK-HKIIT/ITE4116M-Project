@@ -7,6 +7,7 @@
         "dev": "vite --host"
     },
     "dependencies": {
+        "@awesome.me/kit-45e7c69ab8": "^1.0.2",
         "autoprefixer": "^10.4.20",
         "axios": "^1.7.4",
         "beercss": "^3.13.1",
