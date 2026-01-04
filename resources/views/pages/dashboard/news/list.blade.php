@@ -26,7 +26,7 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'title', 'label' => 'Title', 'class' => 'w-auto'],
+            ['key' => 'title', 'label' => 'Title', 'class' => 'w-auto min-w-64'],
             ['key' => 'language', 'label' => 'Language', 'class' => 'w-fit'],
             ['key' => 'is_published', 'label' => 'Status', 'class' => 'w-fit', 'format' => (fn($article, $is_published) => ($is_published ? 'Published' : 'Draft'))],
             ['key' => 'published_on', 'label' => 'Published on', 'class' => 'w-fit'],
@@ -88,19 +88,19 @@ class extends Component
     <x-card shadow>
         <x-table :headers="$headers" :rows="$articles" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 25]">
             @scope('actions', $article)
-                <div class="flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.news.edit', ['article' => $article])" class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteArticle({{ $article->id }})" spinner class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
-
-                    <x-dropdown right>
-                        <x-slot:trigger>
-                            <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
-                        </x-slot:trigger>
-
-                        <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.news.edit', ['article' => $article])" />
-                        <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteArticle({{ $article->id }})" spinner />
-                    </x-dropdown>
+                <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
+                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.news.edit', ['article' => $article])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteArticle({{ $article->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
+
+                <x-dropdown right>
+                    <x-slot:trigger>
+                        <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
+                    </x-slot:trigger>
+
+                    <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.news.edit', ['article' => $article])" />
+                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteArticle({{ $article->id }})" spinner />
+                </x-dropdown>
             @endscope
         </x-table>
     </x-card>
