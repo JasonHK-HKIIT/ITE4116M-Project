@@ -20,4 +20,13 @@ class NewsArticle extends Model implements HasMedia
             ->useFallbackUrl('/images/placeholder.svg')
             ->singleFile();
     }
+
+    protected $fillable = [
+        'slug',
+        'language',
+        'title',
+        'is_published',
+        'published_on',
+        'content',
+    ];
 }
