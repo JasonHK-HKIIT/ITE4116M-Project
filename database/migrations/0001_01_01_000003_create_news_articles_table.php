@@ -15,21 +15,15 @@ return new class extends Migration
         Schema::create('news_articles', function (Blueprint $table)
         {
             $table->id();
+            $table->tinyText('slug');
+            $table->enum('language', Language::values());
+            $table->tinyText('title');
+            $table->tinyText('thumbnail');
             $table->boolean('is_published')->default(false);
             $table->date('published_on')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('news_article_contents', function (Blueprint $table)
-        {
-            $table->id();
-            $table->foreignId('news_article_id')->constrained()->onDelete('cascade');
-            $table->enum('language', Language::values());
-            $table->tinyText('thumbnail');
-            $table->tinyText('title');
             $table->mediumText('content');
-            $table->unique(['news_article_id', 'language']);
             $table->timestamps();
+            $table->unique(['slug', 'language']);
         });
     }
 
@@ -38,7 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('news_article_contents');
         Schema::dropIfExists('news_articles');
     }
 };

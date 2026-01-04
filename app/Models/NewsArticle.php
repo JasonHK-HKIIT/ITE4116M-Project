@@ -10,9 +10,4 @@ class NewsArticle extends Model
 {
     /** @use HasFactory<\Database\Factories\NewsArticleFactory> */
     use HasFactory;
-
-    public function newsArticleContent(): HasMany
-    {
-        return $this->hasMany(NewsArticleContent::class);
-    }
 }

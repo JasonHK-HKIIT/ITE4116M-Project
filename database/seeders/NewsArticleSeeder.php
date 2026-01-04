@@ -17,24 +17,20 @@ class NewsArticleSeeder extends Seeder
     public function run(): void
     {
         NewsArticle::factory()
-            ->count(50)
-            ->has(NewsArticleContent::factory()
-                ->count(3)
-                ->sequence(
-                    ['language' => Language::en->value],
-                    ['language' => Language::zh_HK->value],
-                    ['language' => Language::zh_CN->value]))
+            ->count(60)
+            ->sequence(
+                ['language' => Language::en->value],
+                ['language' => Language::zh_HK->value],
+                ['language' => Language::zh_CN->value])
             ->create();
         
         NewsArticle::factory()
-            ->count(5)
+            ->count(6)
             ->unpublished()
-            ->has(NewsArticleContent::factory()
-                ->count(3)
-                ->sequence(
-                    ['language' => Language::en->value],
-                    ['language' => Language::zh_HK->value],
-                    ['language' => Language::zh_CN->value]))
+            ->sequence(
+                ['language' => Language::en->value],
+                ['language' => Language::zh_HK->value],
+                ['language' => Language::zh_CN->value])
             ->create();
     }
 }
