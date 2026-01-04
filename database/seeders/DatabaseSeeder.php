@@ -41,7 +41,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             [
-                NewsArticleSeeder::class
+                NewsArticleSeeder::class,
+                ActivitySeeder::class,
             ]);
     }
 }
