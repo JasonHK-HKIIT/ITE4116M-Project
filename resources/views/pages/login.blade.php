@@ -55,8 +55,8 @@ class extends Component
     </div>
 
     <x-form wire:submit="login">
-        <x-input :label="__('CNA / Student ID')" wire:model="username" icon="fal.user" :placeholder="__('CNA / Student ID')" inline />
-        <x-input :label="__('Password')" wire:model="password" type="password" icon="fal.key" :placeholder="__('Password')" inline />
+        <x-input :label="__('CNA / Student ID')" wire:model="username" type="text" autocomplete="username" icon="fal.user" :placeholder="__('CNA / Student ID')" inline />
+        <x-input :label="__('Password')" wire:model="password" type="password" autocomplete="current-password" icon="fal.key" :placeholder="__('Password')" inline />
 
         <x-slot:actions>
             <x-button label="Create an account" class="btn-ghost" link="/register" />
