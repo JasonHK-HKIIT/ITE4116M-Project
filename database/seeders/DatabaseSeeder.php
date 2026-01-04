@@ -29,6 +29,17 @@ class DatabaseSeeder extends Seeder
 
         User::firstOrCreate(
             [
+                'username' => '240155170',
+            ],
+            [
+                'password' => 'qwerasdf',
+                'family_name' => 'Hui',
+                'given_name' => 'Ho Fung Matthew'
+            ]
+        );
+
+        User::firstOrCreate(
+            [
                 'username' => 'admin',
             ],
             [
@@ -43,6 +54,7 @@ class DatabaseSeeder extends Seeder
             [
                 NewsArticleSeeder::class,
                 ActivitySeeder::class,
-            ]);
+            ]
+        );
     }
 }
