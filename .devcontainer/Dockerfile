@@ -6,7 +6,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Install and enable PHP extensions
 RUN docker-php-ext-configure pcntl --enable-pcntl && \
-    docker-php-ext-install intl mysqli pcntl pdo pdo_mysql && \
+    docker-php-ext-install exif intl mysqli pcntl pdo pdo_mysql && \
     docker-php-ext-enable xdebug
 
 # [Optional] Uncomment this section to install additional OS packages.

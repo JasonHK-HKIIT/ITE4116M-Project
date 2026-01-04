@@ -18,7 +18,6 @@ return new class extends Migration
             $table->tinyText('slug');
             $table->enum('language', Language::values());
             $table->tinyText('title');
-            $table->tinyText('thumbnail');
             $table->boolean('is_published')->default(false);
             $table->date('published_on')->nullable();
             $table->mediumText('content');

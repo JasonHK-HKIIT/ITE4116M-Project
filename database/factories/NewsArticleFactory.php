@@ -18,7 +18,6 @@ class NewsArticleFactory extends Factory
     {
         return [
             'slug' => fake()->unique()->slug(),
-            'thumbnail' => fake()->uuid() . '.jpg',
             'title' => fake()->sentence(10),
             'content' => fake()->paragraphs(10, true),
             'is_published' => true,
