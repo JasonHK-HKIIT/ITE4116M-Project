@@ -68,8 +68,8 @@ class extends Component
         <x-table :headers="$headers" :rows="$articles">
             @scope('actions', $article)
                 <div class="flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :link="route('dashboard.news.edit', ['id' => $article->id])" class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
-                    <x-button icon="fal.trash" wire:click="deleteArticle({{ $article->id }})" spinner class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.news.edit', ['id' => $article->id])" class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
+                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteArticle({{ $article->id }})" spinner class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
 
                     <x-dropdown right>
                         <x-slot:trigger>
