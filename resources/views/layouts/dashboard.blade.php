@@ -12,7 +12,7 @@
     </x-slot:actions>
 </x-nav>
 
-<x-main>
+<x-main full-width>
     <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
         <livewire:brand class="px-5 pt-4" />
 
