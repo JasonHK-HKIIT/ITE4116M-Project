@@ -1,18 +1,27 @@
 <?php
 
 use App\Models\NewsArticle;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
+use Livewire\WithPagination;
 
 new
 #[Layout('layouts::dashboard')]
 class extends Component
 {
+    use WithPagination, WithoutUrlPagination;
+    
+    public array $sortBy = ['column' => 'published_on', 'direction' => 'desc'];
+
+    public int $perPage = 10;
+
     public bool $isDrawerOpened = false;
 
-    public string $searchQuery = '';
+    public string $keyword = '';
 
-    public ?string $articleStatus = null;
+    public ?string $status = null;
 
     public function headers(): array
     {
@@ -26,7 +35,19 @@ class extends Component
 
     public function articles()
     {
-        return NewsArticle::all();
+        return NewsArticle::query()
+            ->when($this->keyword, function ($query, $keyword)
+            {
+                $query
+                    ->where('title', 'like', '%' . $keyword . '%')
+                    ->orWhere('content', 'like', '%' . $keyword . '%');
+            })
+            ->when($this->status, function ($query, $status)
+            {
+                $query->where('is_published', ($status == 'published'));
+            })
+            ->orderBy($this->sortBy['column'], $this->sortBy['direction'])
+            ->paginate($this->perPage);
     }
 
     public function statuses(): array
@@ -41,7 +62,7 @@ class extends Component
     {
 
     }
-    
+
     public function with(): array
     {
         return [
@@ -56,7 +77,7 @@ class extends Component
 <div>
     <x-header :title="__('News & Announcement')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="searchQuery" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keyword" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
             <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
@@ -65,7 +86,7 @@ class extends Component
     </x-header>
 
     <x-card shadow>
-        <x-table :headers="$headers" :rows="$articles">
+        <x-table :headers="$headers" :rows="$articles" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 25]">
             @scope('actions', $article)
                 <div class="flex flex-row w-8 lg:w-17">
                     <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.news.edit', ['article' => $article])" class="btn-ghost btn-square btn-sm hidden lg:inline-flex" />
@@ -85,8 +106,8 @@ class extends Component
     </x-card>
 
     <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="searchQuery" :placeholder="__('Search...')" />
-        <x-select label="Status" wire:model="articleStatus" :options="$statuses" placeholder="Any" />
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keyword" :placeholder="__('Search...')" />
+        <x-select label="Status" wire:model.live.debounce="status" :options="$statuses" placeholder="Any" />
 
         <x-slot:actions>
             <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
