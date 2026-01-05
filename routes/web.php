@@ -17,6 +17,9 @@ Route::get('/logout', function ()
 Route::name('portal.')->middleware('auth')->group(function ()
 {
     Route::livewire('/', 'pages::portal.home')->name('home');
+
+    Route::livewire('/activities', 'pages::portal.activities.list')->name('activities.list');
+    Route::livewire('/activities/show/{id}', 'pages::portal.activities.show')->whereNumber('id')->name('activities.show');
 });
 
 Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()
