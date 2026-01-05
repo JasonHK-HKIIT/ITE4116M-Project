@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\NewsArticle;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -37,13 +37,7 @@ class extends Component
         return NewsArticle::query()
             ->when($this->keywords, function ($query, $keywords)
             {
-                $query->whereIn('id', function (Builder $query) use ($keywords)
-                {
-                    $query
-                        ->select('news_article_id')
-                        ->from('news_article_translations')
-                        ->whereFullText(['title', 'content'], $keywords);
-                });
+                $query->whereHas('translations', fn ($query) => $query->whereFullText(['title', 'content'], $keywords));
             })
             ->when($this->status, function ($query, $status)
             {
