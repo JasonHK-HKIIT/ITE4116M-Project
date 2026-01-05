@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('news_articles', function (Blueprint $table)
         {
             $table->id();
-            $table->tinyText('slug');
+            $table->string('slug', 127);
             $table->boolean('is_published')->default(false);
             $table->date('published_on')->nullable();
             $table->timestamps();
@@ -25,10 +25,11 @@ return new class extends Migration
         {
             $table->id();
             $table->foreignId('news_article_id')->constrained()->onDelete('cascade');
-            $table->string('locale', 10);
+            $table->string('locale', 10)->index();
             $table->tinyText('title');
             $table->mediumText('content');
             $table->unique(['news_article_id', 'locale']);
+            $table->fullText(['title', 'content']);
         });
     }
 
