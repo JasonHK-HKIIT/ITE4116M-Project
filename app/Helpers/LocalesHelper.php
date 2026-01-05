@@ -15,17 +15,24 @@ class LocalesHelper
         return ['en', 'zh-HK', 'zh-CN'];
     }
 
-    public static function getRules(string $field, array|string $rules): array
+    public static function buildRules(string $field, array|string $rules): array
     {
         return collect(LocalesHelper::locales())
             ->flatMap(fn($locale, $key) => ["$field.$locale" => $rules])
             ->toArray();
     }
 
-    public static function getValidationAttributes(string $field, mixed $attributes = null): array
+    public static function buildValidationAttributes(string $field, mixed $attributes = null): array
     {
         return collect(LocalesHelper::locales())
             ->flatMap(fn($locale, $key) => ["$field.$locale" => ($attributes ?? $field)])
+            ->toArray();
+    }
+
+    public static function buildPropertyValue(mixed $value = null): array
+    {
+        return collect(LocalesHelper::locales())
+            ->flatMap(fn($locale, $key) => [$locale => $value])
             ->toArray();
     }
 

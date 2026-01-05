@@ -28,16 +28,16 @@ class extends Component
     protected function rules(): array
     {
         return array_merge(
-            LocalesHelper::getRules('title', ['required', 'max:255']),
-            LocalesHelper::getRules('content', ['required', 'max:16777215']),
+            LocalesHelper::buildRules('title', ['required', 'max:255']),
+            LocalesHelper::buildRules('content', ['required', 'max:16777215']),
         );
     }
 
     protected function validationAttributes()
     {
         return array_merge(
-            LocalesHelper::getValidationAttributes('title'),
-            LocalesHelper::getValidationAttributes('content'),
+            LocalesHelper::buildValidationAttributes('title'),
+            LocalesHelper::buildValidationAttributes('content'),
         );
     }
 
@@ -50,6 +50,10 @@ class extends Component
         {
             $this->fill($article->only(["slug"]));
             $this->fill(LocalesHelper::transformToProperties($article->getTranslationsArray()));
+        }
+        else
+        {
+            $this->content = LocalesHelper::buildPropertyValue();
         }
     }
 
