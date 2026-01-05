@@ -77,7 +77,7 @@ class extends Component
     <x-card shadow>
         <x-form wire:submit="save">
             <x-tabs wire:model="selectedLanguage">
-                @foreach (Language::values() as $language)
+                @foreach (LocalesHelper::locales() as $language)
                     <x-tab wire:key="{{ $language }}" :name="$language" :label="__('languages.' . $language)">
                         <x-input label="Title" wire:model="title.{{ $language }}" />
                         <x-input label="Slug" wire:model="slug" prefix="/news/" />
