@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 new
@@ -11,10 +11,10 @@ new
 #[Title("Login")]
 class extends Component
 {
-    #[Rule("required")]
+    #[Validate("required")]
     public string $username = "";
 
-    #[Rule("required")]
+    #[Validate("required")]
     public string $password = "";
 
     public function mount()
