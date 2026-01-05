@@ -18,8 +18,6 @@ class NewsArticleFactory extends Factory
     {
         return [
             'slug' => fake()->unique()->slug(),
-            'title' => fake()->sentence(10),
-            'content' => fake()->paragraphs(10, true),
             'is_published' => true,
             'published_on' => fake()->date(),
         ];

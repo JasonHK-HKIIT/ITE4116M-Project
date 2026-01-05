@@ -6,9 +6,19 @@ use App\Traits\EnumValues;
 
 enum Language: string
 {
-    case en = 'en';
-    case zh_HK = 'zh-HK';
-    case zh_CN = 'zh-CN';
+    case ENGLISH = 'en';
+    case CHINESE_TRADITIONAL = 'zh-HK';
+    case CHINESE_SIMPLIFIED = 'zh-CN';
     
     use EnumValues;
+
+    public function toLocale(): string
+    {
+        return str_replace('-', '_', $this->value);
+    }
+
+    public static function fromLocale(string $locale): Language
+    {
+        return Language::from(str_replace('_', '-', $locale));
+    }
 }

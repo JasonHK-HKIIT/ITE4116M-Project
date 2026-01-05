@@ -16,13 +16,19 @@ return new class extends Migration
         {
             $table->id();
             $table->tinyText('slug');
-            $table->enum('language', Language::values());
-            $table->tinyText('title');
             $table->boolean('is_published')->default(false);
             $table->date('published_on')->nullable();
-            $table->mediumText('content');
             $table->timestamps();
-            $table->unique(['slug', 'language']);
+        });
+
+        Schema::create('news_article_translations', function (Blueprint $table)
+        {
+            $table->id();
+            $table->foreignId('news_article_id')->constrained()->onDelete('cascade');
+            $table->string('locale', 10);
+            $table->tinyText('title');
+            $table->mediumText('content');
+            $table->unique(['news_article_id', 'locale']);
         });
     }
 
