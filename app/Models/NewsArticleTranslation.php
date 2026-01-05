@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Stevebauman\Purify\Casts\PurifyHtmlOnGet;
 
 class NewsArticleTranslation extends Model
 {
@@ -13,4 +14,11 @@ class NewsArticleTranslation extends Model
     public $timestamps = false;
 
     protected $fillable = ['title', 'content'];
+
+    protected function casts()
+    {
+        return [
+            'content' => PurifyHtmlOnGet::class,
+        ];
+    }
 }
