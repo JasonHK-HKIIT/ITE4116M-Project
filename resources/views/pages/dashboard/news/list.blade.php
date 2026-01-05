@@ -1,17 +1,17 @@
 <?php
 
 use App\Models\NewsArticle;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
 new
 #[Layout('layouts::dashboard')]
 class extends Component
 {
-    use WithPagination, WithoutUrlPagination;
+    use WithPagination;
     
     public array $sortBy = ['column' => 'published_on', 'direction' => 'desc'];
 
@@ -19,7 +19,7 @@ class extends Component
 
     public bool $isDrawerOpened = false;
 
-    public string $keyword = '';
+    public string $keywords = '';
 
     public ?string $status = null;
 
@@ -27,20 +27,23 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => 'Title', 'class' => 'w-auto min-w-64'],
-            // ['key' => 'language', 'label' => 'Language', 'class' => 'w-fit'],
             ['key' => 'is_published', 'label' => 'Status', 'class' => 'w-fit', 'format' => (fn($article, $is_published) => ($is_published ? 'Published' : 'Draft'))],
             ['key' => 'published_on', 'label' => 'Published on', 'class' => 'w-fit'],
         ];
     }
 
-    public function articles()
+    public function articles(): LengthAwarePaginator
     {
         return NewsArticle::query()
-            ->when($this->keyword, function ($query, $keyword)
+            ->when($this->keywords, function ($query, $keywords)
             {
-                $query
-                    ->where('title', 'like', '%' . $keyword . '%')
-                    ->orWhere('content', 'like', '%' . $keyword . '%');
+                $query->whereIn('id', function (Builder $query) use ($keywords)
+                {
+                    $query
+                        ->select('news_article_id')
+                        ->from('news_article_translations')
+                        ->whereFullText(['title', 'content'], $keywords);
+                });
             })
             ->when($this->status, function ($query, $status)
             {
@@ -77,7 +80,7 @@ class extends Component
 <div>
     <x-header :title="__('News & Announcement')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keyword" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
             <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
@@ -106,7 +109,7 @@ class extends Component
     </x-card>
 
     <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keyword" :placeholder="__('Search...')" />
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
         <x-select label="Status" wire:model.live.debounce="status" :options="$statuses" placeholder="Any" />
 
         <x-slot:actions>
