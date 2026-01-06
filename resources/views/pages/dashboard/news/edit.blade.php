@@ -70,9 +70,12 @@ class extends Component
     }
 }; ?>
 
-@push('scripts')
-    @vite(['resources/js/vendor/tinymce.js'])
-@endpush
+@assets
+    @vite([
+        'resources/js/vendor/flatpickr.js',
+        'resources/js/vendor/tinymce.js'
+    ])
+@endassets
 
 <div>
     <x-header :title="__('News & Announcement')" :subtitle="($exists ? 'Update' : 'Create') . ' Article'" separator>
