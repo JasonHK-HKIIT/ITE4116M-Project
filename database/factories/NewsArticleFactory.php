@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\NewsArticleStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,16 +19,16 @@ class NewsArticleFactory extends Factory
     {
         return [
             'slug' => fake()->unique()->slug(),
-            'is_published' => true,
+            'status' => NewsArticleStatus::Published,
             'published_on' => fake()->date(),
         ];
     }
 
-    public function unpublished(): static
+    public function draft(): static
     {
         return $this->state(fn (array $attributes) =>
             [
-                'is_published' => false,
+                'status' => NewsArticleStatus::Draft,
                 'published_on' => null,
             ]);
     }

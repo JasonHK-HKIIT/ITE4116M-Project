@@ -28,7 +28,7 @@ class NewsArticleSeeder extends Seeder
         
         NewsArticle::factory()
             ->count(5)
-            ->unpublished()
+            ->draft()
             ->has(NewsArticleTranslation::factory()
                 ->count(3)
                 ->sequence(

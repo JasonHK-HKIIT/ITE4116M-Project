@@ -27,8 +27,8 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => 'Title', 'class' => 'w-auto min-w-64'],
-            ['key' => 'is_published', 'label' => 'Status', 'class' => 'w-fit', 'format' => (fn($article, $is_published) => ($is_published ? 'Published' : 'Draft'))],
-            ['key' => 'published_on', 'label' => 'Published on', 'class' => 'w-fit'],
+            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'format' => (fn($article, $status) => __($status->value))],
+            ['key' => 'published_on', 'label' => 'Published on', 'class' => 'w-fit', 'format' => ['date', 'Y-m-d']],
         ];
     }
 

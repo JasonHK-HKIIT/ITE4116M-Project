@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\NewsArticleStatus;
 use Astrotomic\Translatable\Contracts\Translatable as TranslatableContracts;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -22,6 +23,14 @@ class NewsArticle extends Model implements TranslatableContracts, HasMedia
     ];
 
     public $translatedAttributes = ['title', 'content'];
+
+    protected function casts()
+    {
+        return [
+            'status' => NewsArticleStatus::class,
+            'published_on' => 'date',
+        ];
+    }
 
     public function newsArticleTranslation(): HasMany
     {
