@@ -10,6 +10,7 @@ export default defineConfig({
             input: [
                 "resources/css/app.css",
                 "resources/js/app.js",
+                "resources/css/vendor/flatpickr.css",
                 "resources/js/vendor/flatpickr.js",
                 "resources/js/vendor/tinymce.js",
             ],
