@@ -9,11 +9,16 @@ use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Mary\Traits\Toast;
 
 new
 #[Layout('layouts::dashboard')]
 class extends Component
 {
+    use Toast;
+
+    public string $uuid;
+
     public string $selectedLanguage = 'en';
 
     public bool $exists = false;
@@ -23,26 +28,33 @@ class extends Component
     #[Validate('required')]
     public array $title = [];
 
-    #[Validate(['required', 'alpha_dash:ascii', 'max:127'])]
     public string $slug = '';
 
     public NewsArticleStatus $status = NewsArticleStatus::Draft;
 
-    #[Validate('required')]
+    #[Validate(['nullable', 'date'])]
     public ?Carbon $published_on = null;
 
     #[Validate('required')]
     public array $content = [];
 
-    public array $statuses = [
-            ['id' => NewsArticleStatus::Draft, 'name' => 'Draft'],
-            ['id' => NewsArticleStatus::Published, 'name' => 'Published'],
-        ];
+    public function __construct()
+    {
+        $this->uuid = md5(uuid_create());
+    }
+
+    public function statuses(): array
+    {
+        return collect(NewsArticleStatus::cases())
+            ->map(fn($case, $key) => ['id' => $case, 'name' => $case->name])
+            ->toArray();
+    }
 
     protected function rules(): array
     {
         return array_merge(
             [
+                'slug' => ['required', 'alpha_dash:ascii', 'max:127', Rule::unique('news_articles', 'slug')->ignore($this->article)],
                 'status' => ['required', Rule::enum(NewsArticleStatus::class)],
             ],
             LocalesHelper::buildRules('title', ['required', 'max:255']),
@@ -84,14 +96,25 @@ class extends Component
         $fields = LocalesHelper::transformToModelFields($this->validate(), $this->article->translatedAttributes);
         $this->article->fill($fields);
         $this->article->save();
+
+        if ($this->exists)
+        {
+            $this->success('News article was updated.');
+        }
+        else
+        {
+            $this->success(
+                "News article was created.",
+                redirectTo: route('dashboard.news.edit', ['article' => $this->article]));
+        }
     }
 
-    // public function with(): array
-    // {
-    //     return [
-    //         'statuses' => $this->statuses(),
-    //     ];
-    // }
+    public function with(): array
+    {
+        return [
+            'statuses' => $this->statuses(),
+        ];
+    }
 }; ?>
 
 @assets
@@ -110,19 +133,23 @@ class extends Component
         <x-form wire:submit="save">
             <x-tabs wire:model="selectedLanguage">
                 @foreach (LocalesHelper::locales() as $language)
-                    <x-tab wire:key="tab.{{ $language }}.1" :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                        <x-input label="Title" wire:model="title.{{ $language }}" />
-                    </x-tab>
+                    <div wire:key="{{ $uuid }}.tabs.{{ $language }}.1">
+                        <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
+                            <x-input label="Title" wire:model="title.{{ $language }}" />
+                        </x-tab>
+                    </div>
                 @endforeach
                     <div class="px-1">
-                        <x-input label="Slug" wire:model="slug" prefix="/news/" class="" />
+                        <x-input label="Slug" wire:model="slug" prefix="/news/" popover="Unique identifier of the article" />
                         <x-group label="Status" wire:model="status" :options="$statuses" />
                         <x-datepicker label="Published on" wire:model="published_on" />
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
-                    <x-tab wire:key="tab.{{ $language }}.2" :name="$language" :label="__('languages.' . $language)" class="pt-0">
-                        <x-editor label="Content" wire:model="content.{{ $language }}" gplLicense />
-                    </x-tab>
+                    <div wire:key="{{ $uuid }}.tabs.{{ $language }}.2">
+                        <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">
+                            <x-editor label="Content" wire:model="content.{{ $language }}" gplLicense />
+                        </x-tab>
+                    </div>
                 @endforeach
             </x-tabs>
 

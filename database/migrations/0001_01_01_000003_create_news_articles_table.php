@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('news_articles', function (Blueprint $table)
         {
             $table->id();
-            $table->string('slug', 127);
+            $table->string('slug', 127)->unique();
             $table->enum('status', NewsArticleStatus::values())->default(NewsArticleStatus::Draft);
             $table->date('published_on')->nullable();
             $table->timestamps();

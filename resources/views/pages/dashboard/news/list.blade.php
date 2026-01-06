@@ -1,17 +1,19 @@
 <?php
 
+use App\Enums\NewsArticleStatus;
 use App\Models\NewsArticle;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Mary\Traits\Toast;
 
 new
 #[Layout('layouts::dashboard')]
 class extends Component
 {
-    use WithPagination;
+    use Toast, WithPagination;
     
     public array $sortBy = ['column' => 'published_on', 'direction' => 'desc'];
 
@@ -27,13 +29,15 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => 'Title', 'class' => 'w-auto min-w-64'],
-            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'format' => (fn($article, $status) => __($status->value))],
+            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'sortable' => false, 'format' => (fn($article, $status) => __($status->value))],
             ['key' => 'published_on', 'label' => 'Published on', 'class' => 'w-fit', 'format' => ['date', 'Y-m-d']],
         ];
     }
 
     public function articles(): LengthAwarePaginator
     {
+        $sortTranslation = in_array($this->sortBy['column'], ['title']);
+
         return NewsArticle::query()
             ->when($this->keywords, function ($query, $keywords)
             {
@@ -41,23 +45,40 @@ class extends Component
             })
             ->when($this->status, function ($query, $status)
             {
-                $query->where('is_published', ($status == 'published'));
+                $query->where('status', $status);
             })
-            ->orderBy($this->sortBy['column'], $this->sortBy['direction'])
+            ->when((($this->sortBy['column'] == 'published_on') ? $this->sortBy : false), function ($query, $sortBy)
+            {
+                $query->orderBy('status', ($sortBy['direction'] == 'asc') ? 'desc' : 'asc');
+            })
+            ->when((($this->sortBy['column'] == 'published_on') ? $this->sortBy : false), function ($query, $sortBy)
+            {
+                $query->orderBy('status', ($sortBy['direction'] == 'asc') ? 'desc' : 'asc');
+            })
+            ->when(($sortTranslation ? $this->sortBy : false), function ($query, $sortBy)
+            {
+                $query->orderByTranslation($this->sortBy['column'], $this->sortBy['direction']);
+            })
+            ->when((!$sortTranslation ? $this->sortBy : false), function ($query, $sortBy)
+            {
+                $query->orderBy($this->sortBy['column'], $this->sortBy['direction']);
+            })
             ->paginate($this->perPage);
     }
 
     public function statuses(): array
     {
-        return [
-            ['id' => 'published', 'name' => 'Published'],
-            ['id' => 'draft', 'name' => 'Draft'],
-        ];
+        return collect(NewsArticleStatus::cases())
+            ->map(fn($case, $key) => ['id' => $case, 'name' => $case->name])
+            ->toArray();
     }
 
-    public function deleteArticle($id): void
+    public function deleteArticle(int $id): void
     {
-
+        if (NewsArticle::destroy($id) > 0)
+        {
+            $this->success('News article was deleted.');
+        }
     }
 
     public function with(): array
