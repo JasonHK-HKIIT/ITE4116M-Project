@@ -19,8 +19,7 @@
         "robsontenorio/mary": "dev-livewire-4",
         "spatie/laravel-medialibrary": "^11.17",
         "stevebauman/purify": "^6.3",
-        "symfony/http-client": "^8.0",
-        "tinymce/tinymce": "^8.3"
+        "symfony/http-client": "^8.0"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^3.6",
