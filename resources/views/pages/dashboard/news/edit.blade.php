@@ -133,11 +133,9 @@ class extends Component
         <x-form wire:submit="save">
             <x-tabs wire:model="selectedLanguage">
                 @foreach (LocalesHelper::locales() as $language)
-                    <div wire:key="{{ $uuid }}.tabs.{{ $language }}.1">
-                        <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                            <x-input label="Title" wire:model="title.{{ $language }}" />
-                        </x-tab>
-                    </div>
+                    <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
+                        <x-input label="Title" wire:model="title.{{ $language }}" />
+                    </x-tab>
                 @endforeach
                     <div class="px-1">
                         <x-input label="Slug" wire:model="slug" prefix="/news/" popover="Unique identifier of the article" />
@@ -145,11 +143,9 @@ class extends Component
                         <x-datepicker label="Published on" wire:model="published_on" />
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
-                    <div wire:key="{{ $uuid }}.tabs.{{ $language }}.2">
-                        <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">
-                            <x-editor label="Content" wire:model="content.{{ $language }}" gplLicense />
-                        </x-tab>
-                    </div>
+                    <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">
+                        <x-editor label="Content" wire:model="content.{{ $language }}" gplLicense />
+                    </x-tab>
                 @endforeach
             </x-tabs>
 
