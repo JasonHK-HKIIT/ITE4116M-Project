@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\LocalesHelper;
 use App\Models\Resource;
 use App\Models\ResourceTranslation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class ResourceSeeder extends Seeder
 {
@@ -19,10 +20,7 @@ class ResourceSeeder extends Seeder
             ->has(ResourceTranslation::factory()
                 ->count(3)
                 ->resource()
-                ->sequence(
-                    ['locale' => 'en'],
-                    ['locale' => 'zh-HK'],
-                    ['locale' => 'zh-CN']))
+                ->sequence(...Arr::map(LocalesHelper::locales(), fn($item) => ['locale' => $item])))
             ->create();
     }
 }

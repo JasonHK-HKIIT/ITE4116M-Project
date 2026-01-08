@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Language;
+use App\Helpers\LocalesHelper;
 use App\Models\NewsArticle;
 use App\Models\NewsArticleTranslation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class NewsArticleSeeder extends Seeder
 {
@@ -20,10 +19,7 @@ class NewsArticleSeeder extends Seeder
             ->count(50)
             ->has(NewsArticleTranslation::factory()
                 ->count(3)
-                ->sequence(
-                    ['locale' => Language::ENGLISH->value],
-                    ['locale' => Language::CHINESE_TRADITIONAL->value],
-                    ['locale' => Language::CHINESE_SIMPLIFIED->value]))
+                ->sequence(...Arr::map(LocalesHelper::locales(), fn($item) => ['locale' => $item])))
             ->create();
         
         NewsArticle::factory()
@@ -31,10 +27,7 @@ class NewsArticleSeeder extends Seeder
             ->draft()
             ->has(NewsArticleTranslation::factory()
                 ->count(3)
-                ->sequence(
-                    ['locale' => Language::ENGLISH->value],
-                    ['locale' => Language::CHINESE_TRADITIONAL->value],
-                    ['locale' => Language::CHINESE_SIMPLIFIED->value]))
+                ->sequence(...Arr::map(LocalesHelper::locales(), fn($item) => ['locale' => $item])))
             ->create();
     }
 }
