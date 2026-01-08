@@ -101,6 +101,16 @@ class extends Component
             'statuses' => $this->statuses(),
         ];
     }
+
+    public function clear(): void
+    {
+        $this->reset([
+            'keywords',
+            'status',
+            'publishedAfter',
+            'publishedBefore'
+        ]);
+    }
 }; ?>
 
 @assets
