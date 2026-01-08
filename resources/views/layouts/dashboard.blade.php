@@ -20,7 +20,16 @@
             @if($user = auth()->user())
                 <x-menu-separator />
 
-                <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
+                <x-list-item :item="$user" value="given_name" sub-value="username" no-separator no-hover class="-mx-2 !-my-2 rounded">
+                    <x-slot:avatar>
+                        <div>
+                            <div class="avatar">
+                                <div class="w-11 rounded-full">
+                                    <img src="{{ $user->avatar() }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </x-slot:avatar>
                     <x-slot:actions>
                         <x-button icon="fal.right-from-bracket" class="btn-circle btn-ghost btn-xs" tooltip-left="Sign Out" no-wire-navigate link="/logout" />
                     </x-slot:actions>
@@ -42,7 +51,7 @@
                 <x-menu-item title="Create Article" route="dashboard.news.create" />
             </x-menu-sub>
 
-            <x-menu-item title="Information Centre" icon="fal.circle-info" link="/info" />
+            <x-menu-item title="Resource Centre" icon="fal.circle-info" link="/resources" />
             
             <x-menu-separator />
 

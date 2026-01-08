@@ -12,10 +12,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, HasMedia
 {
-    use Authenticatable, Authorizable;
+    use Authenticatable, Authorizable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -71,5 +73,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function student(): HasOne
     {
         return $this->hasOne(Student::class);
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('avatar')
+            ->useFallbackUrl('/images/avatar.svg')
+            ->useFallbackPath(public_path('/images/avatar.svg'))
+            ->singleFile();
+    }
+
+    public function avatar(): string
+    {
+        return $this->getFirstMediaUrl('avatar');
     }
 }
