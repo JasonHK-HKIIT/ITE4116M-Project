@@ -171,7 +171,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <h3 class="text-lg font-bold text-primary">Other Services</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="#" class="text-primary hover:underline">Information Centre</a>
+                    <a href="{{ route('portal.information-centre') }}" class="text-primary hover:underline" wire:navigate>Information Centre</a>
                 </div>
             </div>
         </div>

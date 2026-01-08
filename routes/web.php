@@ -20,6 +20,9 @@ Route::name('portal.')->middleware('auth')->group(function ()
 
     Route::livewire('/activities', 'pages::portal.activities.list')->name('activities.list');
     Route::livewire('/activities/show/{id}', 'pages::portal.activities.show')->whereNumber('id')->name('activities.show');
+
+    Route::livewire('/information-centre', 'pages::portal.information-centre')->name('information-centre');
+    Route::get('/information-centre/download/{id}', [\App\Http\Controllers\InformationCentreController::class, 'download'])->name('information-centre.download');
 });
 
 Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()
