@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
         $this->call(
             [
                 NewsArticleSeeder::class,
+                ResourceSeeder::class,
                 ActivitySeeder::class,
             ]
         );
