@@ -4,7 +4,7 @@ use App\Enums\NewsArticleStatus;
 use App\Helpers\LocalesHelper;
 use App\Models\NewsArticle;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
@@ -32,7 +32,6 @@ class extends Component
 
     public NewsArticleStatus $status = NewsArticleStatus::Draft;
 
-    #[Validate(['nullable', 'date'])]
     public ?Carbon $published_on = null;
 
     #[Validate('required')]
@@ -56,6 +55,7 @@ class extends Component
             [
                 'slug' => ['required', 'alpha_dash:ascii', 'max:127', Rule::unique('news_articles', 'slug')->ignore($this->article)],
                 'status' => ['required', Rule::enum(NewsArticleStatus::class)],
+                'published_on' => ['nullable', Rule::requiredIf(fn() => ($this->status == NewsArticleStatus::Published)), 'date']
             ],
             LocalesHelper::buildRules('title', ['required', 'max:255']),
             LocalesHelper::buildRules('content', ['required', 'max:16777215']),
@@ -93,6 +93,9 @@ class extends Component
 
     public function save(): void
     {
+        if (empty($this->slug)) { $this->slug = Str::slug($this->title['en'] ?? ''); }
+        if (empty($this->published_on) && ($this->status == NewsArticleStatus::Published)) { $this->published_on = Carbon::today(); }
+
         $fields = LocalesHelper::transformToModelFields($this->validate(), $this->article->translatedAttributes);
         $this->article->fill($fields);
         $this->article->save();
@@ -131,7 +134,7 @@ class extends Component
 
     <x-card shadow>
         <x-form wire:submit="save">
-            <x-tabs wire:model="selectedLanguage">
+            <x-tabs wire:model="selectedLanguage" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
                         <x-input label="Title" wire:model="title.{{ $language }}" />
@@ -140,7 +143,7 @@ class extends Component
                     <div class="px-1">
                         <x-input label="Slug" wire:model="slug" prefix="/news/" popover="Unique identifier of the article" />
                         <x-group label="Status" wire:model="status" :options="$statuses" />
-                        <x-datepicker label="Published on" wire:model="published_on" />
+                        <x-datepicker label="Published on" wire:model="published_on" clearable />
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">
