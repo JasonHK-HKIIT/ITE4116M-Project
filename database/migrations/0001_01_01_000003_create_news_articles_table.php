@@ -26,7 +26,7 @@ return new class extends Migration
         {
             $table->id();
             $table->foreignId('news_article_id')->constrained()->onDelete('cascade');
-            $table->string('locale', 10)->index();
+            $table->string('locale', 5)->index();
             $table->tinyText('title');
             $table->mediumText('content');
             $table->unique(['news_article_id', 'locale']);
