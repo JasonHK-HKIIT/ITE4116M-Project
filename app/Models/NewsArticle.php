@@ -18,7 +18,7 @@ class NewsArticle extends Model implements TranslatableContracts, HasMedia
 
     protected $fillable = [
         'slug',
-        'is_published',
+        'status',
         'published_on',
     ];
 

@@ -2,8 +2,8 @@
 
 use App\Enums\NewsArticleStatus;
 use App\Models\NewsArticle;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,6 +24,10 @@ class extends Component
     public string $keywords = '';
 
     public ?string $status = null;
+
+    public ?Carbon $publishedAfter = null;
+
+    public ?Carbon $publishedBefore = null;
 
     public function headers(): array
     {
@@ -46,6 +50,14 @@ class extends Component
             ->when($this->status, function ($query, $status)
             {
                 $query->where('status', $status);
+            })
+            ->when($this->publishedAfter, function ($query, $publishedAfter)
+            {
+                $query->where('published_on', '>=', $publishedAfter);
+            })
+            ->when($this->publishedBefore, function ($query, $publishedBefore)
+            {
+                $query->where('published_on', '<=', $publishedBefore);
             })
             ->when((($this->sortBy['column'] == 'published_on') ? $this->sortBy : false), function ($query, $sortBy)
             {
@@ -89,8 +101,14 @@ class extends Component
             'statuses' => $this->statuses(),
         ];
     }
-};
-?>
+}; ?>
+
+@assets
+    @vite([
+        'resources/css/vendor/flatpickr.css',
+        'resources/js/vendor/flatpickr.js'
+    ])
+@endassets
 
 <div>
     <x-header :title="__('News & Announcement')" separator>
@@ -126,6 +144,8 @@ class extends Component
     <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
         <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
         <x-select label="Status" wire:model.live.debounce="status" :options="$statuses" placeholder="Any" />
+        <x-datepicker label="Published After" wire:model.live="publishedAfter" clearable />
+        <x-datepicker label="Published Before" wire:model.live="publishedBefore" clearable />
 
         <x-slot:actions>
             <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
