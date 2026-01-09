@@ -33,7 +33,7 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => 'Title', 'class' => 'w-auto min-w-64'],
-            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'sortable' => false, 'format' => (fn($article, $status) => __($status->value))],
+            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'sortable' => false, 'format' => (fn($article, $status) => __($status->name))],
             ['key' => 'published_on', 'label' => 'Published on', 'class' => 'w-fit', 'format' => ['date', 'Y-m-d']],
         ];
     }
