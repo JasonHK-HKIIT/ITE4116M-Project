@@ -21,9 +21,9 @@ class extends Component
 
     public bool $isDrawerOpened = false;
 
-    public string $keywords = '';
+    public ?string $keywords = null;
 
-    public ?string $status = null;
+    public ?NewsArticleStatus $status = null;
 
     public ?Carbon $publishedAfter = null;
 
