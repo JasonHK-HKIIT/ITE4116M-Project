@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Enums\Role;
+use App\Models\InstituteCampus;
+use App\Models\Student;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -34,7 +36,25 @@ class DatabaseSeeder extends Seeder
             [
                 'password' => 'qwerasdf',
                 'family_name' => 'Hui',
-                'given_name' => 'Ho Fung Matthew'
+                'given_name' => 'Ho Fung Matthew',
+                'chinese_name' => '許皓峰',
+            ]
+        );
+
+        $user240155170 = User::where('username', '240155170')->first();
+        $campus = InstituteCampus::firstOrCreate([]);
+
+        Student::firstOrCreate(
+            ['user_id' => $user240155170->id],
+            [
+                'institute_campus_id' => $campus->id,
+                'gender' => 'Male',
+                'date_of_birth' => '1996-06-03',
+                'nationality' => 'Hong Kong SAR China',
+                'mother_tongue' => 'Tofu',
+                'tel_no' => null,
+                'mobile_no' => '65557890',
+                'address' => 'My home, My city, My land, My country',
             ]
         );
 

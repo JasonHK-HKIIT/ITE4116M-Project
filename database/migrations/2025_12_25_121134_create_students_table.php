@@ -15,6 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('institute_campus_id');
+            $table->string('gender', 6)->nullable();
+            $table->date('date_of_birth')->nullable();
+            $table->string('nationality')->nullable();
+            $table->string('mother_tongue')->nullable();
+            $table->string('tel_no')->nullable();
+            $table->string('mobile_no')->nullable();
+            $table->string('address')->nullable();
             $table->timestamps();
         });
     }

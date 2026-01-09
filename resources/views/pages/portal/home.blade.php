@@ -123,7 +123,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <h3 class="text-lg font-bold text-primary">My Academics</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="#" class="text-primary hover:underline">Profile</a>
+                    <a href="{{ route('portal.profile.personal-particular') }}" wire:navigate class="text-primary hover:underline">Profile</a>
                 </div>
             </div>
         </div>
