@@ -4,6 +4,7 @@ use App\Enums\NewsArticleStatus;
 use App\Models\NewsArticle;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,6 +30,7 @@ class extends Component
 
     public ?Carbon $publishedBefore = null;
 
+    #[Computed]
     public function headers(): array
     {
         return [
@@ -78,6 +80,7 @@ class extends Component
             ->paginate($this->perPage);
     }
 
+    #[Computed]
     public function statuses(): array
     {
         return collect(NewsArticleStatus::cases())

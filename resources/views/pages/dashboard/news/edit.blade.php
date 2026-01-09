@@ -6,6 +6,7 @@ use App\Models\NewsArticle;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
@@ -16,8 +17,6 @@ new
 class extends Component
 {
     use Toast;
-
-    public string $uuid;
 
     public string $selectedLanguage = 'en';
 
@@ -37,11 +36,7 @@ class extends Component
     #[Validate('required')]
     public array $content = [];
 
-    public function __construct()
-    {
-        $this->uuid = md5(uuid_create());
-    }
-
+    #[Computed]
     public function statuses(): array
     {
         return collect(NewsArticleStatus::cases())
