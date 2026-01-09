@@ -20,11 +20,22 @@
             <x-sidebar-user />
 
             <x-menu-item title="Dashboard" icon="fal.gauge-high" route="dashboard.home" />
+            
             <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
-            <x-menu-sub title="Profile" icon="fal.address-card">
-                <x-menu-item title="Personal Particular" link="/profile/personal-particular" />
-                <x-menu-item title="Programme & Modules" link="/profile/programme-modules" />
+
+            <x-menu-sub title="Academic Structure" icon="fal.school-flag">
+                <x-menu-item title="Institutes" link="/dashboard/academic/institutes" />
+                <x-menu-item title="Campuses" link="/dashboard/academic/campuses" />
+                <x-menu-item title="Programmes" link="/dashboard/academic/programmes" />
+                <x-menu-item title="Modules" link="/dashboard/academic/modules" />
             </x-menu-sub>
+
+            <x-menu-sub title="Students" icon="fal.users">
+                <x-menu-item title="All Students" link="/dashboard/students" />
+                <x-menu-item title="Create Student" link="/dashboard/students/create" />
+                <x-menu-item title="Batch Import" link="/dashboard/students/import" />
+            </x-menu-sub>
+
             <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/activities" />
 
             <x-menu-sub title="News & Announcement" icon="fal.newspaper">
