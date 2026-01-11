@@ -15,11 +15,17 @@ return new class extends Migration
             $table->id();
             $table->foreignId('institute_id');
             $table->tinyText('programme_code')->unique();
-            $table->tinyText('name_en');
-            $table->tinyText('name_zh_HK');
-            $table->tinyText('name_zh_CN');
             $table->timestamps();
             $table->unique(['institute_id', 'programme_code']);
+        });
+        
+        Schema::create('programme_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('programme_id')->constrained()->onDelete('cascade');
+            $table->string('locale', 5)->index();
+            $table->tinyText('name');
+            $table->timestamps();
+            $table->unique(['programme_id', 'locale']);
         });
         
         Schema::create('modules', function (Blueprint $table) {
@@ -28,6 +34,15 @@ return new class extends Migration
             $table->tinyText('module_code');
             $table->timestamps();
             $table->unique(['institute_id', 'module_code']);
+        });
+        
+        Schema::create('module_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('module_id')->constrained()->onDelete('cascade');
+            $table->string('locale', 5)->index();
+            $table->tinyText('name');
+            $table->timestamps();
+            $table->unique(['module_id', 'locale']);
         });
         
         Schema::create('programme_modules', function (Blueprint $table) {
@@ -45,7 +60,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('programme_modules');
+        Schema::dropIfExists('module_translations');
         Schema::dropIfExists('modules');
+        Schema::dropIfExists('programme_translations');
         Schema::dropIfExists('programmes');
     }
 };
