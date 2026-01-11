@@ -60,7 +60,7 @@ return new class extends Migration
             $table->foreignId('programme_id')->constrained()->onDelete('cascade');
             $table->string('class_code', 10);
             $table->timestamps();
-            $table->unique(['academic_year', 'institute_campus_id', 'module_id', 'class_code']);
+            $table->unique(['academic_year', 'institute_campus_id', 'programme_id', 'class_code'], 'classes_academic_year_institute_campus_programme_class_unique');
         });
     }
 
