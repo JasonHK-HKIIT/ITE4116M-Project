@@ -21,6 +21,22 @@ return new class extends Migration
             $table->timestamps();
             $table->unique(['institute_id', 'programme_code']);
         });
+        
+        Schema::create('modules', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('institute_id');
+            $table->tinyText('module_code');
+            $table->timestamps();
+            $table->unique(['institute_id', 'module_code']);
+        });
+        
+        Schema::create('programme_modules', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('programme_id');
+            $table->foreignId('module_id');
+            $table->timestamps();
+            $table->unique(['programme_id', 'module_id']);
+        });
     }
 
     /**
@@ -28,6 +44,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('programme_modules');
+        Schema::dropIfExists('modules');
         Schema::dropIfExists('programmes');
     }
 };
