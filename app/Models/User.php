@@ -8,6 +8,7 @@ use App\Enums\Role;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
@@ -84,8 +85,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             ->singleFile();
     }
 
-    public function avatar(): string
+    protected function avatar(): Attribute
     {
-        return $this->getFirstMediaUrl('avatar');
+        return Attribute::make(
+            get: fn() => $this->getFirstMediaUrl('avatar'));
     }
 }
