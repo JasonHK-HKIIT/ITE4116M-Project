@@ -13,61 +13,33 @@ class extends Component
 
     public int $perPage = 10;
 
-    public string $keyword = '';
+    public string $keywords = '';
+
 
     //filters
-    public ?string $selectedCampus = null;
-    public ?string $selectedType = null;
-    public ?string $title = null;
-    public ?string $instructor = null;
+    public ?string $type = null;
     public ?string $execution_from = null;
     public ?string $execution_to = null;
     public ?string $attribute = null;
     public bool $vacancy = false;
 
 
-    //options
-    public array $activity_type_options = [
-            'All Activity Type',
-            'Campus Representatives',
-            'Career Development Activities',
-            'Extra-curricular Activities',
-            'Language Activities',
-            'Other Achievements',
-            'Personal Development Activities',
-            'Physical Education & Sports',
-            'Professional Qualifications',
-            'Student Groups',
-            'Student Organizations',
-            'Volunteer Services',
-        ];
-
-    public array $attribute_options = [
-            'All Atteibute',
-            'Effective Communicators (EC)', 
-            'Independent Learners (IDL)', 
-            'Informed and Professionally Competent (IPC)', 
-            'No need to classify', 'Positive and Flexible (PF)', 
-            'Problem-solvers (PS)', 
-            'Professional, Socially and Globally Responsible (PSG)'
-        ];
-    
-    public array $campus_options = ['Not Specified'];
-
-
-    public function filters()
+    public function clear()
     {
-    }
-
-    public function resetFilters()
-    {
+        $this->reset([
+            'keywords',
+            'execution_from',
+            'execution_to'
+        ]);
     }
 
     public function activities()
     {
         return Activity::query()
-        ->paginate($this->perPage);
-
+            ->when($this->keywords, function ($query, $keywords) {
+                $query->whereFullText(['title', 'instructor', 'activity_code'], $keywords);
+            })
+            ->paginate($this->perPage);
     }
 
 
@@ -75,9 +47,9 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => 'Title','class' => 'w-auto min-w-64'],
-            ['key' => 'activity_code', 'label' => 'Code','class' => 'w-fit'],
-            ['key' => 'total_amount', 'label' => 'total amount','class' => 'w-fit'],
-            ['key' => 'included_deposit', 'label' => 'included deposit','class' => 'w-fit'],
+            ['key' => 'instructor', 'label' => 'Instructor','class' => 'w-fit'],
+            ['key' => 'activity_type', 'label' => 'Activity type','class' => 'w-fit'],
+            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit'],
             ['key' => 'has_vacancy', 'label' => 'Vacancy', 'class' => 'w-fit', 'format' => fn($activities, $has_vacancy) => $has_vacancy ? 'Yes' : 'No', 'sortable' => false],
         ];
     }
@@ -87,16 +59,19 @@ class extends Component
         return [
             'headers' => $this->headers(),
             'activities' => $this->activities(),
-            'activity_type_options' => $this->activity_type_options,
-            'attribute_options' => $this->attribute_options,
-            'campus_options' => $this->campus_options
         ];
     }
 
 }; ?>
 
-<div>
+@assets
+    @vite([
+        'resources/css/vendor/flatpickr.css',
+        'resources/js/vendor/flatpickr.js'
+    ])
+@endassets
 
+<div>
     <x-drawer
     wire:model="isDrawerOpened"
     title="Filter" 
@@ -106,53 +81,29 @@ class extends Component
     class="w-11/12 lg:w-1/3" right>
 
     <div>
-        <x-form>
-                
-        <x-select
-        label="Campus"
-        wire:model="selectedCampus"
-        :options="$campus_options" /></br>
 
-        <x-input label="Activity Code" wire:model="activity_Code" placeholder="Enter code" clearable /></br>
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
 
-        <x-select
-        label="Activity Type"
-        wire:model="selectedType"
-        :options="$activity_type_options"/></br>
+        <x-datepicker label="Execution From" wire:model.live="execution_from" clearable />
 
-        <x-input label="Activity Title" wire:model="title" placeholder="Enter Title" clearable /></br>
-
-
-        <x-input label="instructor" wire:model="instructor" placeholder="Instructor" clearable /></br>
-
-        Execution Period 
-        <x-datetime label="From" wire:model="execution_from" />
-        <x-datetime label="To" wire:model="execution_to" /> </br>
-
-        <x-select
-        label="Attribute"
-        wire:model="attribute"
-        :options="$attribute_options" /></br>
+        <x-datepicker label="Execution to" wire:model.live="execution_to" clearable />
         
-        <x-checkbox label="Activity with Vacancies only" wire:model="vacancy" right /></br>
-
-        
+        <x-checkbox label="Activity with Vacancies only" wire:model="vacancy" right />
         
     </div>
  
     <x-slot:actions>
         <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-        <x-button label="Confirm" class="btn-primary" type="submit" icon="o-check" />
+        <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
     </x-slot:actions>
 
-    </x-form>
 
     </x-drawer>
 
     <x-header :title="__('Activities')" separator>
  
          <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keyword" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
             <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
@@ -162,7 +113,7 @@ class extends Component
 
 
     <x-card shadow>
-        <x-table :headers="$headers" :rows="$activities" >
+        <x-table :headers="$headers" :rows="$activities" with-pagination per-page="perPage" :per-page-values="[5, 10, 20]">
             @scope('actions', $activity)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
                     <x-button icon="fal.file-lines" :tooltip="__('Activity Details')" :link="route('portal.activities.show', ['id' => $activity->id ])" class="btn-ghost btn-square btn-sm" />

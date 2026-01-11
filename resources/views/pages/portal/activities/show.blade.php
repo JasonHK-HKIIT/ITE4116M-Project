@@ -51,6 +51,5 @@ class extends Component
         <p><strong>Attachment:</strong> {{ $activity->attachment }}</p>
 
         <x-button label="Back" :link="route('portal.activities.list')" class="btn-ghost mt-4" />
-    </div>
     </x-card>
 </div>

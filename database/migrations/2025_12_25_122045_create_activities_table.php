@@ -59,6 +59,8 @@ return new class extends Migration
 
             $table->timestamps();
 
+            $table->fullText(['title', 'instructor', 'activity_code']);
+
         });
     }
 
