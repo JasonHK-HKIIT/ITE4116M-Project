@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table)
+        {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
             $table->foreignId('institute_campus_id');
@@ -24,6 +25,14 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('student_classes', function (Blueprint $table)
+        {
+            $table->id();
+            $table->foreignId('student_id')->constrained()->onDelete('cascade');
+            $table->foreignId('class_id')->constrained()->onDelete('cascade');
+            $table->unique(['student_id', 'class_id']);
+        });
     }
 
     /**
@@ -31,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('student_classes');
         Schema::dropIfExists('students');
     }
 };

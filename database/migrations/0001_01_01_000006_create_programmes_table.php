@@ -52,6 +52,16 @@ return new class extends Migration
             $table->timestamps();
             $table->unique(['programme_id', 'module_id']);
         });
+        
+        Schema::create('classes', function (Blueprint $table) {
+            $table->id();
+            $table->year('academic_year');
+            $table->foreignId('institute_campus_id')->constrained()->onDelete('cascade');
+            $table->foreignId('programme_id')->constrained()->onDelete('cascade');
+            $table->string('class_code', 10);
+            $table->timestamps();
+            $table->unique(['academic_year', 'institute_campus_id', 'module_id', 'class_code']);
+        });
     }
 
     /**
