@@ -15,6 +15,37 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
         });
+        
+        Schema::create('institute_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('institute_id')->constrained()->onDelete('cascade');
+            $table->string('locale', 5)->index();
+            $table->tinyText('name');
+            $table->timestamps();
+            $table->unique(['institute_id', 'locale']);
+        });
+        
+        Schema::create('campuses', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
+        
+        Schema::create('campus_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('campus_id')->constrained()->onDelete('cascade');
+            $table->string('locale', 5)->index();
+            $table->tinyText('name');
+            $table->timestamps();
+            $table->unique(['campus_id', 'locale']);
+        });
+
+        Schema::create('institute_campuses', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('institute_id')->constrained()->onDelete('cascade');
+            $table->foreignId('campus_id')->constrained()->onDelete('cascade');
+            $table->timestamps();
+            $table->unique(['institute_id', 'campus_id']);
+        });
     }
 
     /**
@@ -22,6 +53,8 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('institute_campuses');
+        Schema::dropIfExists('campuses');
         Schema::dropIfExists('institutes');
     }
 };
