@@ -40,7 +40,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         </a>
 
         <!-- Student Activities -->
-        <a href="#" wire:navigate>
+        <a href="{{ route('portal.activities.list') }}" wire:navigate>
             <x-card shadow class="hover:shadow-lg transition cursor-pointer h-full">
                 <div class="flex flex-col items-center gap-3 p-4">
                     <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
@@ -52,7 +52,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         </a>
 
         <!-- News & Announcement -->
-        <a href="#" wire:navigate>
+        <a href="{{route('portal.news.list') }}" wire:navigate>
             <x-card shadow class="hover:shadow-lg transition cursor-pointer h-full">
                 <div class="flex flex-col items-center gap-3 p-4">
                     <div
@@ -138,7 +138,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <h3 class="text-lg font-bold text-primary">Student Affairs</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="#" class="text-primary hover:underline">News and Announcement</a>
+                    <a href="{{ route('portal.news.list') }}" class="text-primary hover:underline">News and Announcement</a>
                     <a href="#" class="text-primary hover:underline">Calendar</a>
                 </div>
             </div>
@@ -155,7 +155,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <h3 class="text-lg font-bold text-primary">Campus Life</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="#" class="text-primary hover:underline">Student Activity</a>
+                    <a href="{{ route('portal.activities.list') }}" class="text-primary hover:underline">Student Activity</a>
                 </div>
             </div>
         </div>

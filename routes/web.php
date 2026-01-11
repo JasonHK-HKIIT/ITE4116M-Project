@@ -26,6 +26,8 @@ Route::name('portal.')->middleware('auth')->group(function ()
 
     Route::livewire('/information-centre', 'pages::portal.information-centre')->name('information-centre');
     Route::get('/information-centre/download/{id}', [\App\Http\Controllers\InformationCentreController::class, 'download'])->name('information-centre.download');
+
+    Route::livewire('/news', 'pages::portal.news.list')->name('news.list');
 });
 
 Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()
