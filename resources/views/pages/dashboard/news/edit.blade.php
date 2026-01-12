@@ -10,19 +10,23 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Mary\Traits\Toast;
 
 new
 #[Layout('layouts::dashboard')]
 class extends Component
 {
-    use Toast;
+    use Toast, WithFileUploads;
 
     public string $selectedLanguage = 'en';
 
     public bool $exists = false;
 
     public NewsArticle $article;
+
+    // for add image
+    public $cover;
 
     #[Validate('required')]
     public array $title = [];
@@ -95,6 +99,14 @@ class extends Component
         $this->article->fill($fields);
         $this->article->save();
 
+        // Add image in storage
+        if ($this->cover) {
+            $this->article->clearMediaCollection('cover');
+            $this->article->addMedia($this->cover->getRealPath())
+                ->usingFileName($this->cover->getClientOriginalName())
+                ->toMediaCollection('cover');
+        }
+
         if ($this->exists)
         {
             $this->success('News article was updated.');
@@ -139,6 +151,16 @@ class extends Component
                         <x-input label="Slug" wire:model="slug" prefix="/news/" popover="Unique identifier of the article" />
                         <x-group label="Status" wire:model="status" :options="$statuses" />
                         <x-datepicker label="Published on" wire:model="published_on" clearable />
+
+                        <!--if selected image -> open, else if -> get the current image or default image-->
+                        @if ($cover && Str::startsWith($cover->getMimeType(), 'image/'))
+                            <br />
+                            <img src="{{ $cover->temporaryUrl() }}" alt="Preview" class="max-h-48 rounded border" />
+                        @elseif ($article->getFirstMediaUrl('cover'))
+                            <br />
+                            <img src="{{ $article->getFirstMediaUrl('cover') }}" alt="Current Image" class="max-h-48 rounded border" />
+                        @endif
+                        <x-input type="file" label="Image" wire:model="cover" accept="image/jpeg,image/png,image/jpg,image/bmp" />
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">

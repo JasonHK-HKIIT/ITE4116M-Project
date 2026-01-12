@@ -14,9 +14,9 @@ new #[Layout('layouts::portal')] class extends Component {
 
 <div class="p-4 md:p-8">
     <x-card :title="$article->title" :subtitle="$article->published_on?->format('Y-m-d')" shadow separator>
-        <div class="prose max-w-none mb-4">{!! nl2br(e($article->content)) !!}</div>
+        <div class="prose max-w-none mb-4">{{ strip_tags($article->content) }}</div>
         <x-slot:figure>
-            <img src="{{ $article->getFirstMediaUrl('cover') }}" alt="Cover" class="w-full h-56 object-cover rounded" />
+            <img src="{{ $article->getFirstMediaUrl('cover') }}" alt="Cover" class="w-full h-auto max-h-[600px] object-contain rounded" />
         </x-slot:figure>
         <x-slot:actions separator>
             <a href="{{ route('portal.news.list') }}" class="btn btn-primary">{{ __('Back to News List') }}</a>
