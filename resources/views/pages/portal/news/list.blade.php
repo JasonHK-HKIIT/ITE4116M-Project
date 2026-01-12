@@ -53,6 +53,13 @@ new #[Layout('layouts::portal')] class extends Component {
     }
 }; ?>
 
+@assets
+    @vite([
+        'resources/css/vendor/flatpickr.css',
+        'resources/js/vendor/flatpickr.js'
+    ])
+@endassets
+
 <div class="p-4 md:p-8 space-y-6 max-w-7xl mx-auto">
     <x-header :title="__('News & Announcement')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
@@ -98,10 +105,10 @@ new #[Layout('layouts::portal')] class extends Component {
                                 <div class="flex items-center gap-1">
                                     {{ $article->published_on?->format('Y-m-d') }}
                                 </div>
-                                <div class="flex items-center gap-1">
-                                    <span class="text-primary">View Details</span>
-                                    <x-icon name="fal.eye" class="w-4 h-4 text-primary" />
-                                </div>
+                                <a href="{{ route('portal.news.show', $article->id) }}" class="flex items-center gap-1 text-primary hover:underline">
+                                    <span>View Details</span>
+                                    <x-icon name="fal.eye" class="w-4 h-4" />
+                                </a>
                             </div>
                         </div>
                     </x-card>
