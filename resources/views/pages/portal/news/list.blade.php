@@ -3,6 +3,7 @@
 use App\Enums\NewsArticleStatus;
 use App\Models\NewsArticle;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -15,8 +16,8 @@ new #[Layout('layouts::portal')] class extends Component {
     public int $perPage = 10;
     public bool $isDrawerOpened = false;
     public ?string $keywords = null;
-    public ?string $publishedAfter = null;
-    public ?string $publishedBefore = null;
+    public ?Carbon $publishedAfter = null;
+    public ?Carbon $publishedBefore = null;
 
     #[Computed]
     public function articles(): LengthAwarePaginator

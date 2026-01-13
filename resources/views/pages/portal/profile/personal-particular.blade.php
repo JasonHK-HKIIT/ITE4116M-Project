@@ -33,7 +33,9 @@ new #[Layout('layouts::portal')] class extends Component {
     ];
 @endphp
 
+
 <div class="p-4 md:p-8 space-y-6 max-w-7xl mx-auto">
+  <x-header :title="__('Profile')" separator />
     <x-card shadow class="overflow-hidden">
         <div class="flex flex-col lg:flex-row gap-6">
             <div class="flex-1 space-y-2">

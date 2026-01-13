@@ -24,8 +24,8 @@ Route::name('portal.')->middleware('auth')->group(function ()
     Route::livewire('/profile/personal-particular', 'pages::portal.profile.personal-particular')->name('profile.personal-particular');
     Route::livewire('/profile/programme-modules', 'pages::portal.profile.programme-modules')->name('profile.programme-modules');
 
-    Route::livewire('/information-centre', 'pages::portal.information-centre')->name('information-centre');
-    Route::get('/information-centre/download/{id}', [\App\Http\Controllers\InformationCentreController::class, 'download'])->name('information-centre.download');
+    Route::livewire('/resources/resources-centre', 'pages::portal.resources.resources-centre')->name('resources-centre');
+    Route::get('/resources/resources-centre/download/{id}', [\App\Http\Controllers\InformationCentreController::class, 'download'])->name('resources-centre.download');
 
     Route::livewire('/news', 'pages::portal.news.list')->name('news.list');
     Route::livewire('/news/{id}', 'pages::portal.news.show')->whereNumber('id')->name('news.show');

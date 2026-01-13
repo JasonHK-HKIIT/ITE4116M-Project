@@ -28,7 +28,7 @@
             </x-menu-sub>
             <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/activities" />
             <x-menu-item title="News & Announcement" icon="fal.newspaper" link="/news" />
-            <x-menu-item title="Information Centre" icon="fal.circle-info" link="/information-centre" />
+            <x-menu-item title="Resources Centre" icon="fal.circle-info" link="/resources/resources-centre" />
             
             <x-menu-separator />
 
