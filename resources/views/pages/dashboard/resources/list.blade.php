@@ -4,12 +4,13 @@ use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Mary\Traits\Toast;
 
 new
-#[Layout('layouts::portal')]
+#[Layout('layouts::dashboard')]
 class extends Component
 {
-    use WithPagination;
+    use Toast, WithPagination;
 
     public int $perPage = 10;
 
@@ -36,9 +37,7 @@ class extends Component
     {
         $locale = app()->getLocale() ?? 'en';
         $query = \App\Models\Resource::query()
-            ->with(['translations' => function ($query) use ($locale) {
-                $query->where('locale', $locale);
-            }, 'translations.media']);
+            ->with(['translations.media']);
 
         if ($this->keywords) {
             $query->whereHas('translations', function ($q) use ($locale) {
@@ -56,17 +55,28 @@ class extends Component
 
         $resources = $query->orderByDesc('updated_at')->paginate($this->perPage);
 
-        $items = $resources->getCollection()->flatMap(function ($resource) use ($locale) {
-            return $resource->translations->map(function ($translation) use ($resource) {
-                return (object) [
-                    'id' => $translation->id,
-                    'title' => $translation->title,
-                    'locale' => $translation->locale,
-                    'media' => $translation->getMedia('resources'),
-                    'resource_id' => $resource->id,
-                    'latest_date' => $resource->updated_at,
-                ];
-            });
+        $items = $resources->getCollection()->map(function ($resource) use ($locale) {
+            $mainTranslation = $resource->translations->where('locale', $locale)->first();
+            $title = $mainTranslation ? $mainTranslation->title : ($resource->translations->first()->title ?? '');
+            $allMedia = collect();
+            // Collect all translation PDF's media
+            foreach ($resource->translations as $translation) {
+                foreach ($translation->getMedia('resources') as $media) {
+                    $allMedia->push((object) [
+                        'file_name' => $media->file_name,
+                        'url' => $media->getFullUrl(),
+                        'locale' => $translation->locale,
+                        'size' => $media->size,
+                    ]);
+                }
+            }
+            return (object) [
+                'id' => $resource->id,
+                'title' => $title,
+                'media' => $allMedia,
+                'resource_id' => $resource->id,
+                'latest_date' => $resource->updated_at,
+            ];
         })->values();
 
         return new \Illuminate\Pagination\LengthAwarePaginator(
@@ -76,6 +86,21 @@ class extends Component
             $resources->currentPage(),
             ['path' => route('portal.resources-centre'), 'query' => request()->query()]
         );
+    }
+
+    public function deleteResource(int $id): void
+    {
+        $resource = \App\Models\Resource::with('translations.media')->find($id);
+        if ($resource) {
+            foreach ($resource->translations as $translation) {
+                foreach ($translation->getMedia('resources') as $media) {
+                    $media->delete();
+                }
+                $translation->delete();
+            }
+            $resource->delete();
+            $this->success('Resource was deleted.');
+        }
     }
 
     public function with(): array
@@ -95,26 +120,15 @@ class extends Component
 @endassets
 
 <div>
-
     <x-header :title="__('Resources Centre')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
             <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
             <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.resources.create')" responsive />
         </x-slot:actions>
     </x-header>
-
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
-        <x-datepicker label="Latest After" wire:model.live="publishedAfter" clearable />
-        <x-datepicker label="Latest Before" wire:model.live="publishedBefore" clearable />
-
-        <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
-        </x-slot:actions>
-    </x-drawer>
 
     <x-card shadow>
         <x-table :headers="$headers" :rows="$documents" with-pagination per-page="perPage" :per-page-values="[5, 10, 15]" expandable :expandable-key="'id'" wire:model="expanded">
@@ -123,6 +137,20 @@ class extends Component
                     <x-icon name="o-book-open" class="w-5 h-5 text-primary" />
                     <span>{{ $row->title }}</span>
                 </div>
+            @endscope
+
+            @scope('actions', $row)
+                <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
+                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.resources.edit', ['resource' => $row->resource_id])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteResource({{ $row->resource_id }})" spinner class="btn-ghost btn-square btn-sm" />
+                </div>
+                <x-dropdown right>
+                    <x-slot:trigger>
+                        <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
+                    </x-slot:trigger>
+                    <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.resources.edit', ['resource' => $row->resource_id])" />
+                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteResource({{ $row->resource_id }})" spinner />
+                </x-dropdown>
             @endscope
 
             @scope('expansion', $row)
@@ -134,10 +162,10 @@ class extends Component
                             @foreach($row->media as $media)
                                 <div class="flex justify-between items-center bg-white p-3 rounded">
                                     <div>
-                                        <p class="font-semibold">{{ $media->file_name }}</p>
+                                        <p class="font-semibold">{{ $media->file_name }} <span class="ml-2 text-xs text-gray-500">[{{ $media->locale }}]</span></p>
                                         <p class="text-sm text-gray-600">Size: {{ number_format($media->size / 1024, 2) }} KB</p>
                                     </div>
-                                    <a href="{{ $media->getFullUrl() }}" class="btn btn-ghost btn-sm" target="_blank">
+                                    <a href="{{ $media->url }}" class="btn btn-ghost btn-sm" target="_blank">
                                         <x-icon name="o-arrow-down-tray" class="w-5 h-5" />
                                     </a>
                                 </div>
@@ -148,4 +176,14 @@ class extends Component
             @endscope
         </x-table>
     </x-card>
+    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
+        <x-datepicker label="Latest After" wire:model.live="publishedAfter" clearable />
+        <x-datepicker label="Latest Before" wire:model.live="publishedBefore" clearable />
+
+        <x-slot:actions>
+            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+        </x-slot:actions>
+    </x-drawer>
 </div>

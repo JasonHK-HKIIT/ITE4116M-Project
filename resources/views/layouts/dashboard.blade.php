@@ -43,7 +43,10 @@
                 <x-menu-item title="Create Article" route="dashboard.news.create" />
             </x-menu-sub>
 
-            <x-menu-item title="Resource Centre" icon="fal.circle-info" link="/resources" />
+            <x-menu-sub title="Resource Centre" icon="fal.circle-info">
+                <x-menu-item title="All Resources" route="dashboard.resources.list" />
+                <x-menu-item title="Create Resource" route="dashboard.resources.create" />
+            </x-menu-sub>
             
             <x-menu-separator />
 

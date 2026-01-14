@@ -25,7 +25,6 @@ Route::name('portal.')->middleware('auth')->group(function ()
     Route::livewire('/profile/programme-modules', 'pages::portal.profile.programme-modules')->name('profile.programme-modules');
 
     Route::livewire('/resources/resources-centre', 'pages::portal.resources.resources-centre')->name('resources-centre');
-    Route::get('/resources/resources-centre/download/{id}', [\App\Http\Controllers\InformationCentreController::class, 'download'])->name('resources-centre.download');
 
     Route::livewire('/news', 'pages::portal.news.list')->name('news.list');
     Route::livewire('/news/{id}', 'pages::portal.news.show')->whereNumber('id')->name('news.show');
@@ -38,4 +37,8 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
     Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
     Route::livewire('/news/{article}', 'pages::dashboard.news.edit')->whereNumber('article')->name('news.edit');
+
+    Route::livewire('/resources', 'pages::dashboard.resources.list')->name('resources.list');
+    Route::livewire('/resources/create', 'pages::dashboard.resources.edit')->name('resources.create');
+    Route::livewire('/resources/{resource}', 'pages::dashboard.resources.edit')->whereNumber('resource')->name('resources.edit');
 });
