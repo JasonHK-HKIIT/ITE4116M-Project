@@ -15,6 +15,9 @@ class LocalesHelper
         return ['en', 'zh-HK', 'zh-CN'];
     }
 
+    /**
+     * Build multi-locale validation rules for validating a localised field.
+     */
     public static function buildRules(string $field, array|string $rules): array
     {
         return collect(LocalesHelper::locales())
@@ -22,6 +25,9 @@ class LocalesHelper
             ->toArray();
     }
 
+    /**
+     * Build multi-locale validation attributes for validating a localised field.
+     */
     public static function buildValidationAttributes(string $field, mixed $attributes = null): array
     {
         return collect(LocalesHelper::locales())
@@ -29,6 +35,9 @@ class LocalesHelper
             ->toArray();
     }
 
+    /**
+     * Build multi-locale property value for validating a localised field.
+     */
     public static function buildPropertyValue(mixed $value = null): array
     {
         return collect(LocalesHelper::locales())
