@@ -77,6 +77,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             [
+                InstituteSeeder::class,
                 NewsArticleSeeder::class,
                 ResourceSeeder::class,
                 ActivitySeeder::class,
