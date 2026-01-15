@@ -50,7 +50,7 @@
             
             <x-menu-separator />
 
-            <x-menu-item title="Back to MyPortal" icon="fal.person-to-portal" route="portal.home" />
+            <x-menu-item title="Back to MyPortal" icon="fal.angles-left" route="portal.home" />
         </x-menu>
     </x-slot:sidebar>
 

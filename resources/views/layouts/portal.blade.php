@@ -19,7 +19,8 @@
         <x-menu activate-by-route>
             <x-sidebar-user />
 
-            <x-button label="Chat with Valo" link="/assistant" icon="fal.sparkles" class="btn-primary btn-block mt-0.5 mb-1" />
+            <x-button label="Chat with Valo" link="{{ route('portal.assistant') }}" icon="fal.sparkles" class="btn-primary btn-block mt-0.5 mb-1" />
+
             <x-menu-item title="Home" icon="fal.house" link="/" />
             <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
             <x-menu-sub title="Profile" icon="fal.address-card">
