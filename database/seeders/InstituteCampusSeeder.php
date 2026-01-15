@@ -2,35 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Models\Campus;
 use App\Models\Institute;
-use App\Models\InstituteTranslation;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class InstituteSeeder extends Seeder
+class InstituteCampusSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $hkdi = Institute::create();
-        $hkdi->instituteTranslation()->createMany(
-            [
-                [
-                    'locale' => 'en',
-                    'name' => 'Hong Kong Design Institute',
-                ],
-                [
-                    'locale' => 'zh-HK',
-                    'name' => '香港知專設計學院',
-                ],
-                [
-                    'locale' => 'zh-CN',
-                    'name' => '香港知专设计学院',
-                ],
-            ]);
-
         $ive = Institute::create();
         $ive->instituteTranslation()->createMany(
             [
@@ -45,6 +27,23 @@ class InstituteSeeder extends Seeder
                 [
                     'locale' => 'zh-CN',
                     'name' => '香港专业教育学院',
+                ],
+            ]);
+
+        $hkdi = Institute::create();
+        $hkdi->instituteTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'name' => 'Hong Kong Design Institute',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'name' => '香港知專設計學院',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'name' => '香港知专设计学院',
                 ],
             ]);
 
@@ -64,5 +63,23 @@ class InstituteSeeder extends Seeder
                     'name' => '香港资讯科技学院',
                 ],
             ]);
+
+        $lwl = Campus::create();
+        $lwl->campusTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'name' => 'Lee Wai Lee',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'name' => '李惠利',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'name' => '李惠利',
+                ],
+            ]);
+        $lwl->institutes->push($ive, $hkdi, $hkiit);
     }
 }

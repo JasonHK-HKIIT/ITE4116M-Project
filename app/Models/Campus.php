@@ -6,6 +6,7 @@ use Astrotomic\Translatable\Contracts\Translatable as TranslatableContract;
 use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Campus extends Model implements TranslatableContract
@@ -18,5 +19,10 @@ class Campus extends Model implements TranslatableContract
     public function campusTranslation(): HasMany
     {
         return $this->hasMany(CampusTranslation::class);
+    }
+
+    public function institutes(): BelongsToMany
+    {
+        return $this->belongsToMany(Institute::class, 'institute_campus');
     }
 }

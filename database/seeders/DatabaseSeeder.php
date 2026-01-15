@@ -44,15 +44,12 @@ class DatabaseSeeder extends Seeder
         $user240155170 = User::where('username', '240155170')->first();
         $institute = \App\Models\Institute::firstOrCreate([]);
         $campusModel = \App\Models\Campus::firstOrCreate([]);
-        $campus = \App\Models\InstituteCampus::firstOrCreate([
-            'institute_id' => $institute->id,
-            'campus_id' => $campusModel->id,
-        ]);
 
         Student::firstOrCreate(
             ['user_id' => $user240155170->id],
             [
-                'institute_campus_id' => $campus->id,
+                'institute_id' => $institute->id,
+                'campus_id' => $campusModel->id,
                 'gender' => 'Male',
                 'date_of_birth' => '1996-06-03',
                 'nationality' => 'Hong Kong SAR China',
@@ -77,7 +74,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call(
             [
-                InstituteSeeder::class,
+                InstituteCampusSeeder::class,
                 NewsArticleSeeder::class,
                 ResourceSeeder::class,
                 ActivitySeeder::class,

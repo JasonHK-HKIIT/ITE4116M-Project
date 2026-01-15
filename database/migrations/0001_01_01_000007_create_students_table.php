@@ -15,7 +15,8 @@ return new class extends Migration
         {
             $table->id();
             $table->foreignId('user_id')->unique()->constrained()->onDelete('cascade');
-            $table->foreignId('institute_campus_id');
+            $table->foreignId('institute_id');
+            $table->foreignId('campus_id');
             $table->string('gender', 6)->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('nationality')->nullable();

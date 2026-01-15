@@ -56,11 +56,12 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->year('academic_year');
-            $table->foreignId('institute_campus_id')->constrained()->onDelete('cascade');
+            $table->foreignId('institute_id')->constrained()->onDelete('cascade');
+            $table->foreignId('campus_id')->constrained()->onDelete('cascade');
             $table->foreignId('programme_id')->constrained()->onDelete('cascade');
             $table->string('class_code', 10);
             $table->timestamps();
-            $table->unique(['academic_year', 'institute_campus_id', 'programme_id', 'class_code'], 'classes_academic_year_institute_campus_programme_class_unique');
+            $table->unique(['academic_year', 'institute_id', 'campus_id', 'programme_id', 'class_code'], 'classes_academic_year_institute_campus_programme_class_unique');
         });
     }
 

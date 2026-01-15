@@ -39,7 +39,7 @@ return new class extends Migration
             $table->unique(['campus_id', 'locale']);
         });
 
-        Schema::create('institute_campuses', function (Blueprint $table) {
+        Schema::create('institute_campus', function (Blueprint $table) {
             $table->id();
             $table->foreignId('institute_id')->constrained()->onDelete('cascade');
             $table->foreignId('campus_id')->constrained()->onDelete('cascade');
