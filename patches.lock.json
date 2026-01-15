@@ -1,0 +1,17 @@
+{
+    "_hash": "8e67e911cb86d20049009a4b571a20e39b306ea4060268bb864e149a65790093",
+    "patches": {
+        "robsontenorio/mary": [
+            {
+                "package": "robsontenorio/mary",
+                "description": "0",
+                "url": "patches/robsontenorio-mary-src-view-components-main-php.patch",
+                "sha256": "01419c8c90e2d6adc5ff883d9e18a4ed3a2b2b78ebbb7ee5387594ae8a5a368e",
+                "depth": 1,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ]
+    }
+}

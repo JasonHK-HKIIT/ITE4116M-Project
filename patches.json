@@ -1,0 +1,7 @@
+{
+    "patches": {
+        "robsontenorio/mary": [
+            "patches/robsontenorio-mary-src-view-components-main-php.patch"
+        ]
+    }
+}

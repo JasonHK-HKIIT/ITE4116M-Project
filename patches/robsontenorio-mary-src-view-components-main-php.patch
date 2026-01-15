@@ -1,0 +1,25 @@
+--- ../src/View/Components/Main.php
++++ ../src/View/Components/Main.php
+@@ -21,6 +21,8 @@
+         public ?string $collapseText = 'Collapse',
+         public ?string $collapseIcon = 'o-bars-3-bottom-right',
+         public ?bool $collapsible = false,
++        public ?string $class = null,
++        public ?string $drawerClass = null,
+     ) {
+         $this->url = route('mary.toogle-sidebar', absolute: false);
+     }
+@@ -28,11 +30,12 @@
+     public function render(): View|Closure|string
+     {
+         return <<<'BLADE'
+-                 <main @class(["w-full mx-auto", "max-w-screen-2xl" => !$fullWidth])>
++                 <main @class(["w-full mx-auto", "max-w-screen-2xl" => !$fullWidth, $class])>
+                     <div @class([
+                         "drawer lg:drawer-open",
+                         "drawer-end" => $sidebar?->attributes['right'],
+                         "max-sm:drawer-end" => $sidebar?->attributes['right-mobile'],
++                        $drawerClass,
+                     ])>
+                         <input id="{{ $sidebar?->attributes['drawer'] }}" type="checkbox" class="drawer-toggle" />
+                         <div {{ $content->attributes->class(["drawer-content w-full mx-auto p-5 lg:px-10 lg:py-5"]) }}>

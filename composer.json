@@ -84,7 +84,6 @@
         ]
     },
     "extra": {
-        "patches": {        },
         "laravel": {
             "dont-discover": []
         }
