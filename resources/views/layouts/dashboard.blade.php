@@ -24,8 +24,8 @@
             <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
 
             <x-menu-sub title="Academic Structure" icon="fal.school-flag">
-                <x-menu-item title="Institutes" link="/dashboard/academic/institutes" />
-                <x-menu-item title="Campuses" link="/dashboard/academic/campuses" />
+                <x-menu-item title="Institutes" route="dashboard.academic.institutes" />
+                <x-menu-item title="Campuses" route="dashboard.academic.campuses" />
                 <x-menu-item title="Programmes" link="/dashboard/academic/programmes" />
                 <x-menu-item title="Modules" link="/dashboard/academic/modules" />
             </x-menu-sub>

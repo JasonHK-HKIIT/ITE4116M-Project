@@ -80,6 +80,24 @@ class InstituteCampusSeeder extends Seeder
                     'name' => '李惠利',
                 ],
             ]);
-        $lwl->institutes->push($ive, $hkdi, $hkiit);
+        $lwl->institutes()->sync([$ive, $hkdi, $hkiit]);
+
+        $st = Campus::create();
+        $st->campusTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'name' => 'Sha Tin',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'name' => '沙田',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'name' => '沙田',
+                ],
+            ]);
+        $st->institutes()->sync([$ive, $hkiit]);
     }
 }

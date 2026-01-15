@@ -23,6 +23,6 @@ class Institute extends Model implements TranslatableContract
 
     public function campuses(): BelongsToMany
     {
-        return $this->belongsToMany(Campus::class);
+        return $this->belongsToMany(Campus::class, 'institute_campus');
     }
 }

@@ -61,7 +61,7 @@ class extends Component
         );
     }
 
-    protected function validationAttributes()
+    protected function validationAttributes(): array
     {
         return array_merge(
             LocalesHelper::buildValidationAttributes('title'),

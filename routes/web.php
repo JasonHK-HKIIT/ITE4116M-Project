@@ -34,6 +34,9 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
 {
     Route::livewire('/', 'pages::dashboard.home')->name('home');
 
+    Route::livewire('/academic/institutes', 'pages::dashboard.academic.institutes')->name('academic.institutes');
+    Route::livewire('/academic/campuses', 'pages::dashboard.academic.campuses')->name('academic.campuses');
+
     Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
     Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
     Route::livewire('/news/{article}', 'pages::dashboard.news.edit')->whereNumber('article')->name('news.edit');
