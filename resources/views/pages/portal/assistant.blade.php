@@ -32,9 +32,9 @@ class extends Component
     <x-slot:content class="flex flex-col">
         <x-header title="New Chat" separator class="!mb-0" />
         
-        <div class="grow-1 self-center flex flex-col w-full max-w-192">
-            <div class="pt-10 grow-1 overflow-y-auto">
-                <div style="container-type: size;">
+        <div class="grow-1 flex flex-col">
+            <div class="pt-10 grow-1 flex flex-col overflow-y-auto">
+                <div class="self-center w-full max-w-192" style="container-type: size;">
                     <div class="chat chat-end">
                         <div class="chat-header">
                             You
@@ -179,7 +179,7 @@ class extends Component
                 </div>
             </div>
 
-            <x-form no-separator>
+            <x-form no-separator class="self-center w-full max-w-192">
                 <x-textarea wire:model="message" placeholder="Ask anything" rows="3" class="resize-none" />
 
                 <x-slot:actions>
