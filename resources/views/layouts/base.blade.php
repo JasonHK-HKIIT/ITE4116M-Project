@@ -8,7 +8,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('scripts')
 </head>
-<body class="min-h-screen font-sans antialiased bg-base-200">
+<body class="min-h-screen flex flex-col font-sans antialiased bg-base-200">
     @yield('content')
 
     <x-toast />
