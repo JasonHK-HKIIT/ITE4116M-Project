@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "446b073df560dfee9170ea590d692434",
+    "content-hash": "1ba27ef773ee5d67ed9254b80eca3c41",
     "packages": [
         {
             "name": "astrotomic/laravel-translatable",
@@ -4827,16 +4827,16 @@
         },
         {
             "name": "robsontenorio/mary",
-            "version": "dev-livewire-4",
+            "version": "2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robsontenorio/mary.git",
-                "reference": "ac8954468891876cab08506f90f85c252bd187c6"
+                "reference": "8f91de45487be126ec8a5c7d4068e8a88a117871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robsontenorio/mary/zipball/ac8954468891876cab08506f90f85c252bd187c6",
-                "reference": "ac8954468891876cab08506f90f85c252bd187c6",
+                "url": "https://api.github.com/repos/robsontenorio/mary/zipball/8f91de45487be126ec8a5c7d4068e8a88a117871",
+                "reference": "8f91de45487be126ec8a5c7d4068e8a88a117871",
                 "shasum": ""
             },
             "require": {
@@ -4901,7 +4901,7 @@
             ],
             "support": {
                 "issues": "https://github.com/robsontenorio/mary/issues",
-                "source": "https://github.com/robsontenorio/mary/tree/livewire-4"
+                "source": "https://github.com/robsontenorio/mary/tree/2.6.0"
             },
             "funding": [
                 {
@@ -4909,7 +4909,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-14T14:16:14+00:00"
+            "time": "2026-01-14T20:27:28+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
@@ -11134,8 +11134,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "livewire/livewire": 10,
-        "robsontenorio/mary": 20
+        "livewire/livewire": 10
     },
     "prefer-stable": true,
     "prefer-lowest": false,
