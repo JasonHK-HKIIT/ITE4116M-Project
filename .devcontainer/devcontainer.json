@@ -13,7 +13,10 @@
 	"forwardPorts": [
 		3306,
 		5173,
-		8000
+		5174,
+		5433,
+		8000,
+		8100
 	],
 	"features": {
 		"ghcr.io/devcontainers/features/node:1": {
@@ -24,6 +27,12 @@
 		},
 		"ghcr.io/devcontainers-extra/features/composer:1": {
 			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {
+			"moby": false,
+			"azureDnsAutoDetection": true,
+			"version": "latest",
+			"dockerDashComposeVersion": "v2"
 		}
 	},
 	"customizations": {
@@ -45,8 +54,20 @@
 			"label": "Vite HRM",
 			"onAutoForward": "silent"
 		},
+		"5174": {
+			"label": "OpenGPTs UI",
+			"onAutoForward": "notify"
+		},
+		"5433": {
+			"label": "PGVector",
+			"onAutoForward": "silent"
+		},
 		"8000": {
 			"label": "Laravel",
+			"onAutoForward": "notify"
+		},
+		"8100": {
+			"label": "OpenGPTs",
 			"onAutoForward": "notify"
 		},
 		"9000": {
