@@ -14,7 +14,7 @@
 
 <x-main full-width>
     <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
-        <x-brand class="px-5 pt-4" />
+        <livewire:brand class="px-5 pt-4" />
 
         <x-menu activate-by-route>
             <x-sidebar-user />

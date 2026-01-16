@@ -41,7 +41,7 @@ class extends Component
 
 <div class="md:w-96 mx-auto mt-20">
     <div class="flex justify-between items-end mb-10">
-        <x-brand />
+        <livewire:brand />
 
         <x-dropdown right>
             <x-slot:trigger>

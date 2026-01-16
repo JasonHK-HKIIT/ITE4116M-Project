@@ -12,7 +12,7 @@ class extends Component
 
 <x-main full-width class="grow-1 flex flex-col" drawer-class="grow-1">
     <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
-        <x-brand class="px-5 pt-4" />
+        <livewire:brand class="px-5 pt-4" />
 
         <x-menu activate-by-route>
             <x-sidebar-user />
