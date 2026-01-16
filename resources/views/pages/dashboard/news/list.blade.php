@@ -6,6 +6,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
@@ -22,12 +23,16 @@ class extends Component
 
     public bool $isDrawerOpened = false;
 
+    #[Url(as: 'q')]
     public ?string $keywords = null;
 
+    #[Url]
     public ?NewsArticleStatus $status = null;
 
+    // #[Url(as: 'after')]
     public ?Carbon $publishedAfter = null;
 
+    // #[Url(as: 'before')]
     public ?Carbon $publishedBefore = null;
 
     #[Computed]
