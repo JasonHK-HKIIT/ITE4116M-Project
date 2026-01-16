@@ -37,7 +37,6 @@ class extends Component
                 <div class="self-center w-full max-w-192" style="container-type: size;">
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:40</time>
                         </div>
                         <div class="chat-bubble">Hi Valo, I need help planning a new web application project.</div>
@@ -51,7 +50,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:41</time>
                         </div>
                         <div class="chat-bubble">I want to create a task management system for teams.</div>
@@ -65,7 +63,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:42</time>
                         </div>
                         <div class="chat-bubble">I'm thinking Laravel and Livewire for the backend, with Tailwind CSS.</div>
@@ -79,7 +76,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:43</time>
                         </div>
                         <div class="chat-bubble">Task creation, assignments, due dates, comments, and file attachments.</div>
@@ -93,7 +89,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:44</time>
                         </div>
                         <div class="chat-bubble">Yes! That would be great. How would I implement that with Livewire?</div>
@@ -107,7 +102,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:45</time>
                         </div>
                         <div class="chat-bubble">What about the database structure? Any recommendations?</div>
@@ -121,7 +115,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:46</time>
                         </div>
                         <div class="chat-bubble">Should I implement user roles and permissions from the start?</div>
@@ -135,7 +128,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:47</time>
                         </div>
                         <div class="chat-bubble">What about testing? Should I write tests as I go?</div>
@@ -149,7 +141,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:48</time>
                         </div>
                         <div class="chat-bubble">How should I handle file uploads for attachments?</div>
@@ -163,7 +154,6 @@ class extends Component
                     </div>
                     <div class="chat chat-end">
                         <div class="chat-header">
-                            You
                             <time class="text-xs opacity-50">12:49</time>
                         </div>
                         <div class="chat-bubble">This is really helpful! Any final tips before I start building?</div>
