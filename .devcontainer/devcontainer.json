@@ -43,6 +43,15 @@
 				"onecentlin.laravel-blade",
 				"xdebug.php-debug"
 			]
+		},
+		"codespaces": {
+			"repositories": {
+				"JasonHK-HKIIT/ITE4116M-Project-Assistant": {
+					"permissions": {
+						"contents": "write"
+					}
+				}
+			}
 		}
 	},
 	"portsAttributes": {
