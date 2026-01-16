@@ -1,0 +1,3 @@
+[submodule "assistant"]
+	path = assistant
+	url = https://github.com/JasonHK-HKIIT/ITE4116M-Project-Assistant.git
