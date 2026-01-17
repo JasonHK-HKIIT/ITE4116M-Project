@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -15,6 +16,7 @@ class extends Component
 
     public bool $isDrawerOpened = false;
 
+    #[Url(as: 'Search')]
     public string $keywords = '';
 
     public ?Carbon $publishedAfter = null;
@@ -132,7 +134,7 @@ class extends Component
                             <div class="text-gray-500">No files uploaded.</div>
                         @else
                             @foreach($row->media as $media)
-                                <div class="flex justify-between items-center bg-white p-3 rounded">
+                                <div class="flex justify-between items-center bg-base-100 p-3 rounded">
                                     <div>
                                         <p class="font-semibold">{{ $media->file_name }}</p>
                                         <p class="text-sm text-gray-600">Size: {{ number_format($media->size / 1024, 2) }} KB</p>

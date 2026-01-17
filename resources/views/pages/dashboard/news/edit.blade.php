@@ -170,7 +170,7 @@ class extends Component
             </x-tabs>
 
             <x-slot:actions>
-                <x-button label="Cancel" />
+                <x-button label="Cancel" :link="route('dashboard.news.list')" />
                 <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>

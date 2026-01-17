@@ -6,6 +6,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
@@ -14,9 +15,14 @@ new #[Layout('layouts::portal')] class extends Component {
     use Toast, WithPagination;
 
     public int $perPage = 10;
+
     public bool $isDrawerOpened = false;
+
+    #[Url(as: 'Search')]
     public ?string $keywords = null;
+
     public ?Carbon $publishedAfter = null;
+
     public ?Carbon $publishedBefore = null;
 
     #[Computed]

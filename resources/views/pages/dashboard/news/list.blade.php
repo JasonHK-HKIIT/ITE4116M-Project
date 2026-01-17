@@ -23,7 +23,7 @@ class extends Component
 
     public bool $isDrawerOpened = false;
 
-    #[Url(as: 'q')]
+    #[Url(as: 'Search')]
     public ?string $keywords = null;
 
     #[Url]
