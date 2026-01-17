@@ -20,7 +20,9 @@ export default defineConfig({
     ],
     server: {
         hmr: {
-            host: "localhost"
+            protocol: (process.env.CODESPACES && process.env.PUBLIC_URL) ? "wss" : undefined,
+            host: (process.env.CODESPACES && process.env.PUBLIC_URL) ? `${process.env.CODESPACE_NAME}-5173.${process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}` : "localhost",
+            clientPort: (process.env.CODESPACES && process.env.PUBLIC_URL) ? 443 : undefined,
         },
         cors: true,
         watch: {

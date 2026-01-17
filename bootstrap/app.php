@@ -13,6 +13,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void
     {
+        if ((env('APP_ENV') == 'local') || (env('CODESPACES') == 'true'))
+        {
+            $middleware->trustProxies(at: '*');
+        }
+
         $middleware->alias(
             [
                 'role' => RoleMiddleware::class,
