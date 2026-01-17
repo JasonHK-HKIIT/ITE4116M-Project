@@ -14,7 +14,6 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        'institute_campus_id',
         'gender',
         'date_of_birth',
         'nationality',
@@ -31,9 +30,26 @@ class Student extends Model
         ];
     }
 
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function modules()
+    {
+        return $this->belongsToMany(Module::class, 'student_modules');
+    }
+
+    public function classes()
+    {
+        return $this->belongsToMany(ClassModel::class, 'student_classes', 'student_id', 'class_id');
+    }
+
+    public function programmes()
+    {
+        return $this->classes()->with('programme')->get()->pluck('programme')->unique('id');
     }
 
     public function instituteCampus(): BelongsTo

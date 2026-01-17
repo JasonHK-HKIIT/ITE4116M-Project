@@ -41,25 +41,6 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $user240155170 = User::where('username', '240155170')->first();
-        $institute = \App\Models\Institute::firstOrCreate([]);
-        $campusModel = \App\Models\Campus::firstOrCreate([]);
-
-        Student::firstOrCreate(
-            ['user_id' => $user240155170->id],
-            [
-                'institute_id' => $institute->id,
-                'campus_id' => $campusModel->id,
-                'gender' => 'Male',
-                'date_of_birth' => '1996-06-03',
-                'nationality' => 'Hong Kong SAR China',
-                'mother_tongue' => 'Tofu',
-                'tel_no' => null,
-                'mobile_no' => '65557890',
-                'address' => 'My home, My city, My land, My country',
-            ]
-        );
-
         User::firstOrCreate(
             [
                 'username' => 'admin',
@@ -72,13 +53,17 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $this->call(
-            [
-                InstituteCampusSeeder::class,
-                NewsArticleSeeder::class,
-                ResourceSeeder::class,
-                ActivitySeeder::class,
-            ]
-        );
+        $this->call([
+            InstituteCampusSeeder::class,
+            StudentSeeder::class,
+            ProgrammeSeeder::class,
+            ModuleSeeder::class,
+            ProgrammeModuleSeeder::class,
+            ClassSeeder::class,
+            StudentClassSeeder::class,
+            NewsArticleSeeder::class,
+            ResourceSeeder::class,
+            ActivitySeeder::class,
+        ]);
     }
 }

@@ -12,6 +12,25 @@ class ProgrammeSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $institute = \App\Models\Institute::all();
+        $programmes = [
+            ['programme_code' => 'IT114105', 'translations' => [
+                ['locale' => 'en', 'name' => 'Higher Diploma in Software Engineering'],
+                ['locale' => 'zh-HK', 'name' => '高級文憑（軟件工程）'],
+                ['locale' => 'zh-CN', 'name' => '高级文凭（软件工程）'],
+            ]],
+            ['programme_code' => 'IT114103', 'translations' => [
+                ['locale' => 'en', 'name' => 'Higher Diploma in Telecommunications and Networking'],
+                ['locale' => 'zh-HK', 'name' => '高級文憑（電訊及網絡）'],
+                ['locale' => 'zh-CN', 'name' => '高级文凭（电讯及网络）'],
+            ]],
+        ];
+        foreach ($programmes as $data) {
+            $programme = \App\Models\Programme::create([
+                'institute_id' => $institute[0]->id,
+                'programme_code' => $data['programme_code'],
+            ]);
+            $programme->programmeTranslation()->createMany($data['translations']);
+        }
     }
 }
