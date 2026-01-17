@@ -1,16 +1,151 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
+use Symfony\Component\HttpClient\EventSourceHttpClient;
+use Symfony\Component\HttpClient\HttpClient;
 
 new
 #[Layout("layouts::assistant")]
 class extends Component
 {
+    public ?string $threadId = null;
+
+    public array $records = [];
+
+    public ?string $runId = null;
+
     public ?string $message = null;
+    public ?string $question = null;
+
+    public function send(): void
+    {
+        $this->question = $this->message;
+        $this->message = null;
+
+        if (!$this->threadId)
+        {
+            /** @var \Illuminate\Http\Client\Response */
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/assistants',
+                [
+                    'public' => false,
+                    'name' => '',
+                    'config' => [
+                        'configurable' => [
+                            'type' => 'agent',
+                            'type==agent/agent_type' => 'GPT 3.5 Turbo',
+                            'type==agent/system_message' => 'You are a helpful assistant.',
+                            'type==agent/retrieval_description' => 'Can be used to look up information that was uploaded to this assistant.
+    If the user is referencing particular files, that is often a good hint that information may be here.
+    If the user asks a vague question, they are likely meaning to look up info from this retriever, and you should call it!',
+                            'type==agent/tools' => [],
+                            'type==agent/interrupt_before_action' => false,
+                        ],
+                    ],
+                ]);
+            $assistant = $response->json();
+
+            /** @var \Illuminate\Http\Client\Response */
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/threads',
+                [
+                    'assistant_id' => $assistant['assistant_id'],
+                    'name' => $this->question,
+                ]);
+            $thread = $response->json();
+            $this->threadId = $thread['thread_id'];
+
+            $this->dispatch('chat-created', url: route('portal.assistant.history', ['id' => $this->threadId], false));
+        }
+        
+        // /** @var \Illuminate\Http\Client\Response */
+        // $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/threads/' . $this->threadId . '/state',
+        //     [
+        //         'values' => [
+        //             [
+        //                 'type' => 'human',
+        //                 'content' => $message,
+        //             ],
+        //         ],
+        //     ]);
+
+        // /** @var \Illuminate\Http\Client\Response */
+        // $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . '/threads/' . $this->threadId . '/state');
+        // $state = $response->json();
+        // $this->records = $state['values'];
+        // $this->runId = "Hi";
+        
+        $this->js('$wire.think()');
+    }
+
+    public function think(): void
+    {
+        $client = new EventSourceHttpClient(HttpClient::create(
+            [
+                'headers' => [
+                    'Cookie' => sprintf("%s=%s", 'opengpts_user_id', rawurlencode(auth()->user()->id))
+                ],
+            ]));
+
+        $source = $client->connect(config('app.assistant.base_url') . '/runs/stream',
+            [
+                'json' => [
+                    'thread_id' => $this->threadId,
+                    'input' => [
+                        [
+                            'type' => 'human',
+                            'content' => $this->question,
+                        ],
+                    ],
+                ],
+            ], 'POST');
+
+        while ($source)
+        {
+            foreach ($client->stream($source) as $event)
+            {
+                if ($event->isLast())
+                {
+                    /** @var \Illuminate\Http\Client\Response */
+                    $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . '/threads/' . $this->threadId . '/state');
+                    $state = $response->json();
+                    $this->records = $state['values'];
+                    $this->question = null;
+
+                    return;
+                }
+
+                if ($event instanceof ServerSentEvent)
+                {
+                    switch ($event->getType())
+                    {
+                        case 'metadata':
+                            $this->runId = json_decode($event->getData())->run_id;
+                            // $this->render
+                            break;
+                        case 'data':
+                            $message = last(json_decode($event->getData()));
+                            if ($message->type != 'human')
+                            {
+                                $this->stream(to: 'message', content: $message->content, replace: true);
+                                usleep(100000);
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+    }
 }; ?>
 
 <x-main full-width class="grow-1 flex flex-col" drawer-class="grow-1">
+    @script
+        <script>
+            this.$on("chat-created", ({ url }) => history.replaceState(history.state, "", url));
+        </script>
+    @endscript
+
     <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
         <livewire:brand class="px-5 pt-4" />
 
@@ -35,145 +170,26 @@ class extends Component
         <div class="grow-1 flex flex-col">
             <div class="pt-10 grow-1 flex flex-col overflow-y-auto">
                 <div class="self-center w-full max-w-192" style="container-type: size;">
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:40</time>
-                        </div>
-                        <div class="chat-bubble">Hi Valo, I need help planning a new web application project.</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:40</time>
-                        </div>
-                        <div class="chat-bubble">Hello! I'd be happy to help you plan your web application. What kind of application are you thinking of building?</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:41</time>
-                        </div>
-                        <div class="chat-bubble">I want to create a task management system for teams.</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:41</time>
-                        </div>
-                        <div class="chat-bubble">Great idea! Task management systems are very useful. Are you planning to use any specific technology stack?</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:42</time>
-                        </div>
-                        <div class="chat-bubble">I'm thinking Laravel and Livewire for the backend, with Tailwind CSS.</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:42</time>
-                        </div>
-                        <div class="chat-bubble">Excellent choice! That stack works very well together. What core features do you want to include?</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:43</time>
-                        </div>
-                        <div class="chat-bubble">Task creation, assignments, due dates, comments, and file attachments.</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:43</time>
-                        </div>
-                        <div class="chat-bubble">Those are solid core features. Have you considered adding real-time notifications for task updates?</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:44</time>
-                        </div>
-                        <div class="chat-bubble">Yes! That would be great. How would I implement that with Livewire?</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:44</time>
-                        </div>
-                        <div class="chat-bubble">You can use Laravel Echo with Pusher or Laravel Reverb for WebSocket connections. Livewire integrates seamlessly with both.</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:45</time>
-                        </div>
-                        <div class="chat-bubble">What about the database structure? Any recommendations?</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:45</time>
-                        </div>
-                        <div class="chat-bubble">I'd suggest tables for users, teams, projects, tasks, comments, and attachments. Use proper foreign keys and indexes for performance.</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:46</time>
-                        </div>
-                        <div class="chat-bubble">Should I implement user roles and permissions from the start?</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:46</time>
-                        </div>
-                        <div class="chat-bubble">Absolutely! Use Laravel's built-in authorization features or Spatie's Permission package. It's easier to add early than to retrofit later.</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:47</time>
-                        </div>
-                        <div class="chat-bubble">What about testing? Should I write tests as I go?</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:47</time>
-                        </div>
-                        <div class="chat-bubble">Yes! Write feature tests for your main workflows and unit tests for complex business logic. Laravel makes testing quite straightforward.</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:48</time>
-                        </div>
-                        <div class="chat-bubble">How should I handle file uploads for attachments?</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:48</time>
-                        </div>
-                        <div class="chat-bubble">Use Laravel's filesystem abstraction with S3 or local storage. Livewire has excellent file upload support with progress indicators built-in.</div>
-                    </div>
-                    <div class="chat chat-end">
-                        <div class="chat-header">
-                            <time class="text-xs opacity-50">12:49</time>
-                        </div>
-                        <div class="chat-bubble">This is really helpful! Any final tips before I start building?</div>
-                    </div>
-                    <div class="chat chat-start">
-                        <div class="chat-header">
-                            Valo
-                            <time class="text-xs opacity-50">12:49</time>
-                        </div>
-                        <div class="chat-bubble">Start with an MVP featuring just core functionality. Use version control from day one, and don't forget to add proper error handling and logging. Good luck with your project!</div>
-                    </div>
+                    @foreach ($records as $record)
+                        <livewire:chat-bubble :sent="$record['type'] == 'human'" wire:stream="{{ $record['id'] }}">
+                            {{ $record['content'] }}
+                        </livewire:chat-bubble>
+                    @endforeach
+                    @if ($question)
+                        <livewire:chat-bubble sent>
+                            {{ $question }}
+                        </livewire:chat-bubble>
+                        <livewire:chat-bubble author="Valo" wire:stream="message"></livewire:chat-bubble>
+                    @endif
                     <div class="h-5"></div>
                 </div>
             </div>
 
-            <x-form no-separator class="self-center w-full max-w-192">
-                <x-textarea wire:model="message" placeholder="Ask anything" rows="3" class="resize-none" />
+            <x-form wire:submit="send" no-separator class="self-center w-full max-w-192">
+                <x-textarea wire:model="message" placeholder="Ask anything" rows="3" class="resize-none" autofocus />
 
                 <x-slot:actions>
-                    <x-button label="Send" icon-right="fal.paper-plane-top" type="submit" class="btn-primary" spinner />
+                    <x-button label="Send" icon-right="fal.paper-plane-top" type="submit" class="btn-primary" spinner="send, think" />
                 </x-slot:actions>
             </x-form>
         </div>
