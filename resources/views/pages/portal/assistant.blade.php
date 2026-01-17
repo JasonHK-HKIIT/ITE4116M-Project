@@ -1,7 +1,12 @@
 <?php
 
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
 use Symfony\Component\HttpClient\EventSourceHttpClient;
@@ -11,19 +16,70 @@ new
 #[Layout("layouts::assistant")]
 class extends Component
 {
+    #[Locked]
+    public array $threads = [];
+
+    #[Locked]
     public ?string $threadId = null;
 
-    public array $records = [];
+    #[Locked]
+    public array $messages = [];
 
-    public ?string $runId = null;
+    #[Locked]
+    public ?string $lastMessageId = null;
 
-    public ?string $message = null;
+    #[Validate('required')]
     public ?string $question = null;
+
+    public function mount(?string $id = null): void
+    {
+        try
+        {
+            $response = Http::get(config('app.assistant.base_url') . '/health');
+            abort_unless($response->ok(), 503);
+        }
+        catch (ConnectionException $ex)
+        {
+            abort(503);
+        }
+
+        $this->threadId = $id;
+
+        if ($this->threadId)
+        {
+            /** @var \Illuminate\Http\Client\Response */
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . "/threads/{$this->threadId}/state");
+            if (!$response->ok())
+            {
+                Log::error("OpenGPTs error: {$response->json('detail')}", ['Thread ID' => $this->threadId]);
+                abort($response->status());
+            }
+
+            $state = $response->json();
+            $this->messages = $state['values'];
+            $this->lastMessageId = array_last($this->messages)['id'];
+        }
+
+        $this->refreshThreads(true);
+    }
+
+    #[On('refresh-threads')]
+    public function refreshThreads(bool $initial = false): void
+    {
+        /** @var \Illuminate\Http\Client\Response */
+        $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . '/threads/');
+        $threads = $response->json();
+        usort($threads, fn($a, $b) => (strtotime($b['updated_at']) - strtotime($a['updated_at'])));
+        $this->threads = $threads;
+
+        if (!$initial) { $this->renderIsland('threads', with: $this); }
+    }
 
     public function send(): void
     {
-        $this->question = $this->message;
-        $this->message = null;
+        $this->validateOnly('question');
+        $question = $this->question;
+        $this->question = null;
 
         if (!$this->threadId)
         {
@@ -51,35 +107,19 @@ class extends Component
             $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/threads',
                 [
                     'assistant_id' => $assistant['assistant_id'],
-                    'name' => $this->question,
+                    'name' => $question,
                 ]);
             $thread = $response->json();
             $this->threadId = $thread['thread_id'];
 
-            $this->dispatch('chat-created', url: route('portal.assistant.history', ['id' => $this->threadId], false));
+            $this->dispatch('thread-created', url: route('portal.assistant.thread', ['id' => $this->threadId], false))->self();
+            $this->dispatch('refresh-threads')->self();
         }
         
-        // /** @var \Illuminate\Http\Client\Response */
-        // $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/threads/' . $this->threadId . '/state',
-        //     [
-        //         'values' => [
-        //             [
-        //                 'type' => 'human',
-        //                 'content' => $message,
-        //             ],
-        //         ],
-        //     ]);
-
-        // /** @var \Illuminate\Http\Client\Response */
-        // $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . '/threads/' . $this->threadId . '/state');
-        // $state = $response->json();
-        // $this->records = $state['values'];
-        // $this->runId = "Hi";
-        
-        $this->js('$wire.think()');
+        $this->dispatch('question-sent', question: $question)->self();
     }
 
-    public function think(): void
+    public function think(string $question): void
     {
         $client = new EventSourceHttpClient(HttpClient::create(
             [
@@ -95,7 +135,7 @@ class extends Component
                     'input' => [
                         [
                             'type' => 'human',
-                            'content' => $this->question,
+                            'content' => $question,
                         ],
                     ],
                 ],
@@ -107,44 +147,36 @@ class extends Component
             {
                 if ($event->isLast())
                 {
-                    /** @var \Illuminate\Http\Client\Response */
-                    $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . '/threads/' . $this->threadId . '/state');
-                    $state = $response->json();
-                    $this->records = $state['values'];
-                    $this->question = null;
-
+                    $this->dispatch('refresh-threads')->self();
                     return;
                 }
 
-                if ($event instanceof ServerSentEvent)
+                if (($event instanceof ServerSentEvent) && ($event->getType() == 'data'))
                 {
-                    switch ($event->getType())
+                    $this->messages = $event->getArrayData();
+                    $message = array_last($event->getArrayData());
+                    if ($message['id'] != $this->lastMessageId)
                     {
-                        case 'metadata':
-                            $this->runId = json_decode($event->getData())->run_id;
-                            // $this->render
-                            break;
-                        case 'data':
-                            $message = last(json_decode($event->getData()));
-                            if ($message->type != 'human')
-                            {
-                                $this->stream(to: 'message', content: $message->content, replace: true);
-                                usleep(100000);
-                            }
-                            break;
+                        $this->lastMessageId = $message['id'];
+                        $this->streamIsland('messages', mode: 'append', with: $this);
                     }
+
+                    $this->stream(to: $message['id'], content: $message['content'], replace: true);
+                    usleep(50000);
                 }
             }
         }
     }
 }; ?>
 
+@script
+    <script>
+        this.$on("question-sent", ({ question }) => $wire.think(question));
+        this.$on("thread-created", ({ url }) => history.replaceState(history.state, "", url));
+    </script>
+@endscript
+
 <x-main full-width class="grow-1 flex flex-col" drawer-class="grow-1">
-    @script
-        <script>
-            this.$on("chat-created", ({ url }) => history.replaceState(history.state, "", url));
-        </script>
-    @endscript
 
     <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
         <livewire:brand class="px-5 pt-4" />
@@ -154,8 +186,11 @@ class extends Component
 
             <x-menu-item title="New Chat" icon="fal.message-plus" route="portal.assistant" />
             <x-menu-sub title="Chat History" icon="fal.clock-rotate-left" open>
-                <x-menu-item title="Chat A" :link="route('portal.assistant.history', ['id' => 'f81d4fae-7dec-11d0-a765-00a0c91e6bf6'])" />
-                <x-menu-item title="Chat B" :link="route('portal.assistant.history', ['id' => 'f81d4fae-7dec-11d0-a765-00a0c91e6bf7'])" />
+                @island(name: 'threads')
+                    @foreach ($threads as $thread)
+                        <x-menu-item wire:key="{{ $thread['thread_id'] }}" :title="$thread['name']" :link="route('portal.assistant.thread', ['id' => $thread['thread_id']])" />
+                    @endforeach
+                @endisland
             </x-menu-sub>
             
             <x-menu-separator />
@@ -170,23 +205,19 @@ class extends Component
         <div class="grow-1 flex flex-col">
             <div class="pt-10 grow-1 flex flex-col overflow-y-auto">
                 <div class="self-center w-full max-w-192" style="container-type: size;">
-                    @foreach ($records as $record)
-                        <livewire:chat-bubble :sent="$record['type'] == 'human'" wire:stream="{{ $record['id'] }}">
-                            {{ $record['content'] }}
-                        </livewire:chat-bubble>
-                    @endforeach
-                    @if ($question)
-                        <livewire:chat-bubble sent>
-                            {{ $question }}
-                        </livewire:chat-bubble>
-                        <livewire:chat-bubble author="Valo" wire:stream="message"></livewire:chat-bubble>
-                    @endif
+                    @island(name: 'messages')
+                        @foreach ($messages as $message)
+                            <livewire:chat-bubble wire:key="{{ @$message['id'] }}" :sent="$message['type'] == 'human'" wire:stream="{{ $message['id'] }}">
+                                {{ $message['content'] }}
+                            </livewire:chat-bubble>
+                        @endforeach
+                    @endisland
                     <div class="h-5"></div>
                 </div>
             </div>
 
             <x-form wire:submit="send" no-separator class="self-center w-full max-w-192">
-                <x-textarea wire:model="message" placeholder="Ask anything" rows="3" class="resize-none" autofocus />
+                <x-textarea wire:model="question" placeholder="Ask anything" rows="3" class="resize-none" autofocus />
 
                 <x-slot:actions>
                     <x-button label="Send" icon-right="fal.paper-plane-top" type="submit" class="btn-primary" spinner="send, think" />
