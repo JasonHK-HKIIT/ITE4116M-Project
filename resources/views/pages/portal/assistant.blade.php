@@ -163,8 +163,8 @@ class extends Component
                 if (($event instanceof ServerSentEvent) && ($event->getType() == 'data'))
                 {
                     $this->messages = Message::collect($event->getArrayData(), 'array');
-                    $message = array_last($event->getArrayData());
-                    if ($message->id != $this->lastMessageId)
+                    $message = array_last($this->messages);
+                    if ($message?->id != $this->lastMessageId)
                     {
                         $this->lastMessageId = $message->id;
                         $this->streamIsland('messages', mode: 'append', with: $this);
@@ -226,9 +226,7 @@ class extends Component
                 <div class="self-center w-full max-w-192" style="container-type: size;">
                     @island(name: 'messages')
                         @foreach ($messages as $message)
-                            <livewire:chat-bubble id="{{ $message->id }}" wire:key="{{ $message->id }}" :sent="$message->type == App\Enums\Assistant\MessageType::Human" wire:stream="{{ $message->id }}">
-                                {{ $message->content }}
-                            </livewire:chat-bubble>
+                            <livewire:chat-message id="{{ $message->id }}" wire:key="{{ $message->id }}" :message="$message" wire:stream="{{ $message->id }}" />
                         @endforeach
                     @endisland
                     <div class="h-5"></div>
