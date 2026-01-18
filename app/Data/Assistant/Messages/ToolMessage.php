@@ -3,11 +3,11 @@
 namespace App\Data\Assistant\Messages;
 
 use App\Enums\Assistant\ToolMessageStatus;
-use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\LaravelData\Optional;
 
-#[MapInputName(SnakeCaseMapper::class)]
+#[MapName(SnakeCaseMapper::class)]
 class ToolMessage extends Message
 {
     public string $toolCallId;

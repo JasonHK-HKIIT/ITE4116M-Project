@@ -2,12 +2,12 @@
 
 namespace App\Data\Assistant\Messages;
 
-use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\LaravelData\Optional;
 
-#[MapInputName(SnakeCaseMapper::class)]
+#[MapName(SnakeCaseMapper::class)]
 class ToolCall extends Data
 {
     public string|null|Optional $id;

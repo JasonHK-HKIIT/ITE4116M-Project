@@ -2,8 +2,8 @@
 
 namespace App\Data\Assistant\Messages;
 
-use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 
-#[MapInputName(SnakeCaseMapper::class)]
+#[MapName(SnakeCaseMapper::class)]
 class SystemMessage extends Message {}

@@ -4,7 +4,7 @@ namespace App\Data\Assistant\Messages;
 
 use App\Enums\Assistant\MessageType;
 use Livewire\Wireable;
-use Spatie\LaravelData\Attributes\MapInputName;
+use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\PropertyForMorph;
 use Spatie\LaravelData\Concerns\WireableData;
 use Spatie\LaravelData\Contracts\PropertyMorphableData;
@@ -12,7 +12,7 @@ use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 use Spatie\LaravelData\Optional;
 
-#[MapInputName(SnakeCaseMapper::class)]
+#[MapName(SnakeCaseMapper::class)]
 abstract class Message extends Data implements PropertyMorphableData, Wireable
 {
     use WireableData;
