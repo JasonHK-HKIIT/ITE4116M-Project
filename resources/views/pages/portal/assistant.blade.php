@@ -1,5 +1,8 @@
 <?php
 
+use App\Data\Assistant\Messages\Message;
+use App\Data\Assistant\ThreadState;
+use App\Enums\Assistant\MessageType;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -22,6 +25,7 @@ class extends Component
     #[Locked]
     public ?string $threadId = null;
 
+    /** @var Message[] */
     #[Locked]
     public array $messages = [];
 
@@ -55,12 +59,17 @@ class extends Component
                 abort($response->status());
             }
 
-            $state = $response->json();
-            $this->messages = $state['values'];
-            $this->lastMessageId = array_last($this->messages)['id'];
+            $state = ThreadState::from($response->json());
+            $this->messages = $state->values;
+            $this->lastMessageId = array_last($this->messages)->id;
         }
 
         $this->refreshThreads(true);
+    }
+
+    public function boot()
+    {
+        
     }
 
     #[On('refresh-threads')]
@@ -153,16 +162,17 @@ class extends Component
 
                 if (($event instanceof ServerSentEvent) && ($event->getType() == 'data'))
                 {
-                    $this->messages = $event->getArrayData();
+                    $this->messages = Message::collect($event->getArrayData(), 'array');
                     $message = array_last($event->getArrayData());
-                    if ($message['id'] != $this->lastMessageId)
+                    if ($message->id != $this->lastMessageId)
                     {
-                        $this->lastMessageId = $message['id'];
+                        $this->lastMessageId = $message->id;
                         $this->streamIsland('messages', mode: 'append', with: $this);
                     }
 
-                    $this->stream(to: $message['id'], content: $message['content'], replace: true);
+                    $this->stream(to: $message->id, content: $message->content, replace: true);
                     usleep(50000);
+                    $this->dispatch('messages-scroll', messageId: $this->lastMessageId)->self();
                 }
             }
         }
@@ -173,6 +183,15 @@ class extends Component
     <script>
         this.$on("question-sent", ({ question }) => $wire.think(question));
         this.$on("thread-created", ({ url }) => history.replaceState(history.state, "", url));
+
+        this.$on("messages-scroll", ({ messageId }) =>
+        {
+            const message = document.getElementById(messageId);
+            if (message)
+            {
+                message.scrollIntoView(false);
+            }
+        });
     </script>
 @endscript
 
@@ -203,12 +222,12 @@ class extends Component
         <x-header title="New Chat" separator class="!mb-0" />
         
         <div class="grow-1 flex flex-col">
-            <div class="pt-10 grow-1 flex flex-col overflow-y-auto">
+            <div class="pt-10 grow-1 flex flex-col overflow-y-auto" style="scrollbar-width: none;">
                 <div class="self-center w-full max-w-192" style="container-type: size;">
                     @island(name: 'messages')
                         @foreach ($messages as $message)
-                            <livewire:chat-bubble wire:key="{{ @$message['id'] }}" :sent="$message['type'] == 'human'" wire:stream="{{ $message['id'] }}">
-                                {{ $message['content'] }}
+                            <livewire:chat-bubble id="{{ $message->id }}" wire:key="{{ $message->id }}" :sent="$message->type == App\Enums\Assistant\MessageType::Human" wire:stream="{{ $message->id }}">
+                                {{ $message->content }}
                             </livewire:chat-bubble>
                         @endforeach
                     @endisland

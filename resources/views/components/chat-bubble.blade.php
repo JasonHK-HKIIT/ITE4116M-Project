@@ -9,7 +9,7 @@ new class extends Component
     public bool $sent = false;
 }; ?>
 
-<div @class(['chat', 'chat-start' => !$sent, 'chat-end' => $sent])>
+<div {{ $attributes->whereDoesntStartWith('wire:stream')->class(['chat', 'chat-start' => !$sent, 'chat-end' => $sent]) }}>
     <div class="chat-header">
         {{ $author ?? '' }}
         <time class="text-xs opacity-50">{{ $time ?? '' }}</time>
