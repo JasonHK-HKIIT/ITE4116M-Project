@@ -16,13 +16,23 @@ new #[Layout('layouts::portal')] class extends Component {
 
 @php
     $user = Auth::user();
+
     $student = $this->student;
+    // Take the latest class
+    $currentClass = $student?->classes()->orderByDesc('academic_year')->first();
+
+    $instituteName = $student?->institute?->name ?? '';
+
+    $campusName = $student?->campus?->name ?? '';
+
     $rows = [
         ['label' => 'Student ID', 'value' => $user->username],
         ['label' => 'Chinese Name', 'value' => $user->chinese_name],
         ['label' => 'Family name', 'value' => $user->family_name],
         ['label' => 'Given Name', 'value' => $user->given_name],
-        ['label' => 'Institute Campus ID', 'value' => $student?->institute_campus_id],
+        ['label' => 'Institute', 'value' => $instituteName],
+        ['label' => 'Campus', 'value' => $campusName],
+        ['label' => 'Current Class', 'value' => $currentClass?->class_code],
         ['label' => 'Gender', 'value' => $student?->gender],
         ['label' => 'Date of Birth', 'value' => $student?->date_of_birth?->format('d-M-Y')],
         ['label' => 'Country', 'value' => $student?->nationality],
@@ -50,7 +60,7 @@ new #[Layout('layouts::portal')] class extends Component {
                     @foreach ($rows as $row)
                         <div class="flex gap-3 border-b border-base-200 py-2">
                             <span class="w-48 text-sm font-semibold text-base-content/70">{{ $row['label'] }}</span>
-                            <span class="text-sm text-base-content">{{ $row['value'] ?? '—' }}</span>
+                            <span class="text-sm text-base-content">{{ ($row['value'] === null || $row['value'] === '') ? '—' : $row['value'] }}</span>
                         </div>
                     @endforeach
                 </div>

@@ -30,7 +30,6 @@ class Student extends Model
         ];
     }
 
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -52,15 +51,20 @@ class Student extends Model
         return $this->classes()->with('programme')->get()->pluck('programme')->unique('id');
     }
 
-    public function instituteCampus(): BelongsTo
+    public function institute()
     {
-        return $this->belongsTo(InstituteCampus::class);
+        return $this->belongsTo(Institute::class);
     }
-    
+    public function campus()
+    {
+        return $this->belongsTo(Campus::class);
+    }
+
     protected function studentId(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->user->username,
-            set: fn(string $value) => ($this->user->username = $value));
+            set: fn(string $value) => ($this->user->username = $value)
+        );
     }
 }
