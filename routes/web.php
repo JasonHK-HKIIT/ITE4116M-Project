@@ -30,7 +30,7 @@ Route::name('portal.')->middleware('auth')->group(function ()
     Route::livewire('/resources/resources-centre', 'pages::portal.resources.resources-centre')->name('resources-centre');
 
     Route::livewire('/news', 'pages::portal.news.list')->name('news.list');
-    Route::livewire('/news/{id}', 'pages::portal.news.show')->whereNumber('id')->name('news.show');
+    Route::livewire('/news/{slug}', 'pages::portal.news.show')->name('news.show');
 });
 
 Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()

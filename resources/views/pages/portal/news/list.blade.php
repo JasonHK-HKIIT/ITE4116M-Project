@@ -112,7 +112,7 @@ new #[Layout('layouts::portal')] class extends Component {
                                 <div class="flex items-center gap-1">
                                     {{ $article->published_on?->format('Y-m-d') }}
                                 </div>
-                                <a href="{{ route('portal.news.show', $article->id) }}" class="flex items-center gap-1 text-primary hover:underline">
+                                <a href="{{ url('/news/' . $article->slug) }}" class="flex items-center gap-1 text-primary hover:underline">
                                     <span>View Details</span>
                                     <x-icon name="fal.eye" class="w-4 h-4" />
                                 </a>

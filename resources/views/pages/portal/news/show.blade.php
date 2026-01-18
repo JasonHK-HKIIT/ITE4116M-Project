@@ -6,9 +6,9 @@ use Livewire\Component;
 new #[Layout('layouts::portal')] class extends Component {
     public NewsArticle $article;
 
-    public function mount($id)
+    public function mount($slug)
     {
-        $this->article = NewsArticle::findOrFail($id);
+        $this->article = NewsArticle::where('slug', $slug)->firstOrFail();
     }
 }; ?>
 
