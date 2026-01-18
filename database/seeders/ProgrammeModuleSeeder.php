@@ -19,8 +19,8 @@ class ProgrammeModuleSeeder extends Seeder
         $Contemporary_Topics_in_Software_Engineering = \App\Models\Module::where('module_code', 'ITP4507')->first();
         $Human_Computer_Interaction_and_GUI_Programming = \App\Models\Module::where('module_code', 'ITP4506')->first();
         $IT_Professionalism = \App\Models\Module::where('module_code', 'ITE4103')->first();
-        $Professional_Workplace_Communication_Storytelling_and_Job_Search = \App\Models\Module::where('module_code', 'ITP4514')->first();
-        $Vocational_Chinese_Communication_Putonghua_Conversation_and_Reports = \App\Models\Module::where('module_code', 'ITP4514')->first();
+        $Professional_Workplace_Communication_Storytelling_and_Job_Search = \App\Models\Module::where('module_code', 'LAN4102')->first();
+        $Vocational_Chinese_Communication_Putonghua_Conversation_and_Reports = \App\Models\Module::where('module_code', 'LAN3003')->first();
 
         $Software_Engineering->modules()->sync(
             [
