@@ -226,7 +226,7 @@ class extends Component
                 <div class="self-center w-full max-w-192" style="container-type: size;">
                     @island(name: 'messages')
                         @foreach ($messages as $message)
-                            <livewire:chat-message id="{{ $message->id }}" wire:key="{{ $message->id }}" :message="$message" wire:stream="{{ $message->id }}" />
+                            <livewire:chat-message id="{{ $message->id }}" wire:key="{{ $message->id }}" :message="$message" />
                         @endforeach
                     @endisland
                     <div class="h-5"></div>

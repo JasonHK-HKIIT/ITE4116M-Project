@@ -24,10 +24,10 @@ new class extends Component
     }
 }; ?>
 
-<div {{ $attributes->whereDoesntStartWith('wire:stream')->class(['chat', 'chat-start' => !$isHumanMessage, 'chat-end' => $isHumanMessage]) }}>
+<div {{ $attributes->class(['chat', 'chat-start' => !$isHumanMessage, 'chat-end' => $isHumanMessage]) }}>
     <div class="chat-header">
         {{ $author ?? '' }}
         <time class="text-xs opacity-50">{{ $time ?? '' }}</time>
     </div>
-    <div {{ $attributes->whereStartsWith('wire:stream')->class('chat-bubble') }}>{{ $message->content }}</div>
+    <div class="chat-bubble" wire:stream="{{ $message->id }}">{{ $message->content }}</div>
 </div>
