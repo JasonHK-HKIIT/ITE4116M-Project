@@ -3,11 +3,12 @@
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Activity;
-
+use Livewire\WithPagination;
 new
 #[Layout("layouts::portal")]
 class extends Component
 {
+    use WithPagination;
 
     public bool $isDrawerOpened = false;
 
@@ -31,10 +32,23 @@ class extends Component
         ]);
     }
 
+    public function updatingKeywords()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingExecutionFrom()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingExecutionTo()
+    {
+        $this->resetPage();
+    }
+
     public function activities()
     {
-
-
         return Activity::query()
             ->when($this->keywords, function ($query, $keywords) {
                 $query->whereFullText(['title', 'instructor', 'activity_code'], $keywords);
