@@ -27,7 +27,7 @@ class extends Component
     <x-card title="Activity Details" shadow separator>
         <x-tabs wire:model="selectedTab" label-class="text-xl font-bold">
             <x-tab name="administrative-tab" label="Administrative">
-                <div class="space-y-6 text-gray-700 text-lg">
+                <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Activity Code:</strong> {{ $activity->activity_code }}</p>
                     <p><strong>Activity Type:</strong> {{ $activity->activity_type ?? 'N/A' }}</p>
                     <p><strong>Title:</strong> {{ $activity->title }}</p>
@@ -37,7 +37,7 @@ class extends Component
                 </div>
             </x-tab>
             <x-tab name="time-tab" label="Time">
-                <div class="space-y-6 text-gray-700 text-lg">
+                <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Execution Period:</strong> 
                         From {{ $activity->execution_from }} 
                         To {{ $activity->execution_to }}
@@ -51,13 +51,13 @@ class extends Component
                 </div>
             </x-tab>
             <x-tab name="personnel-tab" label="Personnel">
-                <div class="space-y-6 text-gray-700 text-lg">
+                <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Instructor:</strong> {{ $activity->instructor }}</p>
                     <p><strong>Responsible Staff:</strong> {{ $activity->responsible_staff }}</p>
                 </div>
             </x-tab>
             <x-tab name="descriptive-tab" label="Descriptive">
-                <div class="space-y-3 text-gray-700 text-lg">
+                <div class="space-y-3 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Description:</strong></p>
                     <p>{{ $activity->description }}</p>
                     <p><strong>Venue:</strong> {{ $activity->venue }}</p>
@@ -65,13 +65,13 @@ class extends Component
                 </div>
             </x-tab>
             <x-tab name="financial-tab" label="Financial">
-                <div class="space-y-6 text-gray-700 text-lg">
+                <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Total Amount:</strong> {{ $activity->total_amount }}</p>
                     <p><strong>Included Deposit:</strong> {{ $activity->included_deposit }}</p>
                 </div>
             </x-tab>
             <x-tab name="supporting-tab" label="Supporting">
-                <div class="space-y-6 text-gray-700 text-lg">
+                <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Attachment:</strong> {{ $activity->attachment }}</p>
                     <p><strong>SWPD Programme:</strong> {{ $activity->swpd_programme ? 'Yes' : 'No' }}</p>
                 </div>
