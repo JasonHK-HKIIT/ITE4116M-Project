@@ -28,7 +28,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
 
         <!-- QUICK ACCESS CARDS -->
         <!-- Calendar -->
-        <a href="#" wire:navigate>
+        <a href="{{ route('portal.calendar') }}" wire:navigate>
             <x-card shadow class="hover:shadow-lg transition cursor-pointer h-full">
                 <div class="flex flex-col items-center gap-3 p-4">
                     <div class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
@@ -139,7 +139,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
                     <a href="{{ route('portal.news.list') }}" class="text-primary hover:underline">News and Announcement</a>
-                    <a href="#" class="text-primary hover:underline">Calendar</a>
+                    <a href="{{ route('portal.calendar') }}" class="text-primary hover:underline">Calendar</a>
                 </div>
             </div>
         </div>
