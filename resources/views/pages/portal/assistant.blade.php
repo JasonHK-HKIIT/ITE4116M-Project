@@ -1,6 +1,8 @@
 <?php
 
+use App\Data\Assistant\Assistant;
 use App\Data\Assistant\Messages\Message;
+use App\Data\Assistant\Thread;
 use App\Data\Assistant\ThreadState;
 use App\Enums\Assistant\MessageType;
 use Illuminate\Http\Client\ConnectionException;
@@ -25,6 +27,9 @@ class extends Component
     #[Locked]
     public ?string $threadId = null;
 
+    #[Locked]
+    public ?Thread $thread = null;
+
     /** @var Message[] */
     #[Locked]
     public array $messages = [];
@@ -35,11 +40,15 @@ class extends Component
     #[Validate('required')]
     public ?string $question = null;
 
+    private string $baseUrl;
+
     public function mount(?string $id = null): void
     {
+        $this->baseUrl = config('app.assistant.base_url');
+
         try
         {
-            $response = Http::get(config('app.assistant.base_url') . '/health');
+            $response = Http::get("{$this->baseUrl}/health");
             abort_unless($response->ok(), 503);
         }
         catch (ConnectionException $ex)
@@ -50,9 +59,13 @@ class extends Component
         $this->threadId = $id;
 
         if ($this->threadId)
-        {
+        {            
             /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . "/threads/{$this->threadId}/state");
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/{$this->threadId}");
+            $this->thread = Thread::from($response->json());
+
+            /** @var \Illuminate\Http\Client\Response */
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/{$this->threadId}/state");
             if (!$response->ok())
             {
                 Log::error("OpenGPTs error: {$response->json('detail')}", ['Thread ID' => $this->threadId]);
@@ -69,14 +82,24 @@ class extends Component
 
     public function boot()
     {
-        
+        if ($this->threadId)
+        {
+            /** @var \Illuminate\Http\Client\Response */
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/{$this->threadId}");
+            $this->thread = Thread::from($response->json());
+        }
+    }
+
+    public function createThread(): void
+    {
+
     }
 
     #[On('refresh-threads')]
     public function refreshThreads(bool $initial = false): void
     {
         /** @var \Illuminate\Http\Client\Response */
-        $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get(config('app.assistant.base_url') . '/threads/');
+        $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/");
         $threads = $response->json();
         usort($threads, fn($a, $b) => (strtotime($b['updated_at']) - strtotime($a['updated_at'])));
         $this->threads = $threads;
@@ -93,7 +116,7 @@ class extends Component
         if (!$this->threadId)
         {
             /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/assistants',
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post("{$this->baseUrl}/assistants",
                 [
                     'public' => false,
                     'name' => '',
@@ -110,16 +133,16 @@ class extends Component
                         ],
                     ],
                 ]);
-            $assistant = $response->json();
+            $assistant = Assistant::from($response->json());
 
             /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post(config('app.assistant.base_url') . '/threads',
+            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post("{$this->baseUrl}/threads",
                 [
-                    'assistant_id' => $assistant['assistant_id'],
+                    'assistant_id' => $assistant->assistantId,
                     'name' => $question,
                 ]);
-            $thread = $response->json();
-            $this->threadId = $thread['thread_id'];
+            $this->thread = Thread::from($response->json());
+            $this->threadId = $thread->threadId;
 
             $this->dispatch('thread-created', url: route('portal.assistant.thread', ['id' => $this->threadId], false))->self();
             $this->dispatch('refresh-threads')->self();
@@ -137,7 +160,7 @@ class extends Component
                 ],
             ]));
 
-        $source = $client->connect(config('app.assistant.base_url') . '/runs/stream',
+        $source = $client->connect("{$this->baseUrl}/runs/stream",
             [
                 'json' => [
                     'thread_id' => $this->threadId,
@@ -219,7 +242,7 @@ class extends Component
     </x-slot:sidebar>
 
     <x-slot:content class="flex flex-col">
-        <x-header title="New Chat" separator class="!mb-0" />
+        <x-header :title="$threadId ? 'Chat Thread' : 'New Chat'" :subtitle="$thread?->name" separator class="!mb-0" />
         
         <div class="grow-1 flex flex-col">
             <div class="pt-10 grow-1 flex flex-col overflow-y-auto" style="scrollbar-width: none;">
