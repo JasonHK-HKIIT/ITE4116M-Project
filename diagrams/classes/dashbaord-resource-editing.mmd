@@ -1,0 +1,38 @@
+classDiagram
+    class ResourcesEditComponent {
+        -string selectedLanguage
+        -bool exists
+        -Resource resource
+        -array pendingFiles
+        -array pendingDeleteMedia
+        -array title
+        +locales() array
+        +mount(Resource resource) void
+        +save() void
+        +removePendingFile(string language, int idx) void
+        +markDeleteMedia(int mediaId, string language) void
+    }
+    
+    class Resource {
+        +int id
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection translations
+        +string title
+        +save() void
+        +getTranslationsArray() array
+    }
+    
+    class ResourceTranslation {
+        +int id
+        +int resource_id
+        +string locale
+        +string title
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection media
+        +getMedia(string collection) Collection
+    }
+    
+    ResourcesEditComponent --> Resource : manages
+    Resource --> ResourceTranslation : hasMany

@@ -1,0 +1,48 @@
+classDiagram
+    class InstitutesComponent {
+        -array sortBy
+        -bool instituteModal
+        -string instituteModalSelectedTab
+        -Institute institute
+        -array name
+        -array campus_ids
+        -Collection campusOptions
+        +headers() array
+        +institutes() Collection
+        +locales() array
+        +mount() void
+        +createInstitute() void
+        +editInstitute(Institute institute) void
+        +save() void
+        +deleteInstitute(int id) void
+    }
+    
+    class Institute {
+        +int id
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection translations
+        +Collection campuses
+        +string name
+        +save() void
+    }
+    
+    class InstituteTranslation {
+        +int id
+        +int institute_id
+        +string locale
+        +string name
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    class Campus {
+        +int id
+        +string name
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    InstitutesComponent --> Institute : manages
+    Institute --> InstituteTranslation : hasMany
+    Institute --> Campus : belongsToMany

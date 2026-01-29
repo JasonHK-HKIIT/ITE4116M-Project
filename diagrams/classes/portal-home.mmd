@@ -1,0 +1,19 @@
+classDiagram
+    class PortalHomeComponent {
+        +render() View
+    }
+    
+    class User {
+        +int id
+        +string username
+        +string chinese_name
+        +string family_name
+        +string given_name
+        +string email
+        +Carbon email_verified_at
+        +Carbon created_at
+        +Carbon updated_at
+        +Student student
+    }
+    
+    PortalHomeComponent --> User : displays

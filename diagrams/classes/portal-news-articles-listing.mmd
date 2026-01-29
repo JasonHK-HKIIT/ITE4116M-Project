@@ -1,0 +1,36 @@
+classDiagram
+    class PortalNewsListComponent {
+        -int perPage
+        -bool isDrawerOpened
+        -string keywords
+        -Carbon publishedAfter
+        -Carbon publishedBefore
+        +articles() LengthAwarePaginator
+        +clear() void
+    }
+    
+    class NewsArticle {
+        +int id
+        +string slug
+        +NewsArticleStatus status
+        +Carbon published_on
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection translations
+        +string title
+        +string content
+        +Media cover
+    }
+    
+    class NewsArticleTranslation {
+        +int id
+        +int news_article_id
+        +string locale
+        +string title
+        +string content
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    PortalNewsListComponent --> NewsArticle : queries
+    NewsArticle --> NewsArticleTranslation : hasMany

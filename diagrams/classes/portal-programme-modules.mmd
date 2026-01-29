@@ -1,0 +1,48 @@
+classDiagram
+    class ProgrammeModulesComponent {
+        -array expanded
+        +mount() void
+        +headers() array
+        +studentProgrammes() Collection
+    }
+    
+    class User {
+        +int id
+        +string username
+        +string chinese_name
+        +string family_name
+        +string given_name
+        +Carbon created_at
+        +Carbon updated_at
+        +Student student
+    }
+    
+    class Student {
+        +int id
+        +int user_id
+        +Carbon created_at
+        +Carbon updated_at
+        +User user
+        +Collection programmes
+    }
+    
+    class Programme {
+        +int id
+        +string name
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection modules
+    }
+    
+    class Module {
+        +int id
+        +string code
+        +string name
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    ProgrammeModulesComponent --> User : uses
+    User --> Student : hasOne
+    Student --> Programme : belongsToMany
+    Programme --> Module : hasMany

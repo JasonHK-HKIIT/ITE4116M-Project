@@ -1,0 +1,34 @@
+classDiagram
+    class ResourcesListComponent {
+        -int perPage
+        -bool isDrawerOpened
+        -string keywords
+        -Carbon publishedAfter
+        -Carbon publishedBefore
+        -array expanded
+        +headers() array
+        +documents() LengthAwarePaginator
+        +deleteResource(int id) void
+    }
+    
+    class Resource {
+        +int id
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection translations
+        +string title
+    }
+    
+    class ResourceTranslation {
+        +int id
+        +int resource_id
+        +string locale
+        +string title
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection media
+        +getMedia(string collection) Collection
+    }
+    
+    ResourcesListComponent --> Resource : queries
+    Resource --> ResourceTranslation : hasMany

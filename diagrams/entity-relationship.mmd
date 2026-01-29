@@ -1,0 +1,239 @@
+erDiagram
+    users ||--o{ students : "has one"
+    users ||--o{ sessions : "has many"
+    users {
+        bigint id PK
+        string username UK
+        string password
+        string remember_token
+        enum role
+        string family_name
+        string given_name
+        string chinese_name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    sessions {
+        string id PK
+        bigint user_id FK
+        string ip_address
+        text user_agent
+        text payload
+        int last_activity
+    }
+
+    students ||--o{ student_classes : "belongs to many"
+    students {
+        bigint id PK
+        bigint user_id FK,UK
+        bigint institute_id FK
+        bigint campus_id FK
+        string gender
+        date date_of_birth
+        string nationality
+        string mother_tongue
+        string tel_no
+        string mobile_no
+        string address
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    institutes ||--o{ institute_translations : "has many"
+    institutes ||--o{ institute_campus : "belongs to many"
+    institutes ||--o{ programmes : "has many"
+    institutes ||--o{ modules : "has many"
+    institutes {
+        bigint id PK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    institute_translations {
+        bigint id PK
+        bigint institute_id FK
+        string locale
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    campuses ||--o{ campus_translations : "has many"
+    campuses ||--o{ institute_campus : "belongs to many"
+    campuses ||--o{ classes : "has many"
+    campuses {
+        bigint id PK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    campus_translations {
+        bigint id PK
+        bigint campus_id FK
+        string locale
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    institute_campus {
+        bigint id PK
+        bigint institute_id FK
+        bigint campus_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    programmes ||--o{ programme_translations : "has many"
+    programmes ||--o{ programme_modules : "belongs to many"
+    programmes ||--o{ classes : "has many"
+    programmes {
+        bigint id PK
+        bigint institute_id FK
+        string programme_code UK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    programme_translations {
+        bigint id PK
+        bigint programme_id FK
+        string locale
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    modules ||--o{ module_translations : "has many"
+    modules ||--o{ programme_modules : "belongs to many"
+    modules {
+        bigint id PK
+        bigint institute_id FK
+        string module_code
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    module_translations {
+        bigint id PK
+        bigint module_id FK
+        string locale
+        string name
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    programme_modules {
+        bigint id PK
+        bigint programme_id FK
+        bigint module_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    classes ||--o{ student_classes : "has many"
+    classes {
+        bigint id PK
+        year academic_year
+        bigint institute_id FK
+        bigint campus_id FK
+        bigint programme_id FK
+        string class_code
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    student_classes {
+        bigint id PK
+        bigint student_id FK
+        bigint class_id FK
+    }
+
+    news_articles ||--o{ news_article_translations : "has many"
+    news_articles {
+        bigint id PK
+        string slug UK
+        enum status
+        date published_on
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    news_article_translations {
+        bigint id PK
+        bigint news_article_id FK
+        string locale
+        string title
+        text content
+    }
+
+    resources ||--o{ resource_translations : "has many"
+    resources {
+        bigint id PK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    resource_translations {
+        bigint id PK
+        bigint resource_id FK
+        string locale
+        string title
+    }
+
+    activities {
+        bigint id PK
+        string activity_code UK
+        string activity_type
+        string title
+        string campus
+        string discipline
+        string instructor
+        string responsible_staff
+        date execution_from
+        date execution_to
+        datetime time_slot_from
+        datetime time_slot_to
+        decimal duration_hours
+        text description
+        string attribute
+        boolean swpd_programme
+        string venue
+        text venue_remark
+        int capacity
+        int registered
+        boolean has_vacancy
+        decimal total_amount
+        decimal included_deposit
+        string attachment
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    calendar_events {
+        bigint id PK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    media {
+        bigint id PK
+        string model_type
+        bigint model_id
+        uuid uuid UK
+        string collection_name
+        string name
+        string file_name
+        string mime_type
+        string disk
+        string conversions_disk
+        bigint size
+        json manipulations
+        json custom_properties
+        json generated_conversions
+        json responsive_images
+        int order_column
+        timestamp created_at
+        timestamp updated_at
+    }

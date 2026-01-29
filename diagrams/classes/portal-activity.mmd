@@ -1,0 +1,25 @@
+classDiagram
+    class ActivityShowComponent {
+        +Activity activity
+        +string selectedTab
+        +mount(int id) void
+    }
+    
+    class Activity {
+        +int id
+        +string activity_code
+        +string activity_type
+        +string title
+        +string description
+        +string venue
+        +string instructor
+        +string responsible_staff
+        +decimal total_amount
+        +decimal included_deposit
+        +Carbon execution_from
+        +Carbon execution_to
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    ActivityShowComponent --> Activity : displays

@@ -1,0 +1,51 @@
+classDiagram
+    class NewsEditComponent {
+        -string selectedLanguage
+        -bool exists
+        -NewsArticle article
+        -file cover
+        -array title
+        -string slug
+        -NewsArticleStatus status
+        -Carbon published_on
+        -array content
+        +statuses() array
+        +locales() array
+        +mount(NewsArticle article) void
+        +save() void
+    }
+    
+    class NewsArticle {
+        +int id
+        +string slug
+        +NewsArticleStatus status
+        +Carbon published_on
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection translations
+        +string title
+        +string content
+        +Media cover
+        +save() void
+        +getTranslationsArray() array
+    }
+    
+    class NewsArticleTranslation {
+        +int id
+        +int news_article_id
+        +string locale
+        +string title
+        +string content
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    class LocalesHelper {
+        +locales() array
+        +transformToProperties(array) array
+        +transformToModelFields(array, array) array
+    }
+    
+    NewsEditComponent --> NewsArticle : manages
+    NewsEditComponent --> LocalesHelper : uses
+    NewsArticle --> NewsArticleTranslation : hasMany

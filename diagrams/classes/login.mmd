@@ -1,0 +1,24 @@
+classDiagram
+    class LoginComponent {
+        -string username
+        -string password
+        +mount() void
+        +login() void
+    }
+    
+    class Auth {
+        +attempt(array credentials) bool
+        +user() User
+    }
+    
+    class User {
+        +int id
+        +string username
+        +string email
+        +Carbon email_verified_at
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    LoginComponent --> Auth : uses
+    Auth --> User : returns

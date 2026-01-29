@@ -1,0 +1,58 @@
+classDiagram
+    class AssistantComponent {
+        -array threads
+        -string threadId
+        -Thread thread
+        -array messages
+        -string lastMessageId
+        -string input
+        -bool streaming
+        +mount(string id) void
+        +sendMessage() void
+        +createThread() void
+        +clearConversation() void
+    }
+    
+    class Thread {
+        +int id
+        +string thread_id
+        +string name
+        +array values
+        +int user_id
+        +string assistant_id
+        +Carbon created_at
+        +Carbon updated_at
+        +User user
+        +Assistant assistant
+    }
+    
+    class Message {
+        +string type
+        +string content
+        +string id
+    }
+    
+    class Assistant {
+        +int id
+        +string assistant_id
+        +string name
+        +string description
+        +string instructions
+        +string model
+        +array tools
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    class User {
+        +int id
+        +string username
+        +string given_name
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    AssistantComponent --> Thread : manages
+    AssistantComponent --> Message : handles
+    Thread --> Assistant : belongsTo
+    Thread --> User : belongsTo

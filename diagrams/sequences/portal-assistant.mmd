@@ -1,0 +1,182 @@
+sequenceDiagram
+    actor User
+    participant View as View Layer<br/>(assistant.blade.php)
+    participant Controller as Controller Layer<br/>(Livewire Component)
+    participant AssistantAPI as External Service<br/>(OpenGPTs API)
+    participant Model as Model Layer<br/>(Thread, Message, Assistant)
+    participant Auth as Authentication
+
+    %% Initial Page Load - New Chat
+    User->>View: Access assistant page (no thread ID)
+    View->>Controller: Component initialization
+    Controller->>Controller: mount(id = null)
+    Controller->>Auth: auth()->user()->id
+    Auth-->>Controller: User ID
+    
+    Controller->>AssistantAPI: GET /health
+    AssistantAPI-->>Controller: 200 OK
+    
+    alt Health check fails
+        Controller-->>View: abort(503)
+        View-->>User: Service Unavailable
+    end
+    
+    Controller->>Controller: Set threadId = null
+    Controller->>Controller: refreshThreads(initial=true)
+    Controller->>AssistantAPI: GET /threads/<br/>(with user cookie)
+    AssistantAPI-->>Controller: Array of threads
+    Controller->>Controller: Sort threads by updated_at
+    Controller-->>View: Render with threads list
+    View-->>User: Display new chat interface
+
+    %% Initial Page Load - Existing Thread
+    User->>View: Access assistant page (with thread ID)
+    View->>Controller: Component initialization
+    Controller->>Controller: mount(id = threadId)
+    Controller->>Auth: auth()->user()->id
+    Auth-->>Controller: User ID
+    
+    Controller->>AssistantAPI: GET /health
+    AssistantAPI-->>Controller: 200 OK
+    
+    Controller->>Controller: Set threadId
+    Controller->>AssistantAPI: GET /threads/{threadId}<br/>(with user cookie)
+    AssistantAPI-->>Controller: Thread JSON data
+    Controller->>Model: Thread::from(json)
+    Model-->>Controller: Thread instance
+    
+    Controller->>AssistantAPI: GET /threads/{threadId}/state<br/>(with user cookie)
+    AssistantAPI-->>Controller: ThreadState JSON data
+    
+    alt API error
+        Controller->>Controller: Log error
+        Controller-->>View: abort(status)
+        View-->>User: Error page
+    end
+    
+    Controller->>Model: ThreadState::from(json)
+    Model-->>Controller: ThreadState with messages
+    Controller->>Controller: Extract messages array
+    Controller->>Controller: Set lastMessageId
+    Controller->>Controller: refreshThreads(initial=true)
+    Controller-->>View: Render with thread & messages
+    View-->>User: Display chat history
+
+    %% Component Boot
+    View->>Controller: boot()
+    
+    alt Has threadId
+        Controller->>AssistantAPI: GET /threads/{threadId}<br/>(with user cookie)
+        AssistantAPI-->>Controller: Updated thread data
+        Controller->>Model: Thread::from(json)
+        Model-->>Controller: Updated thread instance
+    end
+
+    %% Refresh Threads
+    User->>View: Trigger refresh (auto/manual)
+    View->>Controller: refreshThreads()
+    Controller->>AssistantAPI: GET /threads/<br/>(with user cookie)
+    AssistantAPI-->>Controller: Updated threads array
+    Controller->>Controller: Sort by updated_at
+    Controller->>View: renderIsland('threads')
+    View-->>User: Update threads list
+
+    %% Send New Message - Create Thread
+    User->>View: Type question & click Send
+    View->>Controller: send()
+    Controller->>Controller: validateOnly('question')
+    Controller->>Controller: Store question, reset input
+    
+    alt No threadId (new chat)
+        Controller->>AssistantAPI: POST /assistants<br/>(with config & user cookie)
+        AssistantAPI-->>Controller: Assistant JSON
+        Controller->>Model: Assistant::from(json)
+        Model-->>Controller: Assistant instance
+        
+        Controller->>AssistantAPI: POST /threads<br/>(assistant_id, name, user cookie)
+        AssistantAPI-->>Controller: Thread JSON
+        Controller->>Model: Thread::from(json)
+        Model-->>Controller: Thread instance
+        Controller->>Controller: Set threadId
+        
+        Controller->>View: dispatch('thread-created')
+        View->>View: Update browser history
+        Controller->>Controller: dispatch('refresh-threads')
+        Controller->>Controller: refreshThreads()
+    end
+    
+    Controller->>View: dispatch('question-sent')
+    View->>Controller: think(question)
+
+    %% Think Process - Stream Response
+    Controller->>Controller: Create EventSourceHttpClient
+    Controller->>AssistantAPI: POST /runs/stream<br/>(thread_id, input, user cookie)
+    
+    loop For each Server-Sent Event
+        AssistantAPI-->>Controller: SSE event (data)
+        
+        alt Event type is 'data'
+            Controller->>Model: Message::collect(data)
+            Model-->>Controller: Updated messages array
+            Controller->>Controller: Get last message
+            
+            alt New message detected
+                Controller->>Controller: Update lastMessageId
+                Controller->>View: streamIsland('messages', append)
+                View-->>User: Append new message bubble
+            end
+            
+            Controller->>View: stream(content, replace=true)
+            View-->>User: Update message content (streaming)
+            Controller->>View: dispatch('messages-scroll')
+            View->>View: Scroll to last message
+            View-->>User: Auto-scroll to bottom
+        end
+        
+        alt Event is last
+            Controller->>Controller: dispatch('refresh-threads')
+            Controller->>Controller: Exit loop
+        end
+    end
+    
+    Controller-->>View: Streaming complete
+    View-->>User: Display complete response
+
+    %% Send Message - Existing Thread
+    User->>View: Type follow-up question & Send
+    View->>Controller: send()
+    Controller->>Controller: validateOnly('question')
+    Controller->>Controller: threadId exists, skip creation
+    Controller->>View: dispatch('question-sent')
+    View->>Controller: think(question)
+    
+    Note over Controller,AssistantAPI: Same streaming process as above
+    
+    Controller->>AssistantAPI: POST /runs/stream<br/>(existing thread_id)
+    
+    loop Stream Events
+        AssistantAPI-->>Controller: SSE events
+        Controller->>Model: Parse messages
+        Controller->>View: Stream updates
+        View-->>User: Display AI response
+    end
+
+    %% Navigate to Thread
+    User->>View: Click thread in history
+    View->>Controller: Navigate to route
+    Controller->>Controller: mount(id = selectedThreadId)
+    Note over Controller,AssistantAPI: Same as initial load with thread ID
+    Controller->>AssistantAPI: GET /threads/{threadId}
+    Controller->>AssistantAPI: GET /threads/{threadId}/state
+    Controller->>Model: Parse thread & messages
+    Controller-->>View: Render selected thread
+    View-->>User: Display chat history
+
+    %% Create New Chat
+    User->>View: Click "New Chat" menu item
+    View->>Controller: Navigate to portal.assistant
+    Controller->>Controller: mount(id = null)
+    Controller->>Controller: Reset thread state
+    Controller->>Controller: refreshThreads()
+    Controller-->>View: Render empty chat
+    View-->>User: Display new chat interface

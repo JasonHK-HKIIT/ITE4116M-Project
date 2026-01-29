@@ -1,0 +1,115 @@
+sequenceDiagram
+    actor User
+    participant View as View Layer<br/>(list.blade.php)
+    participant Controller as Controller Layer<br/>(Livewire Component)
+    participant Model as Model Layer<br/>(NewsArticle)
+    participant DB as Database
+
+    User->>View: Access news list page
+    View->>Controller: Component initialization
+    Controller->>Controller: Set default sortBy, perPage
+    Controller->>Controller: with() - Prepare data
+    
+    Controller->>Controller: headers() - Build table headers
+    Controller->>Controller: articles() - Build query
+    
+    Controller->>Model: NewsArticle::query()
+    
+    alt Has keywords filter
+        Controller->>Model: whereHas('translations')<br/>whereFullText(['title', 'content'])
+    end
+    
+    alt Has status filter
+        Controller->>Model: where('status', status)
+    end
+    
+    alt Has publishedAfter filter
+        Controller->>Model: where('published_on', '>=', publishedAfter)
+    end
+    
+    alt Has publishedBefore filter
+        Controller->>Model: where('published_on', '<=', publishedBefore)
+    end
+    
+    Controller->>Model: Apply sorting (orderBy/orderByTranslation)
+    Controller->>Model: paginate(perPage)
+    
+    Model->>DB: Execute SELECT query
+    DB-->>Model: Return paginated results
+    Model-->>Controller: LengthAwarePaginator
+    
+    Controller->>Controller: statuses() - Get enum cases
+    Controller-->>View: Return headers, articles, statuses
+    View-->>User: Display news list table
+
+    User->>View: Search/Filter (wire:model.live)
+    View->>Controller: Update keywords/status/dates
+    Controller->>Controller: articles() - Rebuild query
+    Controller->>Model: Query with new filters
+    Model->>DB: Execute filtered query
+    DB-->>Model: Return filtered results
+    Model-->>Controller: Updated articles
+    Controller-->>View: Re-render table
+    View-->>User: Display filtered results
+
+    User->>View: Sort column (click header)
+    View->>Controller: Update sortBy
+    Controller->>Controller: articles() - Rebuild query
+    Controller->>Model: Query with new sorting
+    Model->>DB: Execute sorted query
+    DB-->>Model: Return sorted results
+    Model-->>Controller: Sorted articles
+    Controller-->>View: Re-render table
+    View-->>User: Display sorted results
+
+    User->>View: Change page/per-page
+    View->>Controller: Update pagination params
+    Controller->>Controller: articles() - Rebuild query
+    Controller->>Model: paginate(new perPage)
+    Model->>DB: Execute paginated query
+    DB-->>Model: Return new page results
+    Model-->>Controller: New page articles
+    Controller-->>View: Re-render table
+    View-->>User: Display new page
+
+    User->>View: Click delete button
+    View->>Controller: deleteArticle(id)
+    Controller->>Model: NewsArticle::destroy(id)
+    Model->>DB: DELETE FROM news_articles
+    DB-->>Model: Success
+    Model-->>Controller: Deletion count
+    Controller-->>View: success('Article deleted')
+    View-->>User: Show success message
+    Controller->>Controller: articles() - Refresh list
+    Controller->>Model: Query updated list
+    Model->>DB: Execute query
+    DB-->>Model: Return results
+    Model-->>Controller: Updated articles
+    Controller-->>View: Re-render table
+    View-->>User: Display updated list
+
+    User->>View: Click Filters button
+    View->>Controller: Set isDrawerOpened = true
+    Controller-->>View: Render drawer
+    View-->>User: Show filters drawer
+
+    User->>View: Apply filters in drawer
+    View->>Controller: wire:model.live updates
+    Controller->>Controller: articles() - Rebuild query
+    Controller->>Model: Query with filters
+    Model->>DB: Execute filtered query
+    DB-->>Model: Return filtered results
+    Model-->>Controller: Filtered articles
+    Controller-->>View: Re-render table
+    View-->>User: Display filtered results
+
+    User->>View: Click Reset in drawer
+    View->>Controller: clear()
+    Controller->>Controller: Reset filters
+    Controller->>Controller: articles() - Rebuild query
+    Controller->>Model: Query without filters
+    Model->>DB: Execute query
+    DB-->>Model: Return unfiltered results
+    Model-->>Controller: All articles
+    Controller-->>View: Re-render table
+    View-->>User: Display all results

@@ -1,0 +1,59 @@
+sequenceDiagram
+    actor User
+    participant View as View Layer<br/>(personal-particular.blade.php)
+    participant Controller as Controller Layer<br/>(Livewire Component)
+    participant Auth as Auth Facade
+    participant UserModel as User Model
+    participant StudentModel as Student Model
+    participant InstituteModel as Institute Model
+    participant CampusModel as Campus Model
+    participant ClassModel as Class Model
+    participant DB as Database
+
+    User->>View: Access /profile/personal-particular
+    View->>Controller: Component initialization
+    Controller->>Controller: mount()
+    
+    Controller->>Auth: user()
+    Auth-->>Controller: User instance
+    Controller->>UserModel: $user->student
+    UserModel->>DB: SELECT * FROM students<br/>WHERE user_id = ?
+    DB-->>UserModel: Student record
+    UserModel-->>Controller: Student instance
+    Controller->>Controller: Set $student property
+    
+    Controller-->>View: Render profile page
+    View->>Auth: user()
+    Auth-->>View: User instance (for display)
+    
+    View->>UserModel: Access user properties
+    UserModel-->>View: username, chinese_name,<br/>family_name, given_name
+    
+    View->>StudentModel: $student->institute
+    StudentModel->>DB: Eager load institute relationship
+    DB-->>StudentModel: Institute record
+    StudentModel->>InstituteModel: Get institute data
+    InstituteModel-->>StudentModel: Institute instance
+    StudentModel-->>View: Institute name
+    
+    View->>StudentModel: $student->campus
+    StudentModel->>DB: Eager load campus relationship
+    DB-->>StudentModel: Campus record
+    StudentModel->>CampusModel: Get campus data
+    CampusModel-->>StudentModel: Campus instance
+    StudentModel-->>View: Campus name
+    
+    View->>StudentModel: $student->classes()
+    StudentModel->>DB: SELECT * FROM classes<br/>WHERE student_id = ?<br/>ORDER BY academic_year DESC
+    DB-->>StudentModel: Class records
+    StudentModel->>ClassModel: Get first() class
+    ClassModel-->>StudentModel: Latest class instance
+    StudentModel-->>View: Current class code
+    
+    View->>StudentModel: Access student properties
+    StudentModel-->>View: gender, date_of_birth, nationality,<br/>mother_tongue, tel_no, mobile_no, address
+    
+    View->>UserModel: $user->avatar
+    UserModel-->>View: Avatar URL
+    
+    View-->>User: Display personal information:<br/>- Student ID<br/>- Names (Chinese, Family, Given)<br/>- Institute & Campus<br/>- Current Class<br/>- Personal details<br/>- Contact information<br/>- Student photo

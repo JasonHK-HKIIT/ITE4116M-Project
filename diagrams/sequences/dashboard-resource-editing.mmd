@@ -1,0 +1,158 @@
+sequenceDiagram
+    actor User
+    participant View as View Layer<br/>(edit.blade.php)
+    participant Controller as Controller Layer<br/>(Livewire Component)
+    participant Helper as LocalesHelper
+    participant Model as Model Layer<br/>(Resource)
+    participant Translation as ResourceTranslation<br/>(Model)
+    participant DB as Database
+    participant Storage as Media Storage
+
+    User->>View: Access /dashboard/resources/create or /edit/{id}
+    View->>Controller: Component initialization
+    Controller->>Controller: mount(Resource $resource)
+    Controller->>Controller: Check $resource->exists
+    
+    alt New Resource (Create)
+        Controller->>Controller: Set exists = false
+        Controller->>Helper: locales()
+        Helper-->>Controller: Available locales array
+        loop Each locale
+            Controller->>Controller: Initialize pendingFiles[locale] = []
+            Controller->>Controller: Initialize pendingDeleteMedia[locale] = []
+            Controller->>Controller: Initialize title[locale] = ''
+        end
+    else Existing Resource (Edit)
+        Controller->>Controller: Set exists = true
+        Controller->>Model: $resource->getTranslationsArray()
+        Model->>DB: SELECT * FROM resource_translations<br/>WHERE resource_id = ?
+        DB-->>Model: Translation records
+        Model-->>Controller: Translations array
+        
+        Controller->>Helper: transformToProperties(translations)
+        Helper-->>Controller: Transformed properties (title[locale])
+        Controller->>Controller: fill(properties)
+        
+        Controller->>Helper: locales()
+        Helper-->>Controller: Available locales array
+        loop Each locale
+            Controller->>Controller: Initialize pendingFiles[locale] = []
+            Controller->>Controller: Initialize pendingDeleteMedia[locale] = []
+        end
+    end
+    
+    Controller->>Controller: render()
+    Controller->>Controller: with() - Prepare locales
+    Controller-->>View: Render form with data
+    View-->>User: Display tabbed form with locales
+
+    User->>View: Switch language tab
+    View->>Controller: wire:model="selectedLanguage"
+    Controller->>Controller: Update $selectedLanguage
+    Controller-->>View: Update active tab
+    
+    alt Existing resource
+        View->>Translation: Get existing media
+        Translation->>Storage: getMedia('resources')
+        Storage-->>Translation: Media collection
+        Translation-->>View: Existing files list
+        View-->>User: Display existing files with delete option
+    end
+    
+    View-->>User: Display current tab content
+
+    User->>View: Enter/Edit title for current language
+    View->>Controller: wire:model="title.{locale}"
+    Controller->>Controller: Update title[locale]
+    Controller-->>View: Update binding
+
+    User->>View: Upload new files
+    View->>Controller: wire:model="pendingFiles.{locale}"
+    Controller->>Controller: updatedPendingFiles(value, key)
+    Controller->>Controller: Store files in pendingFiles[locale]
+    Controller-->>View: Update pending files list
+    View-->>User: Display "Files to be uploaded" list
+
+    User->>View: Click remove pending file
+    View->>Controller: wire:click="removePendingFile(locale, idx)"
+    Controller->>Controller: removePendingFile(lang, idx)
+    Controller->>Controller: array_splice pendingFiles[lang]
+    Controller-->>View: Update pending files list
+    View-->>User: Remove file from upload list
+
+    User->>View: Click delete existing file
+    View->>Controller: wire:click="markDeleteMedia(id, locale)"
+    Controller->>Controller: markDeleteMedia(mediaId, language)
+    Controller->>Controller: Add mediaId to pendingDeleteMedia[language]
+    Controller-->>View: Update file display (line-through)
+    View-->>User: Show file marked for deletion
+
+    User->>View: Click "Save" or "Create"
+    View->>Controller: wire:submit="save"
+    
+    Controller->>Helper: buildRules('title', validation)
+    Helper-->>Controller: Validation rules for all locales
+    Controller->>Controller: validate()
+    
+    alt Validation fails
+        Controller-->>View: Validation errors
+        View-->>User: Show error messages
+    else Validation passes
+        Controller->>Helper: transformToModelFields(validated, attributes)
+        Helper-->>Controller: Transformed fields for save
+        
+        Controller->>Model: fill(fields)
+        Model->>Controller: Updated resource instance
+        Controller->>Model: save()
+        Model->>DB: INSERT/UPDATE resources table
+        DB-->>Model: Resource saved
+        
+        loop Each locale with pending files
+            Controller->>Translation: Get translation for locale
+            Translation->>DB: SELECT * FROM resource_translations<br/>WHERE resource_id = ? AND locale = ?
+            DB-->>Translation: Translation record
+            Translation-->>Controller: Translation instance
+            
+            loop Each pending file
+                Controller->>Translation: addMedia(file)
+                Translation->>Storage: Store file in 'resources' collection
+                Storage->>DB: INSERT INTO media table
+                DB-->>Storage: Media record created
+                Storage-->>Translation: Media stored
+                Translation-->>Controller: File uploaded
+            end
+        end
+        
+        loop Each locale with pending deletions
+            Controller->>Translation: Get translation for locale
+            Translation->>DB: SELECT * FROM resource_translations
+            DB-->>Translation: Translation record
+            
+            loop Each media ID to delete
+                Translation->>Storage: Find media by ID
+                Storage->>DB: SELECT * FROM media WHERE id = ?
+                DB-->>Storage: Media record
+                Storage->>Storage: delete()
+                Storage->>DB: DELETE FROM media
+                Storage->>Storage: Delete physical file
+                DB-->>Storage: Media deleted
+                Storage-->>Translation: Deletion complete
+            end
+        end
+        
+        Controller->>Controller: Clear pendingFiles arrays
+        Controller->>Controller: Clear pendingDeleteMedia arrays
+        
+        alt Update existing resource
+            Controller->>Controller: success('Resource was updated.')
+            Controller-->>View: Show success toast
+            View-->>User: Display success message
+        else Create new resource
+            Controller->>Controller: success('Resource was created.', redirect)
+            Controller-->>View: Redirect to edit page
+            View-->>User: Navigate to edit page with ID
+        end
+    end
+
+    User->>View: Click "Cancel"
+    View-->>User: Navigate back to resources list

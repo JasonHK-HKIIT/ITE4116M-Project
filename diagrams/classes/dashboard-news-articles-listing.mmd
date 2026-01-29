@@ -1,0 +1,48 @@
+classDiagram
+    class NewsListComponent {
+        -array sortBy
+        -int perPage
+        -bool isDrawerOpened
+        -string keywords
+        -NewsArticleStatus status
+        -Carbon publishedAfter
+        -Carbon publishedBefore
+        +headers() array
+        +articles() LengthAwarePaginator
+        +statuses() array
+        +deleteArticle(int id) void
+        +clear() void
+    }
+    
+    class NewsArticle {
+        +int id
+        +string slug
+        +NewsArticleStatus status
+        +Carbon published_on
+        +Carbon created_at
+        +Carbon updated_at
+        +Collection translations
+        +string title
+        +string content
+        +Media cover
+    }
+    
+    class NewsArticleTranslation {
+        +int id
+        +int news_article_id
+        +string locale
+        +string title
+        +string content
+        +Carbon created_at
+        +Carbon updated_at
+    }
+    
+    class NewsArticleStatus {
+        <<enumeration>>
+        Draft
+        Published
+    }
+    
+    NewsListComponent --> NewsArticle : queries
+    NewsListComponent --> NewsArticleStatus : filters by
+    NewsArticle --> NewsArticleTranslation : hasMany

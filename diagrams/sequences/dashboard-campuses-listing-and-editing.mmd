@@ -1,0 +1,164 @@
+sequenceDiagram
+    actor User
+    participant View as View Layer<br/>(campuses.blade.php)
+    participant Controller as Controller Layer<br/>(Livewire Component)
+    participant CampusModel as Model Layer<br/>(Campus)
+    participant InstituteModel as Model Layer<br/>(Institute)
+    participant DB as Database
+
+    %% Initial Page Load
+    User->>View: Access campuses page
+    View->>Controller: Component initialization
+    Controller->>Controller: mount()
+    Controller->>CampusModel: Campus::make()
+    CampusModel-->>Controller: New empty campus instance
+    Controller->>InstituteModel: Institute::all()
+    InstituteModel->>DB: SELECT * FROM institutes
+    DB-->>InstituteModel: All institutes
+    InstituteModel-->>Controller: instituteOptions collection
+    
+    Controller->>Controller: with() - Prepare data
+    Controller->>Controller: headers() - Build table headers
+    Controller->>Controller: campuses() - Build query
+    
+    Controller->>CampusModel: Campus::query()
+    
+    alt Sort by translation field (name)
+        Controller->>CampusModel: orderByTranslation(column, direction)
+    else Sort by non-translation field
+        Controller->>CampusModel: orderBy(column, direction)
+    end
+    
+    Controller->>CampusModel: get()
+    CampusModel->>DB: Execute SELECT query
+    DB-->>CampusModel: Return campuses with institutes
+    CampusModel-->>Controller: Collection of campuses
+    
+    Controller-->>View: Return headers, campuses, exists
+    View-->>User: Display campuses table
+
+    %% Search/Filter
+    User->>View: Search (wire:model.live)
+    View->>Controller: Update keywords
+    Controller->>Controller: campuses() - Rebuild query
+    Controller->>CampusModel: Query with filters
+    CampusModel->>DB: Execute filtered query
+    DB-->>CampusModel: Filtered results
+    CampusModel-->>Controller: Filtered campuses
+    Controller-->>View: Re-render table
+    View-->>User: Display filtered results
+
+    %% Sort Column
+    User->>View: Sort column (click header)
+    View->>Controller: Update sortBy
+    Controller->>Controller: campuses() - Rebuild query
+    Controller->>CampusModel: Query with new sorting
+    CampusModel->>DB: Execute sorted query
+    DB-->>CampusModel: Sorted results
+    CampusModel-->>Controller: Sorted campuses
+    Controller-->>View: Re-render table
+    View-->>User: Display sorted results
+
+    %% Create Campus
+    User->>View: Click create button
+    View->>Controller: createCampus()
+    Controller->>CampusModel: Campus::make()
+    CampusModel-->>Controller: New empty campus
+    Controller->>Controller: showCampusModel()
+    Controller->>Controller: resetErrorBag()
+    Controller->>Controller: Build empty name array
+    Controller->>Controller: Set campusModal = true
+    Controller-->>View: Render modal
+    View-->>User: Show create campus modal
+
+    User->>View: Fill form fields<br/>(name translations, institutes)
+    View->>Controller: wire:model updates
+    
+    User->>View: Submit form (wire:submit="save")
+    View->>Controller: save()
+    Controller->>Controller: validate()
+    Controller->>Controller: LocalesHelper::transformToModelFields()
+    
+    Controller->>CampusModel: fill($fields)
+    Controller->>CampusModel: institutes()->sync(institute_ids)
+    CampusModel->>DB: Sync pivot table (campus_institute)
+    DB-->>CampusModel: Success
+    Controller->>CampusModel: save()
+    CampusModel->>DB: INSERT INTO campuses
+    DB-->>CampusModel: Success
+    CampusModel-->>Controller: Campus saved
+    
+    Controller-->>View: success('Campus created')
+    Controller->>Controller: Set campusModal = false
+    Controller->>Controller: campuses() - Refresh list
+    Controller->>CampusModel: Query updated list
+    CampusModel->>DB: Execute query
+    DB-->>CampusModel: Return results
+    CampusModel-->>Controller: Updated campuses
+    Controller-->>View: Close modal & re-render table
+    View-->>User: Show success & updated list
+
+    %% Update Campus
+    User->>View: Click edit button
+    View->>Controller: updateCampus(id)
+    Controller->>CampusModel: Campus::findOrFail(id)
+    CampusModel->>DB: SELECT * FROM campuses WHERE id = ?
+    DB-->>CampusModel: Campus data with relations
+    CampusModel-->>Controller: Existing campus instance
+    
+    Controller->>Controller: showCampusModel()
+    Controller->>Controller: resetErrorBag()
+    Controller->>CampusModel: getTranslationsArray()
+    CampusModel-->>Controller: Translations data
+    Controller->>Controller: LocalesHelper::transformToProperties()
+    Controller->>CampusModel: institutes collection
+    CampusModel-->>Controller: Related institutes
+    Controller->>Controller: Map institute IDs
+    Controller->>Controller: Set campusModal = true
+    Controller-->>View: Render modal with data
+    View-->>User: Show edit campus modal
+
+    User->>View: Modify form fields
+    View->>Controller: wire:model updates
+    
+    User->>View: Submit form
+    View->>Controller: save()
+    Controller->>Controller: Check campus->exists = true
+    Controller->>Controller: validate()
+    Controller->>Controller: LocalesHelper::transformToModelFields()
+    
+    Controller->>CampusModel: fill($fields)
+    Controller->>CampusModel: institutes()->sync(institute_ids)
+    CampusModel->>DB: Sync pivot table
+    DB-->>CampusModel: Success
+    Controller->>CampusModel: save()
+    CampusModel->>DB: UPDATE campuses
+    DB-->>CampusModel: Success
+    CampusModel-->>Controller: Campus updated
+    
+    Controller-->>View: success('Campus updated')
+    Controller->>Controller: Set campusModal = false
+    Controller->>Controller: campuses() - Refresh list
+    Controller->>CampusModel: Query updated list
+    CampusModel->>DB: Execute query
+    DB-->>CampusModel: Return results
+    CampusModel-->>Controller: Updated campuses
+    Controller-->>View: Close modal & re-render table
+    View-->>User: Show success & updated list
+
+    %% Delete Campus (placeholder - deleteArticle method exists but should be deleteCampus)
+    User->>View: Click delete button
+    View->>Controller: deleteArticle(id)
+    Note over Controller: Method not implemented<br/>Should be deleteCampus
+    Controller->>CampusModel: Campus::destroy(id)
+    CampusModel->>DB: DELETE FROM campuses
+    DB-->>CampusModel: Success
+    CampusModel-->>Controller: Deletion count
+    Controller-->>View: success('Campus deleted')
+    Controller->>Controller: campuses() - Refresh list
+    Controller->>CampusModel: Query updated list
+    CampusModel->>DB: Execute query
+    DB-->>CampusModel: Return results
+    CampusModel-->>Controller: Updated campuses
+    Controller-->>View: Re-render table
+    View-->>User: Show success & updated list
