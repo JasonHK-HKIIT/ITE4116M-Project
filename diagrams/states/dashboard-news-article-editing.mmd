@@ -1,0 +1,68 @@
+stateDiagram-v2
+    [*] --> Loading: mount(article)
+    
+    Loading --> Creating: article not exists
+    Loading --> Editing: article exists
+    
+    Creating --> FormEntry
+    Editing --> FormEntry
+    
+    FormEntry --> LanguageSwitch: Change selectedLanguage
+    LanguageSwitch --> FormEntry
+    
+    FormEntry --> ImageUpload: Upload cover image
+    ImageUpload --> ImagePreview: Valid image (jpeg/png/jpg/bmp)
+    ImagePreview --> FormEntry
+    ImageUpload --> FormEntry: Invalid image
+    
+    FormEntry --> StatusChange: Change status
+    StatusChange --> Draft: Status = Draft
+    StatusChange --> Published: Status = Published
+    Draft --> FormEntry
+    Published --> DateRequired: Require published_on
+    DateRequired --> FormEntry
+    
+    FormEntry --> Validating: save()
+    
+    Validating --> SlugGeneration: slug empty
+    SlugGeneration --> DateGeneration: Generate from title[en]
+    Validating --> DateGeneration: slug exists
+    
+    DateGeneration --> Validation: published_on empty & status = Published
+    DateGeneration --> Validation: Date set to today
+    DateGeneration --> Validation: published_on exists
+    
+    Validation --> Saving: Validation Success
+    Validation --> FormEntry: Validation Failed
+    
+    Saving --> MediaHandling: Save article
+    MediaHandling --> ClearMedia: cover uploaded
+    ClearMedia --> AddMedia: Clear existing cover
+    AddMedia --> SuccessToast: Save to collection
+    MediaHandling --> SuccessToast: No cover uploaded
+    
+    SuccessToast --> FormEntry: Update mode (stay on page)
+    SuccessToast --> [*]: Create mode (redirect to edit)
+    
+    FormEntry --> [*]: Cancel (redirect to list)
+    
+    note right of FormEntry
+        - Multi-language tabs (title, content)
+        - Slug input with prefix
+        - Status selection (Draft/Published)
+        - Date picker for published_on
+        - Image upload with preview
+        - TinyMCE editor
+    end note
+    
+    note right of Saving
+        - Transform locale fields
+        - Fill article model
+        - Save to database
+    end note
+    
+    note right of MediaHandling
+        - Clear existing media collection
+        - Add new media with original filename
+        - Store in 'cover' collection
+    end note

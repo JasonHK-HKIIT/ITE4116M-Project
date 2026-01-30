@@ -1,0 +1,38 @@
+stateDiagram-v2
+    [*] --> Viewing: mount()
+    
+    Viewing --> Creating: createCampus()
+    Viewing --> Editing: updateCampus(id)
+    
+    Creating --> ModalOpen: showCampusModel()
+    Editing --> ModalOpen: showCampusModel()
+    
+    ModalOpen --> Validating: save()
+    ModalOpen --> Viewing: Cancel
+    
+    Validating --> Saving: Validation Success
+    Validating --> ModalOpen: Validation Failed
+    
+    Saving --> Viewing: Success Toast
+    
+    Viewing --> Sorting: Change sortBy
+    Sorting --> Viewing: Refresh Table
+    
+    note right of ModalOpen
+        - campusModal = true
+        - Reset error bag
+        - Initialize form fields
+        - Switch between language tabs
+    end note
+    
+    note right of Saving
+        - Fill campus model
+        - Sync institutes
+        - Save to database
+    end note
+    
+    note right of Viewing
+        - Display campuses table
+        - Show institutes badges
+        - Sort by name/direction
+    end note

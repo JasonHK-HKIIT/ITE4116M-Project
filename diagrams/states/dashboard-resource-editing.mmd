@@ -1,0 +1,77 @@
+stateDiagram-v2
+    [*] --> Loading: mount(resource)
+    
+    Loading --> Creating: resource not exists
+    Loading --> Editing: resource exists
+    
+    Creating --> FormEntry: Initialize empty pendingFiles/pendingDeleteMedia
+    Editing --> FormEntry: Load translations & existing media
+    
+    FormEntry --> LanguageSwitch: Change selectedLanguage
+    LanguageSwitch --> FormEntry
+    
+    FormEntry --> FileUpload: Upload new files
+    FileUpload --> PendingFilesQueue: updatedPendingFiles()
+    PendingFilesQueue --> FormEntry: Add to pendingFiles[lang]
+    
+    FormEntry --> RemovePending: removePendingFile(lang, idx)
+    RemovePending --> FormEntry: Remove from pendingFiles[lang]
+    
+    FormEntry --> MarkDelete: markDeleteMedia(mediaId, lang)
+    MarkDelete --> PendingDeleteQueue: Add to pendingDeleteMedia[lang]
+    PendingDeleteQueue --> FormEntry: Mark for deletion
+    
+    FormEntry --> Validating: save()
+    
+    Validating --> Saving: Validation Success
+    Validating --> FormEntry: Validation Failed
+    
+    Saving --> MediaUpload: Save resource
+    MediaUpload --> ProcessPendingFiles: Process each language
+    ProcessPendingFiles --> AddMediaFiles: Upload files to translation
+    AddMediaFiles --> ProcessDeletions: Files uploaded
+    
+    ProcessDeletions --> DeleteMarkedMedia: Process pendingDeleteMedia[lang]
+    DeleteMarkedMedia --> ClearQueues: Delete media files
+    ClearQueues --> SuccessToast: Clear pendingFiles & pendingDeleteMedia
+    
+    SuccessToast --> FormEntry: Update mode (stay on page)
+    SuccessToast --> [*]: Create mode (redirect to edit)
+    
+    FormEntry --> [*]: Cancel (redirect to list)
+    
+    note right of FormEntry
+        - Multi-language tabs (title)
+        - Display existing files per language
+        - Show pending upload files
+        - Mark files for deletion
+        - File upload input (PDF, DOC, DOCX, images)
+    end note
+    
+    note right of PendingFilesQueue
+        - Store files temporarily
+        - Per-language array
+        - Multiple file support
+        - Display with remove option
+    end note
+    
+    note right of PendingDeleteQueue
+        - Mark existing media for deletion
+        - Per-language array
+        - Visual indication (strikethrough)
+        - Delayed deletion on save
+    end note
+    
+    note right of MediaUpload
+        - Get translation by locale
+        - Add media with original filename
+        - Store in 'resources' collection
+        - Process all languages
+    end note
+    
+    note right of DeleteMarkedMedia
+        - Find media by ID
+        - Delete from translation
+        - Process all marked files
+        - Clear queue after deletion
+    end note
