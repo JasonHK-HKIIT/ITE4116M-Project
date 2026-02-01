@@ -41,7 +41,8 @@
 				"bmewburn.vscode-intelephense-client",
 				"namesmt.blade-php",
 				"onecentlin.laravel-blade",
-				"xdebug.php-debug"
+				"xdebug.php-debug",
+				"bradlc.vscode-tailwindcss"
 			]
 		},
 		"codespaces": {

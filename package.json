@@ -7,25 +7,26 @@
         "dev": "vite --host"
     },
     "dependencies": {
-        "@awesome.me/kit-45e7c69ab8": "^1.0.2",
-        "autoprefixer": "^10.4.20",
-        "axios": "^1.7.4",
-        "beercss": "^3.13.1",
-        "concurrently": "^9.0.1",
+        "@awesome.me/kit-45e7c69ab8": "^1.0.3",
+        "autoprefixer": "^10.4.24",
+        "axios": "^1.13.4",
+        "beercss": "^3.13.3",
+        "concurrently": "^9.2.1",
         "flatpickr": "^4.6.13",
         "i": "^0.3.7",
-        "laravel-vite-plugin": "^2.0",
-        "npm": "^11.7.0",
-        "tinymce": "^8.3.1",
-        "tinymce-premium": "^8.3.1",
-        "vite": "^7.0.4"
+        "laravel-vite-plugin": "^2.1.0",
+        "npm": "^11.8.0",
+        "tinymce": "^8.3.2",
+        "tinymce-premium": "^8.3.2",
+        "vite": "^7.3.1"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.9.5",
         "@tailwindcss/oxide-linux-x64-gnu": "^4.0.1",
-        "lightningcss-linux-x64-gnu": "^1.29.1"
+        "lightningcss-linux-x64-gnu": "^1.31.1"
     },
     "devDependencies": {
+        "@tailwindcss/typography": "^0.5.19",
         "@tailwindcss/vite": "^4.1.18",
         "daisyui": "^5.5.14",
         "tailwindcss": "^4.1.18"
