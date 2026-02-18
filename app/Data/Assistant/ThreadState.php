@@ -10,5 +10,8 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 class ThreadState extends Data
 {
     /** @var Messages\Message[] */
-    public array $values;
+    public array|null $values;
+
+    /** @var string[] */
+    public array $next;
 }
