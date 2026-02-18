@@ -97,14 +97,14 @@ class extends Component
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($articles as $article)
                 <a href="{{ route('portal.news.view', $article) }}" wire:navigate>
-                    <x-card :title="$article->title" shadow>
-                    <x-slot:figure>
-                        <img src="{{ $article->getFirstMediaUrl('cover') }}" />
-                    </x-slot:figure>
-                    <time class="text-sm text-base-content/50" datetime="{{ $article->published_on->format('Y-m-d') }}">
-                        {{ $article->published_on->format('Y-m-d') }}
-                    </time>
-                </x-card>
+                    <x-card :title="$article->title" shadow class="transition hover:shadow-lg">
+                        <x-slot:figure>
+                            <img src="{{ $article->getFirstMediaUrl('cover') }}" />
+                        </x-slot:figure>
+                        <time class="text-sm text-base-content/50" datetime="{{ $article->published_on->format('Y-m-d') }}">
+                            {{ $article->published_on->format('Y-m-d') }}
+                        </time>
+                    </x-card>
                 </a>
             @endforeach
         </div>
