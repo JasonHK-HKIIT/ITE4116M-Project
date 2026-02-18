@@ -33,6 +33,13 @@
 			"azureDnsAutoDetection": true,
 			"version": "latest",
 			"dockerDashComposeVersion": "v2"
+		},
+		"ghcr.io/devcontainers/features/python:1": {
+			"installTools": false,
+			"version": "3.11"
+		},
+		"ghcr.io/devcontainers-extra/features/poetry:2": {
+			"version": "latest"
 		}
 	},
 	"customizations": {
