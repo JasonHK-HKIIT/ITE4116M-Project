@@ -124,7 +124,7 @@ class extends Component
                         'configurable' => [
                             'type' => 'agent',
                             'type==agent/agent_type' => 'GPT 3.5 Turbo',
-                            'type==agent/system_message' => 'You are a helpful assistant.',
+                            'type==agent/system_message' => Storage::disk('local')->get('assistant/system_message.txt'),
                             'type==agent/retrieval_description' => 'Can be used to look up information that was uploaded to this assistant.
     If the user is referencing particular files, that is often a good hint that information may be here.
     If the user asks a vague question, they are likely meaning to look up info from this retriever, and you should call it!',

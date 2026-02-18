@@ -42,7 +42,8 @@
 				"namesmt.blade-php",
 				"onecentlin.laravel-blade",
 				"xdebug.php-debug",
-				"bradlc.vscode-tailwindcss"
+				"bradlc.vscode-tailwindcss",
+				"streetsidesoftware.code-spell-checker"
 			]
 		},
 		"codespaces": {
