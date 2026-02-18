@@ -11,7 +11,10 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 
-new #[Layout('layouts::portal')] class extends Component {
+new
+#[Layout('layouts::portal')]
+class extends Component
+{
     use Toast, WithPagination;
 
     public int $perPage = 10;
@@ -88,42 +91,24 @@ new #[Layout('layouts::portal')] class extends Component {
         </x-slot:actions>
     </x-drawer>
 
-    <x-card shadow>
-        <div class="flex items-center justify-between mb-2">
-            <div></div>
-            <div>
-                <select wire:model.live="perPage" class="select select-bordered select-sm w-24">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                </select>
-            </div>
+    @if ($articles->count() === 0)
+        <div class="text-center text-base-content/60 py-12">{{ __('No news found') }}</div>
+    @else
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            @foreach ($articles as $article)
+                <a href="{{ route('portal.news.view', $article) }}" wire:navigate>
+                    <x-card :title="$article->title" shadow>
+                    <x-slot:figure>
+                        <img src="{{ $article->getFirstMediaUrl('cover') }}" />
+                    </x-slot:figure>
+                    <time class="text-sm text-base-content/50" datetime="{{ $article->published_on->format('Y-m-d') }}">
+                        {{ $article->published_on->format('Y-m-d') }}
+                    </time>
+                </x-card>
+                </a>
+            @endforeach
         </div>
-        @if ($articles->count() === 0)
-            <div class="text-center text-base-content/60 py-12">{{ __('No news found') }}</div>
-        @else
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                @foreach ($articles as $article)
-                    <x-card class="border border-base-200 h-full">
-                        <div class="flex flex-col gap-3 h-full">
-                            <img src="{{ $article->getFirstMediaUrl('cover') }}" alt="Cover" class="w-full h-36 object-cover rounded" />
-                            <h3 class="text-lg font-semibold min-h-[3.5rem] line-clamp-3">{{ $article->title }}</h3>
-                            <div class="flex items-center justify-between text-sm text-base-content/60 mt-auto">
-                                <div class="flex items-center gap-1">
-                                    {{ $article->published_on?->format('Y-m-d') }}
-                                </div>
-                                <a href="{{ url('/news/' . $article->slug) }}" class="flex items-center gap-1 text-primary hover:underline">
-                                    <span>View Details</span>
-                                    <x-icon name="fal.eye" class="w-4 h-4" />
-                                </a>
-                            </div>
-                        </div>
-                    </x-card>
-                @endforeach
-            </div>
-            <div class="mt-4">
-                {{ $articles->links() }}
-            </div>
-        @endif
-    </x-card>
+
+        <x-pagination :rows="$articles" wire:model.live="perPage" :per-page-values="[5, 10, 25]" />
+    @endif
 </div>
