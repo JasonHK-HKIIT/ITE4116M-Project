@@ -22,6 +22,6 @@ class Assistant extends Data
 
     public bool $public;
 
-    #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d\TH:i:s.uP')]
+    #[WithCast(DateTimeInterfaceCast::class)]
     public DateTimeImmutable $updatedAt;
 }

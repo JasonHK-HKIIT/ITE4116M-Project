@@ -28,6 +28,6 @@ class Thread extends Data implements Wireable
 
     public array|null|Optional $metadata;
 
-    #[WithCast(DateTimeInterfaceCast::class, format: 'Y-m-d\TH:i:s.uP')]
+    #[WithCast(DateTimeInterfaceCast::class)]
     public DateTimeImmutable $updatedAt;
 }
