@@ -3,13 +3,11 @@ use App\Models\NewsArticle;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-new #[Layout('layouts::portal')] class extends Component {
+new
+#[Layout('layouts::portal')]
+class extends Component
+{
     public NewsArticle $article;
-
-    public function mount($slug)
-    {
-        $this->article = NewsArticle::where('slug', $slug)->firstOrFail();
-    }
 }; ?>
 
 <div class="p-4 md:p-8">
