@@ -4,10 +4,10 @@ use App\Data\Assistant\Assistant;
 use App\Data\Assistant\Messages\Message;
 use App\Data\Assistant\Thread;
 use App\Data\Assistant\ThreadState;
-use App\Enums\Assistant\MessageType;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
@@ -73,8 +73,8 @@ class extends Component
             }
 
             $state = ThreadState::from($response->json());
-            $this->messages = $state->values;
-            $this->lastMessageId = array_last($this->messages)->id;
+            $this->messages = $state->values ?? [];
+            $this->lastMessageId = array_last($this->messages)?->id ?? null;
         }
 
         $this->refreshThreads(true);
@@ -82,6 +82,8 @@ class extends Component
 
     public function boot()
     {
+        $this->baseUrl = config('app.assistant.base_url');
+        
         if ($this->threadId)
         {
             /** @var \Illuminate\Http\Client\Response */
@@ -142,7 +144,7 @@ class extends Component
                     'name' => $question,
                 ]);
             $this->thread = Thread::from($response->json());
-            $this->threadId = $thread->threadId;
+            $this->threadId = $this->thread->threadId;
 
             $this->dispatch('thread-created', url: route('portal.assistant.thread', ['id' => $this->threadId], false))->self();
             $this->dispatch('refresh-threads')->self();
