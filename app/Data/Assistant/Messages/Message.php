@@ -27,6 +27,12 @@ abstract class Message extends Data implements PropertyMorphableData, Wireable
     /** @var string|array<int,string|array> */
     public string|array $content;
 
+    /** @var array<string,mixed> */
+    public array $responseMetadata;
+
+    /** @var array<string,mixed> */
+    public array $additionalKwargs;
+
     public static function morph(array $properties): ?string
     {
         return match ($properties['type'])
