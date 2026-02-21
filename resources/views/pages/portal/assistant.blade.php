@@ -153,16 +153,22 @@ If the user asks a vague question, they are likely meaning to look up info from 
         let firstChatBubble = true;
         const observer = new MutationObserver((records) =>
         {
+            const scrollFromTop = messagesContainer.scrollHeight - (messagesContainer.scrollTop + messagesContainer.clientHeight);
+
             for (const record of records)
             {
-                if (firstChatBubble && Array.from(record.addedNodes).some((node) => ((node instanceof HTMLElement) && node.classList.contains("chat"))))
+                const nodes = Array.from(record.addedNodes);
+                if (nodes.some((node) => ((node instanceof HTMLElement) && node.classList.contains("chat"))))
                 {
-                    firstChatBubble = false;
-                    messagesEndMarker.scrollIntoView(false);
+                    if (firstChatBubble || (scrollFromTop <= 64))
+                    {
+                        firstChatBubble = false;
+                        messagesEndMarker.scrollIntoView(false);
+                    }
                 }
-                else if (Array.from(record.addedNodes).some((node) => ((node instanceof HTMLElement) ? node : node.parentElement)?.closest(".chat-bubble")))
+                else if (nodes.some((node) => ((node instanceof HTMLElement) ? node : node.parentElement)?.closest(".chat-bubble")))
                 {
-                    if ((messagesContainer.scrollTop + messagesContainer.clientHeight) >= (messagesContainer.scrollHeight - 64))
+                    if (scrollFromTop <= 24)
                     {
                         messagesEndMarker.scrollIntoView(false);
                     }
