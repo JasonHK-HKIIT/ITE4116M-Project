@@ -121,6 +121,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
                 if ($event->isLast())
                 {
                     $this->dispatch('refresh-threads')->self();
+                    $this->dispatch('question-answered')->self();
                     return;
                 }
 
@@ -136,7 +137,6 @@ If the user asks a vague question, they are likely meaning to look up info from 
 
                     $this->stream(to: $message->id, content: $message->content, replace: true);
                     usleep(50000);
-                    $this->dispatch('messages-scroll', messageId: $this->lastMessageId)->self();
                 }
             }
         }
@@ -145,17 +145,42 @@ If the user asks a vague question, they are likely meaning to look up info from 
 
 @script
     <script>
-        this.$on("question-sent", ({ question }) => $wire.think(question));
-        this.$on("thread-created", ({ url }) => history.replaceState(history.state, "", url));
+        const messagesContainer = document.getElementById("messages-container");
 
-        this.$on("messages-scroll", ({ messageId }) =>
+        const messagesEndMarker = document.getElementById("messages-end");
+        messagesEndMarker.scrollIntoView(false);
+
+        let firstChatBubble = true;
+        const observer = new MutationObserver((records) =>
         {
-            const message = document.getElementById(messageId);
-            if (message)
+            for (const record of records)
             {
-                message.scrollIntoView(false);
+                if (firstChatBubble && Array.from(record.addedNodes).some((node) => ((node instanceof HTMLElement) && node.classList.contains("chat"))))
+                {
+                    firstChatBubble = false;
+                    messagesEndMarker.scrollIntoView(false);
+                }
+                else if (Array.from(record.addedNodes).some((node) => ((node instanceof HTMLElement) ? node : node.parentElement)?.closest(".chat-bubble")))
+                {
+                    if ((messagesContainer.scrollTop + messagesContainer.clientHeight) >= (messagesContainer.scrollHeight - 64))
+                    {
+                        messagesEndMarker.scrollIntoView(false);
+                    }
+                }
             }
         });
+
+        this.$on("thread-created", ({ url }) => history.replaceState(history.state, "", url));
+
+        this.$on("question-sent", ({ question }) =>
+        {
+            firstChatBubble = true;
+            observer.observe(messagesEndMarker.parentElement, { childList: true, subtree: true });
+
+            $wire.think(question);
+        });
+
+        this.$on("question-answered", () => observer.disconnect());
     </script>
 @endscript
 
@@ -186,7 +211,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
         <x-header :title="$threadId ? 'Chat Thread' : 'New Chat'" :subtitle="$thread?->name" separator class="!mb-0" />
         
         <div class="grow-1 flex flex-col">
-            <div class="pt-10 grow-1 flex flex-col overflow-y-auto" style="scrollbar-width: none;">
+            <div id="messages-container" class="pt-10 grow-1 flex flex-col overflow-y-auto" style="scrollbar-width: none;">
                 <div class="self-center w-full max-w-192" style="container-type: size;">
                     @island(name: 'messages')
                         @foreach ($messages as $message)
