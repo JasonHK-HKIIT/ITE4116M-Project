@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\AssistantClient;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(AssistantClient::class, fn(Application $app) => new AssistantClient());
     }
 
     /**

@@ -9,7 +9,13 @@ use Spatie\LaravelData\Mappers\SnakeCaseMapper;
 #[MapOutputName(SnakeCaseMapper::class)]
 class ThreadCreatePayload extends Data
 {
-    public string $name;
+    public function __construct(
+        public string $name,
+        public string $assistantId)
+    {}
 
-    public string $assistantId;
+    public static function fromMultiple(string $name, string $assistantId): self
+    {
+        return new self($name, $assistantId);
+    }
 }

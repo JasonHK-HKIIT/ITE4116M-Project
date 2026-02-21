@@ -10,9 +10,22 @@ use Spatie\LaravelData\Optional;
 #[MapOutputName(SnakeCaseMapper::class)]
 class AssistantCreatePayload extends Data
 {
-    public string $name;
+    /**
+     * @param array<string,mixed> $config
+     */
+    public function __construct(
+        public string $name,
+        public array $config,
+        public bool|null|Optional $public)
+    {}
 
-    public array $config;
+    public static function fromMultiple(string $name, array $config): self
+    {
+        return new self($name, $config, Optional::create());
+    }
 
-    public bool|null|Optional $public;
+    public static function fromMultipleWithPublic(string $name, array $config, bool|null|Optional $public): self
+    {
+        return new self($name, $config, $public);
+    }
 }

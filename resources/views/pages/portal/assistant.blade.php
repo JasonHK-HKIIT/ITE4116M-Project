@@ -1,12 +1,11 @@
 <?php
 
-use App\Data\Assistant\Assistant;
+use App\Data\Assistant\AssistantCreatePayload;
+use App\Data\Assistant\ExecutionCreatePayload;
 use App\Data\Assistant\Messages\Message;
 use App\Data\Assistant\Thread;
-use App\Data\Assistant\ThreadState;
-use Illuminate\Http\Client\ConnectionException;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
+use App\Data\Assistant\ThreadCreatePayload;
+use App\Services\AssistantClient;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
@@ -14,8 +13,6 @@ use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
-use Symfony\Component\HttpClient\EventSourceHttpClient;
-use Symfony\Component\HttpClient\HttpClient;
 
 new
 #[Layout("layouts::assistant")]
@@ -40,39 +37,22 @@ class extends Component
     #[Validate('required')]
     public ?string $question = null;
 
-    private string $baseUrl;
+    private AssistantClient $client;
+
+    public function boot(AssistantClient $client): void
+    {
+        $this->client = $client;
+        abort_unless($this->client->isHealthy(), 503);
+    }
 
     public function mount(?string $id = null): void
     {
-        $this->baseUrl = config('app.assistant.base_url');
-
-        try
-        {
-            $response = Http::get("{$this->baseUrl}/health");
-            abort_unless($response->ok(), 503);
-        }
-        catch (ConnectionException $ex)
-        {
-            abort(503);
-        }
-
         $this->threadId = $id;
-
         if ($this->threadId)
         {            
-            /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/{$this->threadId}");
-            $this->thread = Thread::from($response->json());
+            $this->thread = $this->client->getThread($this->threadId);
 
-            /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/{$this->threadId}/state");
-            if (!$response->ok())
-            {
-                Log::error("OpenGPTs error: {$response->json('detail')}", ['Thread ID' => $this->threadId]);
-                abort($response->status());
-            }
-
-            $state = ThreadState::from($response->json());
+            $state = $this->client->getThreadState($this->threadId);
             $this->messages = $state->values ?? [];
             $this->lastMessageId = array_last($this->messages)?->id ?? null;
         }
@@ -80,30 +60,11 @@ class extends Component
         $this->refreshThreads(true);
     }
 
-    public function boot()
-    {
-        $this->baseUrl = config('app.assistant.base_url');
-        
-        if ($this->threadId)
-        {
-            /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/{$this->threadId}");
-            $this->thread = Thread::from($response->json());
-        }
-    }
-
-    public function createThread(): void
-    {
-
-    }
-
     #[On('refresh-threads')]
     public function refreshThreads(bool $initial = false): void
     {
-        /** @var \Illuminate\Http\Client\Response */
-        $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->get("{$this->baseUrl}/threads/");
-        $threads = $response->json();
-        usort($threads, fn($a, $b) => (strtotime($b['updated_at']) - strtotime($a['updated_at'])));
+        $threads = $this->client->listThreads();
+        usort($threads, fn($a, $b) => ($b->updatedAt->diff($a->updatedAt)->f));
         $this->threads = $threads;
 
         if (!$initial) { $this->renderIsland('threads', with: $this); }
@@ -117,33 +78,22 @@ class extends Component
 
         if (!$this->threadId)
         {
-            /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post("{$this->baseUrl}/assistants",
-                [
-                    'public' => false,
-                    'name' => '',
-                    'config' => [
-                        'configurable' => [
-                            'type' => 'agent',
-                            'type==agent/agent_type' => 'GPT 3.5 Turbo',
-                            'type==agent/system_message' => Storage::disk('local')->get('assistant/system_message.txt'),
-                            'type==agent/retrieval_description' => 'Can be used to look up information that was uploaded to this assistant.
-    If the user is referencing particular files, that is often a good hint that information may be here.
-    If the user asks a vague question, they are likely meaning to look up info from this retriever, and you should call it!',
-                            'type==agent/tools' => [],
-                            'type==agent/interrupt_before_action' => false,
-                        ],
+            $assistant = $this->client->createAssistant(AssistantCreatePayload::from(
+                name: '',
+                config: [
+                    'configurable' => [
+                        'type' => 'agent',
+                        'type==agent/agent_type' => 'GPT 3.5 Turbo',
+                        'type==agent/system_message' => Storage::disk('local')->get('assistant/system_message.txt'),
+                        'type==agent/retrieval_description' => 'Can be used to look up information that was uploaded to this assistant.
+If the user is referencing particular files, that is often a good hint that information may be here.
+If the user asks a vague question, they are likely meaning to look up info from this retriever, and you should call it!',
+                        'type==agent/tools' => [],
+                        'type==agent/interrupt_before_action' => false,
                     ],
-                ]);
-            $assistant = Assistant::from($response->json());
+                ]));
 
-            /** @var \Illuminate\Http\Client\Response */
-            $response = Http::withCookies(['opengpts_user_id' => auth()->user()->id], 'localhost')->post("{$this->baseUrl}/threads",
-                [
-                    'assistant_id' => $assistant->assistantId,
-                    'name' => $question,
-                ]);
-            $this->thread = Thread::from($response->json());
+            $this->thread = $this->client->createThread(ThreadCreatePayload::from($question, $assistant->assistantId));
             $this->threadId = $this->thread->threadId;
 
             $this->dispatch('thread-created', url: route('portal.assistant.thread', ['id' => $this->threadId], false))->self();
@@ -155,29 +105,18 @@ class extends Component
 
     public function think(string $question): void
     {
-        $client = new EventSourceHttpClient(HttpClient::create(
-            [
-                'headers' => [
-                    'Cookie' => sprintf("%s=%s", 'opengpts_user_id', rawurlencode(auth()->user()->id))
+        $response = $this->client->streamExecution(ExecutionCreatePayload::from(
+            threadId: $this->threadId,
+            input: [
+                [
+                    'type' => 'human',
+                    'content' => $question,
                 ],
             ]));
 
-        $source = $client->connect("{$this->baseUrl}/runs/stream",
-            [
-                'json' => [
-                    'thread_id' => $this->threadId,
-                    'input' => [
-                        [
-                            'type' => 'human',
-                            'content' => $question,
-                        ],
-                    ],
-                ],
-            ], 'POST');
-
-        while ($source)
+        while ($response->source)
         {
-            foreach ($client->stream($source) as $event)
+            foreach ($response->client->stream($response->source) as $event)
             {
                 if ($event->isLast())
                 {
@@ -232,7 +171,7 @@ class extends Component
             <x-menu-sub title="Chat History" icon="fal.clock-rotate-left" open>
                 @island(name: 'threads')
                     @foreach ($threads as $thread)
-                        <x-menu-item wire:key="{{ $thread['thread_id'] }}" :title="$thread['name']" :link="route('portal.assistant.thread', ['id' => $thread['thread_id']])" />
+                        <x-menu-item wire:key="{{ $thread->threadId }}" :title="$thread->name" :link="route('portal.assistant.thread', ['id' => $thread->threadId])" />
                     @endforeach
                 @endisland
             </x-menu-sub>
@@ -254,7 +193,7 @@ class extends Component
                             <livewire:chat-message id="{{ $message->id }}" wire:key="{{ $message->id }}" :message="$message" />
                         @endforeach
                     @endisland
-                    <div class="h-5"></div>
+                    <div id="messages-end" class="h-5"></div>
                 </div>
             </div>
 
