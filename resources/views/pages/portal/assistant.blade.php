@@ -131,7 +131,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
                     if ($message?->id != $this->lastMessageId)
                     {
                         $this->lastMessageId = $message->id;
-                        $this->streamIsland('messages', mode: 'append', with: $this);
+                        $this->streamIsland('messages', mode: 'append', with: [ 'messages' => [$message] ]);
                     }
 
                     $this->stream(to: $message->id, content: $message->content, replace: true);
