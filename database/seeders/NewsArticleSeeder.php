@@ -204,6 +204,223 @@ class NewsArticleSeeder extends Seeder
                 ],
             ]);
 
+        $article = NewsArticle::create(
+            [
+                'slug' => 'vtc-apprenticeship-learn-and-earn-pathway',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-02-06'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'VTC Apprenticeship – Learn and Earn Pathway',
+                    'content' => '<p>The VTC Apprenticeship Scheme offers a "learn and earn" pathway for students who wish to gain recognised qualifications while developing hands-on workplace experience.</p>
+<p>Through structured on-the-job training and related academic study, apprentices will build professional skills, industry knowledge and a strong foundation for future career development.</p>
+<p>Details of the participating industries, entry requirements, allowance and progression pathways will be announced in due course via campus notice boards and the VTC website.</p>
+<p>Interested students are encouraged to stay tuned and contact their Programme Leader or Student Development Office for more information.</p>
+<p>VTC Apprenticeship Office</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => 'VTC 學徒訓練計劃 – 邊學邊賺新出路',
+                    'content' => '<p>VTC 學徒訓練計劃為同學提供「一邊學習、一邊賺取收入」的升學及就業出路，讓你在真實工作環境中累積經驗，同時修讀相關課程。</p>
+<p>透過有系統的在職培訓及課堂學習，同學可以掌握專業技能及行業知識，為日後投身職場打好基礎。</p>
+<p>有關行業範圍、入學條件、學徒薪酬及進修安排等詳情，將稍後透過校內公告及 VTC 網站公布。</p>
+<p>有興趣的同學可留意最新消息，或向課程主任／學生發展處查詢。</p>
+<p>VTC 學徒訓練辦公室</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => 'VTC 学徒训练计划 – 边学边赚新出路',
+                    'content' => '<p>VTC 学徒训练计划为同学提供「一边学习、一边赚取收入」的升学及就业出路，让你在真实工作环境中累积经验，同时修读相关课程。</p>
+<p>通过有系统的在职培训及课堂学习，同学可以掌握专业技能和行业知识，为将来踏入职场打下稳固基础。</p>
+<p>有关行业范围、入学条件、学徒薪酬及进修安排等详情，将稍后通过校内公告及 VTC 网站公布。</p>
+<p>有兴趣的同学可留意最新消息，或向课程主任／学生发展处查询。</p>
+<p>VTC 学徒训练办公室</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'support-services-for-students-with-sen',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-02-06'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Support Services for Students with SEN',
+                    'content' => '<p>For AY2026/27, the Student Special Support Office provides various support services for students with Special Educational Needs (SEN).</p>
+<p>These services aim to help SEN students adapt to campus life, enhance their learning experience and receive appropriate support throughout their studies.</p>
+<p>Details of the support arrangements and application procedures will be announced via campus notices and the VTC website.</p>
+<p>Student Special Support Office</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '為有特殊教育需要學生提供的支援服務',
+                    'content' => '<p>2026/27學年起，學生特別支援辦事處為有特殊教育需要 (SEN) 的同學提供各項支援服務。</p>
+<p>相關服務旨在協助SEN學生適應校園生活、改善學習體驗，並在修讀課程期間獲得適切的支援。</p>
+<p>有關支援安排及申請程序的詳情，將透過校內公告及 VTC 網站公布。</p>
+<p>學生特別支援辦事處</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '为有特殊教育需要学生提供的支援服务',
+                    'content' => '<p>自2026/27学年起，学生特别支援办事处为有特殊教育需要 (SEN) 的同学提供各项支援服务。</p>
+<p>相关服务旨在协助SEN学生适应校园生活、提升学习体验，并在修读课程期间获得适切的支援。</p>
+<p>有关支援安排及申请程序的详情，将通过校内公告及 VTC 网站公布。</p>
+<p>学生特别支援办事处</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'programme-selection-info-day',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-02-10'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Programme Selection Info Day – Register Now!',
+                    'content' => '<p>Join our Programme Selection Info Day on <strong>10 May</strong> to plan your study and career pathway.</p>
+<p>Highlights include:</p>
+<ul>
+<li>Analysis of admission requirements and programme choices</li>
+<li>One-on-one programme consultation with academic staff</li>
+<li>Advice from student support professionals for students and parents</li>
+</ul>
+<p>Seats are limited – register now and get personalised guidance for your next step.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '選科策略資訊日 – 立即登記參加！',
+                    'content' => '<p>「選科策略資訊日」將於<strong>5月10日</strong>舉行，協助同學及家長規劃升學及就業出路。</p>
+<p>活動重點：</p>
+<ul>
+<li>分析收生要求及升學部署</li>
+<li>專屬「一對一」課程諮詢</li>
+<li>學友社專家及老師為家長提供貼士</li>
+</ul>
+<p>名額有限，請立即登記參加，為前路作好準備！</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '选科策略资讯日 – 立即登记参加！',
+                    'content' => '<p>「选科策略资讯日」将于<strong>5月10日</strong>举行，协助同学及家长规划升学及就业出路。</p>
+<p>活动重点：</p>
+<ul>
+<li>分析录取要求及升学部署</li>
+<li>专属「一对一」课程咨询</li>
+<li>学友社专家及老师为家长提供贴士</li>
+</ul>
+<p>名额有限，请立即登记参加，为未来做好准备！</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'dse-results-release-talk-and-workshop',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2025-07-05'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'DSE Results Release Talk & Workshop 2025',
+                    'content' => '<p>The DSE Results Release Talk & Workshop 2025 will be held on <strong>5 July (Saturday)</strong>, from <strong>2:00 pm to 5:00 pm</strong>.</p>
+<p>Activities include:</p>
+<ul>
+<li>Strategies for handling HKDSE results and programme selection</li>
+<li>Counselling on further studies and career prospects</li>
+<li>On-site aptitude and interest assessment</li>
+<li>Preview of campus life and learning environment</li>
+</ul>
+<p>Senior secondary students and parents are welcome to join. Register now to get professional advice before results release.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '文憑試放榜講座暨工作坊2025',
+                    'content' => '<p><strong>「文憑試放榜講座暨工作坊2025」</strong>將於<strong>7月5日（星期六）下午2時至5時</strong>舉行。</p>
+<p>活動內容包括：</p>
+<ul>
+<li>分析文憑試放榜策略及選科部署</li>
+<li>升學及就業前景諮詢</li>
+<li>即場測試專長及潛能</li>
+<li>大專校園生活及設施率先了解</li>
+</ul>
+<p>歡迎中六同學及家長參加，把握機會於放榜前作好準備。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '文凭试放榜讲座暨工作坊2025',
+                    'content' => '<p><strong>「文凭试放榜讲座暨工作坊2025」</strong>将于<strong>7月5日（星期六）下午2时至5时</strong>举行。</p>
+<p>活动内容包括：</p>
+<ul>
+<li>分析文凭试放榜策略及选科部署</li>
+<li>升学及就业前景咨询</li>
+<li>现场测试专长及潜能</li>
+<li>抢先了解大专校园生活及设施</li>
+</ul>
+<p>欢迎中六同学及家长参加，把握机会在放榜前做好准备。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'curriculum-information-and-experience-day-infoday',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2025-11-08'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Curriculum Information & Experience Day (InfoDay)',
+                    'content' => '<p>The Curriculum Information & Experience Day (InfoDay) will be held on <strong>8–9 November</strong> and <strong>15–16 November (Fri–Sat)</strong>.</p>
+<p>Participating institutions include:</p>
+<ul>
+<li>Hong Kong Institute of Vocational Education (IVE)</li>
+<li>Hong Kong Design Institute (HKDI)</li>
+<li>Hong Kong Institute of Information Technology (HKIIT)</li>
+<li>International Culinary Institute (ICI)</li>
+</ul>
+<p>Prospective students can learn about programme information, explore campus facilities, join trial lessons and experience campus life.</p>
+<p>All S6 students and parents are welcome. Visit our InfoDay website for registration details.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '課程資訊及體驗日（InfoDay）',
+                    'content' => '<p><strong>「課程資訊及體驗日（InfoDay）」</strong>將於<strong>11月8–9日及15–16日（星期五、六）</strong>舉行。</p>
+<p>參與院校包括：</p>
+<ul>
+<li>香港專業教育學院</li>
+<li>香港知專設計學院</li>
+<li>香港資訊科技學院</li>
+<li>國際廚藝學院</li>
+</ul>
+<p>同學可透過活動了解課程資訊、參觀校園設施、參與體驗課堂，親身感受校園生活。</p>
+<p>歡迎中六同學及家長參加，詳情請瀏覽 InfoDay 網頁。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '课程资讯及体验日（InfoDay）',
+                    'content' => '<p><strong>「课程资讯及体验日（InfoDay）」</strong>将于<strong>11月8–9日及15–16日（星期五、六）</strong>举行。</p>
+<p>参与院校包括：</p>
+<ul>
+<li>香港专业教育学院</li>
+<li>香港知专设计学院</li>
+<li>香港资讯科技学院</li>
+<li>国际厨艺学院</li>
+</ul>
+<p>同学可透过活动了解课程资讯、参观校园设施、参与体验课堂，亲身感受校园生活。</p>
+<p>欢迎中六同学及家长参加，详情请浏览 InfoDay 网页。</p>',
+                ],
+            ]);
         NewsArticle::factory()
             ->count(2)
             ->draft()

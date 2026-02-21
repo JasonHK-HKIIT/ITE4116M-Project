@@ -17,10 +17,6 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <p class="text-base-content/60 mt-2">
                         {{ now()->format('d F Y (l)') }}
                     </p>
-                    <div class="flex items-center gap-2 mt-4">
-                        <x-icon name="s-envelope" class="w-9 h-9 text-green-500" />
-                        <x-alert title="You have 10 messages" icon="o-exclamation-triangle" />
-                    </div>
                 </div>
                 <x-icon name="fal.sparkles" class="w-16 h-16 text-warning opacity-50" />
             </div>
@@ -73,34 +69,34 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     'image' => '/Images/VTC_slide1.jpg',
                     'title' => 'VTC Apprenticeship',
                     'description' => 'Combining hands-on training with academic learning for career success.',
-                    'url' => '/news/vtc...1',
+                    'url' => '/news/vtc-apprenticeship-learn-and-earn-pathway',
                 ],
                 [
                     'image' => '/Images/VTC_slide2.jpg',
                     'title' => 'Support Services for SEN Students',
                     'description' =>
                         'Providing comprehensive support and resources for students with special educational needs.',
-                    'url' => '/news/vtc...2',
+                    'url' => '/news/support-services-for-students-with-sen',
                 ],
                 [
                     'image' => '/Images/VTC_slide3.jpg',
                     'title' => 'Programme Selection Info Day',
                     'description' => 'Join us on May 10th to explore programme options and career pathways.',
-                    'url' => '/news/vtc...3',
+                    'url' => '/news/programme-selection-info-day',
                 ],
                 [
                     'image' => '/Images/VTC_slide4.jpg',
-                    'title' => 'DSE Results Release & Workshop',
+                    'title' => 'DSE Results Release Talk & Workshop 2025',
                     'description' =>
                         'Analyse exam strategies, get university consultation, test your potential and discover university life.',
-                    'url' => '/news/vtc...4',
+                    'url' => '/news/dse-results-release-talk-and-workshop',
                 ],
                 [
                     'image' => '/Images/VTC_slide5.jpg',
                     'title' => 'Curriculum & Experience Day',
                     'description' =>
                         'InfoDay on November 8-9 and 15-16 (Friday-Saturday). Explore our diverse programmes and discover your future.',
-                    'url' => '/news/vtc...5',
+                    'url' => '/news/curriculum-information-and-experience-day-infoday',
                 ],
             ];
         @endphp
