@@ -49,4 +49,8 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     Route::livewire('/resources', 'pages::dashboard.resources.list')->name('resources.list');
     Route::livewire('/resources/create', 'pages::dashboard.resources.edit')->name('resources.create');
     Route::livewire('/resources/{resource}', 'pages::dashboard.resources.edit')->whereNumber('resource')->name('resources.edit');
+
+    Route::livewire('/activities', 'pages::dashboard.activities.list')->name('activities.list');
+    Route::livewire('/activities/create', 'pages::dashboard.activities.edit')->name('activities.create');
+    Route::livewire('/activities/{id}', 'pages::dashboard.activities.edit')->whereNumber('id')->name('activities.edit');
 });
