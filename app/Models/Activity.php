@@ -4,20 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Astrotomic\Translatable\Translatable;
 
 class Activity extends Model
 {
     /** @use HasFactory<\Database\Factories\ActivityFactory> */
-    use HasFactory;
+    use HasFactory, Translatable;
 
     protected $table = 'activities';
+
+    public array $translatedAttributes = ['title', 'description', 'discipline', 'attribute'];
 
     protected $fillable = [
         'activity_code',
         'activity_type',
-        'title',
-        'campus',
-        'discipline',
+        'campus_id',
         'instructor',
         'responsible_staff',
         'execution_from',
@@ -25,14 +27,11 @@ class Activity extends Model
         'time_slot_from',
         'time_slot_to',
         'duration_hours',
-        'description',
-        'attribute',
         'swpd_programme',
         'venue',
         'venue_remark',
         'capacity',
         'registered',
-        'has_vacancy',
         'total_amount',
         'included_deposit',
         'attachment',
@@ -45,16 +44,21 @@ class Activity extends Model
         'time_slot_to'     => 'datetime:Y-m-d H:i',
         'duration_hours'   => 'decimal:2',
         'swpd_programme'   => 'boolean',
-        'has_vacancy'      => 'boolean',
         'total_amount'     => 'decimal:2',
         'included_deposit' => 'decimal:2',
     ];
 
-    protected static function booted()
+    /**
+     * Get the campus associated with the activity.
+     */
+    public function campus(): BelongsTo
     {
-        static::saving(function ($activity) {
-            $activity->has_vacancy = $activity->registered < $activity->capacity;
-        });
+        return $this->belongsTo(Campus::class);
+    }
+
+    public function getHasVacancyAttribute()
+    {
+        return $this->registered < $this->capacity;
     }
 
 }

@@ -43,18 +43,30 @@ class ActivityFactory extends Factory
                 'Student Organizations',
                 'Volunteer Services'
             ]),
-            'title'             => $this->faker->sentence(3),
-            'campus'            => $this->faker->randomElement(['Not specified']),
-            'discipline'        => $this->faker->randomElement(['IT', 'Business', 'Engineering', 'Arts']),
+            'campus_id'         => $this->faker->numberBetween(1, 2),
             'instructor'        => $this->faker->name(),
             'responsible_staff' => $this->faker->name(),
             'execution_from'    => $from->format('Y-m-d'),
             'execution_to'      => $to->format('Y-m-d'),
             'time_slot_from'    => $slotFrom->format('Y-m-d H:i'),
             'time_slot_to'      => $slotTo->format('Y-m-d H:i'),
-            'duration_hours'    => 1.0,
-            'description'       => $this->faker->paragraph(),
-            'attribute'         => $this->faker->randomElement([
+            'duration_hours'    => $this->faker->randomFloat(2, 0.5, 8),
+            'swpd_programme'    => $this->faker->boolean(),
+            'venue'             => $this->faker->randomElement(['Hall A', 'Room 101', 'Gym', 'Not specified']),
+            'venue_remark'      => $this->faker->sentence(),
+            'capacity'          => $capacity,
+            'registered'        => $registered,
+            'total_amount'      => $totalAmount,
+            'included_deposit'  => $includedDeposit,
+            'attachment'        => $this->faker->optional()->word() . '.pdf',
+            // Translatable fields
+            'title:en'          => $this->faker->sentence(3),
+            'title:zh'          => $this->faker->sentence(3),
+            'description:en'    => $this->faker->paragraph(),
+            'description:zh'    => $this->faker->paragraph(),
+            'discipline:en'     => $this->faker->randomElement(['IT', 'Business', 'Engineering', 'Arts']),
+            'discipline:zh'     => $this->faker->randomElement(['資訊技術', '商業', '工程', '藝術']),
+            'attribute:en'      => $this->faker->randomElement([
                 'Effective Communicators (EC)',
                 'Independent Learners (IDL)',
                 'Informed and Professionally Competent (IPC)',
@@ -63,15 +75,15 @@ class ActivityFactory extends Factory
                 'Problem-solvers (PS)',
                 'Professional, Socially and Globally Responsible (PSG)'
             ]),
-            'swpd_programme'    => $this->faker->boolean(),
-            'venue'             => $this->faker->randomElement(['Hall A', 'Room 101', 'Gym', 'Not specified']),
-            'venue_remark'      => $this->faker->sentence(),
-            'capacity'          => $capacity,
-            'registered'        => $registered,
-            'has_vacancy'       => $registered < $capacity,
-            'total_amount'      => $totalAmount,
-            'included_deposit'  => $includedDeposit,
-            'attachment'        => $this->faker->optional()->word() . '.pdf',
+            'attribute:zh'      => $this->faker->randomElement([
+                '有效溝通者 (EC)',
+                '獨立學習者 (IDL)',
+                '知識淵博和專業稱職 (IPC)',
+                '無需分類',
+                '積極靈活 (PF)',
+                '問題解決者 (PS)',
+                '專業、社會和全球責任感 (PSG)'
+            ]),
         ];
     }
 
