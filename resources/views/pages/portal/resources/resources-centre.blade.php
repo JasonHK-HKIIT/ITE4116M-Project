@@ -36,7 +36,7 @@ class extends Component
 
     public function documents()
     {
-        $locale = app()->getLocale() ?? 'en';
+        $locale = app()->getLocale();
         $query = \App\Models\Resource::query()
             ->with(['translations' => function ($query) use ($locale) {
                 $query->where('locale', $locale);
@@ -58,7 +58,7 @@ class extends Component
 
         $resources = $query->orderByDesc('updated_at')->paginate($this->perPage);
 
-        $items = $resources->getCollection()->flatMap(function ($resource) use ($locale) {
+        $items = $resources->getCollection()->flatMap(function ($resource) {
             return $resource->translations->map(function ($translation) use ($resource) {
                 return (object) [
                     'id' => $translation->id,
@@ -86,6 +86,15 @@ class extends Component
             'headers' => $this->headers(),
             'documents' => $this->documents(),
         ];
+    }
+
+    public function clear(): void
+    {
+        $this->reset([
+            'keywords',
+            'publishedAfter',
+            'publishedBefore',
+        ]);
     }
 }; ?>
 
@@ -119,7 +128,7 @@ class extends Component
     </x-drawer>
 
     <x-card shadow>
-        <x-table :headers="$headers" :rows="$documents" with-pagination per-page="perPage" :per-page-values="[5, 10, 15]" expandable :expandable-key="'id'" wire:model="expanded">
+        <x-table :headers="$headers" :rows="$documents" expandable :expandable-key="'id'" wire:model="expanded">
             @scope('cell_title', $row)
                 <div class="flex items-center gap-2">
                     <x-icon name="o-book-open" class="w-5 h-5 text-primary" />
@@ -149,5 +158,6 @@ class extends Component
                 </div>
             @endscope
         </x-table>
+        <x-pagination :rows="$documents" wire:model.live="perPage" :per-page-values="[5, 10, 15]" />
     </x-card>
 </div>

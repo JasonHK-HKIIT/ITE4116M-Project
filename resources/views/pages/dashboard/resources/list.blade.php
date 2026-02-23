@@ -86,8 +86,17 @@ class extends Component
             $resources->total(),
             $resources->perPage(),
             $resources->currentPage(),
-            ['path' => route('portal.resources-centre'), 'query' => request()->query()]
+            ['path' => route('dashboard.resources.list'), 'query' => request()->query()]
         );
+    }
+
+    public function clear(): void
+    {
+        $this->reset([
+            'keywords',
+            'publishedAfter',
+            'publishedBefore',
+        ]);
     }
 
     public function deleteResource(int $id): void
@@ -112,6 +121,7 @@ class extends Component
             'documents' => $this->documents(),
         ];
     }
+    
 }; ?>
 
 @assets
@@ -133,7 +143,7 @@ class extends Component
     </x-header>
 
     <x-card shadow>
-        <x-table :headers="$headers" :rows="$documents" with-pagination per-page="perPage" :per-page-values="[5, 10, 15]" expandable :expandable-key="'id'" wire:model="expanded">
+        <x-table :headers="$headers" :rows="$documents" expandable :expandable-key="'id'" wire:model="expanded">
             @scope('cell_title', $row)
                 <div class="flex items-center gap-2">
                     <x-icon name="o-book-open" class="w-5 h-5 text-primary" />
@@ -177,6 +187,7 @@ class extends Component
                 </div>
             @endscope
         </x-table>
+        <x-pagination :rows="$documents" wire:model.live="perPage" :per-page-values="[5, 10, 15]" />
     </x-card>
     <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
         <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />

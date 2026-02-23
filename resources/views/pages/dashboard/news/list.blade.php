@@ -140,7 +140,7 @@ class extends Component
     </x-header>
 
     <x-card shadow>
-        <x-table :headers="$headers" :rows="$articles" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 25]">
+        <x-table :headers="$headers" :rows="$articles" :sort-by="$sortBy">
             @scope('actions', $article)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
                     <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.news.edit', ['article' => $article])" class="btn-ghost btn-square btn-sm" />
@@ -157,6 +157,7 @@ class extends Component
                 </x-dropdown>
             @endscope
         </x-table>
+        <x-pagination :rows="$articles" wire:model.live="perPage" :per-page-values="[5, 10, 25]" />
     </x-card>
 
     <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
