@@ -67,7 +67,7 @@ new #[Layout('layouts::portal')] class extends Component {
             </div>
 
             <div class="w-full md:w-48 lg:w-56 flex-shrink-0 mx-auto lg:mx-0">
-                <div class="rounded-lg shadow-lg overflow-hidden bg-base-200">
+                <div class=" shadow-lg overflow-hidden ">
                     <img src="{{ $user->avatar}}" alt="Student photo" class="w-full h-full object-cover object-center">
                 </div>
             </div>
