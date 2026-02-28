@@ -28,7 +28,6 @@ class extends Component
         <x-tabs wire:model="selectedTab" label-class="text-xl font-bold">
             <x-tab name="administrative-tab" label="Administrative">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
-                    <p><strong>Activity Code:</strong> {{ $activity->activity_code }}</p>
                     <p><strong>Activity Type:</strong> {{ $activity->activity_type ?? 'N/A' }}</p>
                     <p><strong>Title:</strong> {{ $activity->title }}</p>
 
@@ -44,9 +43,9 @@ class extends Component
                     </p>
 
                     <p><strong>Time Slot:</strong> 
-                        From {{ $activity->time_slot_from }} 
-                        To {{ $activity->time_slot_to }} 
-                        Duration(hr): {{ $activity->duration_hours }}
+                        From {{ $activity->time_slot_from_date }} at {{ $activity->time_slot_from_time }}
+                        To {{ $activity->time_slot_to_date }} at {{ $activity->time_slot_to_time }}
+                        <br>Duration: {{ $activity->duration_hours }} hours
                     </p>
                 </div>
             </x-tab>

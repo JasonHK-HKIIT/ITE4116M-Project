@@ -22,14 +22,16 @@ class ActivityFactory extends Factory
         $from = $this->faker->dateTimeBetween('now', '+1 month');
         $to   = $this->faker->dateTimeBetween($from, '+2 months');
 
-        $slotFrom = $this->faker->dateTimeBetween($from, $to);
-        $slotTo   = (clone $slotFrom)->modify('+1 hour');
+        $slotFromDate = $this->faker->dateTimeBetween($from, $to);
+        $slotToDate   = (clone $slotFromDate)->modify('+' . $this->faker->numberBetween(0, 5) . ' days');
+
+        $slotFromTime = $this->faker->time('H:i');
+        $slotToTime   = $this->faker->time('H:i');
 
         $totalAmount     = $this->faker->randomFloat(2, 100, 1000);
         $includedDeposit = $this->faker->randomFloat(2, 0, $totalAmount);
 
         return [
-            'activity_code'     => strtoupper($this->faker->numerify('ACT####')),
             'activity_type'     => $this->faker->randomElement([
                 'Campus Representatives',
                 'Career Development Activities',
@@ -44,12 +46,14 @@ class ActivityFactory extends Factory
                 'Volunteer Services'
             ]),
             'campus_id'         => $this->faker->numberBetween(1, 2),
-            'instructor'        => $this->faker->name(),
-            'responsible_staff' => $this->faker->name(),
+            'instructor'        => $this->faker->randomElement(['Tom', 'Sarah', 'Michael', 'Emma']),
+            'responsible_staff' => $this->faker->randomElement(['Joe', 'Maria', 'Robert', 'Anna']),
             'execution_from'    => $from->format('Y-m-d'),
             'execution_to'      => $to->format('Y-m-d'),
-            'time_slot_from'    => $slotFrom->format('Y-m-d H:i'),
-            'time_slot_to'      => $slotTo->format('Y-m-d H:i'),
+            'time_slot_from_date' => $slotFromDate->format('Y-m-d'),
+            'time_slot_from_time' => $slotFromTime,
+            'time_slot_to_date'   => $slotToDate->format('Y-m-d'),
+            'time_slot_to_time'   => $slotToTime,
             'duration_hours'    => $this->faker->randomFloat(2, 0.5, 8),
             'swpd_programme'    => $this->faker->boolean(),
             'venue'             => $this->faker->randomElement(['Hall A', 'Room 101', 'Gym', 'Not specified']),

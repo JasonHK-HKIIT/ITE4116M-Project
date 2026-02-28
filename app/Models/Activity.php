@@ -17,15 +17,16 @@ class Activity extends Model
     public array $translatedAttributes = ['title', 'description', 'discipline', 'attribute'];
 
     protected $fillable = [
-        'activity_code',
         'activity_type',
         'campus_id',
         'instructor',
         'responsible_staff',
         'execution_from',
         'execution_to',
-        'time_slot_from',
-        'time_slot_to',
+        'time_slot_from_date',
+        'time_slot_from_time',
+        'time_slot_to_date',
+        'time_slot_to_time',
         'duration_hours',
         'swpd_programme',
         'venue',
@@ -38,14 +39,16 @@ class Activity extends Model
     ];
 
     protected $casts = [
-        'execution_from'   => 'date:Y-m-d',
-        'execution_to'     => 'date:Y-m-d',
-        'time_slot_from'   => 'datetime:Y-m-d H:i',
-        'time_slot_to'     => 'datetime:Y-m-d H:i',
-        'duration_hours'   => 'decimal:2',
-        'swpd_programme'   => 'boolean',
-        'total_amount'     => 'decimal:2',
-        'included_deposit' => 'decimal:2',
+        'execution_from'    => 'date:Y-m-d',
+        'execution_to'      => 'date:Y-m-d',
+        'time_slot_from_date' => 'date:Y-m-d',
+        'time_slot_from_time' => 'datetime:H:i',
+        'time_slot_to_date'   => 'date:Y-m-d',
+        'time_slot_to_time'   => 'datetime:H:i',
+        'duration_hours'    => 'decimal:2',
+        'swpd_programme'    => 'boolean',
+        'total_amount'      => 'decimal:2',
+        'included_deposit'  => 'decimal:2',
     ];
 
     /**

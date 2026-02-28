@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
 
             // Core identifiers
-            $table->string('activity_code')->unique();
             $table->string('activity_type')->nullable();
 
             // Offering details
@@ -29,9 +28,11 @@ return new class extends Migration
             $table->date('execution_from');
             $table->date('execution_to');
 
-            // Time slot
-            $table->dateTime('time_slot_from')->nullable();
-            $table->dateTime('time_slot_to')->nullable();
+            // Time slot (can span multiple days)
+            $table->date('time_slot_from_date')->nullable();
+            $table->time('time_slot_from_time')->nullable();
+            $table->date('time_slot_to_date')->nullable();
+            $table->time('time_slot_to_time')->nullable();
             $table->decimal('duration_hours', 4, 2)->default(0);
 
             // Description & attributes
