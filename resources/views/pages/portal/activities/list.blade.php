@@ -74,7 +74,7 @@ class extends Component
             })
             ->when((($this->sortBy['column'] == 'title') ? $this->sortBy : false), function ($query, $sortBy)
             {
-                $query->orderBy('title', ($sortBy['direction'] == 'asc') ? 'desc' : 'asc');
+                $query->orderByTranslation('title', $this->sortBy['direction']);
             })
             ->when((($this->sortBy['column'] == 'total_amount') ? $this->sortBy : false), function ($query, $sortBy)
             {

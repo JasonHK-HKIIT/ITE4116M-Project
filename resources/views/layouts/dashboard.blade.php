@@ -36,7 +36,12 @@
                 <x-menu-item title="Batch Import" link="/dashboard/students/import" />
             </x-menu-sub>
 
-            <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/dashboard/activities" />
+            
+            <x-menu-sub title="Student Activities" icon="fal.calendar-star">
+                <x-menu-item title="All Activities" route="dashboard.activities.list" />
+                <x-menu-item title="Create Activities" route="dashboard.activities.create" />
+            </x-menu-sub>
+            
 
             <x-menu-sub title="News & Announcement" icon="fal.newspaper">
                 <x-menu-item title="All Articles" route="dashboard.news.list" />
