@@ -9,4 +9,26 @@ class CalendarEvent extends Model
 {
     /** @use HasFactory<\Database\Factories\CalendarEventFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'class_id',
+        'type',
+        'title',
+        'description',
+        'location',
+        'instructor',
+        'start_at',
+        'end_at',
+    ];
+
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at'   => 'datetime',
+        'type'     => \App\Enums\CalendarEventType::class,
+    ];
+
+    public function classModel()
+    {
+        return $this->belongsTo(ClassModel::class, 'class_id');
+    }
 }

@@ -64,6 +64,7 @@ class DatabaseSeeder extends Seeder
             NewsArticleSeeder::class,
             ResourceSeeder::class,
             ActivitySeeder::class,
+            CalendarEventSeeder::class,
         ]);
     }
 }
