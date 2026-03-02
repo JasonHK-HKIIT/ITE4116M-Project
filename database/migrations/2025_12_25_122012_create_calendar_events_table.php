@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('calendar_events', function (Blueprint $table) {
             $table->id();
             $table->foreignId('class_id')->nullable()->constrained('classes')->nullOnDelete();
+            $table->foreignId('student_id')->nullable()->constrained('students')->nullOnDelete();
             $table->enum('type', ['class', 'activity', 'institute_holiday', 'public_holiday'])->default('class');
             $table->string('title');
             $table->text('description')->nullable();
