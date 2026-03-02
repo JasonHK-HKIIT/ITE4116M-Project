@@ -32,7 +32,7 @@ Route::name('portal.')->middleware('auth')->group(function ()
     Route::livewire('/news', 'pages::portal.news.list')->name('news.list');
     Route::livewire('/news/{article:slug}', 'pages::portal.news.view')->name('news.view');
 
-    Route::livewire('/calendar', 'pages::portal.calendar.list')->name('calendar');
+    Route::livewire('/calendar', 'pages::portal.calendar.calendar_view')->name('calendar');
 });
 
 Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()
