@@ -1,104 +1,101 @@
 <?php
 
+use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Livewire\WithPagination;
-use Illuminate\Support\Facades\Auth;
 
-new #[Layout('layouts::portal')]
-class extends Component
-{
-    use WithPagination;
+new #[Layout('layouts::portal')] 
+class extends Component {
+    public ?Student $student = null;
+    public $programmes = [];
+    public $programmeModules = [];
 
-    public array $expanded = [];
-
-    public function mount()
+    public function mount(): void
     {
-        $this->expanded = $this->studentProgrammes()->pluck('id')->toArray();
-    }
+        $this->student = Auth::user()->student;
+        $locale = app()->getLocale();
 
-    public function headers(): array
-    {
-        return [
-            ['key' => 'programme', 'label' => 'Programme', 'class' => 'w-auto min-w-64'],
-        ];
-    }
+        $studentClasses = $this->student?->classes()
+            ->with(['programme' => function ($query) use ($locale) {
+                $query->with(['programmeTranslation' => function ($q) use ($locale) {
+                    $q->where('locale', $locale);
+                }]);
+            }])
+            ->get() ?? collect();
 
-    public function studentProgrammes()
-    {
-        $user = Auth::user();
-        if ($user->role === 'admin' || !$user->student) {
-            return collect();
-        }
-        return $user->student->programmes();
-    }
+        $this->programmes = $studentClasses->pluck('programme')->unique('id');
 
+        $this->programmeModules = $this->programmes->mapWithKeys(function ($programme) use ($locale) {
+            $modules = $programme->modules()
+                ->with(['moduleTranslation' => function ($q) use ($locale) {
+                    $q->where('locale', $locale);
+                }])
+                ->get();
+            return [$programme->id => $modules];
+        });
+    }
 
     public function with(): array
     {
         return [
-            'headers' => $this->headers(),
-            'programmes' => $this->studentProgrammes(),
+            'programmes' => $this->programmes,
+            'programmeModules' => $this->programmeModules,
         ];
     }
-};
-?>
 
-<div>
+}; ?>
+
+
+<div class="p-4 md:p-8 space-y-6 max-w-7xl mx-auto">
     <x-header :title="__('Programme & Modules')" separator />
-
-    <x-card shadow>
-        @if(Auth::user()->role === 'admin' || !Auth::user()->student)
-            <div class="p-4">
-                <div class="font-semibold mb-2">No Programme Code - No Programme</div>
-                <div class="bg-base-200 p-4">
-                    <table class="table w-full">
-                        <thead>
-                            <tr>
-                                <th>Module Code</th>
-                                <th>Module Title</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="3" class="text-center text-gray-500">No modules.</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    
+    @if($programmes->isEmpty())
+        <x-card shadow>
+            <div class="text-center py-12">
+                <p class="text-base-content/60">{{ __('No programmes assigned yet.') }}</p>
             </div>
-        @else
-            <x-table :headers="$headers" :rows="$programmes" expandable :expandable-key="'id'" wire:model="expanded">
-                @scope('cell_programme', $programme)
-                    <span>{{ $programme->programme_code }} - {{ $programme->name }}</span>
-                @endscope
-                @scope('expansion', $programme)
-                    <div class="bg-base-200 p-4">
-                        <table class="table w-full">
-                            <thead>
-                                <tr>
-                                    <th>Module Code</th>
-                                    <th>Module Title</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if($programme->modules->isEmpty())
-                                    <tr>
-                                        <td colspan="3" class="text-center text-gray-500">No modules.</td>
-                                    </tr>
-                                @else
-                                    @foreach($programme->modules as $module)
-                                        <tr>
-                                            <td>{{ $module->module_code }}</td>
-                                            <td>{{ $module->name }}</td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+        </x-card>
+    @else
+        @foreach ($programmes as $programme)
+            @php
+                $translation = $programme->programmeTranslation->first();
+                $programmeName = $translation?->name ?? $programme->programme_code;
+                $modules = $programmeModules[$programme->id] ?? collect();
+            @endphp
+            
+            <x-card shadow class="overflow-hidden">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between border-b border-base-200 pb-4">
+                        <div>
+                            <h3 class="font-bold ">{{ $programmeName }}</h3>
+                            <p class="text-sm text-base-content/60">{{ __('Programme Code') }}: {{ $programme->programme_code }}</p>
+                        </div>
                     </div>
-                @endscope
-            </x-table>
-        @endif
-    </x-card>
+                    
+                    @if($modules->isEmpty())
+                        <div class="text-center py-8">
+                            <p class="text-base-content/60">{{ __('No modules assigned for this programme.') }}</p>
+                        </div>
+                    @else
+                        <div class="space-y-2">
+                            @foreach ($modules as $module)
+                                @php
+                                    $moduleTranslation = $module->moduleTranslation->first();
+                                    $moduleName = $moduleTranslation?->name ?? $module->module_code;
+                                @endphp
+                                
+                                <div class="flex items-start gap-3 p-3 rounded-lg bg-base-100 hover:bg-base-200 transition-colors">
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-base-content">{{ $moduleName }}</p>
+                                        <p class="text-sm text-base-content/60">{{ __('Module Code') }}: {{ $module->module_code }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </x-card>
+        @endforeach
+    @endif
 </div>
