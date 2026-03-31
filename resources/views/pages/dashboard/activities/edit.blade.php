@@ -247,6 +247,7 @@ class extends Component
             $this->title = LocalesHelper::buildPropertyValue();
             $this->description = LocalesHelper::buildPropertyValue();
             $this->venue_remark = LocalesHelper::buildPropertyValue();
+            $this->instructor = 'Tom';
             
             // Set default campus
             $firstCampus = Campus::first();
@@ -278,7 +279,6 @@ class extends Component
 
     public function save(): void
     {
-        try {
             $validated = $this->validate();
 
             $fields = LocalesHelper::transformToModelFields($validated, $this->activity->translatedAttributes);
@@ -295,9 +295,6 @@ class extends Component
                     "Activity was created.",
                     redirectTo: route('dashboard.activities.list'));
             }
-        } catch (\Exception $e) {
-            $this->addError('general', 'Error: ' . $e->getMessage());
-        }
     }
 
     public function calculateDuration(): void
@@ -359,16 +356,6 @@ class extends Component
 
     <x-card shadow>
         <x-form wire:submit="save">
-            @if ($errors->any())
-                <x-alert icon="o-exclamation-triangle" class="alert-error mb-4">
-                    <strong>Validation Errors:</strong>
-                    <ul class="list-disc list-inside mt-2">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </x-alert>
-            @endif
             <x-tabs wire:model="selectedLanguage" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
@@ -404,12 +391,12 @@ class extends Component
                         <x-input label="Venue" wire:model="venue" />
                         
                         <!-- Capacity -->
-                        <x-input type="number" label="Capacity" wire:model="capacity" required min="0" />
-                        <x-input type="number" label="Registered" wire:model="registered" required min="0" />
+                        <x-input type="number" label="Capacity" wire:model="capacity" min="0" />
+                        <x-input type="number" label="Registered" wire:model="registered" min="0" />
                         
                         <!-- Financials -->
-                        <x-input type="number" label="Total Amount" wire:model="total_amount" required min="0" step="0.01" />
-                        <x-input type="number" label="Included Deposit" wire:model="included_deposit" required min="0" step="0.01" />
+                        <x-input type="number" label="Total Amount" wire:model="total_amount" min="0" step="0.01" />
+                        <x-input type="number" label="Included Deposit" wire:model="included_deposit" min="0" step="0.01" />
                         
                         <!-- Attachment -->
                         <x-file label="Attachment" wire:model="attachment" hint="Upload PDF, DOC or DOCX (Max 5MB)" accept=".pdf,.doc,.docx" />

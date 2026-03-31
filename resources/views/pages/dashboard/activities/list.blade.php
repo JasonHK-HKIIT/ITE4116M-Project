@@ -36,15 +36,6 @@ class extends Component
         $this->selectedLanguage = $lang;
     }
 
-    public function getAvailableLanguages(): array
-    {
-        return [
-            ['value' => 'en', 'label' => 'English'],
-            ['value' => 'zh-HK', 'label' => 'Chinese (Traditional)'],
-            ['value' => 'zh-CN', 'label' => 'Chinese (Simplified)'],
-        ];
-    }
-
 
     public function clear()
     {
@@ -115,13 +106,12 @@ class extends Component
 
     public function headers(): array
     {
-        
         return [
             ['key' => 'title', 'label' => 'Title','class' => 'w-auto min-w-64'],
             ['key' => 'instructor', 'label' => 'Instructor','class' => 'w-fit'],
-            ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit'],
-            ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit'],
-            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit'],
+            ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
         ];
     }
 
@@ -175,14 +165,6 @@ class extends Component
             <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-select 
-                wire:model.live="selectedLanguage" 
-                wire:change="changeLanguage($event.target.value)"
-                :options="$this->getAvailableLanguages()" 
-                option-value="value" 
-                option-label="label"
-                class="w-40"
-            />
             <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.activities.create')" responsive />
         </x-slot:actions>

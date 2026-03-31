@@ -101,9 +101,9 @@ class extends Component
         return [
             ['key' => 'title', 'label' => 'Title','class' => 'w-auto min-w-64'],
             ['key' => 'instructor', 'label' => 'Instructor','class' => 'w-fit'],
-            ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit'],
-            ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit'],
-            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit'],
+            ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
         ];
     }
 
