@@ -16,6 +16,7 @@ return new class extends Migration
 
             // Core identifiers
             $table->string('activity_type')->nullable();
+            $table->string('activity_code')->nullable()->unique();
 
             // Offering details
             $table->foreignId('campus_id')->constrained('campuses')->onDelete('cascade');
@@ -40,7 +41,6 @@ return new class extends Migration
 
             // Venue
             $table->string('venue')->nullable();
-            $table->text('venue_remark')->nullable();
 
             // Capacity & enrolment
             $table->integer('capacity')->default(0);
@@ -53,7 +53,13 @@ return new class extends Migration
             // Attachments
             $table->string('attachment')->nullable();
 
+            // Classification
+            $table->string('discipline')->nullable();
+            $table->string('attribute')->nullable();
+
             $table->timestamps();
+            
+            $table->fullText(['instructor']);
 
         });
 
@@ -63,8 +69,7 @@ return new class extends Migration
             $table->string('locale', 5)->index();
             $table->tinyText('title');
             $table->mediumText('description')->nullable();
-            $table->tinyText('discipline')->nullable();
-            $table->tinyText('attribute')->nullable();
+            $table->text('venue_remark')->nullable();
             $table->timestamps();
             $table->unique(['activity_id', 'locale']);
             $table->fullText(['title', 'description']);

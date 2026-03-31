@@ -3,6 +3,7 @@
 namespace App\Enums\Activity;
 
 use App\Traits\EnumValues;
+use App\Traits\TranslatableEnum;
 
 enum Disciplines: string
 {
@@ -12,4 +13,5 @@ enum Disciplines: string
     case Arts = 'Arts';
 
     use EnumValues;
+    use TranslatableEnum;
 }

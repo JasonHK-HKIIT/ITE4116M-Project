@@ -14,10 +14,13 @@ class Activity extends Model
 
     protected $table = 'activities';
 
-    public array $translatedAttributes = ['title', 'description', 'discipline', 'attribute'];
+    public array $translatedAttributes = ['title', 'description', 'venue_remark'];
+
+
 
     protected $fillable = [
         'activity_type',
+        'activity_code',
         'campus_id',
         'instructor',
         'responsible_staff',
@@ -30,12 +33,13 @@ class Activity extends Model
         'duration_hours',
         'swpd_programme',
         'venue',
-        'venue_remark',
         'capacity',
         'registered',
         'total_amount',
         'included_deposit',
         'attachment',
+        'discipline',
+        'attribute',
     ];
 
     protected $casts = [
@@ -49,6 +53,8 @@ class Activity extends Model
         'swpd_programme'    => 'boolean',
         'total_amount'      => 'decimal:2',
         'included_deposit'  => 'decimal:2',
+        'discipline'        => \App\Enums\Activity\Disciplines::class,
+        'attribute'  => \App\Enums\Activity\Attributes::class,
     ];
 
     /**

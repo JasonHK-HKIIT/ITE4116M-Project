@@ -52,5 +52,5 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
 
     Route::livewire('/activities', 'pages::dashboard.activities.list')->name('activities.list');
     Route::livewire('/activities/create', 'pages::dashboard.activities.edit')->name('activities.create');
-    Route::livewire('/activities/{id}', 'pages::dashboard.activities.edit')->whereNumber('id')->name('activities.edit');
+    Route::livewire('/activities/{activity}', 'pages::dashboard.activities.edit')->whereNumber('activity')->name('activities.edit');
 });

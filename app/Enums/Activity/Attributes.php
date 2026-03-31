@@ -3,6 +3,7 @@
 namespace App\Enums\Activity;
 
 use App\Traits\EnumValues;
+use App\Traits\TranslatableEnum;
 
 enum Attributes: string
 {
@@ -15,4 +16,5 @@ enum Attributes: string
     case Responsible = 'Professional, Socially and Globally Responsible (PSG)';
 
     use EnumValues;
+    use TranslatableEnum;
 }

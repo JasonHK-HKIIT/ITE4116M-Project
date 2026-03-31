@@ -3,6 +3,7 @@
 namespace App\Enums\Activity;
 
 use App\Traits\EnumValues;
+use App\Traits\TranslatableEnum;
 
 enum ActivityTypes: string
 {
@@ -19,4 +20,5 @@ enum ActivityTypes: string
     case VolunteerServices = 'Volunteer Services';
 
     use EnumValues;
+    use TranslatableEnum;
 }

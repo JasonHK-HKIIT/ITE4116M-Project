@@ -8,7 +8,7 @@ class ActivityTranslation extends Model
 {
     protected $table = 'activity_translations';
 
-    protected $fillable = ['title', 'description', 'discipline', 'attribute', 'locale'];
+    protected $fillable = ['title', 'description', 'venue_remark', 'locale'];
 
     public $timestamps = true;
 
