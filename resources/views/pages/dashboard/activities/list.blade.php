@@ -17,11 +17,33 @@ class extends Component
 
     public string $keywords = '';
 
+    public string $selectedLanguage = 'en';
+
     public array $sortBy = ['column' => 'title', 'direction' => 'desc'];
 
 
     public ?string $execution_from = null;
     public ?string $execution_to = null;
+
+    public function mount()
+    {
+        $this->selectedLanguage = app()->getLocale();
+    }
+
+    public function changeLanguage($lang)
+    {
+        app()->setLocale($lang);
+        $this->selectedLanguage = $lang;
+    }
+
+    public function getAvailableLanguages(): array
+    {
+        return [
+            ['value' => 'en', 'label' => 'English'],
+            ['value' => 'zh-HK', 'label' => 'Chinese (Traditional)'],
+            ['value' => 'zh-CN', 'label' => 'Chinese (Simplified)'],
+        ];
+    }
 
 
     public function clear()
@@ -52,7 +74,7 @@ class extends Component
     {
         return Activity::query()
             ->when($this->keywords, function ($query, $keywords) {
-                $query->whereFullText(['title', 'instructor', 'activity_code'], $keywords);
+                $query->whereFullText(['title', 'description'], $keywords);
             })
             ->when($this->execution_from && $this->execution_to, function ($query) {
                 $from = $this->execution_from;
@@ -153,6 +175,14 @@ class extends Component
             <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
+            <x-select 
+                wire:model.live="selectedLanguage" 
+                wire:change="changeLanguage($event.target.value)"
+                :options="$this->getAvailableLanguages()" 
+                option-value="value" 
+                option-label="label"
+                class="w-40"
+            />
             <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.activities.create')" responsive />
         </x-slot:actions>
@@ -164,7 +194,7 @@ class extends Component
             @scope('actions', $activity)
 
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.activities.edit', ['id' => $activity->id ])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" class="btn-ghost btn-square btn-sm" />
                     <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteArticle({{ $activity->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>        
 
@@ -173,7 +203,7 @@ class extends Component
                             <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                         </x-slot:trigger>
 
-                        <x-menu-item title="Activity Details" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['id' => $activity->id ])" />
+                        <x-menu-item title="Activity Details" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" />
                         <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteArticle({{ $activity->id }})" spinner />
 
                     </x-dropdown>

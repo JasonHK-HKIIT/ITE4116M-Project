@@ -16,12 +16,24 @@ class extends Component
 
     public string $keywords = '';
 
+    public string $selectedLanguage = 'en';
+
     public array $sortBy = ['column' => 'title', 'direction' => 'desc'];
 
 
     public ?string $execution_from = null;
     public ?string $execution_to = null;
 
+    public function mount()
+    {
+        $this->selectedLanguage = app()->getLocale();
+    }
+
+    public function changeLanguage($lang)
+    {
+        app()->setLocale($lang);
+        $this->selectedLanguage = $lang;
+    }
 
     public function clear()
     {
@@ -51,7 +63,7 @@ class extends Component
     {
         return Activity::query()
             ->when($this->keywords, function ($query, $keywords) {
-                $query->whereFullText(['title', 'instructor', 'activity_code'], $keywords);
+                $query->whereFullText(['title', 'description'], $keywords);
             })
             ->when($this->execution_from && $this->execution_to, function ($query) {
                 $from = $this->execution_from;
