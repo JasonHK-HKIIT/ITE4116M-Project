@@ -169,7 +169,7 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Institutes')" :subtitle="__('Academic Structure')" separator>
+    <x-header :title="__('Campuses')" :subtitle="__('Academic Structure')" separator>
         <x-slot:middle class="justify-end! max-md:hidden">
             <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
