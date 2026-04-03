@@ -27,7 +27,7 @@
                 <x-menu-item title="Institutes" route="dashboard.academic.institutes" />
                 <x-menu-item title="Campuses" route="dashboard.academic.campuses" />
                 <x-menu-item title="Programmes" route="dashboard.academic.programmes.list" />
-                <x-menu-item title="Modules" link="/dashboard/academic/modules" />
+                <x-menu-item title="Modules" route="dashboard.academic.modules.list" />
             </x-menu-sub>
 
             <x-menu-sub title="Students" icon="fal.users">

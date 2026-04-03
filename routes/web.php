@@ -44,6 +44,9 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     Route::livewire('/academic/programmes', 'pages::dashboard.academic.programmes.list')->name('academic.programmes.list');
     Route::livewire('/academic/programmes/create', 'pages::dashboard.academic.programmes.edit')->name('academic.programmes.create');
     Route::livewire('/academic/programmes/{programme}', 'pages::dashboard.academic.programmes.edit')->whereNumber('programme')->name('academic.programmes.edit');
+    Route::livewire('/academic/modules', 'pages::dashboard.academic.modules.list')->name('academic.modules.list');
+    Route::livewire('/academic/modules/create', 'pages::dashboard.academic.modules.edit')->name('academic.modules.create');
+    Route::livewire('/academic/modules/{module}', 'pages::dashboard.academic.modules.edit')->whereNumber('module')->name('academic.modules.edit');
 
     Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
     Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');

@@ -15,6 +15,11 @@ class Module extends Model implements TranslatableContract
     /** @use HasFactory<\Database\Factories\ModuleFactory> */
     use HasFactory, Translatable;
 
+    protected $fillable = [
+        'institute_id',
+        'module_code',
+    ];
+
     public $translatedAttributes = ['name'];
 
     public function institute(): BelongsTo
