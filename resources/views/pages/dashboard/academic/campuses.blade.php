@@ -6,6 +6,7 @@ use App\Models\Institute;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Mary\Traits\Toast;
@@ -17,6 +18,14 @@ class extends Component
     use Toast;
 
     public array $sortBy = ['column' => 'name', 'direction' => 'asc'];
+
+    public bool $isDrawerOpened = false;
+
+    #[Url(as: 'search')]
+    public ?string $keywords = null;
+
+    #[Url]
+    public $institute_id = null;
 
     public bool $campusModal = false;
 
@@ -36,6 +45,16 @@ class extends Component
     public Collection $instituteOptions;
 
     #[Computed]
+    public function institutes(): array
+    {
+        return Institute::query()
+            ->orderByTranslation('name', 'asc')
+            ->get()
+            ->map(fn ($institute) => ['id' => $institute->id, 'name' => $institute->name])
+            ->toArray();
+    }
+
+    #[Computed]
     public function headers(): array
     {
         return [
@@ -49,6 +68,14 @@ class extends Component
         $sortTranslation = in_array($this->sortBy['column'], ['name']);
 
         return Campus::query()
+            ->when($this->keywords, function ($query, $keywords)
+            {
+                $query->whereHas('translations', fn ($query) => $query->where('name', 'like', "%{$keywords}%"));
+            })
+            ->when($this->institute_id, function ($query, $instituteId)
+            {
+                $query->whereHas('institutes', fn ($query) => $query->where('institutes.id', $instituteId));
+            })
             ->when($sortTranslation, function ($query, $value)
             {
                 $query->orderByTranslation($this->sortBy['column'], $this->sortBy['direction']);
@@ -65,8 +92,17 @@ class extends Component
         return [
             'headers' => $this->headers(),
             'campuses' => $this->campuses(),
+            'institutes' => $this->institutes(),
             'exists' => $this->campus->exists,
         ];
+    }
+
+    public function clear(): void
+    {
+        $this->reset([
+            'keywords',
+            'institute_id',
+        ]);
     }
 
     public function mount()
@@ -134,7 +170,7 @@ class extends Component
 
 <div>
     <x-header :title="__('Institutes')" :subtitle="__('Academic Structure')" separator>
-        <x-slot:middle class="!justify-end max-md:hidden">
+        <x-slot:middle class="justify-end! max-md:hidden">
             <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
@@ -167,6 +203,16 @@ class extends Component
             @endscope
         </x-table>
     </x-card>
+
+    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
+        <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Any" />
+
+        <x-slot:actions>
+            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+        </x-slot:actions>
+    </x-drawer>
 
     <x-modal wire:model="campusModal" :title="($exists ? 'Update' : 'Create') . ' Campus'" :subtitle="$campus->name" persistent>
         <x-form wire:submit="save" no-separator>
