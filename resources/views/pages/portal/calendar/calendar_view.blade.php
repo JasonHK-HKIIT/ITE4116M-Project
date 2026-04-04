@@ -142,7 +142,7 @@ new #[Layout('layouts::portal')] class extends Component {
     }
     $monthLabel = $firstDay->format('M Y');
 
-    /* Prepare events for the current month, filtered by logged-in student's classes (skip for admin)*/
+    // Prepare events for the current month, filtered by logged-in student's classes (skip for admin)
     $user = auth()->user();
     $isAdmin = $user && $user->role === Role::ADMIN;
 
@@ -177,26 +177,38 @@ new #[Layout('layouts::portal')] class extends Component {
     };
 
     $getEventsInRange = function ($start, $end) use ($classIds, $isAdmin, $student) {
+        // admin only show public holidays in portal calendar.
         if ($isAdmin) {
-            return collect();
+            return CalendarEvent::query()
+                ->whereBetween('start_at', [$start, $end])
+                ->where('type', CalendarEventType::PUBLIC_HOLIDAY->value)
+                ->get();
         }
 
         $query = CalendarEvent::query()
             ->whereBetween('start_at', [$start, $end]);
 
-        if ($classIds->isNotEmpty()) {
-            $query->where(function ($q) use ($classIds, $student) {
-                $q->whereIn('class_id', $classIds)
-                  ->orWhere(function ($q) use ($student) {
+        // for students, always show...:
+        // 1.their own class timetable (if they have classes)
+        // 2.their own activities (if they have activities)
+        // 3.all public & institute holidays
+        $query->where(function ($q) use ($classIds, $student) {
+            if ($student && $classIds->isNotEmpty()) {
+                $q->orWhereIn('class_id', $classIds);
+            }
+
+            if ($student) {
+                $q->orWhere(function ($q) use ($student) {
                     $q->where('type', CalendarEventType::ACTIVITY->value)
                         ->where('student_id', $student->id);
-                })
-                ->orWhereIn('type', [
-                    CalendarEventType::PUBLIC_HOLIDAY->value,
-                    CalendarEventType::INSTITUTE_HOLIDAY->value,
-                ]);
-            });
-        }
+                });
+            }
+
+            $q->orWhereIn('type', [
+                CalendarEventType::PUBLIC_HOLIDAY->value,
+                CalendarEventType::INSTITUTE_HOLIDAY->value,
+            ]);
+        });
 
         return $query->get();
     };

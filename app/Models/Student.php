@@ -21,6 +21,8 @@ class Student extends Model
         'tel_no',
         'mobile_no',
         'address',
+        'institute_id',
+        'campus_id',
     ];
 
     protected function casts(): array

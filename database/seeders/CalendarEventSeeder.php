@@ -161,7 +161,7 @@ class CalendarEventSeeder extends Seeder
             'location'    => null,
             'instructor'  => null,
             'start_at'    => $weekBase->copy()->addDays(5),
-            'end_at'      => $weekBase->copy(),
+            'end_at'      => $weekBase->copy()->addDays(5),
         ]);
 
         // Institute holiday
@@ -173,7 +173,7 @@ class CalendarEventSeeder extends Seeder
             'location'    => null,
             'instructor'  => null,
             'start_at'    => $weekBase->copy()->addDays(6),
-            'end_at'      => $weekBase->copy(),
+            'end_at'      => $weekBase->copy()->addDays(6),
         ]);
 
         // This activity not a real data
@@ -186,7 +186,7 @@ class CalendarEventSeeder extends Seeder
             'location'    => 'LW001',
             'instructor'  => 'Mr. Hui',
             'start_at'    => $weekBase->copy()->addDays(3)->setTime(17, 0),
-            'end_at'      => $weekBase->copy()->setTime(18, 0),
+            'end_at'      => $weekBase->copy()->addDays(3)->setTime(18, 0),
         ]);
 
         // This activity not a real data
@@ -199,7 +199,7 @@ class CalendarEventSeeder extends Seeder
             'location'    => 'LW001',
             'instructor'  => 'Mr. Ho',
             'start_at'    => $weekBase->copy()->addDays(4)->setTime(17, 0),
-            'end_at'      => $weekBase->copy()->setTime(18, 0),
+            'end_at'      => $weekBase->copy()->addDays(4)->setTime(18, 0),
         ]);
 
         // This activity not a real data
@@ -212,7 +212,7 @@ class CalendarEventSeeder extends Seeder
             'location'    => 'LW002',
             'instructor'  => 'Ms. Wong',
             'start_at'    => $weekBase->copy()->addDays(7)->setTime(17, 0),
-            'end_at'      => $weekBase->copy()->setTime(18, 0),
+            'end_at'      => $weekBase->copy()->addDays(7)->setTime(18, 0),
         ]);
 
         // This activity not a real data
@@ -225,11 +225,10 @@ class CalendarEventSeeder extends Seeder
             'location'    => 'LW003',
             'instructor'  => 'Ms. Chung',
             'start_at'    => $weekBase->copy()->addDays(7)->setTime(18, 0),
-            'end_at'      => $weekBase->copy()->setTime(19, 0),
+            'end_at'      => $weekBase->copy()->addDays(7)->setTime(19, 0),
         ]);
 
-        //$activity = Activity::where('activity_code', 'ACT001')->first(); <--to Stella
-        $activity = Activity::whereTranslation('title', 'Intro to Laravel', 'en')->first();
+        $activity = Activity::where('activity_code', 'ACT-001-WS')->first();
 
         if ($activity) {
             $fromDate = $activity->time_slot_from_date;
@@ -240,12 +239,21 @@ class CalendarEventSeeder extends Seeder
             $startAt = $fromDate->copy()->setTime($fromTime->hour, $fromTime->minute);
             $endAt = $toDate->copy()->setTime($toTime->hour, $toTime->minute);
 
+            $translated = $activity->translate('en');
+            $activityTitle = $translated?->title ?? '';
+            $activityDescription = $translated?->description ?? '';
+            $activityCode = $activity->activity_code;
+
+            $calendarTitle = $activityCode
+                ? $activityCode . ' - ' . $activityTitle
+                : $activityTitle;
+
             CalendarEvent::create([
                 'student_id'  => $student->id,
                 'class_id'    => null,
                 'type'        => CalendarEventType::ACTIVITY,
-                'title'       => $activity->translate('en')->title,
-                'description' => $activity->translate('en')->description,
+                'title'       => $calendarTitle,
+                'description' => $activityDescription,
                 'location'    => $activity->venue,
                 'instructor'  => $activity->instructor,
                 'start_at'    => $startAt,
