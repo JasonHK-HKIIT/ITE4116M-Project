@@ -21,7 +21,6 @@
         "owenvoke/blade-fontawesome": "^3.0",
         "robsontenorio/mary": "^2.6.0",
         "spatie/laravel-data": "^4.18.0",
-        "spatie/laravel-markdown": "^2.8",
         "spatie/laravel-medialibrary": "^11.17",
         "stevebauman/purify": "^6.3",
         "symfony/http-client": "^8.0"
