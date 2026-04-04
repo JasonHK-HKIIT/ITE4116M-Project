@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('class_id')->nullable()->constrained('classes')->nullOnDelete();
             $table->foreignId('student_id')->nullable()->constrained('students')->nullOnDelete();
+            $table->foreignId('institute_id')->nullable()->constrained('institutes')->nullOnDelete();
             $table->enum('type', ['class', 'activity', 'institute_holiday', 'public_holiday'])->default('class');
             $table->string('title');
             $table->text('description')->nullable();

@@ -204,10 +204,21 @@ new #[Layout('layouts::portal')] class extends Component {
                 });
             }
 
-            $q->orWhereIn('type', [
-                CalendarEventType::PUBLIC_HOLIDAY->value,
-                CalendarEventType::INSTITUTE_HOLIDAY->value,
-            ]);
+            // A public holidays show to all students
+            $q->orWhere('type', CalendarEventType::PUBLIC_HOLIDAY->value);
+
+            // A institute holidays show only to the student's own institute,
+            $q->orWhere(function ($q) use ($student) {
+                $q->where('type', CalendarEventType::INSTITUTE_HOLIDAY->value)
+                    ->where(function ($q) use ($student) {
+                        if ($student && $student->institute_id) {
+                            $q->where('institute_id', $student->institute_id)
+                                ->orWhereNull('institute_id');
+                        } else {
+                            $q->whereNull('institute_id');
+                        }
+                    });
+            });
         });
 
         return $query->get();

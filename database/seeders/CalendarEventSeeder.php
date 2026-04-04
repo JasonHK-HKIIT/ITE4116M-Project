@@ -6,6 +6,7 @@ use App\Models\CalendarEvent;
 use App\Models\ClassModel;
 use App\Models\User;
 use App\Models\Activity;
+use App\Models\Institute;
 use App\Enums\CalendarEventType;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -158,28 +159,44 @@ class CalendarEventSeeder extends Seeder
             'type'        => CalendarEventType::PUBLIC_HOLIDAY,
             'title'       => 'Public Holiday!',
             'description' => 'hello, I am public holiday!',
-            'location'    => null,
-            'instructor'  => null,
-            'start_at'    => $weekBase->copy()->addDays(5),
-            'end_at'      => $weekBase->copy()->addDays(5),
+            'start_at'    => $weekBase->copy()->addDays(5)->startOfDay(),
+            'end_at'      => $weekBase->copy()->addDays(5)->endOfDay(),
         ]);
 
-        // Institute holiday
+        // Institute holiday - scoped to HKIIT only
+        $hkiit = Institute::whereHas('instituteTranslation', function ($q) {
+            $q->where('locale', 'en')
+                ->where('name', 'Hong Kong Institute of Information Technology');
+        })->first();
+
         CalendarEvent::create([
-            'class_id'    => null,
-            'type'        => CalendarEventType::INSTITUTE_HOLIDAY,
-            'title'       => 'Institute Holiday!',
-            'description' => 'hello, I am institute holiday!',
-            'location'    => null,
-            'instructor'  => null,
-            'start_at'    => $weekBase->copy()->addDays(6),
-            'end_at'      => $weekBase->copy()->addDays(6),
+            'institute_id' => $hkiit->id,
+            'type'         => CalendarEventType::INSTITUTE_HOLIDAY,
+            'title'        => 'Institute Holiday!',
+            'description'  => 'hello, I am institute holiday!',
+            'start_at'     => $weekBase->copy()->addDays(6)->startOfDay(),
+            'end_at'       => $weekBase->copy()->addDays(6)->endOfDay(),
         ]);
+
+        // Institute holiday - scoped to HKIIT only
+        $hkiit = Institute::whereHas('instituteTranslation', function ($q) {
+            $q->where('locale', 'en')
+                ->where('name', 'Hong Kong Institute of Information Technology');
+        })->first();
+
+        CalendarEvent::create([
+            'institute_id' => $hkiit->id,
+            'type'         => CalendarEventType::INSTITUTE_HOLIDAY,
+            'title'        => 'Institute Holiday2!',
+            'description'  => 'hello, I am institute holiday2!',
+            'start_at'     => $weekBase->copy()->addDays(7)->startOfDay(),
+            'end_at'       => $weekBase->copy()->addDays(7)->endOfDay(),
+        ]);
+
 
         // This activity not a real data
         CalendarEvent::create([
             'student_id'  => $student->id,
-            'class_id'    => null,
             'type'        => CalendarEventType::ACTIVITY,
             'title'       => 'Student Orientation Day',
             'description' => 'Welcome and orientation session for students.',
@@ -192,7 +209,6 @@ class CalendarEventSeeder extends Seeder
         // This activity not a real data
         CalendarEvent::create([
             'student_id'  => $student->id,
-            'class_id'    => null,
             'type'        => CalendarEventType::ACTIVITY,
             'title'       => 'Career Talk: IT Industry',
             'description' => 'Industry sharing session about careers in IT.',
@@ -205,7 +221,6 @@ class CalendarEventSeeder extends Seeder
         // This activity not a real data
         CalendarEvent::create([
             'student_id'  => $student->id,
-            'class_id'    => null,
             'type'        => CalendarEventType::ACTIVITY,
             'title'       => 'Campus Open Day',
             'description' => 'Guided tours and introduction to campus facilities.',
@@ -218,7 +233,6 @@ class CalendarEventSeeder extends Seeder
         // This activity not a real data
         CalendarEvent::create([
             'student_id'  => $student->id,
-            'class_id'    => null,
             'type'        => CalendarEventType::ACTIVITY,
             'title'       => 'Alumni Sharing Session',
             'description' => 'Alumni share their study and career experience.',
@@ -250,7 +264,6 @@ class CalendarEventSeeder extends Seeder
 
             CalendarEvent::create([
                 'student_id'  => $student->id,
-                'class_id'    => null,
                 'type'        => CalendarEventType::ACTIVITY,
                 'title'       => $calendarTitle,
                 'description' => $activityDescription,
