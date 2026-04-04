@@ -14,6 +14,14 @@ class ProgrammeSeeder extends Seeder
     {
         $institute = \App\Models\Institute::all();
         $programmes = [
+            ['programme_code' => 'DE114112', 'translations' => [
+                ['locale' => 'en', 'name' => 'Higher Diploma in Illustration Design'],
+                ['locale' => 'zh-HK', 'name' => '高級文憑（插畫設計）'],
+                ['locale' => 'zh-CN', 'name' => '高级文凭（插画设计）'],
+
+            ]],
+        ];
+        $programmes2 = [
             ['programme_code' => 'IT114105', 'translations' => [
                 ['locale' => 'en', 'name' => 'Higher Diploma in Software Engineering'],
                 ['locale' => 'zh-HK', 'name' => '高級文憑（軟件工程）'],
@@ -26,8 +34,15 @@ class ProgrammeSeeder extends Seeder
             ]],
         ];
         foreach ($programmes as $data) {
-            $programme = \App\Models\Programme::create([
-                'institute_id' => $institute[0]->id,
+            $programme = \App\Models\Programme::firstOrCreate([
+                'institute_id' => $institute[1]->id,
+                'programme_code' => $data['programme_code'],
+            ]);
+            $programme->programmeTranslation()->createMany($data['translations']);
+        }
+        foreach ($programmes2 as $data) {
+            $programme = \App\Models\Programme::firstOrCreate([
+                'institute_id' => $institute[2]->id,
                 'programme_code' => $data['programme_code'],
             ]);
             $programme->programmeTranslation()->createMany($data['translations']);

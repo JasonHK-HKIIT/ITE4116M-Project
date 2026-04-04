@@ -12,8 +12,8 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $institute = \App\Models\Institute::first();
-        $campus = \App\Models\Campus::first();
+        $institute = \App\Models\Institute::whereTranslation('name', 'Hong Kong Institute of Information Technology', 'en')->first();
+        $campus = \App\Models\Campus::whereTranslation('name', 'Lee Wai Lee', 'en')->first();
 
         $user = \App\Models\User::where('username', '240155170')->first();
         \App\Models\Student::firstOrCreate(

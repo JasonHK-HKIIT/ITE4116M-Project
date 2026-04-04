@@ -47,11 +47,6 @@ class ModuleSeeder extends Seeder
         ];
 
         $modules2 = [
-            ['module_code' => 'ITE4103', 'translations' => [
-                ['locale' => 'en', 'name' => 'IT Professionalism'],
-                ['locale' => 'zh-HK', 'name' => '資訊科技專業精神'],
-                ['locale' => 'zh-CN', 'name' => '信息技术专业精神'],
-            ]],
             ['module_code' => 'LAN4102', 'translations' => [
                 ['locale' => 'en', 'name' => 'Professional Workplace Communication Storytelling and Job Search'],
                 ['locale' => 'zh-HK', 'name' => '專業職場溝通、故事敘述與求職'],
@@ -63,18 +58,27 @@ class ModuleSeeder extends Seeder
                 ['locale' => 'zh-CN', 'name' => '普通话会话与报告'],
             ]],
         ];
-
+    /*
         foreach ($modules1 as $data) {
-            $module = \App\Models\Module::create([
+            $module = \App\Models\Module::firstOrCreate([
                 'institute_id' => $institute[0]->id,
                 'module_code' => $data['module_code'],
             ]);
             $module->moduleTranslation()->createMany($data['translations']);
         }
-
+    */
+        // DI
         foreach ($modules2 as $data) {
-            $module = \App\Models\Module::create([
+            $module = \App\Models\Module::firstOrCreate([
                 'institute_id' => $institute[1]->id,
+                'module_code' => $data['module_code'],
+            ]);
+            $module->moduleTranslation()->createMany($data['translations']);
+        }
+        // HKIIT
+        foreach ($modules1 as $data) {
+            $module = \App\Models\Module::firstOrCreate([
+                'institute_id' => $institute[2]->id,
                 'module_code' => $data['module_code'],
             ]);
             $module->moduleTranslation()->createMany($data['translations']);

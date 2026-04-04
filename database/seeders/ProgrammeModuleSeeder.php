@@ -12,32 +12,37 @@ class ProgrammeModuleSeeder extends Seeder
      */
     public function run(): void
     {
-        $Software_Engineering = \App\Models\Programme::where('programme_code', 'IT114105')->first();
-        $Telecommunications_and_Networking = \App\Models\Programme::where('programme_code', 'IT114103')->first();
+        $softwareEngineeringProgramme = \App\Models\Programme::where('programme_code', 'IT114105')->first();
+        $illustrationDesignProgramme = \App\Models\Programme::where('programme_code', 'DE114112')->first();
 
-        $Artificial_Intelligence_and_Machine_Learning = \App\Models\Module::where('module_code', 'ITP4514')->first();
-        $Contemporary_Topics_in_Software_Engineering = \App\Models\Module::where('module_code', 'ITP4507')->first();
-        $Human_Computer_Interaction_and_GUI_Programming = \App\Models\Module::where('module_code', 'ITP4506')->first();
-        $IT_Professionalism = \App\Models\Module::where('module_code', 'ITE4103')->first();
-        $Professional_Workplace_Communication_Storytelling_and_Job_Search = \App\Models\Module::where('module_code', 'LAN4102')->first();
-        $Vocational_Chinese_Communication_Putonghua_Conversation_and_Reports = \App\Models\Module::where('module_code', 'LAN3003')->first();
+        $informationTechnologyInstitute = \App\Models\Institute::whereTranslation('name', 'Hong Kong Institute of Information Technology', 'en')->first();
+        $designInstitute = \App\Models\Institute::whereTranslation('name', 'Hong Kong Design Institute', 'en')->first();
 
-        $Software_Engineering->modules()->sync(
-            [
-                $Artificial_Intelligence_and_Machine_Learning->id,
-                $Contemporary_Topics_in_Software_Engineering->id,
-                $Human_Computer_Interaction_and_GUI_Programming->id,
-                $IT_Professionalism->id,
-                $Professional_Workplace_Communication_Storytelling_and_Job_Search->id,
-                $Vocational_Chinese_Communication_Putonghua_Conversation_and_Reports->id,
-            ]
-        );
-        $Telecommunications_and_Networking->modules()->sync(
-            [
-                $IT_Professionalism->id,
-                $Professional_Workplace_Communication_Storytelling_and_Job_Search->id,
-                $Vocational_Chinese_Communication_Putonghua_Conversation_and_Reports->id,
-            ]
-        );
+        // HKIIT
+        $artificialIntelligenceAndMachineLearningModule = \App\Models\Module::where('module_code', 'ITP4514')->where('institute_id', $informationTechnologyInstitute?->id)->first();
+        $contemporaryTopicsInSoftwareEngineeringModule  = \App\Models\Module::where('module_code', 'ITP4507')->where('institute_id', $informationTechnologyInstitute?->id)->first();
+        $humanComputerInteractionAndGuiProgrammingModule = \App\Models\Module::where('module_code', 'ITP4506')->where('institute_id', $informationTechnologyInstitute?->id)->first();
+        $itProfessionalismModule = \App\Models\Module::where('module_code', 'ITE4103')->where('institute_id', $informationTechnologyInstitute?->id)->first();
+        $lan4102InformationTechnologyModule  = \App\Models\Module::where('module_code', 'LAN4102')->where('institute_id', $informationTechnologyInstitute?->id)->first();
+        $lan3003InformationTechnologyModule  = \App\Models\Module::where('module_code', 'LAN3003')->where('institute_id', $informationTechnologyInstitute?->id)->first();
+
+        // DI
+        $lan4102DesignInstituteModule = \App\Models\Module::where('module_code', 'LAN4102')->where('institute_id', $designInstitute?->id)->first();
+        $lan3003DesignInstituteModule = \App\Models\Module::where('module_code', 'LAN3003')->where('institute_id', $designInstitute?->id)->first();
+
+
+        $softwareEngineeringProgramme->modules()->sync(array_filter([
+            $artificialIntelligenceAndMachineLearningModule?->id,
+            $contemporaryTopicsInSoftwareEngineeringModule?->id,
+            $humanComputerInteractionAndGuiProgrammingModule?->id,
+            $itProfessionalismModule?->id,
+            $lan4102InformationTechnologyModule?->id,
+            $lan3003InformationTechnologyModule?->id,
+        ]));
+
+        $illustrationDesignProgramme->modules()->sync(array_filter([
+            $lan4102DesignInstituteModule?->id,
+            $lan3003DesignInstituteModule?->id,
+        ]));
     }
 }
