@@ -39,6 +39,11 @@ abstract class Message extends Data implements PropertyMorphableData, Wireable
         return ($this->type == MessageType::Human);
     }
 
+    public function isToolMessage(): bool
+    {
+        return ($this->type == MessageType::Tool);
+    }
+
     public function renderContent(): string
     {
         return $this->isHumanMessage() ? e($this->content) : Str::markdown($this->content, ['html_input' => 'escape']);

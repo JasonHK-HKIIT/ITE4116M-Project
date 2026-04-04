@@ -16,4 +16,9 @@ class ToolMessage extends Message
 
     /** @var mixed|null|Optional */
     public mixed $artifact;
+
+    public function isSuccess(): bool
+    {
+        return ($this->status == ToolMessageStatus::Success);
+    }
 }

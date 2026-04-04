@@ -16,4 +16,9 @@ class ToolCall extends Data
 
     /** @var array<string,mixed> */
     public array $args;
+
+    public function renderArgs(): string
+    {
+        return json_encode($this->args, JSON_PRETTY_PRINT | JSON_FORCE_OBJECT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
 }

@@ -2,6 +2,7 @@
 
 use App\Data\Assistant\AssistantCreatePayload;
 use App\Data\Assistant\ExecutionCreatePayload;
+use App\Data\Assistant\Messages\AIMessage;
 use App\Data\Assistant\Messages\Message;
 use App\Data\Assistant\Thread;
 use App\Data\Assistant\ThreadCreatePayload;
@@ -146,6 +147,14 @@ If the user asks a vague question, they are likely meaning to look up info from 
                     {
                         $this->lastMessageId = $message->id;
                         $this->streamIsland('messages', mode: 'append', with: [ 'messages' => [$message] ]);
+                    }
+
+                    if ($message instanceof AIMessage)
+                    {
+                        foreach ($message->toolCalls as $toolCall)
+                        {
+                            $this->stream(to: $toolCall->id, content: e($toolCall->renderArgs()));
+                        }
                     }
 
                     $this->stream(to: $message->id, content: $message->renderContent());
