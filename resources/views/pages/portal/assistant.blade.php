@@ -94,6 +94,7 @@ If the user is referencing particular files, that is often a good hint that info
 If the user asks a vague question, they are likely meaning to look up info from this retriever, and you should call it!',
                         'type==agent/tools' => [
                             ['type' => 'news_articles'],
+                            ['type' => 'student_activities'],
                         ],
                         'type==agent/interrupt_before_action' => false,
                     ],
