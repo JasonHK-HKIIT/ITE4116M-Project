@@ -28,6 +28,7 @@
                 <x-menu-item title="Campuses" route="dashboard.academic.campuses" />
                 <x-menu-item title="Programmes" route="dashboard.academic.programmes.list" />
                 <x-menu-item title="Modules" route="dashboard.academic.modules.list" />
+                <x-menu-item title="Classes" route="dashboard.academic.classes.list" />
             </x-menu-sub>
 
             <x-menu-sub title="Students" icon="fal.users">
