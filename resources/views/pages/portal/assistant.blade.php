@@ -137,7 +137,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
                         $this->streamIsland('messages', mode: 'append', with: [ 'messages' => [$message] ]);
                     }
 
-                    $this->stream(to: $message->id, content: $message->content, replace: true);
+                    $this->stream(to: $message->id, content: $message->renderContent());
                     usleep(50000);
                 }
             }

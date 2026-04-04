@@ -29,5 +29,7 @@ new class extends Component
         {{ $author ?? '' }}
         <time class="text-xs opacity-50">{{ $time ?? '' }}</time>
     </div>
-    <div class="chat-bubble" wire:stream="{{ $message->id }}">{{ $message->content }}</div>
+    <div class="chat-bubble prose" wire:stream.replace="{{ $message->id }}">
+        {!! $message->renderContent() !!}
+    </div>
 </div>

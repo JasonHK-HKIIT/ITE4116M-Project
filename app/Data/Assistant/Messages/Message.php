@@ -3,6 +3,7 @@
 namespace App\Data\Assistant\Messages;
 
 use App\Enums\Assistant\MessageType;
+use Illuminate\Support\Str;
 use Livewire\Wireable;
 use Spatie\LaravelData\Attributes\MapName;
 use Spatie\LaravelData\Attributes\PropertyForMorph;
@@ -32,6 +33,16 @@ abstract class Message extends Data implements PropertyMorphableData, Wireable
 
     /** @var array<string,mixed> */
     public array $additionalKwargs;
+
+    public function isHumanMessage(): bool
+    {
+        return ($this->type == MessageType::Human);
+    }
+
+    public function renderContent(): string
+    {
+        return $this->isHumanMessage() ? e($this->content) : Str::markdown($this->content, ['html_input' => 'escape']);
+    }
 
     public static function morph(array $properties): ?string
     {
