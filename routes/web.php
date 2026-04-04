@@ -48,6 +48,10 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     Route::livewire('/academic/modules/create', 'pages::dashboard.academic.modules.edit')->name('academic.modules.create');
     Route::livewire('/academic/modules/{module}', 'pages::dashboard.academic.modules.edit')->whereNumber('module')->name('academic.modules.edit');
 
+    Route::livewire('/students', 'pages::dashboard.students.list')->name('students.list');
+    Route::livewire('/students/create', 'pages::dashboard.students.edit')->name('students.create');
+    Route::livewire('/students/{student}', 'pages::dashboard.students.edit')->whereNumber('student')->name('students.edit');
+
     Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
     Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
     Route::livewire('/news/{article}', 'pages::dashboard.news.edit')->whereNumber('article')->name('news.edit');

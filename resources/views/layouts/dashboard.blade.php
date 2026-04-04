@@ -31,8 +31,8 @@
             </x-menu-sub>
 
             <x-menu-sub title="Students" icon="fal.users">
-                <x-menu-item title="All Students" link="/dashboard/students" />
-                <x-menu-item title="Create Student" link="/dashboard/students/create" />
+                <x-menu-item title="All Students" route="dashboard.students.list" />
+                <x-menu-item title="Create Student" route="dashboard.students.create" />
                 <x-menu-item title="Batch Import" link="/dashboard/students/import" />
             </x-menu-sub>
 
