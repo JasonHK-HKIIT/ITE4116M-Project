@@ -77,6 +77,13 @@ class AssistantClient
         return Thread::from($response->json());
     }
 
+    public function deleteThread(string $threadId): bool
+    {
+        /** @var \Illuminate\Http\Client\Response */
+        $response = $this->getGuzzleClient($this->user->id)->delete("{$this->endpoint}/threads/{$threadId}");
+        return $response->ok();
+    }
+
     public function getThreadState(string $threadId): ThreadState
     {
         /** @var \Illuminate\Http\Client\Response */

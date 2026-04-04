@@ -12,12 +12,15 @@ use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Mary\Traits\Toast;
 use Symfony\Component\HttpClient\Chunk\ServerSentEvent;
 
 new
 #[Layout("layouts::assistant")]
 class extends Component
 {
+    use Toast;
+
     #[Locked]
     public array $threads = [];
 
@@ -103,6 +106,14 @@ If the user asks a vague question, they are likely meaning to look up info from 
         }
         
         $this->dispatch('question-sent', question: $question)->self();
+    }
+
+    public function delete(): void
+    {
+        if ($this->client->deleteThread($this->threadId))
+        {
+            $this->success('Thread deleted.', redirectTo: route('portal.assistant'));
+        }
     }
 
     public function think(string $question): void
@@ -216,7 +227,13 @@ If the user asks a vague question, they are likely meaning to look up info from 
     </x-slot:sidebar>
 
     <x-slot:content class="flex flex-col">
-        <x-header :title="$threadId ? 'Chat Thread' : 'New Chat'" :subtitle="$thread?->name" separator class="!mb-0" />
+        <x-header :title="$threadId ? 'Chat Thread' : 'New Chat'" :subtitle="$thread?->name" separator class="!mb-0">
+            <x-slot:actions>
+                @if ($thread)
+                    <x-button :label="__('Delete Thread')" icon="fal.trash" class="btn-primary" wire:click="delete()" loading />
+                @endif
+            </x-slot:actions>
+        </x-header>
         
         <div class="grow-1 flex flex-col">
             <div id="messages-container" class="pt-10 grow-1 flex flex-col overflow-y-auto" style="scrollbar-width: none;">
