@@ -20,8 +20,11 @@
             <x-sidebar-user />
 
             <x-menu-item title="Dashboard" icon="fal.gauge-high" route="dashboard.home" />
-            
-            <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
+
+            <x-menu-sub title="Calendar" icon="fal.calendar-circle-user">
+                <x-menu-item title="Add Events" route="dashboard.calendar.events" />
+                <x-menu-item title="Manage Events" route="dashboard.calendar.manage" />
+            </x-menu-sub>
 
             <x-menu-sub title="Academic Structure" icon="fal.school-flag">
                 <x-menu-item title="Institutes" route="dashboard.academic.institutes" />

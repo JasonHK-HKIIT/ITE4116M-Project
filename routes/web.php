@@ -66,4 +66,12 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     Route::livewire('/activities', 'pages::dashboard.activities.list')->name('activities.list');
     Route::livewire('/activities/create', 'pages::dashboard.activities.edit')->name('activities.create');
     Route::livewire('/activities/{activity}', 'pages::dashboard.activities.edit')->whereNumber('activity')->name('activities.edit');
+
+    Route::livewire('/calendar/manage', 'pages::dashboard.calendar.manage')->name('calendar.manage');
+    Route::livewire('/calendar/management/classes', 'pages::dashboard.calendar.management.classes')->name('calendar.classes');
+    Route::livewire('/calendar/management/activities', 'pages::dashboard.calendar.management.activities')->name('calendar.activities');
+    Route::livewire('/calendar/management/institute-holidays', 'pages::dashboard.calendar.management.institute_holidays')->name('calendar.institute_holidays');
+    Route::livewire('/calendar/management/public-holidays', 'pages::dashboard.calendar.management.public_holidays')->name('calendar.public_holidays');
+    
+    Route::livewire('/calendar/events', 'pages::dashboard.calendar.events')->name('calendar.events');
 });
