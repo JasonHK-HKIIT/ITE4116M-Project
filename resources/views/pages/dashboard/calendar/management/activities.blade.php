@@ -18,11 +18,7 @@ class extends Component
 
     public ?int $student_id = null;
 
-    /**
-     * Editable data for each activity event, keyed by event id.
-     *
-     * @var array<int, array<string, mixed>>
-     */
+    //Editable data for each activity event, keyed by event id.
     public array $eventsData = [];
 
     public function searchStudent(): void

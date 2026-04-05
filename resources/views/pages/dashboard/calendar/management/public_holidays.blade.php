@@ -13,12 +13,11 @@ class extends Component
 {
     use Toast;
 
-    /**
-     * Editable data for each holiday event, keyed by event id.
-     *
-     * @var array<int, array<string, mixed>>
-     */
+    //Editable data for each holiday event, keyed by event id.
     public array $eventsData = [];
+
+    //IDs of events marked for deletion, applied on save.
+    public array $deletedEventIds = [];
 
     protected function buildEventsQuery()
     {
@@ -30,6 +29,7 @@ class extends Component
     protected function loadEvents(): void
     {
         $this->eventsData = [];
+        $this->deletedEventIds = [];
 
         $events = $this->buildEventsQuery()->get();
 
@@ -84,9 +84,25 @@ class extends Component
             ])->save();
         }
 
+        if ($this->deletedEventIds) {
+            CalendarEvent::query()
+                ->where('type', CalendarEventType::PUBLIC_HOLIDAY)
+                ->whereIn('id', $this->deletedEventIds)
+                ->delete();
+        }
+
         $this->success('Public holidays were updated.');
 
         $this->loadEvents();
+    }
+
+    public function deleteEvent(int $id): void
+    {
+        if (! in_array($id, $this->deletedEventIds, true)) {
+            $this->deletedEventIds[] = $id;
+        }
+
+        unset($this->eventsData[$id]);
     }
 
     public function with(): array
@@ -113,10 +129,14 @@ class extends Component
                             <th>Title</th>
                             <th>Description</th>
                             <th>Date</th>
+                            <th class="w-16 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($events as $event)
+                            @if(in_array($event->id, $deletedEventIds ?? [], true))
+                                @continue
+                            @endif
                             <tr>
                                 <td class="align-top">
                                     <x-input
@@ -137,6 +157,13 @@ class extends Component
                                     <x-input
                                         type="date"
                                         wire:model.defer="eventsData.{{ $event->id }}.date"
+                                    />
+                                </td>
+                                <td class="text-right align-middle">
+                                    <x-button
+                                        wire:click="deleteEvent({{ $event->id }})"
+                                        icon="o-trash"
+                                        class="btn-ghost btn-xs text-error"
                                     />
                                 </td>
                             </tr>

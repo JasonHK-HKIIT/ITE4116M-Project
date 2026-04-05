@@ -29,12 +29,11 @@ class extends Component
 
     public ?int $module_id = null;
 
-    /**
-     * Editable data for each calendar(module,class) event, keyed by event id.
-     *
-     * @var array<int, array<string, mixed>>
-     */
+    // Editable data for each calendar(module,class) event, keyed by event id.
     public array $eventsData = [];
+
+    //IDs of events marked for deletion, applied on save.
+    public array $deletedEventIds = [];
 
     #[Computed]
     public function institutes(): array
@@ -176,6 +175,7 @@ class extends Component
     protected function loadEvents(): void
     {
         $this->eventsData = [];
+        $this->deletedEventIds = [];
 
         if (! $this->class_id) {
             return;
@@ -258,9 +258,30 @@ class extends Component
             ])->save();
         }
 
+        if ($this->deletedEventIds) {
+            CalendarEvent::query()
+                ->where('class_id', $this->class_id)
+                ->where('type', CalendarEventType::CLASS_TYPE)
+                ->whereIn('id', $this->deletedEventIds)
+                ->delete();
+        }
+
         $this->success('Class timetable was updated.');
 
         $this->loadEvents();
+    }
+
+    public function deleteEvent(int $id): void
+    {
+        if (! $this->class_id) {
+            return;
+        }
+
+        if (! in_array($id, $this->deletedEventIds, true)) {
+            $this->deletedEventIds[] = $id;
+        }
+
+        unset($this->eventsData[$id]);
     }
 
     public function with(): array
@@ -344,10 +365,14 @@ class extends Component
                                 <th>End</th>
                                 <th>Location</th>
                                 <th>Instructor</th>
+                                <th class="w-16 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($events as $event)
+                                @if(in_array($event->id, $deletedEventIds ?? [], true))
+                                    @continue
+                                @endif
                                 <tr>
                                     <td>
                                         <x-input
@@ -382,6 +407,13 @@ class extends Component
                                             wire:model.defer="eventsData.{{ $event->id }}.instructor"
                                             type="text"
                                             class="w-full"
+                                        />
+                                    </td>
+                                    <td class="text-right align-middle">
+                                        <x-button
+                                            wire:click="deleteEvent({{ $event->id }})"
+                                            icon="o-trash"
+                                            class="btn-ghost btn-xs text-error"
                                         />
                                     </td>
                                 </tr>
