@@ -129,8 +129,8 @@ class extends Component
 
         $fields = LocalesHelper::transformToModelFields($this->validate(), $this->campus->translatedAttributes);
         $this->campus->fill(collect($fields)->except(['institute_ids'])->toArray());
-        $this->campus->institutes()->sync($fields['institute_ids']);
         $this->campus->save();
+        $this->campus->institutes()->sync($fields['institute_ids']);
 
         $this->success('Institute was ' . ($isUpdating ? 'updated' : 'created') . '.');
         $this->campusModal = false;
