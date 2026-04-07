@@ -11,6 +11,8 @@ new
 #[Title("Login")]
 class extends Component
 {
+    public bool $appearance = false;
+
     #[Validate("required")]
     public string $username = "";
 
@@ -43,15 +45,7 @@ class extends Component
     <div class="flex justify-between items-end mb-10">
         <livewire:brand />
 
-        <x-dropdown right>
-            <x-slot:trigger>
-                <x-button icon="fal.language" :tooltip-left="__('Language')" :aria-label="__('Language')" class="btn-square" />
-            </x-slot:trigger>
-
-            <x-menu-item title="English" lang="en" />
-            <x-menu-item title="中文（繁體）" lang="zh-HK" />
-            <x-menu-item title="中文（简体）" lang="zh-CN" />
-        </x-dropdown>
+        <x-button icon="fal.sliders" :tooltip-left="__('Appearance')" :aria-label="__('Appearance')" class="btn-square" @click="$wire.appearance = !$wire.appearance" />
     </div>
 
     <x-form wire:submit="login">
@@ -63,4 +57,6 @@ class extends Component
             <x-button :label="__('Login')" type="submit" icon="fal.left-to-bracket" class="btn-primary" spinner="login" />
         </x-slot:actions>
     </x-form>
+
+    <livewire:appearance wire:model="appearance" />
 </div>
