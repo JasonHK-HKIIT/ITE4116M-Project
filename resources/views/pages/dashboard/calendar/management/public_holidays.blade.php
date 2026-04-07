@@ -54,34 +54,36 @@ class extends Component
 
     public function save(): void
     {
-        if (empty($this->eventsData)) {
+        if (empty($this->eventsData) && empty($this->deletedEventIds)) {
             return;
         }
 
-        $this->validate([
-            'eventsData.*.title' => ['required', 'string', 'max:255'],
-            'eventsData.*.description' => ['nullable', 'string'],
-            'eventsData.*.date' => ['required', 'date'],
-        ]);
+        if (! empty($this->eventsData)) {
+            $this->validate([
+                'eventsData.*.title' => ['required', 'string', 'max:255'],
+                'eventsData.*.description' => ['nullable', 'string'],
+                'eventsData.*.date' => ['required', 'date'],
+            ]);
 
-        foreach ($this->eventsData as $id => $data) {
-            $event = CalendarEvent::query()
-                ->where('type', CalendarEventType::PUBLIC_HOLIDAY)
-                ->find($id);
+            foreach ($this->eventsData as $id => $data) {
+                $event = CalendarEvent::query()
+                    ->where('type', CalendarEventType::PUBLIC_HOLIDAY)
+                    ->find($id);
 
-            if (! $event) {
-                continue;
+                if (! $event) {
+                    continue;
+                }
+
+                $start = Carbon::parse($data['date'])->startOfDay();
+                $end = Carbon::parse($data['date'])->endOfDay();
+
+                $event->fill([
+                    'title' => $data['title'],
+                    'description' => $data['description'] ?? null,
+                    'start_at' => $start,
+                    'end_at' => $end,
+                ])->save();
             }
-
-            $start = Carbon::parse($data['date'])->startOfDay();
-            $end = Carbon::parse($data['date'])->endOfDay();
-
-            $event->fill([
-                'title' => $data['title'],
-                'description' => $data['description'] ?? null,
-                'start_at' => $start,
-                'end_at' => $end,
-            ])->save();
         }
 
         if ($this->deletedEventIds) {
@@ -117,7 +119,7 @@ class extends Component
     <x-header :title="__('Public Holidays')" :subtitle="__('Calendar')" separator />
 
     <x-card shadow>
-        @if ($events->isEmpty())
+        @if (empty($eventsData) && empty($deletedEventIds))
             <p class="text-sm text-base-content/70">
                 There are no public holidays configured yet.
             </p>
@@ -133,21 +135,18 @@ class extends Component
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($events as $event)
-                            @if(in_array($event->id, $deletedEventIds ?? [], true))
-                                @continue
-                            @endif
-                            <tr>
+                        @foreach ($eventsData as $id => $data)
+                            <tr wire:key="public-holiday-{{ $id }}">
                                 <td class="align-top">
                                     <x-input
-                                        wire:model.defer="eventsData.{{ $event->id }}.title"
+                                        wire:model.defer="eventsData.{{ $id }}.title"
                                         placeholder="Title"
                                     />
                                 </td>
 
                                 <td class="align-top">
                                     <x-textarea
-                                        wire:model.defer="eventsData.{{ $event->id }}.description"
+                                        wire:model.defer="eventsData.{{ $id }}.description"
                                         rows="2"
                                         placeholder="Description"
                                     />
@@ -156,12 +155,12 @@ class extends Component
                                 <td class="align-top">
                                     <x-input
                                         type="date"
-                                        wire:model.defer="eventsData.{{ $event->id }}.date"
+                                        wire:model.defer="eventsData.{{ $id }}.date"
                                     />
                                 </td>
                                 <td class="text-right align-middle">
                                     <x-button
-                                        wire:click="deleteEvent({{ $event->id }})"
+                                        wire:click="deleteEvent({{ $id }})"
                                         icon="o-trash"
                                         class="btn-ghost btn-xs text-error"
                                     />

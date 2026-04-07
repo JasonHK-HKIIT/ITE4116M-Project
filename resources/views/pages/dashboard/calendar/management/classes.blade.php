@@ -224,38 +224,38 @@ class extends Component
 
     public function save(): void
     {
-        if (! $this->class_id || empty($this->eventsData)) {
+        if (! $this->class_id || (empty($this->eventsData) && empty($this->deletedEventIds))) {
             return;
         }
 
-        $this->validate([
-            'eventsData.*.title' => ['required', 'string', 'max:255'],
-            'eventsData.*.location' => ['nullable', 'string', 'max:255'],
-            'eventsData.*.instructor' => ['nullable', 'string', 'max:255'],
-            'eventsData.*.start_at' => ['required', 'date'],
-            'eventsData.*.end_time' => ['required', 'date_format:H:i'],
-        ]);
+        if (! empty($this->eventsData)) {
+            $this->validate([
+                'eventsData.*.location' => ['nullable', 'string', 'max:255'],
+                'eventsData.*.instructor' => ['nullable', 'string', 'max:255'],
+                'eventsData.*.start_at' => ['required', 'date'],
+                'eventsData.*.end_time' => ['required', 'date_format:H:i'],
+            ]);
 
-        foreach ($this->eventsData as $id => $data) {
-            $event = CalendarEvent::query()
-                ->where('class_id', $this->class_id)
-                ->where('type', CalendarEventType::CLASS_TYPE)
-                ->find($id);
+            foreach ($this->eventsData as $id => $data) {
+                $event = CalendarEvent::query()
+                    ->where('class_id', $this->class_id)
+                    ->where('type', CalendarEventType::CLASS_TYPE)
+                    ->find($id);
 
-            if (! $event) {
-                continue;
+                if (! $event) {
+                    continue;
+                }
+
+                $start = Carbon::parse($data['start_at']);
+                $end = (clone $start)->setTimeFromTimeString($data['end_time']);
+
+                $event->fill([
+                    'location' => $data['location'] ?? null,
+                    'instructor' => $data['instructor'] ?? null,
+                    'start_at' => $start,
+                    'end_at' => $end,
+                ])->save();
             }
-
-            $start = Carbon::parse($data['start_at']);
-            $end = (clone $start)->setTimeFromTimeString($data['end_time']);
-
-            $event->fill([
-                'title' => $data['title'],
-                'location' => $data['location'] ?? null,
-                'instructor' => $data['instructor'] ?? null,
-                'start_at' => $start,
-                'end_at' => $end,
-            ])->save();
         }
 
         if ($this->deletedEventIds) {
@@ -352,7 +352,7 @@ class extends Component
             />
         </div>
 
-        @if($class_id && $events->isNotEmpty())
+        @if($class_id && (! empty($eventsData) && empty($deletedEventIds) ? true : ($class_id && (! empty($eventsData) || ! empty($deletedEventIds)))))
             <form wire:submit.prevent="save" class="mt-8 space-y-4">
                 <h2 class="text-lg font-semibold">Timetable for selected class</h2>
 
@@ -369,49 +369,42 @@ class extends Component
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($events as $event)
-                                @if(in_array($event->id, $deletedEventIds ?? [], true))
-                                    @continue
-                                @endif
-                                <tr>
-                                    <td>
-                                        <x-input
-                                            wire:model.defer="eventsData.{{ $event->id }}.title"
-                                            type="text"
-                                            class="w-full"
-                                        />
+                            @foreach($eventsData as $id => $data)
+                                <tr wire:key="class-event-{{ $id }}">
+                                    <td class="align-middle">
+                                        <span class="font-medium">{{ $data['title'] ?? '' }}</span>
                                     </td>
                                     <td>
                                         <x-input
-                                            wire:model.defer="eventsData.{{ $event->id }}.start_at"
+                                            wire:model.defer="eventsData.{{ $id }}.start_at"
                                             type="datetime-local"
                                             class="w-full"
                                         />
                                     </td>
                                     <td>
                                         <x-input
-                                            wire:model.defer="eventsData.{{ $event->id }}.end_time"
+                                            wire:model.defer="eventsData.{{ $id }}.end_time"
                                             type="time"
                                             class="w-full"
                                         />
                                     </td>
                                     <td>
                                         <x-input
-                                            wire:model.defer="eventsData.{{ $event->id }}.location"
+                                            wire:model.defer="eventsData.{{ $id }}.location"
                                             type="text"
                                             class="w-full"
                                         />
                                     </td>
                                     <td>
                                         <x-input
-                                            wire:model.defer="eventsData.{{ $event->id }}.instructor"
+                                            wire:model.defer="eventsData.{{ $id }}.instructor"
                                             type="text"
                                             class="w-full"
                                         />
                                     </td>
                                     <td class="text-right align-middle">
                                         <x-button
-                                            wire:click="deleteEvent({{ $event->id }})"
+                                            wire:click="deleteEvent({{ $id }})"
                                             icon="o-trash"
                                             class="btn-ghost btn-xs text-error"
                                         />
