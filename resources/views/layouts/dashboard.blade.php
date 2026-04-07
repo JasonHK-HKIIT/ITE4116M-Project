@@ -22,8 +22,8 @@
             <x-menu-item title="Dashboard" icon="fal.gauge-high" route="dashboard.home" />
 
             <x-menu-sub title="Calendar" icon="fal.calendar-circle-user">
-                <x-menu-item title="Add Events" route="dashboard.calendar.events" />
-                <x-menu-item title="Manage Events" route="dashboard.calendar.manage" />
+                <x-menu-item title="All Events" route="dashboard.calendar.manage" />
+                <x-menu-item title="Create Event" route="dashboard.calendar.events" />
             </x-menu-sub>
 
             <x-menu-sub title="Academic Structure" icon="fal.school-flag">
