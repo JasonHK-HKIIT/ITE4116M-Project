@@ -5,7 +5,9 @@ return [
     'subtitle' => '自訂你的 MyPortal',
     'language' => '語言',
     'theme' => '主題',
-    'theme-auto' => '跟隨系統',
-    'theme-light' => '淺色',
-    'theme-dark' => '深色',
+    'theme_values' => [
+        'auto' => '跟隨系統',
+        'light' => '淺色',
+        'dark' => '深色',
+    ],
 ];

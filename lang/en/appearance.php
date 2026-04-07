@@ -5,7 +5,9 @@ return [
     'subtitle' => 'Customize your MyPortal',
     'language' => 'Language',
     'theme' => 'Theme',
-    'theme-auto' => 'System Default',
-    'theme-light' => 'Light',
-    'theme-dark' => 'Dark',
+    'theme_values' => [
+        'auto' => 'System Default',
+        'light' => 'Light',
+        'dark' => 'Dark',
+    ],
 ];

@@ -35,9 +35,9 @@ new class extends Component
     public function themes(): array
     {
         return [
-            ['id' => 'auto', 'name' => trans('appearance.theme-auto')],
-            ['id' => 'light', 'name' => trans('appearance.theme-light')],
-            ['id' => 'dark', 'name' => trans('appearance.theme-dark')],
+            ['id' => 'auto', 'name' => trans('appearance.theme_values.auto')],
+            ['id' => 'light', 'name' => trans('appearance.theme_values.light')],
+            ['id' => 'dark', 'name' => trans('appearance.theme_values.dark')],
         ];
     }
 
