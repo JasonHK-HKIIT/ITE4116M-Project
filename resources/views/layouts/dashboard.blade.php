@@ -17,11 +17,11 @@
         <livewire:brand class="px-5 pt-4" />
 
         <x-menu activate-by-route>
-            <x-sidebar-user />
+            <livewire:sidebar-user />
 
             <x-menu-item title="Dashboard" icon="fal.gauge-high" route="dashboard.home" />
 
-            <x-menu-sub title="Calendar" icon="fal.calendar-circle-user">
+            <x-menu-sub title="Calendar" icon="fal.calendar-users">
                 <x-menu-item title="All Events" route="dashboard.calendar.manage" />
                 <x-menu-item title="Create Event" route="dashboard.calendar.events" />
             </x-menu-sub>

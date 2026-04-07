@@ -219,7 +219,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
         <livewire:brand class="px-5 pt-4" />
 
         <x-menu activate-by-route>
-            <x-sidebar-user />
+            <livewire:sidebar-user />
 
             <x-menu-item title="New Chat" icon="fal.message-plus" route="portal.assistant" />
             <x-menu-sub title="Chat History" icon="fal.clock-rotate-left" open>

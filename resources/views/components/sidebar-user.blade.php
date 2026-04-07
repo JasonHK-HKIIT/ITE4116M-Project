@@ -4,7 +4,7 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //
+    public bool $appearance = false;
 }; ?>
 
 <div>
@@ -13,10 +13,19 @@ new class extends Component
 
         <x-list-item :item="$user" value="given_name" sub-value="username" no-separator no-hover class="-mx-2 !-my-2 rounded">
             <x-slot:actions>
-                <x-button icon="fal.right-from-bracket" class="btn-circle btn-ghost btn-xs" tooltip-left="Sign Out" no-wire-navigate link="/logout" />
+                <x-dropdown right>
+                    <x-slot:trigger>
+                        <x-button icon="fal.circle-chevron-down" :tooltip-left="__('Quick Menu')" :aria-label="__('Quick Menu')" class="btn-circle btn-ghost btn-xs" />
+                    </x-slot:trigger>
+
+                    <x-menu-item :title="__('appearance.title')" @click="$wire.appearance = !$wire.appearance" />
+                    <x-menu-item title="Sign Out" link="/logout" />
+                </x-dropdown>
             </x-slot:actions>
         </x-list-item>
 
         <x-menu-separator />
     @endif
+
+    <livewire:appearance wire:model="appearance" />
 </div>

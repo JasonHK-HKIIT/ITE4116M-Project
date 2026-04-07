@@ -17,7 +17,7 @@
         <livewire:brand class="px-5 pt-4" />
 
         <x-menu activate-by-route>
-            <x-sidebar-user />
+            <livewire:sidebar-user />
 
             <x-button label="Chat with Valo" link="{{ route('portal.assistant') }}" icon="fal.sparkles" class="btn-primary btn-block mt-0.5 mb-1" />
 

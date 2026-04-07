@@ -48,14 +48,16 @@ new class extends Component
 }; ?>
 
 <div>
-    <x-modal wire:model="opened" :title="__('appearance.title')" :subtitle="__('appearance.subtitle')">
-        <x-form wire:submit="save" no-separator>
-            <x-select :label="__('appearance.language')" wire:model="language" :options="$languages" />
-            <x-select :label="__('appearance.theme')" wire:model="theme" :options="$themes" />
+    @teleport('body')
+        <x-modal wire:model="opened" :title="__('appearance.title')" :subtitle="__('appearance.subtitle')">
+            <x-form wire:submit="save" no-separator>
+                <x-select :label="__('appearance.language')" wire:model="language" :options="$languages" />
+                <x-select :label="__('appearance.theme')" wire:model="theme" :options="$themes" />
 
-            <x-slot:actions>
-                <x-button :label="__('actions.save')" :icon="'fal.floppy-disk'" type="submit" class="btn-primary" spinner="save" />
-            </x-slot:actions>
-        </x-form>
-    </x-modal>
+                <x-slot:actions>
+                    <x-button :label="__('actions.save')" :icon="'fal.floppy-disk'" type="submit" class="btn-primary" spinner="save" />
+                </x-slot:actions>
+            </x-form>
+        </x-modal>
+    @endteleport
 </div>
