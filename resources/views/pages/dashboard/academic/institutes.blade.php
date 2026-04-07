@@ -124,6 +124,12 @@ class extends Component
         $this->showInstituteModel();
     }
 
+    public function deleteInstitute(int $id): void
+    {
+        $this->institute = Institute::findOrFail($id);
+        $this->institute->deleteOrFail();
+    }
+
     public function save(): void
     {
         $isUpdating = $this->institute->exists;
@@ -190,7 +196,7 @@ class extends Component
             @scope('actions', $institute)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
                     <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" wire:click="updateInstitute({{ $institute->id }})" spinner class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteArticle({{ $institute->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteInstitute({{ $institute->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
 
                 <x-dropdown right>
@@ -199,7 +205,7 @@ class extends Component
                     </x-slot:trigger>
 
                     <x-menu-item title="Edit" icon="fal.pen-to-square" wire:click="updateInstitute({{ $institute->id }})" spinner />
-                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteArticle({{ $institute->id }})" spinner />
+                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteInstitute({{ $institute->id }})" spinner />
                 </x-dropdown>
             @endscope
         </x-table>
