@@ -95,15 +95,14 @@ class extends Component
             ->paginate($this->perPage);
     }
 
-
     public function headers(): array
     {
         return [
-            ['key' => 'title', 'label' => 'Title','class' => 'w-auto min-w-64'],
-            ['key' => 'instructor', 'label' => 'Instructor','class' => 'w-fit'],
-            ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
-            ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
-            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
+            ['key' => 'title', 'label' => trans('activities.table_headers.title'),'class' => 'w-auto min-w-64'],
+            ['key' => 'instructor', 'label' => trans('activities.table_headers.instructor'),'class' => 'w-fit'],
+            ['key' => 'execution_from', 'label' => trans('activities.table_headers.execution_from'), 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'execution_to', 'label' => trans('activities.table_headers.execution_to'),'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'total_amount', 'label' => trans('activities.table_headers.total_amount'),'class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
         ];
     }
 
@@ -127,7 +126,7 @@ class extends Component
 <div>
     <x-drawer
     wire:model="isDrawerOpened"
-    title="Filter" 
+    :title="__('actions.filters')" 
     separator
     with-close-button
     close-on-escape
@@ -135,29 +134,29 @@ class extends Component
 
     <div>
 
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('activities.filters.keywords')" />
 
-        <x-datepicker label="Execution From" wire:model.live="execution_from" clearable />
+        <x-datepicker :label="__('activities.filters.execution_from')" wire:model.live="execution_from" clearable />
 
-        <x-datepicker label="Execution to" wire:model.live="execution_to" clearable />
+        <x-datepicker :label="__('activities.filters.execution_to')" wire:model.live="execution_to" clearable />
 
     </div>
  
     <x-slot:actions>
-        <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-        <x-button label="Done" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+        <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+        <x-button :label="__('actions.done')" class="btn-primary" @click="$wire.isDrawerOpened = false" />
     </x-slot:actions>
 
 
     </x-drawer>
 
-    <x-header :title="__('Activities')" separator>
+    <x-header :title="__('activities.title')" separator>
  
          <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('activities.filters.keywords')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
         </x-slot:actions>
 
     </x-header>
@@ -166,7 +165,7 @@ class extends Component
         <x-table :headers="$headers" :rows="$activities" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 20]">
             @scope('actions', $activity)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.file-lines" :tooltip="__('Activity Details')" :link="route('portal.activities.show', ['id' => $activity->id ])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.file-lines" :tooltipLeft="__('activities.table_actions.activity_details')" :link="route('portal.activities.show', ['id' => $activity->id ])" class="btn-ghost btn-square btn-sm" />
                 </div>        
 
                     <x-dropdown right>
