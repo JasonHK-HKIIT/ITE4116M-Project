@@ -35,43 +35,61 @@ Route::name('portal.')->middleware('auth')->group(function ()
     Route::livewire('/calendar', 'pages::portal.calendar.calendar_view')->name('calendar');
 });
 
-Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin'])->group(function ()
+Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin,staff'])->group(function ()
 {
     Route::livewire('/', 'pages::dashboard.home')->name('home');
-    
-    Route::livewire('/calendar', 'pages::dashboard.calendar.manage')->name('calendar.manage');
-    Route::livewire('/calendar/create', 'pages::dashboard.calendar.events')->name('calendar.events');
-    Route::livewire('/calendar/classes', 'pages::dashboard.calendar.management.classes')->name('calendar.classes');
-    Route::livewire('/calendar/activities', 'pages::dashboard.calendar.management.activities')->name('calendar.activities');
-    Route::livewire('/calendar/institute-holidays', 'pages::dashboard.calendar.management.institute_holidays')->name('calendar.institute_holidays');
-    Route::livewire('/calendar/public-holidays', 'pages::dashboard.calendar.management.public_holidays')->name('calendar.public_holidays');
-    
-    Route::livewire('/academic/institutes', 'pages::dashboard.academic.institutes')->name('academic.institutes');
-    Route::livewire('/academic/campuses', 'pages::dashboard.academic.campuses')->name('academic.campuses');
-    Route::livewire('/academic/programmes', 'pages::dashboard.academic.programmes.list')->name('academic.programmes.list');
-    Route::livewire('/academic/programmes/create', 'pages::dashboard.academic.programmes.edit')->name('academic.programmes.create');
-    Route::livewire('/academic/programmes/{programme}', 'pages::dashboard.academic.programmes.edit')->whereNumber('programme')->name('academic.programmes.edit');
-    Route::livewire('/academic/modules', 'pages::dashboard.academic.modules.list')->name('academic.modules.list');
-    Route::livewire('/academic/modules/create', 'pages::dashboard.academic.modules.edit')->name('academic.modules.create');
-    Route::livewire('/academic/modules/{module}', 'pages::dashboard.academic.modules.edit')->whereNumber('module')->name('academic.modules.edit');
-    Route::livewire('/academic/classes', 'pages::dashboard.academic.classes.list')->name('academic.classes.list');
-    Route::livewire('/academic/classes/create', 'pages::dashboard.academic.classes.edit')->name('academic.classes.create');
-    Route::livewire('/academic/classes/{class}', 'pages::dashboard.academic.classes.edit')->whereNumber('class')->name('academic.classes.edit');
 
-    Route::livewire('/students', 'pages::dashboard.students.list')->name('students.list');
-    Route::livewire('/students/create', 'pages::dashboard.students.edit')->name('students.create');
-    Route::livewire('/students/{student}', 'pages::dashboard.students.edit')->whereNumber('student')->name('students.edit');
+    Route::middleware('permission:calendar')->group(function ()
+    {
+        Route::livewire('/calendar', 'pages::dashboard.calendar.manage')->name('calendar.manage');
+        Route::livewire('/calendar/create', 'pages::dashboard.calendar.events')->name('calendar.events');
+        Route::livewire('/calendar/classes', 'pages::dashboard.calendar.management.classes')->name('calendar.classes');
+        Route::livewire('/calendar/activities', 'pages::dashboard.calendar.management.activities')->name('calendar.activities');
+        Route::livewire('/calendar/institute-holidays', 'pages::dashboard.calendar.management.institute_holidays')->name('calendar.institute_holidays');
+        Route::livewire('/calendar/public-holidays', 'pages::dashboard.calendar.management.public_holidays')->name('calendar.public_holidays');
+    });
 
-    Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
-    Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
-    Route::livewire('/news/{article}', 'pages::dashboard.news.edit')->whereNumber('article')->name('news.edit');
+    Route::middleware('permission:academic')->group(function ()
+    {
+        Route::livewire('/academic/institutes', 'pages::dashboard.academic.institutes')->name('academic.institutes');
+        Route::livewire('/academic/campuses', 'pages::dashboard.academic.campuses')->name('academic.campuses');
+        Route::livewire('/academic/programmes', 'pages::dashboard.academic.programmes.list')->name('academic.programmes.list');
+        Route::livewire('/academic/programmes/create', 'pages::dashboard.academic.programmes.edit')->name('academic.programmes.create');
+        Route::livewire('/academic/programmes/{programme}', 'pages::dashboard.academic.programmes.edit')->whereNumber('programme')->name('academic.programmes.edit');
+        Route::livewire('/academic/modules', 'pages::dashboard.academic.modules.list')->name('academic.modules.list');
+        Route::livewire('/academic/modules/create', 'pages::dashboard.academic.modules.edit')->name('academic.modules.create');
+        Route::livewire('/academic/modules/{module}', 'pages::dashboard.academic.modules.edit')->whereNumber('module')->name('academic.modules.edit');
+        Route::livewire('/academic/classes', 'pages::dashboard.academic.classes.list')->name('academic.classes.list');
+        Route::livewire('/academic/classes/create', 'pages::dashboard.academic.classes.edit')->name('academic.classes.create');
+        Route::livewire('/academic/classes/{class}', 'pages::dashboard.academic.classes.edit')->whereNumber('class')->name('academic.classes.edit');
+    });
 
-    Route::livewire('/resources', 'pages::dashboard.resources.list')->name('resources.list');
-    Route::livewire('/resources/create', 'pages::dashboard.resources.edit')->name('resources.create');
-    Route::livewire('/resources/{resource}', 'pages::dashboard.resources.edit')->whereNumber('resource')->name('resources.edit');
+    Route::middleware('permission:students')->group(function ()
+    {
+        Route::livewire('/students', 'pages::dashboard.students.list')->name('students.list');
+        Route::livewire('/students/create', 'pages::dashboard.students.edit')->name('students.create');
+        Route::livewire('/students/{student}', 'pages::dashboard.students.edit')->whereNumber('student')->name('students.edit');
+    });
 
-    Route::livewire('/activities', 'pages::dashboard.activities.list')->name('activities.list');
-    Route::livewire('/activities/create', 'pages::dashboard.activities.edit')->name('activities.create');
-    Route::livewire('/activities/{activity}', 'pages::dashboard.activities.edit')->whereNumber('activity')->name('activities.edit');
+    Route::middleware('permission:news')->group(function ()
+    {
+        Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
+        Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
+        Route::livewire('/news/{article}', 'pages::dashboard.news.edit')->whereNumber('article')->name('news.edit');
+    });
+
+    Route::middleware('permission:resources')->group(function ()
+    {
+        Route::livewire('/resources', 'pages::dashboard.resources.list')->name('resources.list');
+        Route::livewire('/resources/create', 'pages::dashboard.resources.edit')->name('resources.create');
+        Route::livewire('/resources/{resource}', 'pages::dashboard.resources.edit')->whereNumber('resource')->name('resources.edit');
+    });
+
+    Route::middleware('permission:activities')->group(function ()
+    {
+        Route::livewire('/activities', 'pages::dashboard.activities.list')->name('activities.list');
+        Route::livewire('/activities/create', 'pages::dashboard.activities.edit')->name('activities.create');
+        Route::livewire('/activities/{activity}', 'pages::dashboard.activities.edit')->whereNumber('activity')->name('activities.edit');
+    });
 
 });

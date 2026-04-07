@@ -5,11 +5,14 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\Role;
+use App\Enums\Permission;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Support\Str;
@@ -18,7 +21,8 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, HasMedia
 {
-    use Authenticatable, Authorizable, InteractsWithMedia;
+    /** @use HasFactory<\Database\Factories\UserFactory> */
+    use HasFactory, Authenticatable, Authorizable, InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -69,6 +73,35 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         if (is_string($role)) { $role = Role::from($role); }
         return ($this->role == $role);
+    }
+
+    public function hasAnyRole(string|Role ...$roles): bool
+    {
+        foreach ($roles as $role)
+        {
+            if ($this->hasRole($role)) { return true; }
+        }
+
+        return false;
+    }
+
+    public function permissions(): HasMany
+    {
+        return $this->hasMany(UserPermission::class);
+    }
+
+    public function hasPermission(string|Permission $permission): bool
+    {
+        if ($this->hasRole(Role::ADMIN)) { return true; }
+
+        if (is_string($permission))
+        {
+            $permission = Permission::from($permission);
+        }
+
+        return $this->permissions()
+            ->where('permission', $permission->value)
+            ->exists();
     }
 
     public function student(): HasOne

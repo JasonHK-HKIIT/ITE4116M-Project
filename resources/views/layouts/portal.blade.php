@@ -16,6 +16,8 @@
     <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
         <livewire:brand class="px-5 pt-4" />
 
+        @php($user = auth()->user())
+
         <x-menu activate-by-route>
             <livewire:sidebar-user />
 
@@ -30,10 +32,12 @@
             <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/activities" />
             <x-menu-item title="News & Announcement" icon="fal.newspaper" link="/news" />
             <x-menu-item title="Resources Centre" icon="fal.circle-info" link="/resources/resources-centre" />
-            
-            <x-menu-separator />
 
-            <x-menu-item title="Dashboard" icon="fal.gauge-high" link="/dashboard" />
+            @if($user?->hasAnyRole('admin', 'staff'))
+                <x-menu-separator />
+                
+                <x-menu-item title="Dashboard" icon="fal.gauge-high" link="/dashboard" />
+            @endif
         </x-menu>
     </x-slot:sidebar>
 

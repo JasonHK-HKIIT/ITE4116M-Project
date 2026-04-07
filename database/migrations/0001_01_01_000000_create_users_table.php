@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Permission;
 use App\Enums\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -24,6 +25,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('user_permissions', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->enum('permission', Permission::values());
+            $table->unique(['user_id', 'permission']);
+        });
+
         Schema::create("sessions", function (Blueprint $table) {
             $table->string("id")->primary();
             $table->foreignId("user_id")->nullable()->index();
@@ -39,7 +47,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists("users");
         Schema::dropIfExists("sessions");
+        Schema::dropIfExists('user_permissions');
+        Schema::dropIfExists("users");
     }
 };

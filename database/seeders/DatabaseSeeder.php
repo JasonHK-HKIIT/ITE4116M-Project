@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\Permission;
 use App\Enums\Role;
 use App\Models\InstituteCampus;
 use App\Models\Student;
 use App\Models\User;
+use App\Models\UserPermission;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -53,6 +55,26 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
+        $staff = User::firstOrCreate(
+            [
+                'username' => 'staff',
+            ],
+            [
+                'password' => 'letmein',
+                'family_name' => 'Staff',
+                'given_name' => 'User',
+                'role' => Role::STAFF,
+            ]
+        );
+
+        foreach (Permission::values() as $permission)
+        {
+            UserPermission::firstOrCreate([
+                'user_id' => $staff->id,
+                'permission' => $permission,
+            ]);
+        }
+
         $this->call([
             InstituteCampusSeeder::class,
             StudentSeeder::class,
@@ -61,6 +83,7 @@ class DatabaseSeeder extends Seeder
             ProgrammeModuleSeeder::class,
             ClassSeeder::class,
             StudentClassSeeder::class,
+            UserSeeder::class,
             NewsArticleSeeder::class,
             ResourceSeeder::class,
             ActivitySeeder::class,
