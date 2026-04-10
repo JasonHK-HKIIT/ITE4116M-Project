@@ -92,4 +92,11 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
         Route::livewire('/activities/{activity}', 'pages::dashboard.activities.edit')->whereNumber('activity')->name('activities.edit');
     });
 
+    Route::middleware('role:admin')->group(function ()
+    {
+        Route::livewire('/system/staff', 'pages::dashboard.system.staff.list')->name('system.staff.list');
+        Route::livewire('/system/staff/create', 'pages::dashboard.system.staff.edit')->name('system.staff.create');
+        Route::livewire('/system/staff/{staff}', 'pages::dashboard.system.staff.edit')->whereNumber('staff')->name('system.staff.edit');
+    });
+
 });

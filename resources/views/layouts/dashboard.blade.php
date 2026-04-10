@@ -22,14 +22,14 @@
 
             <x-menu-item title="Dashboard" icon="fal.gauge-high" route="dashboard.home" />
 
-            @if($user?->hasPermission('calendar'))
+            @if ($user?->hasPermission('calendar'))
                 <x-menu-sub title="Calendar" icon="fal.calendar-users">
                     <x-menu-item title="All Events" route="dashboard.calendar.manage" />
                     <x-menu-item title="Create Event" route="dashboard.calendar.events" />
                 </x-menu-sub>
             @endif
 
-            @if($user?->hasPermission('academic'))
+            @if ($user?->hasPermission('academic'))
                 <x-menu-sub title="Academic Structure" icon="fal.school-flag">
                     <x-menu-item title="Institutes" route="dashboard.academic.institutes" />
                     <x-menu-item title="Campuses" route="dashboard.academic.campuses" />
@@ -39,7 +39,7 @@
                 </x-menu-sub>
             @endif
 
-            @if($user?->hasPermission('students'))
+            @if ($user?->hasPermission('students'))
                 <x-menu-sub title="Students" icon="fal.users">
                     <x-menu-item title="All Students" route="dashboard.students.list" />
                     <x-menu-item title="Create Student" route="dashboard.students.create" />
@@ -47,24 +47,31 @@
                 </x-menu-sub>
             @endif
 
-            @if($user?->hasPermission('activities'))
+            @if ($user?->hasPermission('activities'))
                 <x-menu-sub title="Student Activities" icon="fal.calendar-star">
                     <x-menu-item title="All Activities" route="dashboard.activities.list" />
                     <x-menu-item title="Create Activities" route="dashboard.activities.create" />
                 </x-menu-sub>
             @endif
 
-            @if($user?->hasPermission('news'))
+            @if ($user?->hasPermission('news'))
                 <x-menu-sub title="News & Announcement" icon="fal.newspaper">
                     <x-menu-item title="All Articles" route="dashboard.news.list" />
                     <x-menu-item title="Create Article" route="dashboard.news.create" />
                 </x-menu-sub>
             @endif
 
-            @if($user?->hasPermission('resources'))
+            @if ($user?->hasPermission('resources'))
                 <x-menu-sub title="Resource Centre" icon="fal.circle-info">
                     <x-menu-item title="All Resources" route="dashboard.resources.list" />
                     <x-menu-item title="Create Resource" route="dashboard.resources.create" />
+                </x-menu-sub>
+            @endif
+
+            @if ($user?->hasRole('admin'))
+                <x-menu-sub title="System Management" icon="fal.gear">
+                    <x-menu-item title="Staff Members" route="dashboard.system.staff.list" />
+                    <x-menu-item title="Password Reset" link="/dashboard/system/password" />
                 </x-menu-sub>
             @endif
             
