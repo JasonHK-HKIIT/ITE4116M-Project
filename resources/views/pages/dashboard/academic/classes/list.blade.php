@@ -41,12 +41,12 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'class_code', 'label' => 'Class Code', 'class' => 'w-fit min-w-36 text-nowrap'],
-            ['key' => 'academic_year', 'label' => 'Academic Year', 'class' => 'w-fit min-w-36 text-nowrap'],
-            ['key' => 'programme', 'label' => 'Programme', 'class' => 'w-fit min-w-44 text-nowrap', 'sortable' => false],
-            ['key' => 'campus', 'label' => 'Campus', 'class' => 'w-fit min-w-44 text-nowrap', 'sortable' => false],
-            ['key' => 'institute', 'label' => 'Institute', 'class' => 'w-fit min-w-48 text-nowrap', 'sortable' => false],
-            ['key' => 'students_count', 'label' => 'Students', 'class' => 'w-fit min-w-24 text-nowrap'],
+            ['key' => 'class_code', 'label' => trans('academic.table.class_code'), 'class' => 'w-fit min-w-36 text-nowrap'],
+            ['key' => 'academic_year', 'label' => trans('academic.table.academic_year'), 'class' => 'w-fit min-w-36 text-nowrap'],
+            ['key' => 'programme', 'label' => trans('academic.table.programme'), 'class' => 'w-fit min-w-44 text-nowrap', 'sortable' => false],
+            ['key' => 'campus', 'label' => trans('academic.table.campus'), 'class' => 'w-fit min-w-44 text-nowrap', 'sortable' => false],
+            ['key' => 'institute', 'label' => trans('academic.table.institute'), 'class' => 'w-fit min-w-48 text-nowrap', 'sortable' => false],
+            ['key' => 'students_count', 'label' => trans('academic.table.students'), 'class' => 'w-fit min-w-24 text-nowrap'],
         ];
     }
 
@@ -149,12 +149,12 @@ class extends Component
         {
             if (ClassModel::destroy($id) > 0)
             {
-                $this->success('Class was deleted.');
+                $this->success(trans('academic.messages.class_deleted'));
             }
         }
         catch (QueryException $exception)
         {
-            $this->error('Class cannot be deleted because it is in use.');
+            $this->error(trans('academic.messages.class_delete_in_use'));
         }
     }
 
@@ -181,12 +181,12 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Classes')" :subtitle="__('Academic Structure')" separator>
+    <x-header :title="__('academic.classes')" :subtitle="__('academic.structure')" separator>
         <x-slot:middle class="justify-end! max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.academic.classes.create')" responsive />
         </x-slot:actions>
     </x-header>
@@ -223,8 +223,8 @@ class extends Component
 
             @scope('actions', $class)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.academic.classes.edit', ['class' => $class])" class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteClass({{ $class->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.academic.classes.edit', ['class' => $class])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteClass({{ $class->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
 
                 <x-dropdown right>
@@ -232,8 +232,8 @@ class extends Component
                         <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                     </x-slot:trigger>
 
-                    <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.academic.classes.edit', ['class' => $class])" />
-                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteClass({{ $class->id }})" spinner />
+                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.academic.classes.edit', ['class' => $class])" />
+                    <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteClass({{ $class->id }})" spinner />
                 </x-dropdown>
             @endscope
         </x-table>
@@ -241,15 +241,15 @@ class extends Component
         <x-pagination :rows="$classes" wire:model.live="perPage" :per-page-values="[5, 10, 25]" />
     </x-card>
 
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
-        <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Any" />
-        <x-select label="Campus" wire:model.live="campus_id" :options="$campuses" placeholder="Any" />
-        <x-select label="Programme" wire:model.live="programme_id" :options="$programmes" placeholder="Any" />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('actions.search')" />
+        <x-select :label="__('academic.filters.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
+        <x-select :label="__('academic.filters.campus')" wire:model.live="campus_id" :options="$campuses" :placeholder="__('actions.any')" />
+        <x-select :label="__('academic.filters.programme')" wire:model.live="programme_id" :options="$programmes" :placeholder="__('actions.any')" />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 </div>

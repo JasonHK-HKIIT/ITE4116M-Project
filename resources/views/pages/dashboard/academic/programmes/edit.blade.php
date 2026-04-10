@@ -134,12 +134,12 @@ class extends Component
 
         if ($this->exists)
         {
-            $this->success('Programme was updated.');
+            $this->success(trans('academic.messages.programme_updated'));
         }
         else
         {
             $this->success(
-                'Programme was created.',
+                trans('academic.messages.programme_created'),
                 redirectTo: route('dashboard.academic.programmes.edit', ['programme' => $this->programme])
             );
         }
@@ -155,7 +155,7 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Programmes')" :subtitle="($exists ? 'Update' : 'Create') . ' Programme'" separator>
+    <x-header :title="__('academic.programmes')" :subtitle="__($exists ? 'academic.modal.update_programme' : 'academic.modal.create_programme')" separator>
     </x-header>
 
     <x-card shadow>
@@ -163,20 +163,20 @@ class extends Component
             <x-tabs wire:model="selectedLanguage" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                        <x-input label="Name" wire:model="name.{{ $language }}" :placeholder="'Name in ' . __('languages.' . $language)" />
+                        <x-input :label="__('academic.form.name')" wire:model="name.{{ $language }}" :placeholder="trans('academic.form.name_in_language', ['language' => __('languages.' . $language)])" />
                     </x-tab>
                 @endforeach
 
                 <div class="px-1">
-                    <x-input label="Programme Code" wire:model="programme_code" placeholder="IT114105" />
-                    <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Select an institute" />
-                    <x-choices label="Modules" wire:model="module_ids" :options="$modules" />
+                    <x-input :label="__('academic.form.programme_code')" wire:model="programme_code" placeholder="IT114105" />
+                    <x-select :label="__('academic.form.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
+                    <x-choices :label="__('academic.form.modules')" wire:model="module_ids" :options="$modules" />
                 </div>
             </x-tabs>
 
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.academic.programmes.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.academic.programmes.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

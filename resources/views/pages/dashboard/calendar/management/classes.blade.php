@@ -266,7 +266,7 @@ class extends Component
                 ->delete();
         }
 
-        $this->success('Class timetable was updated.');
+        $this->success(trans('calendar.messages.class_timetable_updated'));
 
         $this->loadEvents();
     }
@@ -298,56 +298,56 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Class Timetable')" :subtitle="__('Calendar')" separator />
+    <x-header :title="__('calendar.manage.class_timetable')" :subtitle="__('calendar.manage.subtitle')" separator />
 
     <x-card shadow>
         <div class="grid gap-4 md:grid-cols-5">
             <x-select
-                label="Institute"
+                :label="__('calendar.labels.institute')"
                 wire:model.live="institute_id"
                 :options="$institutes"
                 option-label="name"
                 option-value="id"
-                placeholder="Select institute"
+                :placeholder="__('calendar.placeholders.select_institute')"
             />
 
             <x-select
-                label="Campus"
+                :label="__('calendar.labels.campus')"
                 wire:model.live="campus_id"
                 :options="$campuses"
                 option-label="name"
                 option-value="id"
-                placeholder="Select campus"
+                :placeholder="__('calendar.placeholders.select_campus')"
                 :disabled="! $institute_id"
             />
 
             <x-select
-                label="Programme"
+                :label="__('calendar.labels.programme')"
                 wire:model.live="programme_id"
                 :options="$programmes"
                 option-label="name"
                 option-value="id"
-                placeholder="Select programme"
+                :placeholder="__('calendar.placeholders.select_programme')"
                 :disabled="! $campus_id"
             />
 
             <x-select
-                label="Class"
+                :label="__('calendar.labels.class')"
                 wire:model.live="class_id"
                 :options="$classes"
                 option-label="label"
                 option-value="id"
-                placeholder="Select class"
+                :placeholder="__('calendar.placeholders.select_class')"
                 :disabled="! $programme_id"
             />
 
             <x-select
-                label="Module (optional)"
+                :label="__('calendar.labels.module_optional')"
                 wire:model.live="module_id"
                 :options="$modules"
                 option-label="name"
                 option-value="id"
-                placeholder="Any module"
+                :placeholder="__('calendar.placeholders.any_module')"
                 :disabled="! $class_id"
             />
         </div>
@@ -416,7 +416,7 @@ class extends Component
                 </div>
 
                 <div class="mt-4 flex justify-end">
-                    <x-button type="submit" class="btn-primary" icon="fal.floppy-disk" label="Save changes" spinner="save" />
+                    <x-button type="submit" class="btn-primary" icon="fal.floppy-disk" :label="__('calendar.actions.save_changes')" spinner="save" />
                 </div>
             </form>
         @elseif($class_id)

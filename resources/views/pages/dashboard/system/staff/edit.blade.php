@@ -125,7 +125,7 @@ class extends Component
 
         if ($wasExisting && (int) auth()->id() === $this->staff->id && $fields['role'] !== Role::ADMIN->value)
         {
-            $this->addError('role', 'You cannot change your own account role from Admin.');
+            $this->addError('role', trans('system.staff.messages.cannot_change_own_role'));
 
             return;
         }
@@ -159,12 +159,12 @@ class extends Component
 
         if ($wasExisting)
         {
-            $this->success('Staff member was updated.');
+            $this->success(trans('system.staff.messages.updated'));
         }
         else
         {
             $this->success(
-                'Staff member was created. A password has been auto-generated.',
+                trans('system.staff.messages.created'),
                 redirectTo: route('dashboard.system.staff.edit', ['staff' => $user])
             );
         }
@@ -194,21 +194,21 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Staff Members')" :subtitle="($exists ? 'Update' : 'Create') . ' Staff Member'" separator>
+    <x-header :title="__('system.staff.title')" :subtitle="__($exists ? 'system.staff.update_subtitle' : 'system.staff.create_subtitle')" separator>
     </x-header>
 
     <x-card shadow>
         <x-form wire:submit="save">
             <div class="grid gap-5 md:grid-cols-2">
-                <x-input label="Username" wire:model="username" placeholder="staff-john" />
-                <x-input label="Chinese Name" wire:model="chinese_name" placeholder="Optional" />
-                <x-input label="Family Name" wire:model="family_name" />
-                <x-input label="Given Name" wire:model="given_name" />
-                <x-select label="Role" wire:model.live="role" :options="$roleOptions" />
+                <x-input :label="__('system.staff.form.username')" wire:model="username" placeholder="staff-john" />
+                <x-input :label="__('system.staff.form.chinese_name')" wire:model="chinese_name" :placeholder="__('system.staff.form.optional')" />
+                <x-input :label="__('system.staff.form.family_name')" wire:model="family_name" />
+                <x-input :label="__('system.staff.form.given_name')" wire:model="given_name" />
+                <x-select :label="__('system.staff.form.role')" wire:model.live="role" :options="$roleOptions" />
 
                 <div class="md:col-span-2">
                     <x-choices
-                        label="Permissions"
+                        :label="__('system.staff.form.permissions')"
                         wire:model="permission_keys"
                         :options="$permissionOptions"
                         :disabled="$role === App\Enums\Role::ADMIN->value"
@@ -220,8 +220,8 @@ class extends Component
             </div>
 
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.system.staff.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.system.staff.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

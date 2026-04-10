@@ -37,11 +37,11 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'username', 'label' => 'Username', 'class' => 'w-fit min-w-40 text-nowrap', 'sortable' => true],
-            ['key' => 'full_name', 'label' => 'Name', 'class' => 'w-auto min-w-56', 'sortable' => true],
-            ['key' => 'role', 'label' => 'Role', 'class' => 'w-fit min-w-28 text-nowrap', 'sortable' => true],
-            ['key' => 'permissions', 'label' => 'Permissions', 'class' => 'w-fit min-w-64', 'sortable' => false],
-            ['key' => 'created_at', 'label' => 'Created', 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => true],
+            ['key' => 'username', 'label' => trans('system.staff.table.username'), 'class' => 'w-fit min-w-40 text-nowrap', 'sortable' => true],
+            ['key' => 'full_name', 'label' => trans('system.staff.table.name'), 'class' => 'w-auto min-w-56', 'sortable' => true],
+            ['key' => 'role', 'label' => trans('system.staff.table.role'), 'class' => 'w-fit min-w-28 text-nowrap', 'sortable' => true],
+            ['key' => 'permissions', 'label' => trans('system.staff.table.permissions'), 'class' => 'w-fit min-w-64', 'sortable' => false],
+            ['key' => 'created_at', 'label' => trans('system.staff.table.created'), 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => true],
         ];
     }
 
@@ -116,7 +116,7 @@ class extends Component
     {
         if ((int) auth()->id() === $id)
         {
-            $this->error('You cannot delete your own account.');
+            $this->error(trans('system.staff.messages.cannot_delete_self'));
 
             return;
         }
@@ -130,12 +130,12 @@ class extends Component
 
             if ($deletedRows > 0)
             {
-                $this->success('Staff member was deleted.');
+                $this->success(trans('system.staff.messages.deleted'));
             }
         }
         catch (QueryException $exception)
         {
-            $this->error('Staff member cannot be deleted because it is in use.');
+            $this->error(trans('system.staff.messages.delete_in_use'));
         }
     }
 
@@ -174,12 +174,12 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Staff Members')" :subtitle="__('System User Management')" separator>
+    <x-header :title="__('system.staff.title')" :subtitle="__('system.staff.subtitle')" separator>
         <x-slot:middle class="justify-end! max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search by username or name...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('system.staff.search_placeholder')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.system.staff.create')" responsive />
         </x-slot:actions>
     </x-header>
@@ -227,8 +227,8 @@ class extends Component
 
             @scope('actions', $staff)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.system.staff.edit', ['staff' => $staff])" class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteStaff({{ $staff->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.system.staff.edit', ['staff' => $staff])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteStaff({{ $staff->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
 
                 <x-dropdown right>
@@ -236,8 +236,8 @@ class extends Component
                         <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                     </x-slot:trigger>
 
-                    <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.system.staff.edit', ['staff' => $staff])" />
-                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteStaff({{ $staff->id }})" spinner />
+                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.system.staff.edit', ['staff' => $staff])" />
+                    <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteStaff({{ $staff->id }})" spinner />
                 </x-dropdown>
             @endscope
         </x-table>
@@ -245,14 +245,14 @@ class extends Component
         <x-pagination :rows="$staffMembers" wire:model.live="perPage" :per-page-values="[5, 10, 25]" />
     </x-card>
 
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search by username or name...')" />
-        <x-select label="Role" wire:model.live="role" :options="$roleOptions" placeholder="Any" />
-        <x-select label="Permission" wire:model.live="permission" :options="$permissionOptions" placeholder="Any" />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('system.staff.search_placeholder')" />
+        <x-select :label="__('system.staff.filters.role')" wire:model.live="role" :options="$roleOptions" :placeholder="__('actions.any')" />
+        <x-select :label="__('system.staff.filters.permission')" wire:model.live="permission" :options="$permissionOptions" :placeholder="__('actions.any')" />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 </div>

@@ -29,8 +29,8 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'title', 'label' => 'Document Group', 'class' => 'w-auto min-w-64'],
-            ['key' => 'latest_date', 'label' => 'Latest Release', 'class' => 'w-32', 'format' => ['date', 'Y-m-d']],
+            ['key' => 'title', 'label' => trans('resources.table.document_group'), 'class' => 'w-auto min-w-64'],
+            ['key' => 'latest_date', 'label' => trans('resources.table.latest_release'), 'class' => 'w-32', 'format' => ['date', 'Y-m-d']],
         ];
     }
 
@@ -107,23 +107,23 @@ class extends Component
 
 <div>
 
-    <x-header :title="__('Resources Centre')" separator>
+    <x-header :title="__('resources.title')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
         </x-slot:actions>
     </x-header>
 
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
-        <x-datepicker label="Latest After" wire:model.live="publishedAfter" clearable />
-        <x-datepicker label="Latest Before" wire:model.live="publishedBefore" clearable />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('actions.search')" />
+        <x-datepicker :label="__('resources.filters.latest_after')" wire:model.live="publishedAfter" clearable />
+        <x-datepicker :label="__('resources.filters.latest_before')" wire:model.live="publishedBefore" clearable />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 
@@ -140,7 +140,7 @@ class extends Component
                 <div class="bg-base-200 p-4">
                     <div class="space-y-2">
                         @if($row->media->isEmpty())
-                            <div class="text-gray-500">No files uploaded.</div>
+                            <div class="text-gray-500">{{ __('resources.empty.no_files_uploaded') }}</div>
                         @else
                             @foreach($row->media as $media)
                                 <div class="flex justify-between items-center bg-base-100 p-3 rounded">

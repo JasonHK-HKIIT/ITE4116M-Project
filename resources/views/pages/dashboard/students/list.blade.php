@@ -37,12 +37,12 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'username', 'label' => 'Student ID', 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => true],
-            ['key' => 'full_name', 'label' => 'Name', 'class' => 'w-auto min-w-56', 'sortable' => true],
-            ['key' => 'institute', 'label' => 'Institute', 'class' => 'w-fit min-w-48 text-nowrap', 'sortable' => false],
-            ['key' => 'campus', 'label' => 'Campus', 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => false],
-            ['key' => 'classes', 'label' => 'Classes', 'class' => 'w-fit min-w-40', 'sortable' => false],
-            ['key' => 'programmes', 'label' => 'Programmes', 'class' => 'w-fit min-w-40', 'sortable' => false],
+            ['key' => 'username', 'label' => trans('students.table.student_id'), 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => true],
+            ['key' => 'full_name', 'label' => trans('students.table.name'), 'class' => 'w-auto min-w-56', 'sortable' => true],
+            ['key' => 'institute', 'label' => trans('students.table.institute'), 'class' => 'w-fit min-w-48 text-nowrap', 'sortable' => false],
+            ['key' => 'campus', 'label' => trans('students.table.campus'), 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => false],
+            ['key' => 'classes', 'label' => trans('students.table.classes'), 'class' => 'w-fit min-w-40', 'sortable' => false],
+            ['key' => 'programmes', 'label' => trans('students.table.programmes'), 'class' => 'w-fit min-w-40', 'sortable' => false],
         ];
     }
 
@@ -132,12 +132,12 @@ class extends Component
         {
             if (Student::destroy($id) > 0)
             {
-                $this->success('Student was deleted.');
+                $this->success(trans('students.messages.deleted'));
             }
         }
         catch (QueryException $exception)
         {
-            $this->error('Student cannot be deleted because it is in use.');
+            $this->error(trans('students.messages.delete_in_use'));
         }
     }
 
@@ -162,12 +162,12 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Students')" :subtitle="__('Student Management')" separator>
+    <x-header :title="__('students.title')" :subtitle="__('students.subtitle')" separator>
         <x-slot:middle class="justify-end! max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search by ID, name, or mobile...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('students.search_placeholder')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.students.create')" responsive />
         </x-slot:actions>
     </x-header>
@@ -227,8 +227,8 @@ class extends Component
 
             @scope('actions', $student)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.students.edit', ['student' => $student])" class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteStudent({{ $student->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.students.edit', ['student' => $student])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteStudent({{ $student->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
 
                 <x-dropdown right>
@@ -236,8 +236,8 @@ class extends Component
                         <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                     </x-slot:trigger>
 
-                    <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.students.edit', ['student' => $student])" />
-                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteStudent({{ $student->id }})" spinner />
+                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.students.edit', ['student' => $student])" />
+                    <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteStudent({{ $student->id }})" spinner />
                 </x-dropdown>
             @endscope
         </x-table>
@@ -245,14 +245,14 @@ class extends Component
         <x-pagination :rows="$students" wire:model.live="perPage" :per-page-values="[5, 10, 25]" />
     </x-card>
 
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search by ID, name, or mobile...')" />
-        <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Any" />
-        <x-select label="Campus" wire:model.live="campus_id" :options="$campuses" placeholder="Any" />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('students.search_placeholder')" />
+        <x-select :label="__('students.filters.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
+        <x-select :label="__('students.filters.campus')" wire:model.live="campus_id" :options="$campuses" :placeholder="__('actions.any')" />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 </div>

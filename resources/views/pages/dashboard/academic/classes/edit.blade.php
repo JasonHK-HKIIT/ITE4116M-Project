@@ -161,12 +161,12 @@ class extends Component
 
         if ($this->exists)
         {
-            $this->success('Class was updated.');
+            $this->success(trans('academic.messages.class_updated'));
         }
         else
         {
             $this->success(
-                'Class was created.',
+                trans('academic.messages.class_created'),
                 redirectTo: route('dashboard.academic.classes.edit', ['class' => $this->class])
             );
         }
@@ -183,24 +183,24 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Classes')" :subtitle="($exists ? 'Update' : 'Create') . ' Class'" separator>
+    <x-header :title="__('academic.classes')" :subtitle="__($exists ? 'academic.modal.update_class' : 'academic.modal.create_class')" separator>
     </x-header>
 
     <x-card shadow>
         <x-form wire:submit="save">
             <div class="grid gap-5 md:grid-cols-2">
-                <x-input label="Academic Year" wire:model="academic_year" type="number" min="1900" max="2100" placeholder="2026" />
-                <x-input label="Class Code" wire:model="class_code" placeholder="A" />
-                <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Select an institute" />
-                <x-select label="Campus" wire:model="campus_id" :options="$campuses" placeholder="Select a campus" />
+                <x-input :label="__('academic.form.academic_year')" wire:model="academic_year" type="number" min="1900" max="2100" placeholder="2026" />
+                <x-input :label="__('academic.form.class_code')" wire:model="class_code" placeholder="A" />
+                <x-select :label="__('academic.form.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
+                <x-select :label="__('academic.form.campus')" wire:model="campus_id" :options="$campuses" :placeholder="__('actions.any')" />
                 <div class="md:col-span-2">
-                    <x-select label="Programme" wire:model="programme_id" :options="$programmes" placeholder="Select a programme" />
+                    <x-select :label="__('academic.form.programme')" wire:model="programme_id" :options="$programmes" :placeholder="__('actions.any')" />
                 </div>
             </div>
 
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.academic.classes.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.academic.classes.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

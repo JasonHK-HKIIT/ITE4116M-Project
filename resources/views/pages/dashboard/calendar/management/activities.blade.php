@@ -38,7 +38,7 @@ class extends Component
             $this->student_id = null;
             $this->eventsData = [];
 
-            $this->error('Student not found.');
+            $this->error(trans('calendar.messages.student_not_found'));
 
             return;
         }
@@ -47,7 +47,7 @@ class extends Component
 
         $this->loadEvents();
 
-        $this->success('Student loaded.');
+        $this->success(trans('calendar.messages.student_loaded'));
     }
 
     protected function loadEvents(): void
@@ -132,7 +132,7 @@ class extends Component
             ])->save();
         }
 
-        $this->success('Activity events were updated.');
+        $this->success(trans('calendar.messages.activity_events_updated'));
 
         $this->loadEvents();
     }
@@ -147,13 +147,13 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Activities')" :subtitle="__('Calendar')" separator />
+    <x-header :title="__('activities.title')" :subtitle="__('calendar.manage.subtitle')" separator />
 
     <x-card shadow class="mb-6">
         <x-form wire:submit="searchStudent" class="grid gap-4 md:grid-cols-[2fr_auto] items-end">
             <x-input
-                label="Student ID"
-                placeholder="Enter student ID (e.g. 240155170)"
+                :label="__('calendar.labels.student_id')"
+                :placeholder="__('calendar.placeholders.enter_student_id')"
                 wire:model.defer="student_id_input"
             />
 

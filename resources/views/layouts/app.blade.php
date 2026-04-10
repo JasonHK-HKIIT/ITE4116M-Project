@@ -39,18 +39,18 @@
 
                     <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
                         <x-slot:actions>
-                            <x-button icon="o-power" class="btn-circle btn-ghost btn-xs" tooltip-left="logoff" no-wire-navigate link="/logout" />
+                            <x-button icon="o-power" class="btn-circle btn-ghost btn-xs" :tooltip-left="__('navigation.app.logoff')" no-wire-navigate link="/logout" />
                         </x-slot:actions>
                     </x-list-item>
 
                     <x-menu-separator />
                 @endif
 
-                <x-menu-item title="Hello" icon="o-sparkles" link="/" />
+                <x-menu-item :title="__('navigation.app.hello')" icon="o-sparkles" link="/" />
                 
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-menu-item title="Archives" icon="o-archive-box" link="####" />
+                <x-menu-sub :title="__('navigation.app.settings')" icon="o-cog-6-tooth">
+                    <x-menu-item :title="__('navigation.app.wifi')" icon="o-wifi" link="####" />
+                    <x-menu-item :title="__('navigation.app.archives')" icon="o-archive-box" link="####" />
                 </x-menu-sub>
             </x-menu>
         </x-slot:sidebar>

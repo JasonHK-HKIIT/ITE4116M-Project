@@ -553,7 +553,7 @@ new #[Layout('layouts::portal')] class extends Component {
                                 -
                                 {{ $selectedEvent->end_at->format('H:i') }}
                             @else
-                                ({{ __('Whole day') }})
+                                ({{ __('calendar.labels.whole_day') }})
                             @endunless
                         </span>
                     </div>

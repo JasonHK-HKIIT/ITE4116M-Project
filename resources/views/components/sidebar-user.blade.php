@@ -15,11 +15,11 @@ new class extends Component
             <x-slot:actions>
                 <x-dropdown right>
                     <x-slot:trigger>
-                        <x-button icon="fal.circle-chevron-down" :tooltip-left="__('Quick Menu')" :aria-label="__('Quick Menu')" class="btn-circle btn-ghost btn-xs" />
+                        <x-button icon="fal.circle-chevron-down" :tooltip-left="__('actions.quick_menu')" :aria-label="__('actions.quick_menu')" class="btn-circle btn-ghost btn-xs" />
                     </x-slot:trigger>
 
                     <x-menu-item :title="__('appearance.title')" @click="$wire.appearance = !$wire.appearance" />
-                    <x-menu-item title="Sign Out" link="/logout" />
+                    <x-menu-item :title="__('actions.sign_out')" link="/logout" />
                 </x-dropdown>
             </x-slot:actions>
         </x-list-item>

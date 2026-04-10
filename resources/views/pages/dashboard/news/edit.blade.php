@@ -44,7 +44,7 @@ class extends Component
     public function statuses(): array
     {
         return collect(NewsArticleStatus::cases())
-            ->map(fn($case, $key) => ['id' => $case, 'name' => $case->name])
+            ->map(fn($case, $key) => ['id' => $case, 'name' => trans('news.statuses.' . strtolower($case->name))])
             ->toArray();
     }
 
@@ -87,7 +87,7 @@ class extends Component
 
     public function render()
     {
-        return $this->view()->title(($this->exists ? 'Update' : 'Create') . ' Article');
+        return $this->view()->title(trans($this->exists ? 'news.subtitles.update_article' : 'news.subtitles.create_article'));
     }
 
     public function save(): void
@@ -109,12 +109,12 @@ class extends Component
 
         if ($this->exists)
         {
-            $this->success('News article was updated.');
+            $this->success(trans('news.messages.updated'));
         }
         else
         {
             $this->success(
-                "News article was created.",
+                trans('news.messages.created'),
                 redirectTo: route('dashboard.news.edit', ['article' => $this->article]));
         }
     }
@@ -136,7 +136,7 @@ class extends Component
 @endassets
 
 <div>
-    <x-header :title="__('News & Announcement')" :subtitle="($exists ? 'Update' : 'Create') . ' Article'" separator>
+    <x-header :title="__('news.title')" :subtitle="__($exists ? 'news.subtitles.update_article' : 'news.subtitles.create_article')" separator>
     </x-header>
 
     <x-card shadow>
@@ -144,34 +144,34 @@ class extends Component
             <x-tabs wire:model="selectedLanguage" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                        <x-input label="Title" wire:model="title.{{ $language }}" />
+                        <x-input :label="__('news.fields.title')" wire:model="title.{{ $language }}" />
                     </x-tab>
                 @endforeach
                     <div class="px-1">
-                        <x-input label="Slug" wire:model="slug" prefix="/news/" popover="Unique identifier of the article" />
-                        <x-group label="Status" wire:model="status" :options="$statuses" />
-                        <x-datepicker label="Published on" wire:model="published_on" clearable />
+                        <x-input :label="__('news.fields.slug')" wire:model="slug" prefix="/news/" :popover="__('news.slug_help')" />
+                        <x-group :label="__('news.filters.status')" wire:model="status" :options="$statuses" />
+                        <x-datepicker :label="__('news.table.published_on')" wire:model="published_on" clearable />
 
                         <!--if selected image -> open, else if -> get the current image or default image-->
                         @if ($cover && Str::startsWith($cover->getMimeType(), 'image/'))
                             <br />
-                            <img src="{{ $cover->temporaryUrl() }}" alt="Preview" class="max-h-48 rounded border" />
+                            <img src="{{ $cover->temporaryUrl() }}" alt="{{ __('news.image_preview') }}" class="max-h-48 rounded border" />
                         @elseif ($article->getFirstMediaUrl('cover'))
                             <br />
-                            <img src="{{ $article->getFirstMediaUrl('cover') }}" alt="Current Image" class="max-h-48 rounded border" />
+                            <img src="{{ $article->getFirstMediaUrl('cover') }}" alt="{{ __('news.current_image') }}" class="max-h-48 rounded border" />
                         @endif
-                        <x-input type="file" label="Image" wire:model="cover" accept="image/jpeg,image/png,image/jpg,image/bmp" />
+                        <x-input type="file" :label="__('news.fields.image')" wire:model="cover" accept="image/jpeg,image/png,image/jpg,image/bmp" />
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">
-                        <x-editor label="Content" wire:model="content.{{ $language }}" gplLicense />
+                        <x-editor :label="__('news.fields.content')" wire:model="content.{{ $language }}" gplLicense />
                     </x-tab>
                 @endforeach
             </x-tabs>
 
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.news.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.news.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

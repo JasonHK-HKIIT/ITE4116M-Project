@@ -93,7 +93,7 @@ class extends Component
                 ->delete();
         }
 
-        $this->success('Public holidays were updated.');
+        $this->success(trans('calendar.messages.public_holidays_updated'));
 
         $this->loadEvents();
     }
@@ -116,7 +116,7 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Public Holidays')" :subtitle="__('Calendar')" separator />
+    <x-header :title="__('calendar.manage.public_holidays')" :subtitle="__('calendar.manage.subtitle')" separator />
 
     <x-card shadow>
         @if (empty($eventsData) && empty($deletedEventIds))

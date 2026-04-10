@@ -121,7 +121,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
     {
         if ($this->client->deleteThread($this->threadId))
         {
-            $this->success('Thread deleted.', redirectTo: route('portal.assistant'));
+            $this->success(trans('assistant.thread_deleted'), redirectTo: route('portal.assistant'));
         }
     }
 
@@ -228,8 +228,8 @@ If the user asks a vague question, they are likely meaning to look up info from 
         <x-menu activate-by-route>
             <livewire:sidebar-user />
 
-            <x-menu-item title="New Chat" icon="fal.message-plus" route="portal.assistant" />
-            <x-menu-sub title="Chat History" icon="fal.clock-rotate-left" open>
+            <x-menu-item :title="__('assistant.new_chat')" icon="fal.message-plus" route="portal.assistant" />
+            <x-menu-sub :title="__('assistant.chat_history')" icon="fal.clock-rotate-left" open>
                 @island(name: 'threads')
                     @foreach ($threads as $thread)
                         <x-menu-item wire:key="{{ $thread->threadId }}" :title="$thread->name" :link="route('portal.assistant.thread', ['id' => $thread->threadId])" />
@@ -239,15 +239,15 @@ If the user asks a vague question, they are likely meaning to look up info from 
             
             <x-menu-separator />
 
-            <x-menu-item title="Back to MyPortal" icon="fal.angles-left" route="portal.home" />
+            <x-menu-item :title="__('navigation.dashboard.back_to_portal')" icon="fal.angles-left" route="portal.home" />
         </x-menu>
     </x-slot:sidebar>
 
     <x-slot:content class="flex flex-col">
-        <x-header :title="$threadId ? 'Chat Thread' : 'New Chat'" :subtitle="$thread?->name" separator class="!mb-0">
+        <x-header :title="__($threadId ? 'assistant.chat_thread' : 'assistant.new_chat')" :subtitle="$thread?->name" separator class="!mb-0">
             <x-slot:actions>
                 @if ($thread)
-                    <x-button :label="__('Delete Thread')" icon="fal.trash" class="btn-primary" wire:click="delete()" loading />
+                    <x-button :label="__('assistant.delete_thread')" icon="fal.trash" class="btn-primary" wire:click="delete()" loading />
                 @endif
             </x-slot:actions>
         </x-header>
@@ -265,10 +265,10 @@ If the user asks a vague question, they are likely meaning to look up info from 
             </div>
 
             <x-form wire:submit="send" no-separator class="self-center w-full max-w-192">
-                <x-textarea wire:model="question" placeholder="Ask anything" rows="3" class="resize-none" autofocus />
+                <x-textarea wire:model="question" :placeholder="__('assistant.ask_anything')" rows="3" class="resize-none" autofocus />
 
                 <x-slot:actions>
-                    <x-button label="Send" icon-right="fal.paper-plane-top" type="submit" class="btn-primary" spinner="send, think" />
+                    <x-button :label="__('assistant.send')" icon-right="fal.paper-plane-top" type="submit" class="btn-primary" spinner="send, think" />
                 </x-slot:actions>
             </x-form>
         </div>

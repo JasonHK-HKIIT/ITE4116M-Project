@@ -2,8 +2,13 @@
 
 return [
     'title' => '學生活動',
+    'subtitles' => [
+        'create_activity' => '建立活動',
+        'update_activity' => '更新活動',
+    ],
     'table_headers' => [
         'title' => '標題',
+        'status' => '狀態',
         'instructor' => '導師',
         'execution_from' => '開始日期',
         'execution_to' => '結束日期',
@@ -12,9 +17,62 @@ return [
     'table_actions' => [
         'activity_details' => '詳情',
     ],
+    'show' => [
+        'title' => '活動詳情',
+        'tabs' => [
+            'administrative' => '行政',
+            'time' => '時間',
+            'personnel' => '人員',
+            'descriptive' => '描述',
+            'financial' => '財務',
+            'supporting' => '支援',
+        ],
+    ],
     'filters' => [
         'keywords' => '搜尋……',
+        'status' => '狀態',
         'execution_from' => '開始日期',
         'execution_to' => '結束日期',
+    ],
+    'form' => [
+        'title' => '標題',
+        'activity_type' => '活動類型',
+        'activity_code' => '活動編號',
+        'status' => '狀態',
+        'campus' => '校園',
+        'discipline' => '範疇',
+        'attribute' => '能力',
+        'instructor' => '導師',
+        'responsible_staff' => '負責職員',
+        'execution_from' => '開始日期',
+        'execution_to' => '結束日期',
+        'time_slot_from_date' => '時段開始（日期）',
+        'time_slot_from_time' => '時段開始（時間）',
+        'time_slot_to_date' => '時段結束（日期）',
+        'time_slot_to_time' => '時段結束（時間）',
+        'duration_hours' => '時數（小時）',
+        'swpd_programme' => 'SWPD 計劃',
+        'venue' => '地點',
+        'capacity' => '名額',
+        'registered' => '已報名',
+        'total_amount' => '總金額',
+        'included_deposit' => '已包含按金',
+        'attachment' => '附件',
+        'attachment_hint' => '上傳 PDF、DOC 或 DOCX（最多 5MB）',
+        'description' => '描述',
+        'venue_remark' => '地點備註',
+    ],
+    'placeholders' => [
+        'activity_code' => '例如：ACT-001-WS',
+    ],
+    'statuses' => [
+        'draft' => '草稿',
+        'published' => '已發佈',
+        'archived' => '已封存',
+    ],
+    'messages' => [
+        'updated' => '活動已更新。',
+        'created' => '活動已建立。',
+        'deleted' => '活動已刪除。',
     ],
 ];

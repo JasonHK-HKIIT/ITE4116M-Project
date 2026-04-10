@@ -11,7 +11,7 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Manage Events')" :subtitle="__('Calendar')" separator />
+    <x-header :title="__('calendar.manage.title')" :subtitle="__('calendar.manage.subtitle')" separator />
 
     <x-card shadow>
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">

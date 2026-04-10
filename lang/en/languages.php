@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'en' => 'English',
-    'zh-HK' => 'Chinese (Traditional)',
-    'zh-CN' => 'Chinese (Simplified)',
+    'en' => '英文',
+    'zh-HK' => '中文（繁體）',
+    'zh-CN' => '中文（簡體）',
 ];

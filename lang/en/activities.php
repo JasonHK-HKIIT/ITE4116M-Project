@@ -2,8 +2,13 @@
 
 return [
     'title' => 'Student Activities',
+    'subtitles' => [
+        'create_activity' => 'Create Activity',
+        'update_activity' => 'Update Activity',
+    ],
     'table_headers' => [
         'title' => 'Title',
+        'status' => 'Status',
         'instructor' => 'Instructor',
         'execution_from' => 'Execution From',
         'execution_to' => 'Execution To',
@@ -12,9 +17,62 @@ return [
     'table_actions' => [
         'activity_details' => 'Details',
     ],
+    'show' => [
+        'title' => 'Activity Details',
+        'tabs' => [
+            'administrative' => 'Administrative',
+            'time' => 'Time',
+            'personnel' => 'Personnel',
+            'descriptive' => 'Descriptive',
+            'financial' => 'Financial',
+            'supporting' => 'Supporting',
+        ],
+    ],
     'filters' => [
         'keywords' => 'Search...',
+        'status' => 'Status',
         'execution_from' => 'Execution From',
         'execution_to' => 'Execution To',
+    ],
+    'form' => [
+        'title' => 'Title',
+        'activity_type' => 'Activity Type',
+        'activity_code' => 'Activity Code',
+        'status' => 'Status',
+        'campus' => 'Campus',
+        'discipline' => 'Discipline',
+        'attribute' => 'Attribute',
+        'instructor' => 'Instructor',
+        'responsible_staff' => 'Responsible Staff',
+        'execution_from' => 'Execution From',
+        'execution_to' => 'Execution To',
+        'time_slot_from_date' => 'Time Slot From (Date)',
+        'time_slot_from_time' => 'Time Slot From (Time)',
+        'time_slot_to_date' => 'Time Slot To (Date)',
+        'time_slot_to_time' => 'Time Slot To (Time)',
+        'duration_hours' => 'Duration (hours)',
+        'swpd_programme' => 'SWPD Programme',
+        'venue' => 'Venue',
+        'capacity' => 'Capacity',
+        'registered' => 'Registered',
+        'total_amount' => 'Total Amount',
+        'included_deposit' => 'Included Deposit',
+        'attachment' => 'Attachment',
+        'attachment_hint' => 'Upload PDF, DOC or DOCX (Max 5MB)',
+        'description' => 'Description',
+        'venue_remark' => 'Venue Remark',
+    ],
+    'placeholders' => [
+        'activity_code' => 'e.g., ACT-001-WS',
+    ],
+    'statuses' => [
+        'draft' => 'Draft',
+        'published' => 'Published',
+        'archived' => 'Archived',
+    ],
+    'messages' => [
+        'updated' => 'Activity was updated.',
+        'created' => 'Activity was created.',
+        'deleted' => 'Activity was deleted.',
     ],
 ];

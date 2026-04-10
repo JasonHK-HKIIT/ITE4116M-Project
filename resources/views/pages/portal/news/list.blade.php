@@ -71,28 +71,28 @@ class extends Component
 @endassets
 
 <div class="p-4 md:p-8 space-y-6 max-w-7xl mx-auto">
-    <x-header :title="__('News & Announcement')" separator>
+    <x-header :title="__('news.title')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
         </x-slot:actions>
     </x-header>
 
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
-        <x-datepicker label="Published After" wire:model.live="publishedAfter" clearable />
-        <x-datepicker label="Published Before" wire:model.live="publishedBefore" clearable />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
+        <x-datepicker :label="__('news.filters.published_after')" wire:model.live="publishedAfter" clearable />
+        <x-datepicker :label="__('news.filters.published_before')" wire:model.live="publishedBefore" clearable />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 
     @if ($articles->count() === 0)
-        <div class="text-center text-base-content/60 py-12">{{ __('No news found') }}</div>
+        <div class="text-center text-base-content/60 py-12">{{ __('news.empty') }}</div>
     @else
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach ($articles as $article)

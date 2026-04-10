@@ -12,7 +12,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-3xl font-bold text-base-content">
-                        Welcome back, {{ auth()->user()->given_name }}!
+                        {{ __('home.welcome_back', ['name' => auth()->user()->given_name]) }}
                     </h2>
                     <p class="text-base-content/80 dark:text-base-content/70 mt-2">
                         {{ now()->format('d F Y (l)') }}
@@ -112,7 +112,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         <!-- My Academics -->
         <x-card class="mt-6 pt-4 p-6" shadow>
             <div class="flex items-center gap-6">
-                <div class="flex flex-col items-center gap-2 flex-shrink-0">
+                <div class="min-w-35 flex flex-col items-center gap-2 flex-shrink-0">
                     <div class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
                         <x-icon name="fal.book" class="w-8 h-8 text-blue-600 dark:text-blue-400" />
                     </div>
@@ -127,7 +127,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         <!-- Student Affairs -->
         <x-card class="mt-6 pt-4 p-6" shadow>
             <div class="flex items-center gap-6">
-                <div class="flex flex-col items-center gap-2 flex-shrink-0">
+                <div class="min-w-35 flex flex-col items-center gap-2 flex-shrink-0">
                     <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
                         <x-icon name="fal.users" class="w-8 h-8 text-green-600 dark:text-green-400" />
                     </div>
@@ -143,7 +143,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         <!-- Campus Life -->
         <x-card class="mt-6 pt-4 p-6" shadow>
             <div class="flex items-center gap-6">
-                <div class="flex flex-col items-center gap-2 flex-shrink-0">
+                <div class="min-w-35 flex flex-col items-center gap-2 flex-shrink-0">
                     <div
                         class="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
                         <x-icon name="fal.map-pin" class="w-8 h-8 text-purple-600 dark:text-purple-400" />
@@ -159,7 +159,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         <!-- Other Services -->
         <x-card class="mt-6 pt-4 p-6" shadow>
             <div class="flex items-center gap-6">
-                <div class="flex flex-col items-center gap-2 flex-shrink-0">
+                <div class="min-w-35 flex flex-col items-center gap-2 flex-shrink-0">
                     <div
                         class="w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
                         <x-icon name="fal.cogs" class="w-8 h-8 text-orange-600 dark:text-orange-400" />
@@ -175,7 +175,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
         <!-- Useful Links -->
         <x-card class="mt-6 pt-4 p-6" shadow>
             <div class="flex items-center gap-6">
-                <div class="flex flex-col items-center gap-2 flex-shrink-0">
+                <div class="min-w-35 flex flex-col items-center gap-2 flex-shrink-0">
                     <div
                         class="w-16 h-16 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
                         <x-icon name="fal.link" class="w-8 h-8 text-yellow-600 dark:text-yellow-400" />

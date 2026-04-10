@@ -212,7 +212,7 @@ class extends Component
 
         $this->resetValidation();
 
-        $this->success('Class timetable event created.');
+        $this->success(trans('calendar.messages.class_event_created'));
     }
 
     public function startCreateInstituteHoliday(): void
@@ -248,7 +248,7 @@ class extends Component
 
         $this->reset(['institute_title', 'institute_description', 'institute_date']);
 
-        $this->success('Institute holiday created.');
+        $this->success(trans('calendar.messages.institute_holiday_created'));
     }
 
     public function startCreatePublicHoliday(): void
@@ -283,12 +283,12 @@ class extends Component
 
         $this->reset(['public_title', 'public_description', 'public_date']);
 
-        $this->success('Public holiday created.');
+        $this->success(trans('calendar.messages.public_holiday_created'));
     }
 }; ?>
 
 <div>
-    <x-header :title="__('Add Events')" :subtitle="__('Calendar')" separator />
+    <x-header :title="__('calendar.events.title')" :subtitle="__('calendar.manage.subtitle')" separator />
 
     <x-card shadow>
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -330,56 +330,56 @@ class extends Component
     @if ($showClassForm)
         <x-card shadow class="mt-6">
             <x-slot:title>
-                {{ __('Add Class Timetable Event') }}
+                {{ __('calendar.events.add_class_timetable_event') }}
             </x-slot:title>
 
             <div class="grid gap-4 md:grid-cols-5">
                 <x-select
-                    label="Institute"
+                    :label="__('calendar.labels.institute')"
                     wire:model.live="class_institute_id"
                     :options="$class_institutes"
                     option-label="name"
                     option-value="id"
-                    placeholder="Select institute"
+                    :placeholder="__('calendar.placeholders.select_institute')"
                 />
 
                 <x-select
-                    label="Campus"
+                    :label="__('calendar.labels.campus')"
                     wire:model.live="class_campus_id"
                     :options="$class_campuses"
                     option-label="name"
                     option-value="id"
-                    placeholder="Select campus"
+                    :placeholder="__('calendar.placeholders.select_campus')"
                     :disabled="! $class_institute_id"
                 />
 
                 <x-select
-                    label="Programme"
+                    :label="__('calendar.labels.programme')"
                     wire:model.live="class_programme_id"
                     :options="$class_programmes"
                     option-label="name"
                     option-value="id"
-                    placeholder="Select programme"
+                    :placeholder="__('calendar.placeholders.select_programme')"
                     :disabled="! $class_institute_id"
                 />
 
                 <x-select
-                    label="Class"
+                    :label="__('calendar.labels.class')"
                     wire:model.live="class_class_id"
                     :options="$class_classes"
                     option-label="label"
                     option-value="id"
-                    placeholder="Select class"
+                    :placeholder="__('calendar.placeholders.select_class')"
                     :disabled="! $class_programme_id"
                 />
 
                 <x-select
-                    label="Module"
+                    :label="__('calendar.labels.module')"
                     wire:model.live="class_module_id"
                     :options="$class_modules"
                     option-label="name"
                     option-value="id"
-                    placeholder="Select module"
+                    :placeholder="__('calendar.placeholders.select_module')"
                     :disabled="! $class_programme_id"
                 />
             </div>
@@ -387,39 +387,39 @@ class extends Component
             @if ($class_class_id && $class_module_id)
                 <div class="mt-6 grid gap-4 md:grid-cols-5">
                     <x-input
-                        label="Title"
+                        :label="__('calendar.labels.title')"
                         value="{{ $class_title }}"
-                        placeholder="Module title"
+                        :placeholder="__('calendar.placeholders.module_title')"
                         disabled
                         class="md:col-span-2"
                     />
 
                     <x-input
-                        label="Start"
+                        :label="__('calendar.labels.start')"
                         type="datetime-local"
                         wire:model.defer="class_start_at"
                     />
 
                     <x-input
-                        label="End time"
+                        :label="__('calendar.labels.end_time')"
                         type="time"
                         wire:model.defer="class_end_time"
                     />
 
                     <x-input
-                        label="Location"
+                        :label="__('calendar.labels.location')"
                         wire:model.defer="class_location"
                     />
 
                     <x-input
-                        label="Instructor"
+                        :label="__('calendar.labels.instructor')"
                         wire:model.defer="class_instructor"
                     />
                 </div>
 
                 <div class="mt-4 flex justify-end">
                     <x-button wire:click="saveClassEvent" icon="o-plus" class="btn-primary">
-                        {{ __('Add Class Event') }}
+                        {{ __('calendar.events.add_class_event') }}
                     </x-button>
                 </div>
             @endif
@@ -429,27 +429,27 @@ class extends Component
     @if ($showInstituteForm)
         <x-card shadow class="mt-6">
             <x-slot:title>
-                {{ __('Add Institute Holiday') }}
+                {{ __('calendar.events.add_institute_holiday') }}
             </x-slot:title>
 
             <div class="grid gap-4 md:grid-cols-3">
                 <x-select
-                    label="Institute"
+                    :label="__('calendar.labels.institute')"
                     wire:model.defer="institute_id"
                     :options="$institutes"
                     option-label="name"
                     option-value="id"
-                    placeholder="Select institute"
+                    :placeholder="__('calendar.placeholders.select_institute')"
                 />
 
                 <x-input
-                    label="Title"
+                    :label="__('calendar.labels.title')"
                     wire:model.defer="institute_title"
-                    placeholder="Institute holiday title"
+                    :placeholder="__('calendar.placeholders.institute_holiday_title')"
                 />
 
                 <x-input
-                    label="Date"
+                    :label="__('calendar.labels.date')"
                     type="date"
                     wire:model.defer="institute_date"
                 />
@@ -457,16 +457,16 @@ class extends Component
 
             <div class="mt-4">
                 <x-textarea
-                    label="Description"
+                    :label="__('calendar.labels.description')"
                     wire:model.defer="institute_description"
                     rows="3"
-                    placeholder="Description (optional)"
+                    :placeholder="__('calendar.placeholders.description_optional')"
                 />
             </div>
 
             <div class="mt-4 flex justify-end">
                 <x-button wire:click="saveInstituteHoliday" icon="o-plus" class="btn-primary">
-                    {{ __('Add Institute Holiday') }}
+                    {{ __('calendar.events.add_institute_holiday') }}
                 </x-button>
             </div>
         </x-card>
@@ -475,18 +475,18 @@ class extends Component
     @if ($showPublicForm)
         <x-card shadow class="mt-6">
             <x-slot:title>
-                {{ __('Add Public Holiday') }}
+                {{ __('calendar.events.add_public_holiday') }}
             </x-slot:title>
 
             <div class="grid gap-4 md:grid-cols-2">
                 <x-input
-                    label="Title"
+                    :label="__('calendar.labels.title')"
                     wire:model.defer="public_title"
-                    placeholder="Public holiday title"
+                    :placeholder="__('calendar.placeholders.public_holiday_title')"
                 />
 
                 <x-input
-                    label="Date"
+                    :label="__('calendar.labels.date')"
                     type="date"
                     wire:model.defer="public_date"
                 />
@@ -494,16 +494,16 @@ class extends Component
 
             <div class="mt-4">
                 <x-textarea
-                    label="Description"
+                    :label="__('calendar.labels.description')"
                     wire:model.defer="public_description"
                     rows="3"
-                    placeholder="Description (optional)"
+                    :placeholder="__('calendar.placeholders.description_optional')"
                 />
             </div>
 
             <div class="mt-4 flex justify-end">
                 <x-button wire:click="savePublicHoliday" icon="o-plus" class="btn-primary">
-                    {{ __('Add Public Holiday') }}
+                    {{ __('calendar.events.add_public_holiday') }}
                 </x-button>
             </div>
         </x-card>

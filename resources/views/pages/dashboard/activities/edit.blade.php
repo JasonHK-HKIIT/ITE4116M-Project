@@ -112,7 +112,7 @@ class extends Component
     public function statuses(): array
     {
         return collect(NewsArticleStatus::cases())
-            ->map(fn($case) => ['id' => $case, 'name' => $case->name])
+            ->map(fn ($case) => ['id' => $case, 'name' => trans('activities.statuses.' . strtolower($case->name))])
             ->toArray();
     }
 
@@ -153,15 +153,6 @@ class extends Component
             ['id' => 'Nicole', 'name' => 'Nicole Clark'],
             ['id' => 'Thomas', 'name' => 'Thomas Lewis'],
             ['id' => 'Patricia', 'name' => 'Patricia Robinson'],
-        ];
-    }
-
-    #[Computed]
-    public function headers(): array
-    {
-        return [
-            ['key' => 'name', 'label' => 'Institute', 'class' => 'w-fit min-w-48'],
-            ['key' => 'campuses', 'label' => 'Campuses', 'sortable' => false, 'class' => 'w-fit'],
         ];
     }
 
@@ -213,19 +204,19 @@ class extends Component
         $localeName = __("languages.{$primaryLocale}");
 
         return [
-            'activity_code' => 'Activity Code',
-            'campus_id' => 'Campus',
-            'status' => 'Status',
-            'time_slot_from_date' => 'Time Slot From Date',
-            'time_slot_from_time' => 'Time Slot From Time',
-            'time_slot_to_date' => 'Time Slot To Date',
-            'time_slot_to_time' => 'Time Slot To Time',
-            'activity_type' => 'Activity Type',
-            'discipline' => 'Discipline',
-            'attribute' => 'Attribute',
-            "title.{$primaryLocale}" => "Title ({$localeName})",
-            "description.{$primaryLocale}" => "Description ({$localeName})",
-            "venue_remark.{$primaryLocale}" => "Venue Remark ({$localeName})",
+            'activity_code' => trans('activities.form.activity_code'),
+            'campus_id' => trans('activities.form.campus'),
+            'status' => trans('activities.form.status'),
+            'time_slot_from_date' => trans('activities.form.time_slot_from_date'),
+            'time_slot_from_time' => trans('activities.form.time_slot_from_time'),
+            'time_slot_to_date' => trans('activities.form.time_slot_to_date'),
+            'time_slot_to_time' => trans('activities.form.time_slot_to_time'),
+            'activity_type' => trans('activities.form.activity_type'),
+            'discipline' => trans('activities.form.discipline'),
+            'attribute' => trans('activities.form.attribute'),
+            "title.{$primaryLocale}" => trans('activities.form.title') . " ({$localeName})",
+            "description.{$primaryLocale}" => trans('activities.form.description') . " ({$localeName})",
+            "venue_remark.{$primaryLocale}" => trans('activities.form.venue_remark') . " ({$localeName})",
         ];
     }
 
@@ -287,7 +278,7 @@ class extends Component
 
     public function render()
     {
-        return $this->view()->title(($this->exists ? 'Update' : 'Create') . ' Activity');
+        return $this->view()->title(trans($this->exists ? 'activities.subtitles.update_activity' : 'activities.subtitles.create_activity'));
     }
 
     public function save(): void
@@ -301,12 +292,12 @@ class extends Component
 
             if ($this->exists)
             {
-                $this->success('Activity was updated.');
+                $this->success(trans('activities.messages.updated'));
             }
             else
             {
                 $this->success(
-                    "Activity was created.",
+                    trans('activities.messages.created'),
                     redirectTo: route('dashboard.activities.list'));
             }
     }
@@ -366,7 +357,7 @@ class extends Component
 @endassets
 
 <div>
-    <x-header :title="__('Activities')" :subtitle="($exists ? 'Update' : 'Create') . ' Activity'" separator>
+    <x-header :title="__('activities.title')" :subtitle="__($exists ? 'activities.subtitles.update_activity' : 'activities.subtitles.create_activity')" separator>
     </x-header>
 
     <x-card shadow>
@@ -374,60 +365,60 @@ class extends Component
             <x-tabs wire:model="selectedLanguage" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                        <x-input label="Title" wire:model="title.{{ $language }}"  />
+                        <x-input :label="__('activities.form.title')" wire:model="title.{{ $language }}"  />
                     </x-tab>
                 @endforeach
                     <div class="px-1">
                         <!-- Core Details -->
-                        <x-select label="Activity Type" wire:model="activity_type" :options="$types" option-value="value" option-label="label" />
-                        <x-input label="Activity Code" wire:model="activity_code" placeholder="e.g., ACT-001-WS" />
-                        <x-group label="Status" wire:model="status" :options="$statuses" />
-                        <x-select label="Campus" wire:model="campus_id" :options="$campuses" option-value="value" option-label="label"  />
-                        <x-select label="Discipline" wire:model="discipline" :options="$disciplines" option-value="value" option-label="label" />
-                        <x-select label="Attribute" wire:model="attribute" :options="$attributes" option-value="value" option-label="label"  />
+                        <x-select :label="__('activities.form.activity_type')" wire:model="activity_type" :options="$types" option-value="value" option-label="label" />
+                        <x-input :label="__('activities.form.activity_code')" wire:model="activity_code" :placeholder="__('activities.placeholders.activity_code')" />
+                        <x-group :label="__('activities.form.status')" wire:model="status" :options="$statuses" />
+                        <x-select :label="__('activities.form.campus')" wire:model="campus_id" :options="$campuses" option-value="value" option-label="label"  />
+                        <x-select :label="__('activities.form.discipline')" wire:model="discipline" :options="$disciplines" option-value="value" option-label="label" />
+                        <x-select :label="__('activities.form.attribute')" wire:model="attribute" :options="$attributes" option-value="value" option-label="label"  />
                         
                         <!-- Instructor & Staff -->
-                        <x-select label="Instructor" wire:model="instructor" :options="$instructors" option-value="id" option-label="name" />
-                        <x-select label="Responsible Staff" wire:model="responsible_staff" :options="$staff" option-value="id" option-label="name" />
+                        <x-select :label="__('activities.form.instructor')" wire:model="instructor" :options="$instructors" option-value="id" option-label="name" />
+                        <x-select :label="__('activities.form.responsible_staff')" wire:model="responsible_staff" :options="$staff" option-value="id" option-label="name" />
                         
                         <!-- Execution Period -->
-                        <x-datepicker label="Execution From" wire:model="execution_from"  />
-                        <x-datepicker label="Execution To" wire:model="execution_to"  />
+                        <x-datepicker :label="__('activities.form.execution_from')" wire:model="execution_from"  />
+                        <x-datepicker :label="__('activities.form.execution_to')" wire:model="execution_to"  />
                         
                         <!-- Time Slot -->
-                        <x-datepicker label="Time Slot From (Date)" wire:model="time_slot_from_date" />
-                        <x-input type="time" label="Time Slot From (Time)" wire:model.live="time_slot_from_time" />
-                        <x-datepicker label="Time Slot To (Date)" wire:model="time_slot_to_date" />
-                        <x-input type="time" label="Time Slot To (Time)" wire:model.live="time_slot_to_time" />
-                        <x-input type="number" label="Duration (hours)" wire:model="duration_hours" min="0" step="0.5"  />
+                        <x-datepicker :label="__('activities.form.time_slot_from_date')" wire:model="time_slot_from_date" />
+                        <x-input type="time" :label="__('activities.form.time_slot_from_time')" wire:model.live="time_slot_from_time" />
+                        <x-datepicker :label="__('activities.form.time_slot_to_date')" wire:model="time_slot_to_date" />
+                        <x-input type="time" :label="__('activities.form.time_slot_to_time')" wire:model.live="time_slot_to_time" />
+                        <x-input type="number" :label="__('activities.form.duration_hours')" wire:model="duration_hours" min="0" step="0.5"  />
 
 
                         <!-- Program & Venue -->
-                        <x-checkbox label="SWPD Programme" wire:model="swpd_programme" />
-                        <x-input label="Venue" wire:model="venue" />
+                        <x-checkbox :label="__('activities.form.swpd_programme')" wire:model="swpd_programme" />
+                        <x-input :label="__('activities.form.venue')" wire:model="venue" />
                         
                         <!-- Capacity -->
-                        <x-input type="number" label="Capacity" wire:model="capacity" min="0" />
-                        <x-input type="number" label="Registered" wire:model="registered" min="0" />
+                        <x-input type="number" :label="__('activities.form.capacity')" wire:model="capacity" min="0" />
+                        <x-input type="number" :label="__('activities.form.registered')" wire:model="registered" min="0" />
                         
                         <!-- Financials -->
-                        <x-input type="number" label="Total Amount" wire:model="total_amount" min="0" step="0.01" />
-                        <x-input type="number" label="Included Deposit" wire:model="included_deposit" min="0" step="0.01" />
+                        <x-input type="number" :label="__('activities.form.total_amount')" wire:model="total_amount" min="0" step="0.01" />
+                        <x-input type="number" :label="__('activities.form.included_deposit')" wire:model="included_deposit" min="0" step="0.01" />
                         
                         <!-- Attachment -->
-                        <x-file label="Attachment" wire:model="attachment" hint="Upload PDF, DOC or DOCX (Max 5MB)" accept=".pdf,.doc,.docx" />
+                        <x-file :label="__('activities.form.attachment')" wire:model="attachment" :hint="__('activities.form.attachment_hint')" accept=".pdf,.doc,.docx" />
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">
-                        <x-editor label="Description" wire:model="description.{{ $language }}" gplLicense />
-                        <x-textarea label="Venue Remark" wire:model="venue_remark.{{ $language }}" />
+                        <x-editor :label="__('activities.form.description')" wire:model="description.{{ $language }}" gplLicense />
+                        <x-textarea :label="__('activities.form.venue_remark')" wire:model="venue_remark.{{ $language }}" />
                     </x-tab>
                 @endforeach
             </x-tabs>
 
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.activities.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.activities.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

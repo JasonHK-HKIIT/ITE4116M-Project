@@ -42,9 +42,9 @@ class extends Component
 }; ?>
 
 <div>
-    <x-card title="Activity Details" shadow separator>
+    <x-card :title="__('activities.show.title')" shadow separator>
         <x-tabs wire:model="selectedTab" label-class="text-xl font-bold">
-            <x-tab name="administrative-tab" label="Administrative">
+            <x-tab name="administrative-tab" :label="__('activities.show.tabs.administrative')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Activity Type:</strong> {{ $activity->activity_type ?? 'N/A' }}</p>
                     <p><strong>Activity Code:</strong> {{ $activity->activity_code ?? 'N/A' }}</p>
@@ -55,7 +55,7 @@ class extends Component
                     <p><strong>Attribute:</strong> {{ $this->getAttributeLabel() }}</p>
                 </div>
             </x-tab>
-            <x-tab name="time-tab" label="Time">
+            <x-tab name="time-tab" :label="__('activities.show.tabs.time')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Execution Period:</strong> 
                         From {{ $activity->execution_from?->format('M d, Y') ?? 'N/A' }} 
@@ -69,13 +69,13 @@ class extends Component
                     </p>
                 </div>
             </x-tab>
-            <x-tab name="personnel-tab" label="Personnel">
+            <x-tab name="personnel-tab" :label="__('activities.show.tabs.personnel')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Instructor:</strong> {{ $activity->instructor }}</p>
                     <p><strong>Responsible Staff:</strong> {{ $activity->responsible_staff }}</p>
                 </div>
             </x-tab>
-            <x-tab name="descriptive-tab" label="Descriptive">
+            <x-tab name="descriptive-tab" :label="__('activities.show.tabs.descriptive')">
                 <div class="space-y-3 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Description:</strong></p>
                     <div class="prose max-w-none">{!! $activity->description !!}</div>
@@ -83,13 +83,13 @@ class extends Component
                     <p><strong>Venue Remark:</strong> {{ $activity->venue_remark ?? 'N/A' }}</p>
                 </div>
             </x-tab>
-            <x-tab name="financial-tab" label="Financial">
+            <x-tab name="financial-tab" :label="__('activities.show.tabs.financial')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <p><strong>Total Amount:</strong> {{ $activity->total_amount }}</p>
                     <p><strong>Included Deposit:</strong> {{ $activity->included_deposit }}</p>
                 </div>
             </x-tab>
-            <x-tab name="supporting-tab" label="Supporting">
+            <x-tab name="supporting-tab" :label="__('activities.show.tabs.supporting')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <div>
                         <strong>Attachment:</strong>
@@ -118,7 +118,7 @@ class extends Component
             </x-tab>
         </x-tabs>
         <x-slot:actions separator>
-            <a href="{{ route('portal.activities.list') }}" class="btn btn-primary">{{ __('Back to activities List') }}</a>
+            <a href="{{ route('portal.activities.list') }}" class="btn btn-primary">{{ __('actions.back') }} {{ __('activities.title') }}</a>
         </x-slot:actions>
     </x-card>
 </div>

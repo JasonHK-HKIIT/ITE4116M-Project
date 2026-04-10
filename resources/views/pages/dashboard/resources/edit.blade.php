@@ -106,12 +106,12 @@ class extends Component
 
         if ($this->exists)
         {
-            $this->success('Resource was updated.');
+            $this->success(trans('resources.messages.updated'));
         }
         else
         {
             $this->success(
-                "Resource was created.",
+                trans('resources.messages.created'),
                 redirectTo: route('dashboard.resources.edit', ['resource' => $this->resource]));
         }
     }
@@ -152,7 +152,7 @@ class extends Component
     ])
 @endassets
 <div>
-    <x-header :title="__('Resources Centre')" separator>
+    <x-header :title="__('resources.title')" separator>
     </x-header>
 
     <x-card shadow>
@@ -160,9 +160,9 @@ class extends Component
             <x-tabs wire:model="selectedLanguage" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach ($locales as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                        <x-input label="Title" wire:model="title.{{ $language }}" />
+                        <x-input :label="__('resources.edit.title')" wire:model="title.{{ $language }}" />
                         <div class="mt-2">
-                            <div class="font-semibold mb-1">{{ __('Existing Files') }}</div>
+                            <div class="font-semibold mb-1">{{ __('resources.edit.existing_files') }}</div>
                             @php
                                 $translation = $resource->translations->where('locale', $language)->first();
                             @endphp
@@ -175,27 +175,27 @@ class extends Component
                                         <li class="flex items-center gap-2 @if($isPendingDelete) opacity-50 line-through @endif">
                                             <a href="{{ $media->getFullUrl() }}" target="_blank" class="text-primary underline">{{ $media->file_name }}</a>
                                             @if(!$isPendingDelete)
-                                                <x-button icon="fal.trash" size="xs" class="btn-ghost btn-xs" wire:click="markDeleteMedia({{ $media->id }}, '{{ $language }}')" :tooltip="__('Delete file (pending)')" spinner />
+                                                <x-button icon="fal.trash" size="xs" class="btn-ghost btn-xs" wire:click="markDeleteMedia({{ $media->id }}, '{{ $language }}')" :tooltip="__('resources.edit.delete_file_pending')" spinner />
                                             @else
-                                                <span class="text-xs text-red-500">{{ __('Pending delete') }}</span>
+                                                <span class="text-xs text-red-500">{{ __('resources.edit.pending_delete') }}</span>
                                             @endif
                                         </li>
                                     @endforeach
                                 </ul>
                             @else
-                                <span class="text-gray-500">No files uploaded.</span>
+                                <span class="text-gray-500">{{ __('resources.empty.no_files_uploaded') }}</span>
                             @endif
                         </div>
                         <div class="mt-2">
-                            <x-input type="file" label="Files" wire:model="pendingFiles.{{ $language }}" multiple accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" />
+                            <x-input type="file" :label="__('resources.edit.files')" wire:model="pendingFiles.{{ $language }}" multiple accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/*" />
                             @if(!empty($pendingFiles[$language]))
                                 <div class="mt-2">
-                                    <div class="font-semibold mb-1">Files to be uploaded:</div>
+                                    <div class="font-semibold mb-1">{{ __('resources.edit.files_to_be_uploaded') }}</div>
                                     <ul class="list-disc pl-5">
                                         @foreach($pendingFiles[$language] as $idx => $file)
                                             <li class="flex items-center gap-2">
                                                 {{ $file->getClientOriginalName() }}
-                                                <x-button icon="fal.trash" size="xs" class="btn-ghost btn-xs" wire:click="removePendingFile('{{ $language }}', {{ $idx }})" :tooltip="__('Remove from upload')" spinner />
+                                                <x-button icon="fal.trash" size="xs" class="btn-ghost btn-xs" wire:click="removePendingFile('{{ $language }}', {{ $idx }})" :tooltip="__('resources.edit.remove_from_upload')" spinner />
                                             </li>
                                         @endforeach
                                     </ul>
@@ -206,8 +206,8 @@ class extends Component
                 @endforeach
             </x-tabs>
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.resources.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.resources.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

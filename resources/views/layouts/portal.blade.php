@@ -21,22 +21,22 @@
         <x-menu activate-by-route>
             <livewire:sidebar-user />
 
-            <x-button label="Chat with Valo" link="{{ route('portal.assistant') }}" icon="fal.sparkles" class="btn-primary btn-block mt-0.5 mb-1" />
+            <x-button :label="__('navigation.portal.chat_with_valo')" link="{{ route('portal.assistant') }}" icon="fal.sparkles" class="btn-primary btn-block mt-0.5 mb-1" />
 
-            <x-menu-item title="Home" icon="fal.house" link="/" />
-            <x-menu-item title="Calendar" icon="fal.calendar-circle-user" link="/calendar" />
-            <x-menu-sub title="Profile" icon="fal.address-card">
-                <x-menu-item title="Personal Particular" link="/profile/personal-particular" />
-                <x-menu-item title="Programme & Modules" link="/profile/programme-modules" />
+            <x-menu-item :title="__('navigation.portal.home')" icon="fal.house" link="/" />
+            <x-menu-item :title="__('navigation.portal.calendar')" icon="fal.calendar-circle-user" link="/calendar" />
+            <x-menu-sub :title="__('navigation.portal.profile')" icon="fal.address-card">
+                <x-menu-item :title="__('navigation.portal.personal_particular')" link="/profile/personal-particular" />
+                <x-menu-item :title="__('navigation.portal.programme_modules')" link="/profile/programme-modules" />
             </x-menu-sub>
-            <x-menu-item title="Student Activities" icon="fal.calendar-star" link="/activities" />
-            <x-menu-item title="News & Announcement" icon="fal.newspaper" link="/news" />
-            <x-menu-item title="Resources Centre" icon="fal.circle-info" link="/resources/resources-centre" />
+            <x-menu-item :title="__('navigation.portal.activities')" icon="fal.calendar-star" link="/activities" />
+            <x-menu-item :title="__('navigation.portal.news')" icon="fal.newspaper" link="/news" />
+            <x-menu-item :title="__('navigation.portal.resources')" icon="fal.circle-info" link="/resources/resources-centre" />
 
             @if($user?->hasAnyRole('admin', 'staff'))
                 <x-menu-separator />
                 
-                <x-menu-item title="Dashboard" icon="fal.gauge-high" link="/dashboard" />
+                <x-menu-item :title="__('navigation.portal.dashboard')" icon="fal.gauge-high" link="/dashboard" />
             @endif
         </x-menu>
     </x-slot:sidebar>

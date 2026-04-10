@@ -110,7 +110,7 @@ class extends Component
     public function deleteArticle(int $id): void
     {
         if (Activity::destroy($id) > 0) {
-            $this->success('Activity was deleted.');
+            $this->success(trans('activities.messages.deleted'));
         }
     }
 
@@ -118,12 +118,12 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'title', 'label' => 'Title','class' => 'w-auto min-w-64'],
-            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'sortable' => false],
-            ['key' => 'instructor', 'label' => 'Instructor','class' => 'w-fit'],
-            ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
-            ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
-            ['key' => 'total_amount', 'label' => 'Total amount','class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
+            ['key' => 'title', 'label' => trans('activities.table_headers.title'),'class' => 'w-auto min-w-64'],
+            ['key' => 'status', 'label' => trans('activities.table_headers.status'), 'class' => 'w-fit', 'sortable' => false],
+            ['key' => 'instructor', 'label' => trans('activities.table_headers.instructor'),'class' => 'w-fit'],
+            ['key' => 'execution_from', 'label' => trans('activities.table_headers.execution_from'), 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'execution_to', 'label' => trans('activities.table_headers.execution_to'),'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
+            ['key' => 'total_amount', 'label' => trans('activities.table_headers.total_amount'),'class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
         ];
     }
 
@@ -155,7 +155,7 @@ class extends Component
 <div>
     <x-drawer
     wire:model="isDrawerOpened"
-    title="Filter" 
+    :title="__('actions.filters')" 
     separator
     with-close-button
     close-on-escape
@@ -163,31 +163,31 @@ class extends Component
 
     <div>
 
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
 
-        <x-select label="Status" wire:model.live="status" :options="$statuses" placeholder="Any" option-value="id" option-label="name" />
+        <x-select :label="__('activities.filters.status')" wire:model.live="status" :options="$statuses" :placeholder="__('actions.any')" option-value="id" option-label="name" />
 
-        <x-datepicker label="Execution From" wire:model.live="execution_from" clearable />
+        <x-datepicker :label="__('activities.filters.execution_from')" wire:model.live="execution_from" clearable />
 
-        <x-datepicker label="Execution to" wire:model.live="execution_to" clearable />
+        <x-datepicker :label="__('activities.filters.execution_to')" wire:model.live="execution_to" clearable />
 
     </div>
  
     <x-slot:actions>
-        <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-        <x-button label="Done" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+        <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+        <x-button :label="__('actions.done')" class="btn-primary" @click="$wire.isDrawerOpened = false" />
     </x-slot:actions>
 
 
     </x-drawer>
 
-    <x-header :title="__('Activities')" separator>
+    <x-header :title="__('activities.title')" separator>
  
          <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive>
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive>
                 @if ($status || $execution_from || $execution_to)
                     <x-badge value="1" class="badge-sm badge-primary absolute -top-2 -right-2" />
                 @endif
@@ -210,8 +210,8 @@ class extends Component
             @scope('actions', $activity)
 
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteArticle({{ $activity->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteArticle({{ $activity->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>        
 
                     <x-dropdown right>
@@ -219,8 +219,8 @@ class extends Component
                             <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                         </x-slot:trigger>
 
-                        <x-menu-item title="Activity Details" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" />
-                        <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteArticle({{ $activity->id }})" spinner />
+                        <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" />
+                        <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteArticle({{ $activity->id }})" spinner />
 
                     </x-dropdown>
             @endscope

@@ -249,12 +249,12 @@ class extends Component
 
         if ($this->exists)
         {
-            $this->success('Student was updated.');
+            $this->success(trans('students.messages.updated'));
         }
         else
         {
             $this->success(
-                'Student was created. A password has been auto-generated.',
+                trans('students.messages.created'),
                 redirectTo: route('dashboard.students.edit', ['student' => $this->student])
             );
         }
@@ -271,44 +271,44 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Students')" :subtitle="($exists ? 'Update' : 'Create') . ' Student'" separator>
+    <x-header :title="__('students.title')" :subtitle="__($exists ? 'students.modal.update_student' : 'students.modal.create_student')" separator>
     </x-header>
 
     <x-card shadow>
         <x-form wire:submit="save">
             <div class="grid gap-5 md:grid-cols-2">
-                <x-input label="Student ID" wire:model="username" placeholder="240155170" />
-                <x-input label="Chinese Name" wire:model="chinese_name" placeholder="Optional" />
-                <x-input label="Family Name" wire:model="family_name" />
-                <x-input label="Given Name" wire:model="given_name" />
+                <x-input :label="__('students.form.student_id')" wire:model="username" placeholder="240155170" />
+                <x-input :label="__('students.form.chinese_name')" wire:model="chinese_name" :placeholder="__('students.form.optional')" />
+                <x-input :label="__('students.form.family_name')" wire:model="family_name" />
+                <x-input :label="__('students.form.given_name')" wire:model="given_name" />
                 <x-select
-                    label="Gender"
+                    :label="__('students.form.gender')"
                     wire:model="gender"
                     :options="[
                         ['id' => 'Male', 'name' => 'Male'],
                         ['id' => 'Female', 'name' => 'Female'],
                         ['id' => 'Other', 'name' => 'Other'],
                     ]"
-                    placeholder="Prefer not to say"
+                    :placeholder="__('students.form.prefer_not_to_say')"
                 />
-                <x-datepicker label="Date of Birth" wire:model="date_of_birth" clearable />
-                <x-input label="Nationality" wire:model="nationality" />
-                <x-input label="Mother Tongue" wire:model="mother_tongue" />
-                <x-input label="Telephone No." wire:model="tel_no" />
-                <x-input label="Mobile No." wire:model="mobile_no" />
+                <x-datepicker :label="__('students.form.date_of_birth')" wire:model="date_of_birth" clearable />
+                <x-input :label="__('students.form.nationality')" wire:model="nationality" />
+                <x-input :label="__('students.form.mother_tongue')" wire:model="mother_tongue" />
+                <x-input :label="__('students.form.telephone_no')" wire:model="tel_no" />
+                <x-input :label="__('students.form.mobile_no')" wire:model="mobile_no" />
                 <div class="md:col-span-2">
-                    <x-textarea label="Address" wire:model="address" />
+                    <x-textarea :label="__('students.form.address')" wire:model="address" />
                 </div>
-                <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Select an institute" />
-                <x-select label="Campus" wire:model.live="campus_id" :options="$campuses" placeholder="Select a campus" />
+                <x-select :label="__('students.filters.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
+                <x-select :label="__('students.filters.campus')" wire:model.live="campus_id" :options="$campuses" :placeholder="__('actions.any')" />
                 <div class="md:col-span-2">
-                    <x-choices label="Classes" wire:model="class_ids" :options="$classes" />
+                    <x-choices :label="__('students.form.classes')" wire:model="class_ids" :options="$classes" />
                 </div>
             </div>
 
             <x-slot:actions>
-                <x-button label="Cancel" :link="route('dashboard.students.list')" />
-                <x-button :label="($exists ? 'Save' : 'Create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
+                <x-button :label="__('actions.cancel')" :link="route('dashboard.students.list')" />
+                <x-button :label="__($exists ? 'actions.save' : 'actions.create')" :icon="'fal.' . ($exists ? 'floppy-disk' : 'plus')" type="submit" class="btn-primary" spinner="save" />
             </x-slot:actions>
         </x-form>
     </x-card>

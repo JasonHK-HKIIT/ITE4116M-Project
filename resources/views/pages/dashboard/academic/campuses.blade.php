@@ -58,8 +58,8 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'name', 'label' => 'Campus', 'class' => 'w-fit text-nowrap'],
-            ['key' => 'institutes', 'label' => 'Institutes', 'sortable' => false, 'class' => 'w-fit'],
+            ['key' => 'name', 'label' => trans('academic.table.campus'), 'class' => 'w-fit text-nowrap'],
+            ['key' => 'institutes', 'label' => trans('academic.table.institutes'), 'sortable' => false, 'class' => 'w-fit'],
         ];
     }
 
@@ -138,7 +138,7 @@ class extends Component
         $this->campus->save();
         $this->campus->institutes()->sync($fields['institute_ids']);
 
-        $this->success('Institute was ' . ($isUpdating ? 'updated' : 'created') . '.');
+        $this->success(trans('academic.messages.campus_saved', ['action' => $isUpdating ? 'updated' : 'created']));
         $this->campusModal = false;
     }
 
@@ -175,12 +175,12 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Campuses')" :subtitle="__('Academic Structure')" separator>
+    <x-header :title="__('academic.campuses')" :subtitle="__('academic.structure')" separator>
         <x-slot:middle class="justify-end! max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" wire:click="createCampus" spinner responsive />
         </x-slot:actions>
     </x-header>
@@ -194,8 +194,8 @@ class extends Component
             @endscope
             @scope('actions', $campus)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" wire:click="updateCampus({{ $campus->id }})" spinner class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteCampus({{ $campus->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" wire:click="updateCampus({{ $campus->id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteCampus({{ $campus->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
 
                 <x-dropdown right>
@@ -203,33 +203,33 @@ class extends Component
                         <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                     </x-slot:trigger>
 
-                    <x-menu-item title="Edit" icon="fal.pen-to-square" wire:click="updateCampus({{ $campus->id }})" spinner />
-                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteCampus({{ $campus->id }})" spinner />
+                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" wire:click="updateCampus({{ $campus->id }})" spinner />
+                    <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteCampus({{ $campus->id }})" spinner />
                 </x-dropdown>
             @endscope
         </x-table>
     </x-card>
 
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
-        <x-select label="Institute" wire:model.live="institute_id" :options="$institutes" placeholder="Any" />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('actions.search')" />
+        <x-select :label="__('academic.filters.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 
-    <x-modal wire:model="campusModal" :title="($exists ? 'Update' : 'Create') . ' Campus'" :subtitle="$campus->name" persistent>
+    <x-modal wire:model="campusModal" :title="__($exists ? 'academic.modal.update_campus' : 'academic.modal.create_campus')" :subtitle="$campus->name" persistent>
         <x-form wire:submit="save" no-separator>
             <x-tabs wire:model="campusModalSelectedTab" label-div-class="border-b-[length:var(--border)] border-b-base-content/10 flex flex-wrap overflow-x-auto">
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pb-0">
-                        <x-input label="Name" wire:model="name.{{ $language }}" :placeholder="'Name in ' . __('languages.' . $language)" />
+                        <x-input :label="__('academic.form.name')" wire:model="name.{{ $language }}" :placeholder="trans('academic.form.name_in_language', ['language' => __('languages.' . $language)])" />
                     </x-tab>
                 @endforeach
                 <div class="px-1">
-                    <x-choices label="Institutes" wire:model="institute_ids" :options="$instituteOptions" />
+                    <x-choices :label="__('academic.form.institutes')" wire:model="institute_ids" :options="$instituteOptions" />
                 </div>
             </x-tabs>
 

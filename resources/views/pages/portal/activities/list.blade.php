@@ -175,7 +175,7 @@ class extends Component
                             <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                         </x-slot:trigger>
 
-                        <x-menu-item title="Activity Details" icon="fal.file-lines" :link="route('portal.activities.show', ['id' => $activity->id ])" />
+                        <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.file-lines" :link="route('portal.activities.show', ['id' => $activity->id ])" />
                     </x-dropdown>
             @endscope
         </x-table>

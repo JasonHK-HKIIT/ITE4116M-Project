@@ -48,12 +48,12 @@ class extends Component {
 
 
 <div class="p-4 md:p-8 space-y-6 max-w-7xl mx-auto">
-    <x-header :title="__('Programme & Modules')" separator />
+    <x-header :title="__('profile.programme_modules.title')" separator />
     
     @if($programmes->isEmpty())
         <x-card shadow>
             <div class="text-center py-12">
-                <p class="text-base-content/60">{{ __('No programmes assigned yet.') }}</p>
+                <p class="text-base-content/60">{{ __('profile.programme_modules.empty_programmes') }}</p>
             </div>
         </x-card>
     @else
@@ -69,13 +69,13 @@ class extends Component {
                     <div class="flex items-center justify-between border-b border-base-200 pb-4">
                         <div>
                             <h3 class="font-bold ">{{ $programmeName }}</h3>
-                            <p class="text-sm text-base-content/60">{{ __('Programme Code') }}: {{ $programme->programme_code }}</p>
+                            <p class="text-sm text-base-content/60">{{ __('profile.programme_modules.programme_code') }}: {{ $programme->programme_code }}</p>
                         </div>
                     </div>
                     
                     @if($modules->isEmpty())
                         <div class="text-center py-8">
-                            <p class="text-base-content/60">{{ __('No modules assigned for this programme.') }}</p>
+                            <p class="text-base-content/60">{{ __('profile.programme_modules.empty_modules') }}</p>
                         </div>
                     @else
                         <div class="space-y-2">
@@ -88,7 +88,7 @@ class extends Component {
                                 <div class="flex items-start gap-3 p-3 rounded-lg bg-base-100 hover:bg-base-200 transition-colors">
                                     <div class="flex-1">
                                         <p class="font-semibold text-base-content">{{ $moduleName }}</p>
-                                        <p class="text-sm text-base-content/60">{{ __('Module Code') }}: {{ $module->module_code }}</p>
+                                        <p class="text-sm text-base-content/60">{{ __('profile.programme_modules.module_code') }}: {{ $module->module_code }}</p>
                                     </div>
                                 </div>
                             @endforeach

@@ -136,7 +136,7 @@ class extends Component
                 ->delete();
         }
 
-        $this->success('Institute holidays were updated.');
+        $this->success(trans('calendar.messages.institute_holidays_updated'));
 
         $this->loadEvents();
     }
@@ -165,17 +165,17 @@ class extends Component
 }; ?>
 
 <div>
-    <x-header :title="__('Institute Holidays')" :subtitle="__('Calendar')" separator />
+    <x-header :title="__('calendar.manage.institute_holidays')" :subtitle="__('calendar.manage.subtitle')" separator />
 
     <x-card shadow class="mb-6">
         <div class="grid gap-4 md:grid-cols-3 items-end">
             <x-select
-                label="Institute"
+                :label="__('calendar.labels.institute')"
                 wire:model.live="institute_id"
                 :options="$institutes"
                 option-label="name"
                 option-value="id"
-                placeholder="Select institute"
+                :placeholder="__('calendar.placeholders.select_institute')"
             />
 
             @if ($selectedInstitute)

@@ -30,8 +30,8 @@ class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'title', 'label' => 'Document Group', 'class' => 'w-auto min-w-64'],
-            ['key' => 'latest_date', 'label' => 'Latest Release', 'class' => 'w-32', 'format' => ['date', 'Y-m-d']],
+            ['key' => 'title', 'label' => trans('resources.table.document_group'), 'class' => 'w-auto min-w-64'],
+            ['key' => 'latest_date', 'label' => trans('resources.table.latest_release'), 'class' => 'w-32', 'format' => ['date', 'Y-m-d']],
         ];
     }
 
@@ -110,7 +110,7 @@ class extends Component
                 $translation->delete();
             }
             $resource->delete();
-            $this->success('Resource was deleted.');
+            $this->success(trans('resources.messages.deleted'));
         }
     }
 
@@ -132,12 +132,12 @@ class extends Component
 @endassets
 
 <div>
-    <x-header :title="__('Resources Centre')" separator>
+    <x-header :title="__('resources.title')" separator>
         <x-slot:middle class="!justify-end max-md:hidden">
-            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
+            <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('actions.search')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('actions.filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.resources.create')" responsive />
         </x-slot:actions>
     </x-header>
@@ -153,15 +153,15 @@ class extends Component
 
             @scope('actions', $row)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('Edit')" :link="route('dashboard.resources.edit', ['resource' => $row->resource_id])" class="btn-ghost btn-square btn-sm" />
-                    <x-button icon="fal.trash" :tooltip="__('Delete')" wire:click="deleteResource({{ $row->resource_id }})" spinner class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.resources.edit', ['resource' => $row->resource_id])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteResource({{ $row->resource_id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
                 <x-dropdown right>
                     <x-slot:trigger>
                         <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                     </x-slot:trigger>
-                    <x-menu-item title="Edit" icon="fal.pen-to-square" :link="route('dashboard.resources.edit', ['resource' => $row->resource_id])" />
-                    <x-menu-item title="Delete" icon="fal.trash" wire:click.stop="deleteResource({{ $row->resource_id }})" spinner />
+                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.resources.edit', ['resource' => $row->resource_id])" />
+                    <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteResource({{ $row->resource_id }})" spinner />
                 </x-dropdown>
             @endscope
 
@@ -189,14 +189,14 @@ class extends Component
         </x-table>
         <x-pagination :rows="$documents" wire:model.live="perPage" :per-page-values="[5, 10, 15]" />
     </x-card>
-    <x-drawer wire:model="isDrawerOpened" title="Filters" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
-        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('Search...')" />
-        <x-datepicker label="Latest After" wire:model.live="publishedAfter" clearable />
-        <x-datepicker label="Latest Before" wire:model.live="publishedBefore" clearable />
+    <x-drawer wire:model="isDrawerOpened" :title="__('actions.filters')" right separator with-close-button class="w-3/5 md:w-1/2 lg:w-1/3">
+        <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" :placeholder="__('actions.search')" />
+        <x-datepicker :label="__('resources.filters.latest_after')" wire:model.live="publishedAfter" clearable />
+        <x-datepicker :label="__('resources.filters.latest_before')" wire:model.live="publishedBefore" clearable />
 
         <x-slot:actions>
-            <x-button label="Reset" icon="fal.xmark" wire:click="clear" spinner />
-            <x-button label="Done" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
+            <x-button :label="__('actions.reset')" icon="fal.xmark" wire:click="clear" spinner />
+            <x-button :label="__('actions.done')" icon="fal.check" class="btn-primary" @click="$wire.isDrawerOpened = false" />
         </x-slot:actions>
     </x-drawer>
 </div>
