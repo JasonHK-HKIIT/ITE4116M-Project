@@ -7,6 +7,7 @@ use App\Data\Assistant\Messages\Message;
 use App\Data\Assistant\Thread;
 use App\Data\Assistant\ThreadCreatePayload;
 use App\Services\AssistantClient;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Locked;
@@ -95,6 +96,12 @@ If the user asks a vague question, they are likely meaning to look up info from 
                         'type==agent/tools' => [
                             ['type' => 'news_articles'],
                             ['type' => 'student_activities'],
+                            [
+                                'type' => 'user_profile',
+                                'config' => [
+                                    'user_id' => (string) Auth::id(),
+                                ],
+                            ],
                         ],
                         'type==agent/interrupt_before_action' => false,
                     ],
