@@ -47,6 +47,24 @@ new class extends Component
     }
 }; ?>
 
+<script>
+    if ($wire.theme === "auto")
+    {
+        const query = matchMedia("(prefers-color-scheme: dark)");
+        query.addEventListener("change", ({ matches }) => updateTheme(matches ? "dark" : "light"));
+        updateTheme(query.matches ? "dark" : "light")
+    }
+    else
+    {
+        updateTheme($wire.theme);
+    }
+
+    function updateTheme(theme)
+    {
+        document.documentElement.dataset.theme = theme;
+    }
+</script>
+
 <div>
     @teleport('body')
         <x-modal wire:model="opened" :title="__('appearance.title')" :subtitle="__('appearance.subtitle')">

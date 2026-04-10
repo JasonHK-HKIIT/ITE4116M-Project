@@ -12,13 +12,13 @@
 
 /** daisyUI */
 @plugin "daisyui" {
-    themes: light --default, dark --prefersdark;
+    themes: light --default, dark/* --prefersdark */;
 }
 
 @plugin "daisyui/theme" {
     name: "light";
     default: true;
-    prefersdark: false;
+    /* prefersdark: false; */
     color-scheme: "light";
     --color-primary: oklch(0.288 0.0862 270.27);
     --color-primary-content: oklch(93% 0.034 272.788);
@@ -27,13 +27,13 @@
 @plugin "daisyui/theme" {
     name: "dark";
     default: false;
-    prefersdark: true;
+    /* prefersdark: true; */
     color-scheme: "dark";
     --color-primary: oklch(0.388 0.0862 270.27);
     --color-primary-content: oklch(96% 0.018 272.314);
 }
 
-/* @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *)); */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 /* maryUI */
 @source "../../vendor/robsontenorio/mary/src/View/Components/**/*.php";
