@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\NewsArticleStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -74,6 +75,7 @@ class ActivityFactory extends Factory
                 'Problem-solvers (PS)',
                 'Professional, Socially and Globally Responsible (PSG)'
             ]),
+            'status' => NewsArticleStatus::Published,
             // Translatable fields
             'title:en'          => $this->faker->sentence(3),
             'title:zh'          => $this->faker->sentence(3),

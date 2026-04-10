@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Enums\Activity\ActivityTypes;
 use App\Enums\Activity\Disciplines;
 use App\Enums\Activity\Attributes;
+use App\Enums\NewsArticleStatus;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -80,6 +81,8 @@ class extends Component
 
     public float $included_deposit = 0;
 
+    public NewsArticleStatus $status = NewsArticleStatus::Draft;
+
     public ActivityTypes $type = ActivityTypes::CampusRepresentatives;
 
     #[Computed]
@@ -103,6 +106,14 @@ class extends Component
     public function attributes(): array
     {
         return Attributes::optionsForCurrentLocale();
+    }
+
+    #[Computed]
+    public function statuses(): array
+    {
+        return collect(NewsArticleStatus::cases())
+            ->map(fn($case) => ['id' => $case, 'name' => $case->name])
+            ->toArray();
     }
 
     #[Computed]
@@ -170,6 +181,7 @@ class extends Component
             [
                 'activity_type' => ['nullable', 'string', Rule::in($this->activityTypes())],
                 'activity_code' => ['nullable', 'string', 'max:255', Rule::unique('activities', 'activity_code')->ignore($this->activity?->id)],
+                'status' => ['required', Rule::enum(NewsArticleStatus::class)],
                 'attribute'=> ['required', Rule::enum(Attributes::class)],
                 'discipline'=> ['nullable', Rule::enum(Disciplines::class)],
                 'campus_id' => ['required', 'integer', 'exists:campuses,id'],
@@ -203,6 +215,7 @@ class extends Component
         return [
             'activity_code' => 'Activity Code',
             'campus_id' => 'Campus',
+            'status' => 'Status',
             'time_slot_from_date' => 'Time Slot From Date',
             'time_slot_from_time' => 'Time Slot From Time',
             'time_slot_to_date' => 'Time Slot To Date',
@@ -232,7 +245,7 @@ class extends Component
                 'responsible_staff', 'execution_from', 'execution_to', 'time_slot_from_date',
                 'time_slot_to_date', 'duration_hours', 'swpd_programme', 'venue',
                 'capacity', 'registered', 'total_amount',
-                'included_deposit', 'discipline', 'attribute'
+                'included_deposit', 'discipline', 'attribute', 'status'
             ]));
             if ($activity->time_slot_from_time) {
                 $this->time_slot_from_time = $activity->time_slot_from_time->format('H:i');
@@ -279,6 +292,7 @@ class extends Component
 
     public function save(): void
     {
+        if (empty($this->published_on) && ($this->status == NewsArticleStatus::Published)) { $this->published_on = Carbon::today(); }
             $validated = $this->validate();
 
             $fields = LocalesHelper::transformToModelFields($validated, $this->activity->translatedAttributes);
@@ -336,6 +350,7 @@ class extends Component
             'types' => $this->types(),
             'disciplines' => $this->disciplines(),
             'attributes' => $this->attributes(),
+            'statuses' => $this->statuses(),
             'instructors' => $this->instructors(),
             'staff' => $this->staff(),
         ];
@@ -366,6 +381,7 @@ class extends Component
                         <!-- Core Details -->
                         <x-select label="Activity Type" wire:model="activity_type" :options="$types" option-value="value" option-label="label" />
                         <x-input label="Activity Code" wire:model="activity_code" placeholder="e.g., ACT-001-WS" />
+                        <x-group label="Status" wire:model="status" :options="$statuses" />
                         <x-select label="Campus" wire:model="campus_id" :options="$campuses" option-value="value" option-label="label"  />
                         <x-select label="Discipline" wire:model="discipline" :options="$disciplines" option-value="value" option-label="label" />
                         <x-select label="Attribute" wire:model="attribute" :options="$attributes" option-value="value" option-label="label"  />

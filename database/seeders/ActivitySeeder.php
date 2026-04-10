@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Activity;
+use App\Enums\NewsArticleStatus;
 
 class ActivitySeeder extends Seeder
 {
@@ -47,6 +48,7 @@ class ActivitySeeder extends Seeder
             'total_amount'      => 500.00,
             'included_deposit'  => 100.00,
             'attachment'        => 'intro_laravel.pdf',
+            'status'            => NewsArticleStatus::Draft,
         ]);
 
         // 50 Additional multilingual activities
@@ -336,6 +338,7 @@ class ActivitySeeder extends Seeder
                 'total_amount'      => rand(500, 5000),
                 'included_deposit'  => rand(100, 1000),
                 'attachment'        => null,
+                'status'            => NewsArticleStatus::Published,
             ]);
         }
     }

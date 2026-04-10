@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\NewsArticleStatus;
 
 return new class extends Migration
 {
@@ -57,6 +58,8 @@ return new class extends Migration
             $table->string('discipline')->nullable();
             $table->string('attribute')->nullable();
 
+
+            $table->enum('status', NewsArticleStatus::values())->default(NewsArticleStatus::Draft);
             $table->timestamps();
             
             $table->fullText(['instructor']);

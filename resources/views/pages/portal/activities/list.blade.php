@@ -3,6 +3,7 @@
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Activity;
+use App\Enums\NewsArticleStatus;
 use Livewire\WithPagination;
 new
 #[Layout("layouts::portal")]
@@ -62,6 +63,7 @@ class extends Component
     public function activities()
     {
         return Activity::query()
+            ->where('status', NewsArticleStatus::Published)
             ->when($this->keywords, function ($query, $keywords) {
                 $query->whereFullText(['title', 'description'], $keywords);
             })

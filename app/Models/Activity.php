@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Astrotomic\Translatable\Translatable;
+use App\Enums\NewsArticleStatus;
 
 class Activity extends Model
 {
@@ -41,6 +42,7 @@ class Activity extends Model
         'attachment',
         'discipline',
         'attribute',
+        'status',
     ];
 
     protected $casts = [
@@ -55,7 +57,8 @@ class Activity extends Model
         'total_amount'      => 'decimal:2',
         'included_deposit'  => 'decimal:2',
         'discipline'        => \App\Enums\Activity\Disciplines::class,
-        'attribute'  => \App\Enums\Activity\Attributes::class,
+        'attribute'         => \App\Enums\Activity\Attributes::class,
+        'status'            => NewsArticleStatus::class,
     ];
 
     /**

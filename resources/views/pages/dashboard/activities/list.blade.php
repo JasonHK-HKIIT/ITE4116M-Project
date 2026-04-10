@@ -3,6 +3,7 @@
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Activity;
+use App\Enums\NewsArticleStatus;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
 new
@@ -21,6 +22,7 @@ class extends Component
 
     public array $sortBy = ['column' => 'title', 'direction' => 'desc'];
 
+    public ?NewsArticleStatus $status = null;
 
     public ?string $execution_from = null;
     public ?string $execution_to = null;
@@ -41,6 +43,7 @@ class extends Component
     {
         $this->reset([
             'keywords',
+            'status',
             'execution_from',
             'execution_to',
         ]);
@@ -61,11 +64,19 @@ class extends Component
         $this->resetPage();
     }
 
+    public function updatingStatus()
+    {
+        $this->resetPage();
+    }
+
     public function activities()
     {
         return Activity::query()
             ->when($this->keywords, function ($query, $keywords) {
                 $query->whereFullText(['title', 'description'], $keywords);
+            })
+            ->when($this->status, function ($query, $status) {
+                $query->where('status', $status);
             })
             ->when($this->execution_from && $this->execution_to, function ($query) {
                 $from = $this->execution_from;
@@ -108,6 +119,7 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => 'Title','class' => 'w-auto min-w-64'],
+            ['key' => 'status', 'label' => 'Status', 'class' => 'w-fit', 'sortable' => false],
             ['key' => 'instructor', 'label' => 'Instructor','class' => 'w-fit'],
             ['key' => 'execution_from', 'label' => 'Execution From', 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
             ['key' => 'execution_to', 'label' => 'Execution To','class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
@@ -120,7 +132,15 @@ class extends Component
         return [
             'headers' => $this->headers(),
             'activities' => $this->activities(),
+            'statuses' => $this->statuses(),
         ];
+    }
+
+    public function statuses(): array
+    {
+        return collect(NewsArticleStatus::cases())
+            ->map(fn($case) => ['id' => $case, 'name' => $case->name])
+            ->toArray();
     }
 
 }; ?>
@@ -145,6 +165,8 @@ class extends Component
 
         <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
 
+        <x-select label="Status" wire:model.live="status" :options="$statuses" placeholder="Any" option-value="id" option-label="name" />
+
         <x-datepicker label="Execution From" wire:model.live="execution_from" clearable />
 
         <x-datepicker label="Execution to" wire:model.live="execution_to" clearable />
@@ -165,7 +187,11 @@ class extends Component
             <x-input icon="fal.magnifying-glass" wire:model.live.debounce="keywords" type="search" :placeholder="__('Search...')" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive />
+            <x-button :label="__('Filters')" icon="fal.filter" @click="$wire.isDrawerOpened = true" responsive>
+                @if ($status || $execution_from || $execution_to)
+                    <x-badge value="1" class="badge-sm badge-primary absolute -top-2 -right-2" />
+                @endif
+            </x-button>
             <x-button icon="fal.plus" class="btn-primary" :link="route('dashboard.activities.create')" responsive />
         </x-slot:actions>
 
@@ -173,6 +199,14 @@ class extends Component
 
     <x-card shadow>
         <x-table :headers="$headers" :rows="$activities" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 20]">
+            @scope('cell_status', $activity)
+                @if ($activity->status->name === 'Draft')
+                    <x-badge value="Draft" class="badge-warning" />
+                @elseif ($activity->status->name === 'Published')
+                    <x-badge value="Published" class="badge-success" />
+                @endif
+            @endscope
+
             @scope('actions', $activity)
 
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
