@@ -15,13 +15,15 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Mary\Traits\Toast;
+use Illuminate\Support\Facades\Storage;
 
 new
 #[Layout('layouts::dashboard')]
 class extends Component
 {
-    use Toast;
+    use Toast, WithFileUploads;
 
     public string $selectedLanguage = 'en';
 
@@ -84,6 +86,11 @@ class extends Component
     public NewsArticleStatus $status = NewsArticleStatus::Draft;
 
     public ActivityTypes $type = ActivityTypes::CampusRepresentatives;
+
+    #[Validate('nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120')]
+    public $attachment = null;
+
+    public ?string $attachment_display = null;
 
     #[Computed]
     public function types(): array
@@ -245,6 +252,11 @@ class extends Component
                 $this->time_slot_to_time = $activity->time_slot_to_time->format('H:i');
             }
             $this->fill(LocalesHelper::transformToProperties($activity->getTranslationsArray()));
+
+            // Load existing attachment
+            if ($activity->attachment) {
+                $this->attachment_display = $activity->attachment;
+            }
         }
         else
         {
@@ -281,12 +293,102 @@ class extends Component
         return $this->view()->title(trans($this->exists ? 'activities.subtitles.update_activity' : 'activities.subtitles.create_activity'));
     }
 
+    private function getActivityUploadPath(): string
+    {
+        if ($this->activity->exists && $this->activity->id) {
+            return "activities/{$this->activity->id}";
+        }
+        return "activities/temp";
+    }
+
+    public function uploadAttachment(): void
+    {
+        $this->validate(['attachment' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx|max:5120']);
+
+        if ($this->attachment) {
+            try {
+                $uploadPath = $this->getActivityUploadPath();
+
+                // Delete old attachment if exists
+                if ($this->attachment_display && Storage::disk('public')->exists("{$uploadPath}/{$this->attachment_display}")) {
+                    Storage::disk('public')->delete("{$uploadPath}/{$this->attachment_display}");
+                }
+
+                // Ensure directory exists
+                if (!Storage::disk('public')->exists($uploadPath)) {
+                    Storage::disk('public')->makeDirectory($uploadPath);
+                }
+
+                // Store the new file
+                $filename = $this->attachment->getClientOriginalName();
+                $path = $this->attachment->storeAs($uploadPath, $filename, 'public');
+                $this->attachment_display = $filename;
+                $this->attachment = null; // Clear the upload input
+                
+                $this->success(__('activities.messages.file_uploaded', ['filename' => $filename]));
+            } catch (\Exception $e) {
+                $this->error('File upload failed: ' . $e->getMessage());
+            }
+        }
+    }
+
+    public function updatedAttachment(): void
+    {
+        $this->uploadAttachment();
+    }
+
+    public function deleteAttachment(): void
+    {
+        if ($this->attachment_display) {
+            $uploadPath = $this->getActivityUploadPath();
+            if (Storage::disk('public')->exists("{$uploadPath}/{$this->attachment_display}")) {
+                Storage::disk('public')->delete("{$uploadPath}/{$this->attachment_display}");
+            }
+            $this->attachment_display = null;
+            $this->attachment = null;
+            $this->success(__('activities.messages.file_deleted'));
+        }
+    }
+
+    public function getAttachmentUrl(): ?string
+    {
+        if ($this->attachment_display) {
+            $uploadPath = $this->getActivityUploadPath();
+            if (Storage::disk('public')->exists("{$uploadPath}/{$this->attachment_display}")) {
+                return Storage::disk('public')->url("{$uploadPath}/{$this->attachment_display}");
+            }
+        }
+        return null;
+    }
+
     public function save(): void
     {
         if (empty($this->published_on) && ($this->status == NewsArticleStatus::Published)) { $this->published_on = Carbon::today(); }
             $validated = $this->validate();
 
             $fields = LocalesHelper::transformToModelFields($validated, $this->activity->translatedAttributes);
+            
+            // Handle attachment - move temp files to activity folder if newly created
+            if ($this->attachment_display) {
+                $fields['attachment'] = $this->attachment_display;
+                
+                // If this is a new activity, move temp files to activity-specific folder
+                if (!$this->exists) {
+                    $oldPath = "activities/temp/{$this->attachment_display}";
+                    $newPath = "activities/{$this->activity->id}/{$this->attachment_display}";
+                    if (Storage::disk('public')->exists($oldPath)) {
+                        Storage::disk('public')->makeDirectory("activities/{$this->activity->id}");
+                        Storage::disk('public')->move($oldPath, $newPath);
+                    }
+                }
+            } elseif ($this->exists && !$this->attachment_display) {
+                // If we're editing and attachment was deleted
+                if ($this->activity->attachment && Storage::disk('public')->exists("activities/{$this->activity->id}/{$this->activity->attachment}")) {
+                    Storage::disk('public')->delete("activities/{$this->activity->id}/{$this->activity->attachment}");
+                }
+                $fields['attachment'] = null;
+            }
+
             $this->activity->fill($fields);
             $this->activity->save();
 
@@ -406,7 +508,39 @@ class extends Component
                         <x-input type="number" :label="__('activities.form.included_deposit')" wire:model="included_deposit" min="0" step="0.01" />
                         
                         <!-- Attachment -->
-                        <x-file :label="__('activities.form.attachment')" wire:model="attachment" :hint="__('activities.form.attachment_hint')" accept=".pdf,.doc,.docx" />
+                        <div class="space-y-3">
+                            <x-file 
+                                :label="__('activities.form.attachment')" 
+                                wire:model="attachment" 
+                                :hint="__('activities.form.attachment_hint')" 
+                                accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" 
+                            />
+                            
+                            @if ($attachment_display)
+                                <div class="flex items-center justify-between p-3 bg-base-200 rounded-lg">
+                                    <div class="flex items-center gap-2">
+                                        <i class="fas fa-file-pdf text-error"></i>
+                                        <span class="font-medium">{{ $attachment_display }}</span>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <x-button icon="fal.file-lines"
+                                            link="{{ $this->getAttachmentUrl() }}" 
+                                            external
+                                            class="btn btn-sm btn-primary"
+                                            title="{{ __('actions.view') }}"
+                                        />
+                                        <x-button
+                                            icon="fal.trash"
+                                            type="button"
+                                            wire:click="deleteAttachment"
+                                            wire:confirm="{{ __('activities.messages.confirm_delete_file') }}"
+                                            class="btn btn-sm btn-erro"
+                                            title="{{ __('actions.delete') }}"
+                                        />
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 @foreach (LocalesHelper::locales() as $language)
                     <x-tab :name="$language" :label="__('languages.' . $language)" class="pt-0">

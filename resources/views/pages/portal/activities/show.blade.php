@@ -3,6 +3,7 @@
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Activity;
+use Illuminate\Support\Facades\Storage;
 
 new
 #[Layout("layouts::portal")]
@@ -37,6 +38,28 @@ class extends Component
     public function getAttributeLabel(): string
     {
         return $this->activity->attribute?->label() ?? 'N/A';
+    }
+
+    public function getAttachmentUrl(): ?string
+    {
+        if ($this->activity->attachment) {
+            $path = "activities/{$this->activity->id}/{$this->activity->attachment}";
+            if (Storage::disk('public')->exists($path)) {
+                return Storage::disk('public')->url($path);
+            }
+        }
+        return null;
+    }
+
+    public function getAttachmentSize(): int
+    {
+        if ($this->activity->attachment) {
+            $path = "activities/{$this->activity->id}/{$this->activity->attachment}";
+            if (Storage::disk('public')->exists($path)) {
+                return Storage::disk('public')->size($path);
+            }
+        }
+        return 0;
     }
 
 }; ?>
@@ -96,21 +119,25 @@ class extends Component
                         @if($activity->attachment)
                             <div class="mt-2 space-y-2">
                                 @php
-                                    $filePath = storage_path('app/public/activities/' . $activity->attachment);
-                                    $fileSize = file_exists($filePath) ? filesize($filePath) : 0;
+                                    $attachmentUrl = $this->getAttachmentUrl();
+                                    $fileSize = $this->getAttachmentSize();
                                 @endphp
-                                <div class="flex justify-between items-center bg-base-100 p-3 rounded">
-                                    <div>
-                                        <p class="font-semibold">{{ $activity->attachment }}</p>
-                                        <p class="text-sm text-gray-600">Size: {{ number_format($fileSize / 1024, 2) }} KB</p>
+                                @if($attachmentUrl)
+                                    <div class="flex justify-between items-center bg-base-100 p-3 rounded">
+                                        <div>
+                                            <p class="font-semibold">{{ $activity->attachment }}</p>
+                                            <p class="text-sm text-gray-600">Size: {{ number_format($fileSize / 1024, 2) }} KB</p>
+                                        </div>
+                                        <a href="{{ $attachmentUrl }}" class="btn btn-primary btn-sm text-white" target="_blank" rel="noopener noreferrer">
+                                            <x-icon name="o-arrow-down-tray" class="w-5 h-5" />
+                                        </a>
                                     </div>
-                                    <a href="{{ asset('storage/activities/' . $activity->attachment) }}" class="btn btn-ghost btn-sm" target="_blank">
-                                        <x-icon name="o-arrow-down-tray" class="w-5 h-5" />
-                                    </a>
-                                </div>
+                                @else
+                                    <p class="text-warning mt-2">{{ __('activities.messages.file_not_found') }}</p>
+                                @endif
                             </div>
                         @else
-                            <p class="text-gray-400 mt-2">No attachment</p>
+                            <p class="text-gray-400 mt-2">{{ __('activities.messages.no_attachment') }}</p>
                         @endif
                     </div>
                     <p><strong>SWPD Programme:</strong> {{ $activity->swpd_programme ? 'Yes' : 'No' }}</p>

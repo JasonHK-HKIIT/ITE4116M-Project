@@ -14,4 +14,5 @@ return [
     'save' => '儲存',
     'search' => '搜尋...',
     'sign_out' => '登出',
+    'view' => '檢視',
 ];

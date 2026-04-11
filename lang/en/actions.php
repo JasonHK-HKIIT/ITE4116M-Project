@@ -14,4 +14,5 @@ return [
     'save' => 'Save',
     'search' => 'Search...',
     'sign_out' => 'Sign Out',
+    'view' => 'View',
 ];
