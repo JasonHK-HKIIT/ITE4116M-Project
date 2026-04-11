@@ -217,27 +217,6 @@ class extends Component
         <x-table :headers="$headers" :rows="$activities" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 20]">
             @scope('actions', $activity)
                 <div class="hidden lg:inline-flex flex-row w-40 gap-2">
-                    @if($this->isRegistered($activity->id))
-                        <button class="btn btn-success btn-sm btn-outline">
-                            {{ __('activities.registrations.status.' . $this->getRegistrationStatus($activity->id)) }}
-                        </button>
-                    @elseif(!$this->isRegistrationOpen($activity))
-                        <button class="btn btn-error btn-sm btn-disabled">
-                            {{ __('activities.registrations.registration_closed') }}
-                        </button>
-                    @elseif($this->isActivityFull($activity))
-                        <button class="btn btn-error btn-sm btn-disabled">
-                            {{ __('activities.registrations.activity_full') }}
-                        </button>
-                    @elseif($this->isStaffOrAdmin())
-                        <button class="btn btn-sm btn-disabled">
-                            {{ __('activities.registrations.register') }}
-                        </button>
-                    @else
-                        <a href="{{ route('portal.activities.show', ['id' => $activity->id]) }}" class="btn btn-primary btn-sm">
-                            {{ __('activities.registrations.register') }}
-                        </a>
-                    @endif
                     <x-button icon="fal.file-lines" :tooltipLeft="__('activities.table_actions.activity_details')" :link="route('portal.activities.show', ['id' => $activity->id ])" class="btn-ghost btn-square btn-sm" />
                 </div>        
 
@@ -246,25 +225,6 @@ class extends Component
                             <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                         </x-slot:trigger>
 
-                    @if($this->isRegistered($activity->id))
-                        <x-menu-item disabled>
-                            <span class="text-success">{{ __('activities.registrations.status.' . $this->getRegistrationStatus($activity->id)) }}</span>
-                        </x-menu-item>
-                    @elseif(!$this->isRegistrationOpen($activity))
-                        <x-menu-item disabled>
-                            {{ __('activities.registrations.registration_closed') }}
-                        </x-menu-item>
-                    @elseif($this->isActivityFull($activity))
-                        <x-menu-item disabled>
-                            {{ __('activities.registrations.activity_full') }}
-                        </x-menu-item>
-                    @elseif($this->isStaffOrAdmin())
-                        <x-menu-item disabled>
-                            {{ __('activities.registrations.register') }}
-                        </x-menu-item>
-                    @else
-                        <x-menu-item :title="__('activities.registrations.register')" icon="fal.plus" :link="route('portal.activities.show', ['id' => $activity->id])" />
-                    @endif
                     <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.file-lines" :link="route('portal.activities.show', ['id' => $activity->id ])" />
                     </x-dropdown>
             @endscope

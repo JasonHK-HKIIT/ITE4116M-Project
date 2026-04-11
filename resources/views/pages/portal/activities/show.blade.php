@@ -119,53 +119,53 @@ class extends Component
         <x-tabs wire:model="selectedTab" label-class="text-xl font-bold">
             <x-tab name="administrative-tab" :label="__('activities.show.tabs.administrative')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
-                    <p><strong>Activity Type:</strong> {{ $activity->activity_type ?? 'N/A' }}</p>
-                    <p><strong>Activity Code:</strong> {{ $activity->activity_code ?? 'N/A' }}</p>
-                    <p><strong>Title:</strong> {{ $activity->title }}</p>
+                    <p><strong>{{ __('activities.show.fields.activity_type') }}:</strong> {{ $activity->activity_type ?? 'N/A' }}</p>
+                    <p><strong>{{ __('activities.show.fields.activity_code') }}:</strong> {{ $activity->activity_code ?? 'N/A' }}</p>
+                    <p><strong>{{ __('activities.show.fields.title') }}:</strong> {{ $activity->title }}</p>
 
-                    <p><strong>Campus:</strong> {{ $activity->campus->name ?? 'N/A' }}</p>
-                    <p><strong>Discipline:</strong> {{ $this->getDisciplineLabel() }}</p>
-                    <p><strong>Attribute:</strong> {{ $this->getAttributeLabel() }}</p>
+                    <p><strong>{{ __('activities.show.fields.campus') }}:</strong> {{ $activity->campus->name ?? 'N/A' }}</p>
+                    <p><strong>{{ __('activities.show.fields.discipline') }}:</strong> {{ $this->getDisciplineLabel() }}</p>
+                    <p><strong>{{ __('activities.show.fields.attribute') }}:</strong> {{ $this->getAttributeLabel() }}</p>
                 </div>
             </x-tab>
             <x-tab name="time-tab" :label="__('activities.show.tabs.time')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
-                    <p><strong>Execution Period:</strong> 
+                    <p><strong>{{ __('activities.show.fields.execution_period') }}:</strong> 
                         From {{ $activity->execution_from?->format('M d, Y') ?? 'N/A' }} 
                         To {{ $activity->execution_to?->format('M d, Y') ?? 'N/A' }}
                     </p>
 
-                    <p><strong>Time Slot:</strong> 
+                    <p><strong>{{ __('activities.show.fields.time_slot') }}:</strong> 
                         From {{ $activity->time_slot_from_date?->format('M d, Y') ?? 'N/A' }} at {{ \Illuminate\Support\Carbon::parse($activity->time_slot_from_time)?->format('H:i') ?? 'N/A' }}
                         To {{ $activity->time_slot_to_date?->format('M d, Y') ?? 'N/A' }} at {{ \Illuminate\Support\Carbon::parse($activity->time_slot_to_time)?->format('H:i') ?? 'N/A' }}
-                        <br><strong>Duration: </strong>{{ $activity->duration_hours }} hours
+                        <br><strong>{{ __('activities.show.fields.duration') }}: </strong>{{ $activity->duration_hours }} hours
                     </p>
                 </div>
             </x-tab>
             <x-tab name="personnel-tab" :label="__('activities.show.tabs.personnel')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
-                    <p><strong>Instructor:</strong> {{ $activity->instructor }}</p>
-                    <p><strong>Responsible Staff:</strong> {{ $activity->responsible_staff }}</p>
+                    <p><strong>{{ __('activities.show.fields.instructor') }}:</strong> {{ $activity->instructor }}</p>
+                    <p><strong>{{ __('activities.show.fields.responsible_staff') }}:</strong> {{ $activity->responsible_staff }}</p>
                 </div>
             </x-tab>
             <x-tab name="descriptive-tab" :label="__('activities.show.tabs.descriptive')">
                 <div class="space-y-3 text-gray-700 dark:text-gray-200 text-lg">
-                    <p><strong>Description:</strong></p>
+                    <p><strong>{{ __('activities.show.fields.description') }}:</strong></p>
                     <div class="prose max-w-none">{!! $activity->description !!}</div>
-                    <p><strong>Venue:</strong> {{ $activity->venue }}</p>
-                    <p><strong>Venue Remark:</strong> {{ $activity->venue_remark ?? 'N/A' }}</p>
+                    <p><strong>{{ __('activities.show.fields.venue') }}:</strong> {{ $activity->venue }}</p>
+                    <p><strong>{{ __('activities.show.fields.venue_remark') }}:</strong> {{ $activity->venue_remark ?? 'N/A' }}</p>
                 </div>
             </x-tab>
             <x-tab name="financial-tab" :label="__('activities.show.tabs.financial')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
-                    <p><strong>Total Amount:</strong> {{ $activity->total_amount }}</p>
-                    <p><strong>Included Deposit:</strong> {{ $activity->included_deposit }}</p>
+                    <p><strong>{{ __('activities.show.fields.total_amount') }}:</strong> {{ $activity->total_amount }}</p>
+                    <p><strong>{{ __('activities.show.fields.included_deposit') }}:</strong> {{ $activity->included_deposit }}</p>
                 </div>
             </x-tab>
             <x-tab name="supporting-tab" :label="__('activities.show.tabs.supporting')">
                 <div class="space-y-6 text-gray-700 dark:text-gray-200 text-lg">
                     <div>
-                        <strong>Attachment:</strong>
+                        <strong>{{ __('activities.show.fields.attachment') }}:</strong>
                         @if($activity->attachment)
                             <div class="mt-2 space-y-2">
                                 @php
@@ -176,7 +176,7 @@ class extends Component
                                     <div class="flex justify-between items-center bg-base-100 p-3 rounded">
                                         <div>
                                             <p class="font-semibold">{{ $activity->attachment }}</p>
-                                            <p class="text-sm text-gray-600">Size: {{ number_format($fileSize / 1024, 2) }} KB</p>
+                                            <p class="text-sm text-gray-600">{{ __('activities.show.fields.size') }}: {{ number_format($fileSize / 1024, 2) }} KB</p>
                                         </div>
                                         <a href="{{ $attachmentUrl }}" class="btn btn-primary btn-sm text-white" target="_blank" rel="noopener noreferrer">
                                             <x-icon name="o-arrow-down-tray" class="w-5 h-5" />
@@ -190,12 +190,11 @@ class extends Component
                             <p class="text-gray-400 mt-2">{{ __('activities.messages.no_attachment') }}</p>
                         @endif
                     </div>
-                    <p><strong>SWPD Programme:</strong> {{ $activity->swpd_programme ? 'Yes' : 'No' }}</p>
+                    <p><strong>{{ __('activities.show.fields.swpd_programme') }}:</strong> {{ $activity->swpd_programme ? __('activities.messages.yes') : __('activities.messages.no') }}</p>
                 </div>
             </x-tab>
         </x-tabs>
         <x-slot:actions separator>
-            <a href="{{ route('portal.activities.list') }}" class="btn btn-ghost">{{ __('actions.back') }}</a>
             @auth
                 @if($this->isAlreadyRegistered())
                     <a href="{{ route('portal.activities.unregister', $activity->id) }}" class="btn btn-error btn-outline">
@@ -204,15 +203,16 @@ class extends Component
                 @elseif(!$this->isRegistrationOpen())
                     <button class="btn btn-disabled">{{ __('activities.registrations.registration_closed') }}</button>
                 @elseif(!$this->hasVacancy())
-                    <button class="btn btn-disabled">{{ __('activities.registrations.activity_full') }}</button>
+                    <button class="btn btn-disabled">{{ __('activities.registrations.status.activity_full') }}</button>
                 @elseif($this->isStaffOrAdmin())
-                    <button class="btn btn-disabled">{{ __('activities.registrations.register') }}</button>
+                    <button class="btn btn-disabled">{{ __('activities.registrations.status.register') }}</button>
                 @else
                     <a href="{{ route('portal.activities.register', $activity->id) }}" class="btn btn-primary">
-                        {{ __('activities.registrations.register') }}
+                        {{ __('activities.registrations.status.register') }}
                     </a>
                 @endif
             @endauth
+            <a href="{{ route('portal.activities.list') }}" class="btn btn-ghost">{{ __('actions.back') }}</a>
         </x-slot:actions>
     </x-card>
 </div>
