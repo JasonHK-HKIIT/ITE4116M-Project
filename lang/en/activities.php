@@ -80,4 +80,21 @@ return [
         'file_not_found' => 'The attachment file could not be found.',
         'no_attachment' => 'No attachment available.',
     ],
+    'registrations' => [
+        'status' => [
+            'participate' => 'Participating',
+            'registered' => 'Registered',
+        ],
+        'register' => 'Register',
+        'registered' => 'Successfully registered',
+        'already_registered' => 'Already registered for this activity',
+        'registration_closed' => 'Registration period has ended',
+        'activity_full' => 'Full',
+        'no_student_profile' => 'Please create a student profile first',
+        'unregistered' => 'Successfully unregistered',
+        'processing' => 'Processing your registration...',
+        'no_registrations' => 'No registered activities yet',
+        'cancel' => 'Cancel Participation',
+        'title' => 'Registered Activities',
+    ],
 ];

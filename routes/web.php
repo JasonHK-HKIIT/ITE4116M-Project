@@ -23,6 +23,8 @@ Route::name('portal.')->middleware('auth')->group(function ()
 
     Route::livewire('/activities', 'pages::portal.activities.list')->name('activities.list');
     Route::livewire('/activities/show/{id}', 'pages::portal.activities.show')->whereNumber('id')->name('activities.show');
+    Route::livewire('/activities/register/{id}', 'pages::portal.activities.register')->whereNumber('id')->name('activities.register');
+    Route::livewire('/activities/unregister/{id}', 'pages::portal.activities.unregister')->whereNumber('id')->name('activities.unregister');
 
     Route::livewire('/profile/personal-particular', 'pages::portal.profile.personal-particular')->name('profile.personal-particular');
     Route::livewire('/profile/programme-modules', 'pages::portal.profile.programme-modules')->name('profile.programme-modules');

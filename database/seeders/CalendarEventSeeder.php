@@ -242,7 +242,7 @@ class CalendarEventSeeder extends Seeder
             'end_at'      => $weekBase->copy()->addDays(7)->setTime(19, 0),
         ]);
 
-        $activity = Activity::where('activity_code', 'ACT-001-WS')->first();
+        $activity = Activity::where('activity_code', 'ACT-003-REG')->first();
 
         if ($activity) {
             $fromDate = $activity->time_slot_from_date;

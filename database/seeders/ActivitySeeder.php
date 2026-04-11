@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Activity;
+use App\Models\ActivityRegistration;
 use App\Enums\NewsArticleStatus;
 
 class ActivitySeeder extends Seeder
@@ -31,11 +32,11 @@ class ActivitySeeder extends Seeder
             'attribute'         => 'Effective Communicators (EC)',
             'instructor'        => 'Tom',
             'responsible_staff' => 'Joe',
-            'execution_from'    => '2026-01-15',
-            'execution_to'      => '2026-01-20',
-            'time_slot_from_date' => '2026-01-15',
+            'execution_from'    => date('Y-m-d', strtotime('-5 days')),
+            'execution_to'      => date('Y-m-d', strtotime('+5 days')),
+            'time_slot_from_date' => date('Y-m-d', strtotime('+7 days')),
             'time_slot_from_time' => '09:30',
-            'time_slot_to_date'   => '2026-01-15',
+            'time_slot_to_date'   => date('Y-m-d', strtotime('+7 days')),
             'time_slot_to_time'   => '10:30',
             'duration_hours'    => 1.0,
             'swpd_programme'    => true,
@@ -48,8 +49,123 @@ class ActivitySeeder extends Seeder
             'total_amount'      => 500.00,
             'included_deposit'  => 100.00,
             'attachment'        => 'intro_laravel.pdf',
+            'status'            => NewsArticleStatus::Published,
+        ]);
+
+        // Activity that is already FULL
+        $fullActivity = Activity::create([
+            'campus_id'         => 1,
+            'activity_type'     => 'Career Development Activities',
+            'activity_code'     => 'ACT-002-FULL',
+            'title:en'          => 'Advanced React Development',
+            'title:zh-HK'       => '進階 React 開發',
+            'title:zh-CN'       => '进阶 React 开发',
+            'description:en'    => 'This activity is already at full capacity.',
+            'description:zh-HK' => '此活動已滿額。',
+            'description:zh-CN' => '此活动已满额。',
+            'discipline'        => 'IT',
+            'attribute'         => 'Effective Communicators (EC)',
+            'instructor'        => 'Sarah',
+            'responsible_staff' => 'Maria',
+            'execution_from'    => date('Y-m-d', strtotime('-2 days')),
+            'execution_to'      => date('Y-m-d', strtotime('+3 days')),
+            'time_slot_from_date' => date('Y-m-d', strtotime('+5 days')),
+            'time_slot_from_time' => '14:00',
+            'time_slot_to_date'   => date('Y-m-d', strtotime('+5 days')),
+            'time_slot_to_time'   => '16:00',
+            'duration_hours'    => 2.0,
+            'swpd_programme'    => true,
+            'venue'             => 'Room 201',
+            'venue_remark:en'   => 'Full capacity - no vacancies',
+            'venue_remark:zh-HK' => '已滿額 - 沒有空位',
+            'venue_remark:zh-CN' => '已满额 - 没有空位',
+            'capacity'          => 25,
+            'registered'        => 25,  // FULL
+            'total_amount'      => 800.00,
+            'included_deposit'  => 150.00,
+            'attachment'        => null,
+            'status'            => NewsArticleStatus::Published,
+        ]);
+
+        // Activity that the student is ALREADY REGISTERED for
+        $registeredActivity = Activity::create([
+            'campus_id'         => 1,
+            'activity_type'     => 'Extra-curricular Activities',
+            'activity_code'     => 'ACT-003-REG',
+            'title:en'          => 'UI/UX Design Workshop',
+            'title:zh-HK'       => 'UI/UX 設計工作坊',
+            'title:zh-CN'       => 'UI/UX 设计工作坊',
+            'description:en'    => 'You are already registered for this activity.',
+            'description:zh-HK' => '您已為此活動報名。',
+            'description:zh-CN' => '您已为此活动报名。',
+            'discipline'        => 'IT',
+            'attribute'         => 'Effective Communicators (EC)',
+            'instructor'        => 'Emma',
+            'responsible_staff' => 'Robert',
+            'execution_from'    => date('Y-m-d', strtotime('-1 days')),
+            'execution_to'      => date('Y-m-d', strtotime('+8 days')),
+            'time_slot_from_date' => date('Y-m-d', strtotime('+6 days')),
+            'time_slot_from_time' => '10:00',
+            'time_slot_to_date'   => date('Y-m-d', strtotime('+6 days')),
+            'time_slot_to_time'   => '12:00',
+            'duration_hours'    => 2.0,
+            'swpd_programme'    => false,
+            'venue'             => 'Room 301',
+            'venue_remark:en'   => 'Please bring design portfolio',
+            'venue_remark:zh-HK' => '請帶上設計作品集',
+            'venue_remark:zh-CN' => '请带上设计作品集',
+            'capacity'          => 40,
+            'registered'        => 15,
+            'total_amount'      => 600.00,
+            'included_deposit'  => 120.00,
+            'attachment'        => null,
+            'status'            => NewsArticleStatus::Published,
+        ]);
+
+        // Activity with Draft status (not published)
+        $draftActivity = Activity::create([
+            'campus_id'         => 1,
+            'activity_type'     => 'Professional Development Activities',
+            'activity_code'     => 'ACT-004-DRAFT',
+            'title:en'          => 'Coming Soon Workshop',
+            'title:zh-HK'       => '即將推出工作坊',
+            'title:zh-CN'       => '即将推出工作坊',
+            'description:en'    => 'This activity is in draft status and not yet published.',
+            'description:zh-HK' => '此活動處於草稿狀態，尚未發布。',
+            'description:zh-CN' => '此活动处于草稿状态，尚未发布。',
+            'discipline'        => 'IT',
+            'attribute'         => 'Independent Learners (IDL)',
+            'instructor'        => 'James',
+            'responsible_staff' => 'Kevin',
+            'execution_from'    => date('Y-m-d', strtotime('-3 days')),
+            'execution_to'      => date('Y-m-d', strtotime('+10 days')),
+            'time_slot_from_date' => date('Y-m-d', strtotime('+7 days')),
+            'time_slot_from_time' => '13:00',
+            'time_slot_to_date'   => date('Y-m-d', strtotime('+7 days')),
+            'time_slot_to_time'   => '15:00',
+            'duration_hours'    => 2.0,
+            'swpd_programme'    => true,
+            'venue'             => 'Room 401',
+            'venue_remark:en'   => 'TBD',
+            'venue_remark:zh-HK' => '待定',
+            'venue_remark:zh-CN' => '待定',
+            'capacity'          => 50,
+            'registered'        => 0,
+            'total_amount'      => 1000.00,
+            'included_deposit'  => 200.00,
+            'attachment'        => null,
             'status'            => NewsArticleStatus::Draft,
         ]);
+
+        // Create registration record for the student with username 240155170
+        $studentUser = \App\Models\User::where('username', '240155170')->first();
+        if ($studentUser && $studentUser->student) {
+            ActivityRegistration::create([
+                'activity_id' => $registeredActivity->id,
+                'student_id'  => $studentUser->student->id,
+                'status'      => 'registered',
+            ]);
+        }
 
         // 50 Additional multilingual activities
         $titles = [
@@ -307,6 +423,12 @@ class ActivitySeeder extends Seeder
             $titleEn = $titles[$titleIndex];
             $titleTranslations = $translations[$titleEn] ?? ['zh-HK' => $titleEn, 'zh-CN' => $titleEn];
 
+            // Calculate dates: registration period is current, activity happens after registration closes
+            $registrationStartOffset = max(-10, -$i);  // Registration started a few days ago
+            $registrationEndOffset = 5 + (($i - 2) % 10);  // Registration closes in 5-15 days
+            $activityStartOffset = $registrationEndOffset + 2;  // Activity starts 2 days after registration closes
+            $activityEndOffset = $activityStartOffset;  // Same day activity (or +1 for multi-day)
+
             Activity::create([
                 'campus_id'         => $campuses[array_rand($campuses)],
                 'activity_type'     => $activityTypes[array_rand($activityTypes)],
@@ -321,11 +443,11 @@ class ActivitySeeder extends Seeder
                 'attribute'         => $attributes[array_rand($attributes)],
                 'instructor'        => $instructors[array_rand($instructors)],
                 'responsible_staff' => $staff[array_rand($staff)],
-                'execution_from'    => date('Y-m-d', strtotime("+$i days")),
-                'execution_to'      => date('Y-m-d', strtotime("+$i days +5 days")),
-                'time_slot_from_date' => date('Y-m-d', strtotime("+$i days")),
+                'execution_from'    => date('Y-m-d', strtotime("$registrationStartOffset days")),
+                'execution_to'      => date('Y-m-d', strtotime("$registrationEndOffset days")),
+                'time_slot_from_date' => date('Y-m-d', strtotime("$activityStartOffset days")),
                 'time_slot_from_time' => '09:00',
-                'time_slot_to_date'   => date('Y-m-d', strtotime("+$i days")),
+                'time_slot_to_date'   => date('Y-m-d', strtotime("$activityEndOffset days")),
                 'time_slot_to_time'   => '12:00',
                 'duration_hours'    => 3.0,
                 'swpd_programme'    => (bool) rand(0, 1),

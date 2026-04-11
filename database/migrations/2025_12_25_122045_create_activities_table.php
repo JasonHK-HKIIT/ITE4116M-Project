@@ -77,6 +77,21 @@ return new class extends Migration
             $table->unique(['activity_id', 'locale']);
             $table->fullText(['title', 'description']);
         });
+
+        Schema::create('activity_registrations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('activity_id')->constrained('activities')->onDelete('cascade');
+            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            
+            // Simple status: participate or registered
+            $table->enum('status', ['participate', 'registered'])->default('participate');
+            
+            $table->timestamps();
+            
+            // Prevent duplicate registrations
+            $table->unique(['activity_id', 'student_id']);
+            $table->index(['student_id']);
+        });
     }
 
     /**
@@ -84,6 +99,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('activity_registrations');
         Schema::dropIfExists('activity_translations');
         Schema::dropIfExists('activities');
     }

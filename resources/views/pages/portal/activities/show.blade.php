@@ -3,7 +3,10 @@
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Activity;
+use App\Enums\Role;
+use App\Models\ActivityRegistration;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 new
 #[Layout("layouts::portal")]
@@ -60,6 +63,53 @@ class extends Component
             }
         }
         return 0;
+    }
+
+    public function isAlreadyRegistered(): bool
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+        $student = Auth::user()->student;
+        if (!$student) {
+            return false;
+        }
+        return ActivityRegistration::where('activity_id', $this->activity->id)
+            ->where('student_id', $student->id)
+            ->exists();
+    }
+
+    public function getRegistrationStatus(): ?string
+    {
+        if (!Auth::check()) {
+            return null;
+        }
+        $student = Auth::user()->student;
+        if (!$student) {
+            return null;
+        }
+        return ActivityRegistration::where('activity_id', $this->activity->id)
+            ->where('student_id', $student->id)
+            ->value('status');
+    }
+
+    public function isRegistrationOpen(): bool
+    {
+        $now = now();
+        return $now->isBetween($this->activity->execution_from, $this->activity->execution_to);
+    }
+
+    public function hasVacancy(): bool
+    {
+        return $this->activity->registered < $this->activity->capacity;
+    }
+
+    public function isStaffOrAdmin(): bool
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+        return Auth::user()->hasAnyRole(Role::STAFF, Role::ADMIN);
     }
 
 }; ?>
@@ -145,7 +195,24 @@ class extends Component
             </x-tab>
         </x-tabs>
         <x-slot:actions separator>
-            <a href="{{ route('portal.activities.list') }}" class="btn btn-primary">{{ __('actions.back') }} {{ __('activities.title') }}</a>
+            <a href="{{ route('portal.activities.list') }}" class="btn btn-ghost">{{ __('actions.back') }}</a>
+            @auth
+                @if($this->isAlreadyRegistered())
+                    <a href="{{ route('portal.activities.unregister', $activity->id) }}" class="btn btn-error btn-outline">
+                        {{ __('activities.registrations.cancel') }}
+                    </a>
+                @elseif(!$this->isRegistrationOpen())
+                    <button class="btn btn-disabled">{{ __('activities.registrations.registration_closed') }}</button>
+                @elseif(!$this->hasVacancy())
+                    <button class="btn btn-disabled">{{ __('activities.registrations.activity_full') }}</button>
+                @elseif($this->isStaffOrAdmin())
+                    <button class="btn btn-disabled">{{ __('activities.registrations.register') }}</button>
+                @else
+                    <a href="{{ route('portal.activities.register', $activity->id) }}" class="btn btn-primary">
+                        {{ __('activities.registrations.register') }}
+                    </a>
+                @endif
+            @endauth
         </x-slot:actions>
     </x-card>
 </div>

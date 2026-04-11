@@ -9,6 +9,7 @@ return [
     'done' => 'Done',
     'edit' => 'Edit',
     'filters' => 'Filters',
+    'login' => 'Login',
     'quick_menu' => 'Quick Menu',
     'reset' => 'Reset',
     'save' => 'Save',

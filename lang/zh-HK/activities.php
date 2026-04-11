@@ -80,4 +80,21 @@ return [
         'file_not_found' => '找不到附件檔案。',
         'no_attachment' => '沒有可用的附件。',
     ],
+    'registrations' => [
+        'status' => [
+            'participate' => '參與中',
+            'registered' => '已報名',
+        ],
+        'register' => '報名',
+        'registered' => '報名成功',
+        'already_registered' => '已報名此活動',
+        'registration_closed' => '報名期已結束',
+        'activity_full' => '滿額',
+        'no_student_profile' => '請先建立學生檔案',
+        'unregistered' => '已取消報名',
+        'processing' => '正在處理您的報名…',
+        'no_registrations' => '尚未報名任何活動',
+        'cancel' => '取消參與',
+        'title' => '已報名活動',
+    ],
 ];

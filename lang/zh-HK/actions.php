@@ -9,6 +9,7 @@ return [
     'done' => '完成',
     'edit' => '修改',
     'filters' => '篩選',
+    'login' => '登入',
     'quick_menu' => '快速選單',
     'reset' => '重設',
     'save' => '儲存',

@@ -74,6 +74,22 @@ class Activity extends Model
         return $this->hasMany(ActivityTranslation::class);
     }
 
+    /**
+     * Get all registrations for this activity
+     */
+    public function registrations(): HasMany
+    {
+        return $this->hasMany(ActivityRegistration::class);
+    }
+
+    /**
+     * Get registered activations for this activity
+     */
+    public function approvedRegistrations(): HasMany
+    {
+        return $this->registrations()->where('status', 'registered');
+    }
+
     public function getHasVacancyAttribute()
     {
         return $this->registered < $this->capacity;
