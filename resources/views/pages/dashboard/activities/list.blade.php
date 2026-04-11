@@ -119,7 +119,7 @@ class extends Component
     {
         return [
             ['key' => 'title', 'label' => trans('activities.table_headers.title'),'class' => 'w-auto min-w-64'],
-            ['key' => 'status', 'label' => trans('activities.table_headers.status'), 'class' => 'w-fit', 'sortable' => false],
+            ['key' => 'status', 'label' => trans('activities.table_headers.status'), 'class' => 'w-fit', 'sortable' => false, 'format' => (fn($article, $status) => trans('news.statuses.' . strtolower($status->name)))],
             ['key' => 'instructor', 'label' => trans('activities.table_headers.instructor'),'class' => 'w-fit'],
             ['key' => 'execution_from', 'label' => trans('activities.table_headers.execution_from'), 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
             ['key' => 'execution_to', 'label' => trans('activities.table_headers.execution_to'),'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
@@ -139,7 +139,7 @@ class extends Component
     public function statuses(): array
     {
         return collect(NewsArticleStatus::cases())
-            ->map(fn($case) => ['id' => $case, 'name' => $case->name])
+            ->map(fn($case, $key) => ['id' => $case, 'name' => trans('news.statuses.' . strtolower($case->name))])
             ->toArray();
     }
 
@@ -199,13 +199,6 @@ class extends Component
 
     <x-card shadow>
         <x-table :headers="$headers" :rows="$activities" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 20]">
-            @scope('cell_status', $activity)
-                @if ($activity->status->name === 'Draft')
-                    <x-badge value="Draft" class="badge-warning" />
-                @elseif ($activity->status->name === 'Published')
-                    <x-badge value="Published" class="badge-success" />
-                @endif
-            @endscope
 
             @scope('actions', $activity)
 
