@@ -488,9 +488,9 @@ class extends Component
                         <x-datepicker :label="__('activities.form.execution_to')" wire:model="execution_to"  />
                         
                         <!-- Time Slot -->
-                        <x-datepicker :label="__('activities.form.time_slot_from_date')" wire:model="time_slot_from_date" />
+                        <x-datepicker :label="__('activities.form.time_slot_from_date')" wire:model.live="time_slot_from_date" />
                         <x-input type="time" :label="__('activities.form.time_slot_from_time')" wire:model.live="time_slot_from_time" />
-                        <x-datepicker :label="__('activities.form.time_slot_to_date')" wire:model="time_slot_to_date" />
+                        <x-datepicker :label="__('activities.form.time_slot_to_date')" wire:model.live="time_slot_to_date" />
                         <x-input type="time" :label="__('activities.form.time_slot_to_time')" wire:model.live="time_slot_to_time" />
                         <x-input type="number" :label="__('activities.form.duration_hours')" wire:model="duration_hours" min="0" step="0.5"  />
 
