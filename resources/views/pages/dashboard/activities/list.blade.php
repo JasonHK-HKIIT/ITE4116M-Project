@@ -78,12 +78,11 @@ class extends Component
             ->when($this->status, function ($query, $status) {
                 $query->where('status', $status);
             })
-            ->when($this->execution_from && $this->execution_to, function ($query) {
-                $from = $this->execution_from;
-                $to   = $this->execution_to;
-
-                $query->where('execution_from', '>=', $from)
-                    ->where('execution_to', '<=', $to);
+            ->when($this->execution_from, function ($query) {
+                $query->where('execution_from', '>=', $this->execution_from);
+            })
+            ->when($this->execution_to, function ($query) {
+                $query->where('execution_to', '<=', $this->execution_to);
             })
             ->when((($this->sortBy['column'] == 'execution_from') ? $this->sortBy : false), function ($query, $sortBy)
             {
