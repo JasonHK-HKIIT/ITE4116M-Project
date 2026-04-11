@@ -10,8 +10,8 @@ return [
         'title' => 'Title',
         'status' => 'Status',
         'instructor' => 'Instructor',
-        'execution_from' => 'Execution From',
-        'execution_to' => 'Execution To',
+        'execution_from' => 'Registration Start Date',
+        'execution_to' => 'Registration End Date',
         'total_amount' => 'Total Amount',
     ],
     'table_actions' => [
@@ -31,8 +31,8 @@ return [
     'filters' => [
         'keywords' => 'Search...',
         'status' => 'Status',
-        'execution_from' => 'Execution From',
-        'execution_to' => 'Execution To',
+        'execution_from' => 'Registration Start Date',
+        'execution_to' => 'Registration End Date',
     ],
     'form' => [
         'title' => 'Title',
@@ -44,8 +44,8 @@ return [
         'attribute' => 'Attribute',
         'instructor' => 'Instructor',
         'responsible_staff' => 'Responsible Staff',
-        'execution_from' => 'Execution From',
-        'execution_to' => 'Execution To',
+        'execution_from' => 'Registration Start Date',
+        'execution_to' => 'Registration End Date',
         'time_slot_from_date' => 'Time Slot From (Date)',
         'time_slot_from_time' => 'Time Slot From (Time)',
         'time_slot_to_date' => 'Time Slot To (Date)',

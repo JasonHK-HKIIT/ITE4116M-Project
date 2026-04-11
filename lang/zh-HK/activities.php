@@ -10,8 +10,8 @@ return [
         'title' => '標題',
         'status' => '狀態',
         'instructor' => '導師',
-        'execution_from' => '開始日期',
-        'execution_to' => '結束日期',
+        'execution_from' => '報名開始日期',
+        'execution_to' => '報名結束日期',
         'total_amount' => '總金額',
     ],
     'table_actions' => [
@@ -31,8 +31,8 @@ return [
     'filters' => [
         'keywords' => '搜尋……',
         'status' => '狀態',
-        'execution_from' => '開始日期',
-        'execution_to' => '結束日期',
+        'execution_from' => '報名開始日期',
+        'execution_to' => '報名結束日期',
     ],
     'form' => [
         'title' => '標題',
@@ -44,8 +44,8 @@ return [
         'attribute' => '能力',
         'instructor' => '導師',
         'responsible_staff' => '負責職員',
-        'execution_from' => '開始日期',
-        'execution_to' => '結束日期',
+        'execution_from' => '報名開始日期',
+        'execution_to' => '報名結束日期',
         'time_slot_from_date' => '時段開始（日期）',
         'time_slot_from_time' => '時段開始（時間）',
         'time_slot_to_date' => '時段結束（日期）',
