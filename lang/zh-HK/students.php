@@ -7,6 +7,7 @@ return [
     'filters' => [
         'institute' => '學院',
         'campus' => '校園',
+        'programme' => '課程',
     ],
     'table' => [
         'student_id' => '學生編號',

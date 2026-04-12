@@ -4,6 +4,7 @@ use App\Enums\Role;
 use App\Models\Campus;
 use App\Models\ClassModel;
 use App\Models\Institute;
+use App\Models\Programme;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Support\Collection;
@@ -54,6 +55,8 @@ class extends Component
 
     public $campus_id = null;
 
+    public $programme_id = null;
+
     #[Validate([
         'class_ids' => ['nullable', 'array'],
         'class_ids.*' => ['required', 'integer'],
@@ -91,6 +94,7 @@ class extends Component
             ]);
 
             $this->class_ids = $student->classes()->pluck('classes.id')->toArray();
+            $this->programme_id = $student->classes()->value('programme_id');
         }
     }
 
@@ -131,7 +135,11 @@ class extends Component
             {
                 $query->where('campus_id', $campusId);
             })
-            ->when(!$this->institute_id || !$this->campus_id, function ($query)
+            ->when($this->programme_id, function ($query, $programmeId)
+            {
+                $query->where('programme_id', $programmeId);
+            })
+            ->when(!$this->institute_id || !$this->campus_id || !$this->programme_id, function ($query)
             {
                 $query->whereRaw('1 = 0');
             })
@@ -144,6 +152,18 @@ class extends Component
 
                 return $class;
             });
+    }
+
+    #[Computed]
+    public function programmes(): Collection
+    {
+        return Programme::query()
+            ->when($this->institute_id, function ($query, $instituteId)
+            {
+                $query->where('institute_id', $instituteId);
+            })
+            ->orderByTranslation('name', 'asc')
+            ->get();
     }
 
     protected function rules(): array
@@ -169,12 +189,18 @@ class extends Component
                 Rule::exists('campuses', 'id'),
                 Rule::exists('institute_campus', 'campus_id')->where(fn ($query) => $query->where('institute_id', $this->institute_id)),
             ],
+            'programme_id' => [
+                'required',
+                'integer',
+                Rule::exists('programmes', 'id')->where(fn ($query) => $query->where('institute_id', $this->institute_id)),
+            ],
             'class_ids.*' => [
                 'required',
                 'integer',
                 Rule::exists('classes', 'id')->where(fn ($query) => $query
                     ->where('institute_id', $this->institute_id)
                     ->where('campus_id', $this->campus_id)
+                    ->where('programme_id', $this->programme_id)
                 ),
             ],
         ];
@@ -185,6 +211,7 @@ class extends Component
         if (!$value)
         {
             $this->campus_id = null;
+            $this->programme_id = null;
             $this->class_ids = [];
 
             return;
@@ -197,6 +224,13 @@ class extends Component
             $this->campus_id = null;
         }
 
+        $availableProgrammeIds = $this->programmes()->pluck('id')->map(fn ($id) => (int) $id)->all();
+
+        if (!in_array((int) $this->programme_id, $availableProgrammeIds, true))
+        {
+            $this->programme_id = null;
+        }
+
         $this->pruneClassIds();
     }
 
@@ -205,9 +239,14 @@ class extends Component
         $this->pruneClassIds();
     }
 
+    public function updatedProgrammeId(): void
+    {
+        $this->pruneClassIds();
+    }
+
     protected function pruneClassIds(): void
     {
-        if (!$this->institute_id || !$this->campus_id)
+        if (!$this->institute_id || !$this->campus_id || !$this->programme_id)
         {
             $this->class_ids = [];
 
@@ -217,6 +256,7 @@ class extends Component
         $allowedClassIds = ClassModel::query()
             ->where('institute_id', $this->institute_id)
             ->where('campus_id', $this->campus_id)
+            ->where('programme_id', $this->programme_id)
             ->pluck('id')
             ->toArray();
 
@@ -270,6 +310,7 @@ class extends Component
         return [
             'institutes' => $this->institutes(),
             'campuses' => $this->campuses(),
+            'programmes' => $this->programmes(),
             'classes' => $this->classes(),
         ];
     }
@@ -306,9 +347,8 @@ class extends Component
                 </div>
                 <x-select :label="__('students.filters.institute')" wire:model.live="institute_id" :options="$institutes" :placeholder="__('actions.any')" />
                 <x-select :label="__('students.filters.campus')" wire:model.live="campus_id" :options="$campuses" :placeholder="__('actions.any')" />
-                <div class="md:col-span-2">
-                    <x-choices :label="__('students.form.classes')" wire:model="class_ids" :options="$classes" />
-                </div>
+                <x-select :label="__('students.filters.programme')" wire:model.live="programme_id" :options="$programmes" :placeholder="__('actions.any')" />
+                <x-choices :label="__('students.form.classes')" wire:model="class_ids" :options="$classes" />
             </div>
 
             <x-slot:actions>

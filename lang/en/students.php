@@ -7,6 +7,7 @@ return [
     'filters' => [
         'institute' => 'Institute',
         'campus' => 'Campus',
+        'programme' => 'Programme',
     ],
     'table' => [
         'student_id' => 'Student ID',
