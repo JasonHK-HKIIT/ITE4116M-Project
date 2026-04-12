@@ -58,6 +58,7 @@
                 <x-menu-sub :title="__('navigation.dashboard.news')" icon="fal.newspaper">
                     <x-menu-item :title="__('navigation.dashboard.all_articles')" route="dashboard.news.list" />
                     <x-menu-item :title="__('navigation.dashboard.create_article')" route="dashboard.news.create" />
+                    <x-menu-item :title="__('navigation.dashboard.home_carousel')" route="dashboard.news.carousel" />
                 </x-menu-sub>
             @endif
 

@@ -35,6 +35,7 @@ return [
         'news' => '新聞與公告',
         'all_articles' => '所有文章',
         'create_article' => '建立文章',
+        'home_carousel' => '主頁輪播',
         'resource_centre' => '資源中心',
         'all_resources' => '所有資源',
         'create_resource' => '建立資源',

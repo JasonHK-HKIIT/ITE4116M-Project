@@ -84,6 +84,7 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
         Route::livewire('/news', 'pages::dashboard.news.list')->name('news.list');
         Route::livewire('/news/create', 'pages::dashboard.news.edit')->name('news.create');
         Route::livewire('/news/{article}', 'pages::dashboard.news.edit')->whereNumber('article')->name('news.edit');
+        Route::livewire('/news/carousel', 'pages::dashboard.news.carousel')->name('news.carousel');
     });
 
     Route::middleware('permission:resources')->group(function ()

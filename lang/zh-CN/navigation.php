@@ -35,6 +35,7 @@ return [
         'news' => '新闻与公告',
         'all_articles' => '所有文章',
         'create_article' => '建立文章',
+        'home_carousel' => '主页轮播',
         'resource_centre' => '资源中心',
         'all_resources' => '所有资源',
         'create_resource' => '建立资源',

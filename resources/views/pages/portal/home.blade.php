@@ -1,9 +1,37 @@
 <?php
 
+use App\Models\CarouselSlide;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
-new #[Layout('layouts::portal')] class extends Component {}; ?>
+new
+#[Layout('layouts::portal')]
+class extends Component
+{
+    public function carouselSlides(): array
+    {
+        return CarouselSlide::query()
+            ->where('is_active', true)
+            ->orderBy('position')
+            ->orderBy('id')
+            ->get()
+            ->map(fn ($slide) => [
+                'image' => $slide->getFirstMediaUrl('image'),
+                'title' => $slide->title,
+                'description' => $slide->description,
+                'url' => $slide->link_url ?: '#',
+            ])
+            ->values()
+            ->toArray();
+    }
+
+    public function with(): array
+    {
+        return [
+            'slides' => $this->carouselSlides(),
+        ];
+    }
+}; ?>
 
 <div class="p-4 md:p-8">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -63,43 +91,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
 
     <!-- Carousel -->
     <div class="mt-6 pt-8">
-        @php
-            $slides = [
-                [
-                    'image' => '/Images/VTC_slide1.jpg',
-                    'title' => __('home.slides.apprenticeship.title'),
-                    'description' => __('home.slides.apprenticeship.description'),
-                    'url' => '/news/vtc-apprenticeship-learn-and-earn-pathway',
-                ],
-                [
-                    'image' => '/Images/VTC_slide2.jpg',
-                    'title' => __('home.slides.sen_support.title'),
-                    'description' => __('home.slides.sen_support.description'),
-                    'url' => '/news/support-services-for-students-with-sen',
-                ],
-                [
-                    'image' => '/Images/VTC_slide3.jpg',
-                    'title' => __('home.slides.programme_info_day.title'),
-                    'description' => __('home.slides.programme_info_day.description'),
-                    'url' => '/news/programme-selection-info-day',
-                ],
-                [
-                    'image' => '/Images/VTC_slide4.jpg',
-                    'title' => __('home.slides.dse_workshop.title'),
-                    'description' => __('home.slides.dse_workshop.description'),
-                    'url' => '/news/dse-results-release-talk-and-workshop',
-                ],
-                [
-                    'image' => '/Images/VTC_slide5.jpg',
-                    'title' => __('home.slides.curriculum_day.title'),
-                    'description' => __('home.slides.curriculum_day.description'),
-                    'url' => '/news/curriculum-information-and-experience-day-infoday',
-                ],
-            ];
-        @endphp
-
         <x-carousel :slides="$slides" class="h-64 md:h-80 lg:h-96" autoplay="true" interval="8000" />
-
     </div>
 
     <!-- Services Section -->

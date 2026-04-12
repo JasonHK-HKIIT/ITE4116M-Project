@@ -35,6 +35,7 @@ return [
         'news' => 'News & Announcement',
         'all_articles' => 'All Articles',
         'create_article' => 'Create Article',
+        'home_carousel' => 'Home Carousel',
         'resource_centre' => 'Resource Centre',
         'all_resources' => 'All Resources',
         'create_resource' => 'Create Resource',

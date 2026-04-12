@@ -4,6 +4,37 @@ return [
     'title' => '新聞與公告',
     'empty' => '找不到新聞',
     'back_to_list' => '返回新聞列表',
+    'carousel' => [
+        'title' => '主頁輪播',
+        'subtitle' => '管理主頁輪播內容',
+        'create_slide' => '建立輪播項目',
+        'update_slide' => '更新輪播項目',
+        'fields' => [
+            'title' => '標題',
+            'description' => '描述',
+            'link_url' => '連結 URL',
+            'is_active' => '啟用',
+            'image' => '圖片',
+            'position' => '排序',
+        ],
+        'table' => [
+            'image' => '圖片',
+            'title' => '標題',
+            'link_url' => '連結 URL',
+            'status' => '狀態',
+            'position' => '排序',
+        ],
+        'statuses' => [
+            'active' => '啟用',
+            'inactive' => '停用',
+        ],
+        'messages' => [
+            'saved' => '輪播項目已儲存。',
+            'deleted' => '輪播項目已刪除。',
+            'moved' => '輪播排序已更新。',
+            'image_required' => '建立新輪播項目時必須上載圖片。',
+        ],
+    ],
 
     'subtitles' => [
         'create_article' => '建立文章',

@@ -4,6 +4,37 @@ return [
     'title' => '新闻与公告',
     'empty' => '找不到新闻',
     'back_to_list' => '返回新闻列表',
+    'carousel' => [
+        'title' => '主页轮播',
+        'subtitle' => '管理主页轮播内容',
+        'create_slide' => '建立轮播项目',
+        'update_slide' => '更新轮播项目',
+        'fields' => [
+            'title' => '标题',
+            'description' => '描述',
+            'link_url' => '链接 URL',
+            'is_active' => '启用',
+            'image' => '图片',
+            'position' => '排序',
+        ],
+        'table' => [
+            'image' => '图片',
+            'title' => '标题',
+            'link_url' => '链接 URL',
+            'status' => '状态',
+            'position' => '排序',
+        ],
+        'statuses' => [
+            'active' => '启用',
+            'inactive' => '停用',
+        ],
+        'messages' => [
+            'saved' => '轮播项目已保存。',
+            'deleted' => '轮播项目已删除。',
+            'moved' => '轮播排序已更新。',
+            'image_required' => '建立新轮播项目时必须上传图片。',
+        ],
+    ],
 
     'subtitles' => [
         'create_article' => '建立文章',
