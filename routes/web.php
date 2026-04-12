@@ -75,6 +75,7 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     {
         Route::livewire('/students', 'pages::dashboard.students.list')->name('students.list');
         Route::livewire('/students/create', 'pages::dashboard.students.edit')->name('students.create');
+        Route::livewire('/students/import', 'pages::dashboard.students.import')->name('students.import');
         Route::livewire('/students/{user}', 'pages::dashboard.students.edit')->whereNumber('user')->name('students.edit');
     });
 

@@ -43,7 +43,7 @@
                 <x-menu-sub :title="__('navigation.dashboard.students')" icon="fal.users">
                     <x-menu-item :title="__('navigation.dashboard.all_students')" route="dashboard.students.list" />
                     <x-menu-item :title="__('navigation.dashboard.create_student')" route="dashboard.students.create" />
-                    <x-menu-item :title="__('navigation.dashboard.batch_import')" link="/dashboard/students/import" />
+                    <x-menu-item :title="__('navigation.dashboard.batch_import')" route="dashboard.students.import" />
                 </x-menu-sub>
             @endif
 

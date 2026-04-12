@@ -3,6 +3,37 @@
 return [
     'title' => '學生',
     'subtitle' => '學生管理',
+    'import' => [
+        'title' => '批次匯入學生',
+        'subtitle' => '透過 CSV 匯入學生資料',
+        'upload_label' => 'CSV 檔案',
+        'sample' => [
+            'hint' => '請使用扁平 CSV，且不包含任何 ID 欄位與 password 欄位。',
+            'download' => '下載範例 CSV',
+            'columns' => '必要欄位：:columns',
+        ],
+        'summary' => [
+            'total' => '已處理列數',
+            'imported' => '已匯入',
+            'skipped' => '已略過',
+        ],
+        'logs' => [
+            'title' => '匯入記錄',
+            'row' => '列',
+            'username' => '使用者名稱',
+            'status' => '狀態',
+            'message' => '訊息',
+            'empty' => '目前沒有記錄。',
+            'imported' => '已匯入',
+            'skipped' => '已略過',
+        ],
+        'messages' => [
+            'completed' => '匯入完成。成功 :imported 筆，略過 :skipped 筆。',
+            'invalid_header' => 'CSV 標題不正確，請使用範例模板。',
+            'password_column_not_allowed' => '不允許 password 欄位，密碼會由系統自動產生。',
+        ],
+    ],
+
     'search_placeholder' => '以學生編號、姓名或手機搜尋...',
     'filters' => [
         'institute' => '學院',

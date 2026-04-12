@@ -3,6 +3,37 @@
 return [
     'title' => 'Students',
     'subtitle' => 'Student Management',
+    'import' => [
+        'title' => 'Batch Import Students',
+        'subtitle' => 'Import students from CSV',
+        'upload_label' => 'CSV File',
+        'sample' => [
+            'hint' => 'Use a flat CSV without ID columns and without password column.',
+            'download' => 'Download Sample CSV',
+            'columns' => 'Required columns: :columns',
+        ],
+        'summary' => [
+            'total' => 'Processed Rows',
+            'imported' => 'Imported',
+            'skipped' => 'Skipped',
+        ],
+        'logs' => [
+            'title' => 'Import Log',
+            'row' => 'Row',
+            'username' => 'Username',
+            'status' => 'Status',
+            'message' => 'Message',
+            'empty' => 'No logs yet.',
+            'imported' => 'Imported',
+            'skipped' => 'Skipped',
+        ],
+        'messages' => [
+            'completed' => 'Import completed. Imported :imported row(s), skipped :skipped row(s).',
+            'invalid_header' => 'CSV header is invalid. Please use the sample template.',
+            'password_column_not_allowed' => 'Password column is not allowed. Passwords are auto-generated.',
+        ],
+    ],
+
     'search_placeholder' => 'Search by ID, name, or mobile...',
     'filters' => [
         'institute' => 'Institute',
