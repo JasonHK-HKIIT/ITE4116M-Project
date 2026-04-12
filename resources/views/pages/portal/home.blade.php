@@ -30,7 +30,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <div class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
                         <x-icon name="fal.calendar-lines" class="w-8 h-8 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <span class="text-base font-semibold text-center text-base-content">Calendar</span>
+                    <span class="text-base font-semibold text-center text-base-content">{{ __('home.links.calendar') }}</span>
                 </div>
             </x-card>
         </a>
@@ -42,7 +42,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
                         <x-icon name="fal.ballot" class="w-8 h-8 text-green-600 dark:text-green-400" />
                     </div>
-                    <span class="text-base font-semibold text-center text-base-content">Student Activities</span>
+                    <span class="text-base font-semibold text-center text-base-content">{{ __('navigation.portal.activities') }}</span>
                 </div>
             </x-card>
         </a>
@@ -55,7 +55,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                         class="w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
                         <x-icon name="fal.bullhorn" class="w-8 h-8 text-orange-600 dark:text-orange-400" />
                     </div>
-                    <span class="text-base font-semibold text-center text-base-content">News & Announcement</span>
+                    <span class="text-base font-semibold text-center text-base-content">{{ __('home.links.news_and_announcement') }}</span>
                 </div>
             </x-card>
         </a>
@@ -67,35 +67,32 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
             $slides = [
                 [
                     'image' => '/Images/VTC_slide1.jpg',
-                    'title' => 'VTC Apprenticeship',
-                    'description' => 'Combining hands-on training with academic learning for career success.',
+                    'title' => __('home.slides.apprenticeship.title'),
+                    'description' => __('home.slides.apprenticeship.description'),
                     'url' => '/news/vtc-apprenticeship-learn-and-earn-pathway',
                 ],
                 [
                     'image' => '/Images/VTC_slide2.jpg',
-                    'title' => 'Support Services for SEN Students',
-                    'description' =>
-                        'Providing comprehensive support and resources for students with special educational needs.',
+                    'title' => __('home.slides.sen_support.title'),
+                    'description' => __('home.slides.sen_support.description'),
                     'url' => '/news/support-services-for-students-with-sen',
                 ],
                 [
                     'image' => '/Images/VTC_slide3.jpg',
-                    'title' => 'Programme Selection Info Day',
-                    'description' => 'Join us on May 10th to explore programme options and career pathways.',
+                    'title' => __('home.slides.programme_info_day.title'),
+                    'description' => __('home.slides.programme_info_day.description'),
                     'url' => '/news/programme-selection-info-day',
                 ],
                 [
                     'image' => '/Images/VTC_slide4.jpg',
-                    'title' => 'DSE Results Release Talk & Workshop 2025',
-                    'description' =>
-                        'Analyse exam strategies, get university consultation, test your potential and discover university life.',
+                    'title' => __('home.slides.dse_workshop.title'),
+                    'description' => __('home.slides.dse_workshop.description'),
                     'url' => '/news/dse-results-release-talk-and-workshop',
                 ],
                 [
                     'image' => '/Images/VTC_slide5.jpg',
-                    'title' => 'Curriculum & Experience Day',
-                    'description' =>
-                        'InfoDay on November 8-9 and 15-16 (Friday-Saturday). Explore our diverse programmes and discover your future.',
+                    'title' => __('home.slides.curriculum_day.title'),
+                    'description' => __('home.slides.curriculum_day.description'),
                     'url' => '/news/curriculum-information-and-experience-day-infoday',
                 ],
             ];
@@ -108,7 +105,7 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
     <!-- Services Section -->
     <div class="mt-6 pt-10">
         <!-- Section Title -->
-        <h2 class="text-2xl font-bold text-base-content mb-6">Online Student Service</h2>
+        <h2 class="text-2xl font-bold text-base-content mb-6">{{ __('home.online_student_service') }}</h2>
         <!-- My Academics -->
         <x-card class="mt-6 pt-4 p-6" shadow>
             <div class="flex items-center gap-6">
@@ -116,10 +113,10 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <div class="w-16 h-16 rounded-full bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
                         <x-icon name="fal.book" class="w-8 h-8 text-blue-600 dark:text-blue-400" />
                     </div>
-                    <h3 class="text-lg font-bold text-base-content">My Academics</h3>
+                    <h3 class="text-lg font-bold text-base-content">{{ __('home.services.my_academics') }}</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="{{ route('portal.profile.personal-particular') }}" wire:navigate class="text-base-content hover:text-primary hover:underline transition-colors">Profile</a>
+                    <a href="{{ route('portal.profile.personal-particular') }}" wire:navigate class="text-base-content hover:text-primary hover:underline transition-colors">{{ __('home.links.profile') }}</a>
                 </div>
             </div>
         </x-card>
@@ -131,11 +128,11 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                     <div class="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
                         <x-icon name="fal.users" class="w-8 h-8 text-green-600 dark:text-green-400" />
                     </div>
-                    <h3 class="text-lg font-bold text-base-content">Student Affairs</h3>
+                    <h3 class="text-lg font-bold text-base-content">{{ __('home.services.student_affairs') }}</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="{{ route('portal.news.list') }}" class="text-base-content hover:text-primary hover:underline transition-colors">News and Announcement</a>
-                    <a href="{{ route('portal.calendar') }}" class="text-base-content hover:text-primary hover:underline transition-colors">Calendar</a>
+                    <a href="{{ route('portal.news.list') }}" class="text-base-content hover:text-primary hover:underline transition-colors">{{ __('home.links.news_and_announcement') }}</a>
+                    <a href="{{ route('portal.calendar') }}" class="text-base-content hover:text-primary hover:underline transition-colors">{{ __('home.links.calendar') }}</a>
                 </div>
             </div>
         </x-card>
@@ -148,10 +145,10 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                         class="w-16 h-16 rounded-full bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
                         <x-icon name="fal.map-pin" class="w-8 h-8 text-purple-600 dark:text-purple-400" />
                     </div>
-                    <h3 class="text-lg font-bold text-base-content">Campus Life</h3>
+                    <h3 class="text-lg font-bold text-base-content">{{ __('home.services.campus_life') }}</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="{{ route('portal.activities.list') }}" class="text-base-content hover:text-primary hover:underline transition-colors">Student Activity</a>
+                    <a href="{{ route('portal.activities.list') }}" class="text-base-content hover:text-primary hover:underline transition-colors">{{ __('home.links.student_activity') }}</a>
                 </div>
             </div>
         </x-card>
@@ -164,10 +161,10 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                         class="w-16 h-16 rounded-full bg-orange-100 dark:bg-orange-900 flex items-center justify-center">
                         <x-icon name="fal.cogs" class="w-8 h-8 text-orange-600 dark:text-orange-400" />
                     </div>
-                    <h3 class="text-lg font-bold text-base-content">Other Services</h3>
+                    <h3 class="text-lg font-bold text-base-content">{{ __('home.services.other_services') }}</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="{{ route('portal.resources-centre') }}" class="text-base-content hover:text-primary hover:underline transition-colors" wire:navigate>Resources Centre</a>
+                    <a href="{{ route('portal.resources-centre') }}" class="text-base-content hover:text-primary hover:underline transition-colors" wire:navigate>{{ __('home.links.resources_centre') }}</a>
                 </div>
             </div>
         </x-card>
@@ -180,10 +177,10 @@ new #[Layout('layouts::portal')] class extends Component {}; ?>
                         class="w-16 h-16 rounded-full bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
                         <x-icon name="fal.link" class="w-8 h-8 text-yellow-600 dark:text-yellow-400" />
                     </div>
-                    <h3 class="text-lg font-bold text-base-content">Useful Links</h3>
+                    <h3 class="text-lg font-bold text-base-content">{{ __('home.services.useful_links') }}</h3>
                 </div>
                 <div class="flex flex-wrap items-center gap-6">
-                    <a href="#" class="text-base-content hover:text-primary hover:underline transition-colors">VTC Valo</a>
+                    <a href="#" class="text-base-content hover:text-primary hover:underline transition-colors">{{ __('home.links.vtc_valo') }}</a>
                 </div>
             </div>
         </x-card>
