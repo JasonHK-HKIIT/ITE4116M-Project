@@ -102,6 +102,12 @@ If the user asks a vague question, they are likely meaning to look up info from 
                                     'user_id' => (string) Auth::id(),
                                 ],
                             ],
+                            [
+                                'type' => 'timetable',
+                                'config' => [
+                                    'user_id' => (string) Auth::id(),
+                                ],
+                            ],
                         ],
                         'type==agent/interrupt_before_action' => false,
                     ],
