@@ -94,6 +94,7 @@ class extends Component
 If the user is referencing particular files, that is often a good hint that information may be here.
 If the user asks a vague question, they are likely meaning to look up info from this retriever, and you should call it!',
                         'type==agent/tools' => [
+                            ['type' => 'current_time'],
                             ['type' => 'news_articles'],
                             ['type' => 'student_activities'],
                             [
@@ -172,7 +173,7 @@ If the user asks a vague question, they are likely meaning to look up info from 
                     }
 
                     $this->stream(to: $message->id, content: $message->renderContent());
-                    usleep(50000);
+                    usleep(25000);
                 }
             }
         }
