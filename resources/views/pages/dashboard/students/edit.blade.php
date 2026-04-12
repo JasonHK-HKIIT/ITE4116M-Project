@@ -60,13 +60,18 @@ class extends Component
     ], as: 'classes')]
     public array $class_ids = [];
 
-    public function mount(Student $student): void
+    public function mount(?User $user = null): void
     {
-        $this->exists = $student->exists;
-        $this->student = $student;
+        $this->exists = (bool) $user?->exists;
+        $this->student = new Student();
 
         if ($this->exists)
         {
+            $student = $user?->student;
+
+            abort_if(!$student, 404);
+
+            $this->student = $student;
             $student->load(['user', 'classes']);
 
             $this->fill([
@@ -255,7 +260,7 @@ class extends Component
         {
             $this->success(
                 trans('students.messages.created'),
-                redirectTo: route('dashboard.students.edit', ['student' => $this->student])
+                redirectTo: route('dashboard.students.edit', ['user' => $this->student->user])
             );
         }
     }

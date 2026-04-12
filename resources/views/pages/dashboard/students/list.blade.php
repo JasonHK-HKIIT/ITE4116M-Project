@@ -227,7 +227,7 @@ class extends Component
 
             @scope('actions', $student)
                 <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
-                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.students.edit', ['student' => $student])" class="btn-ghost btn-square btn-sm" />
+                    <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.students.edit', ['user' => $student->user])" class="btn-ghost btn-square btn-sm" />
                     <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteStudent({{ $student->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>
 
@@ -236,7 +236,7 @@ class extends Component
                         <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                     </x-slot:trigger>
 
-                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.students.edit', ['student' => $student])" />
+                    <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.students.edit', ['user' => $student->user])" />
                     <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteStudent({{ $student->id }})" spinner />
                 </x-dropdown>
             @endscope

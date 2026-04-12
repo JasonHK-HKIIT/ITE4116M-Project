@@ -70,7 +70,7 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
     {
         Route::livewire('/students', 'pages::dashboard.students.list')->name('students.list');
         Route::livewire('/students/create', 'pages::dashboard.students.edit')->name('students.create');
-        Route::livewire('/students/{student}', 'pages::dashboard.students.edit')->whereNumber('student')->name('students.edit');
+        Route::livewire('/students/{user}', 'pages::dashboard.students.edit')->whereNumber('user')->name('students.edit');
     });
 
     Route::middleware('permission:news')->group(function ()
