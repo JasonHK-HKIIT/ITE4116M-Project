@@ -5,13 +5,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::livewire('/login', 'pages::login')->name('login');
 
-Route::get('/logout', function ()
+Route::middleware('auth')->group(function ()
 {
-    Auth::logout();
-    request()->session()->invalidate();
-    request()->session()->regenerateToken();
+    Route::get('/logout', function ()
+    {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
 
-    return redirect('/');
+        return redirect('/');
+    })->name('logout');
+
+    Route::livewire('/password', 'pages::password')->name('password');
 });
 
 Route::name('portal.')->middleware('auth')->group(function ()
@@ -99,6 +104,7 @@ Route::name('dashboard.')->prefix('/dashboard')->middleware(['auth', 'role:admin
         Route::livewire('/system/staff', 'pages::dashboard.system.staff.list')->name('system.staff.list');
         Route::livewire('/system/staff/create', 'pages::dashboard.system.staff.edit')->name('system.staff.create');
         Route::livewire('/system/staff/{staff}', 'pages::dashboard.system.staff.edit')->whereNumber('staff')->name('system.staff.edit');
+        Route::livewire('/system/password', 'pages::dashboard.system.password')->name('system.password');
     });
 
 });

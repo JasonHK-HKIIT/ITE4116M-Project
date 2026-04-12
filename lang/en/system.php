@@ -1,6 +1,35 @@
 <?php
 
 return [
+    'password' => [
+        'user' => [
+            'title' => 'Change Password',
+            'subtitle' => 'Update your account password',
+            'form' => [
+                'current_password' => 'Current Password',
+                'new_password' => 'New Password',
+                'repeat_new_password' => 'Confirm New Password',
+            ],
+            'messages' => [
+                'updated' => 'Password has been updated.',
+            ],
+        ],
+        'admin' => [
+            'title' => 'Password Reset',
+            'subtitle' => 'Reset password for non-admin users',
+            'form' => [
+                'username' => 'Username',
+                'new_password' => 'New Password',
+                'repeat_new_password' => 'Confirm New Password',
+            ],
+            'messages' => [
+                'updated' => 'Password has been reset successfully.',
+                'user_not_found' => 'User not found.',
+                'admin_not_allowed' => 'Admin accounts cannot be reset from this page.',
+            ],
+        ],
+    ],
+
     'staff' => [
         'title' => 'Staff Members',
         'subtitle' => 'System User Management',

@@ -1,6 +1,35 @@
 <?php
 
 return [
+    'password' => [
+        'user' => [
+            'title' => '更改密碼',
+            'subtitle' => '更新你的帳戶密碼',
+            'form' => [
+                'current_password' => '目前密碼',
+                'new_password' => '新密碼',
+                'repeat_new_password' => '再次輸入新密碼',
+            ],
+            'messages' => [
+                'updated' => '密碼已更新。',
+            ],
+        ],
+        'admin' => [
+            'title' => '重設密碼',
+            'subtitle' => '為非管理員使用者重設密碼',
+            'form' => [
+                'username' => '使用者名稱',
+                'new_password' => '新密碼',
+                'repeat_new_password' => '再次輸入新密碼',
+            ],
+            'messages' => [
+                'updated' => '密碼已成功重設。',
+                'user_not_found' => '找不到使用者。',
+                'admin_not_allowed' => '此頁面不可重設管理員帳戶。',
+            ],
+        ],
+    ],
+
     'staff' => [
         'title' => '教職員',
         'subtitle' => '系統使用者管理',

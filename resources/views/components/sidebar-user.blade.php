@@ -19,7 +19,8 @@ new class extends Component
                     </x-slot:trigger>
 
                     <x-menu-item :title="__('appearance.title')" @click="$wire.appearance = !$wire.appearance" />
-                    <x-menu-item :title="__('actions.sign_out')" link="/logout" />
+                    <x-menu-item :title="__('actions.change_password')" route="password" />
+                    <x-menu-item :title="__('actions.sign_out')" route="logout" />
                 </x-dropdown>
             </x-slot:actions>
         </x-list-item>
