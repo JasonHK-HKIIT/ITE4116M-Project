@@ -25,11 +25,13 @@
 
             <x-menu-item :title="__('navigation.portal.home')" icon="fal.house" link="/" />
             <x-menu-item :title="__('navigation.portal.calendar')" icon="fal.calendar-circle-user" link="/calendar" />
-            <x-menu-sub :title="__('navigation.portal.profile')" icon="fal.address-card">
-                <x-menu-item :title="__('navigation.portal.personal_particular')" link="/profile/personal-particular" />
-                <x-menu-item :title="__('navigation.portal.programme_modules')" link="/profile/programme-modules" />
-            </x-menu-sub>
-            <x-menu-item :title="__('navigation.portal.activities')" icon="fal.calendar-star" link="/activities" />
+            @if($user?->hasRole('student'))
+                <x-menu-sub :title="__('navigation.portal.profile')" icon="fal.address-card">
+                    <x-menu-item :title="__('navigation.portal.personal_particular')" link="/profile/personal-particular" />
+                    <x-menu-item :title="__('navigation.portal.programme_modules')" link="/profile/programme-modules" />
+                </x-menu-sub>
+                <x-menu-item :title="__('navigation.portal.activities')" icon="fal.calendar-star" link="/activities" />
+            @endif
             <x-menu-item :title="__('navigation.portal.news')" icon="fal.newspaper" link="/news" />
             <x-menu-item :title="__('navigation.portal.resources')" icon="fal.circle-info" link="/resources/resources-centre" />
 
