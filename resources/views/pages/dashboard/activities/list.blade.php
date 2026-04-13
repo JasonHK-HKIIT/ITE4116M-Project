@@ -99,10 +99,6 @@ class extends Component
             ->when($this->sortBy['column'] === 'title', function ($query) {
                 $query->orderByTranslation('title', $this->sortBy['direction']);
             })
-            ->when((($this->sortBy['column'] == 'total_amount') ? $this->sortBy : false), function ($query, $sortBy)
-            {
-                $query->orderBy('total_amount', ($sortBy['direction'] == 'asc') ? 'desc' : 'asc');
-            })
             ->paginate($this->perPage);
     }
 
@@ -122,7 +118,6 @@ class extends Component
             ['key' => 'instructor', 'label' => trans('activities.table_headers.instructor'),'class' => 'w-fit'],
             ['key' => 'execution_from', 'label' => trans('activities.table_headers.execution_from'), 'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
             ['key' => 'execution_to', 'label' => trans('activities.table_headers.execution_to'),'class' => 'w-fit', 'format' => ['date', 'd-m-Y']],
-            ['key' => 'total_amount', 'label' => trans('activities.table_headers.total_amount'),'class' => 'w-fit', 'format' => ['currency', '2,.', '$ ']],
         ];
     }
 
@@ -200,8 +195,9 @@ class extends Component
         <x-table :headers="$headers" :rows="$activities" :sort-by="$sortBy" with-pagination per-page="perPage" :per-page-values="[5, 10, 20]">
 
             @scope('actions', $activity)
-
-                <div class="hidden lg:inline-flex flex-row w-8 lg:w-17">
+                
+                <div class="hidden lg:inline-flex flex-row gap-1">
+                    <x-button icon="fal.file-lines" :tooltipLeft="__('activities.table_actions.activity_details')" :link="route('portal.activities.show', ['id' => $activity->id ])" class="btn-ghost btn-square btn-sm" />
                     <x-button icon="fal.pen-to-square" :tooltip="__('actions.edit')" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" class="btn-ghost btn-square btn-sm" />
                     <x-button icon="fal.trash" :tooltip="__('actions.delete')" wire:click="deleteArticle({{ $activity->id }})" spinner class="btn-ghost btn-square btn-sm" />
                 </div>        
@@ -211,6 +207,7 @@ class extends Component
                             <x-button icon="fal.ellipsis-vertical" class="btn-ghost btn-square btn-sm lg:hidden" />
                         </x-slot:trigger>
 
+                        <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.file-lines" :link="route('portal.activities.show', ['id' => $activity->id ])" />
                         <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" />
                         <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteArticle({{ $activity->id }})" spinner />
 

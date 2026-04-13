@@ -212,7 +212,7 @@ class extends Component
                     </a>
                 @endif
             @endauth
-            <a href="{{ route('portal.activities.list') }}" class="btn btn-ghost">{{ __('actions.back') }}</a>
+            <a href="{{ $this->isStaffOrAdmin() ? route('dashboard.activities.list') : route('portal.activities.list') }}" class="btn btn-ghost">{{ __('actions.back') }}</a>
         </x-slot:actions>
     </x-card>
 </div>
