@@ -1,0 +1,15 @@
+{
+  "name": "vtc-my-portal-user-guide",
+  "description": "VTC MyPortal User Guide",
+  "author": "VTC MyPortal Team",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "vivliostyle build",
+    "preview": "vivliostyle preview"
+  },
+  "dependencies": {
+    "@vivliostyle/cli": "10.5.0"
+  }
+}
