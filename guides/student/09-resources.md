@@ -14,10 +14,6 @@ The Resources Centre is designed for browsing document groups and accessing atta
 ## 9.2 Access Resources Centre
 Students can open Resources Centre from portal links, for example from the Home page under Other Services.
 
-> Image placeholder: Resources Centre entry point.
-
-![Open resources centre](./images/09-resources-open-from-home.png)
-
 ## 9.3 Page Overview
 Main page sections:
 - Header title: Resources Centre
@@ -31,8 +27,6 @@ Main page sections:
 Table columns:
 - Document Group
 - Latest Release
-
-> Image placeholder: Resources Centre full-page overview.
 
 ![Resources centre overview](./images/09-resources-overview.png)
 
@@ -57,8 +51,6 @@ Available actions:
 - Reset: clears all filter values
 - Done: closes drawer
 
-> Image placeholder: Filters drawer with date controls.
-
 ![Resources filters](./images/09-resources-filters.png)
 
 ## 9.5 Browse Document Groups
@@ -71,8 +63,6 @@ To inspect files inside a group:
 
 If no files are available for that group, the message No files uploaded. is shown.
 
-> Image placeholder: Expanded row showing files.
-
 ![Expanded document row](./images/09-resources-expanded-row.png)
 
 ## 9.6 Download Files
@@ -80,8 +70,6 @@ For each file in an expanded row:
 1. Select the download icon.
 2. File opens or downloads in a new browser tab/window.
 3. Save the file if prompted by the browser.
-
-> Image placeholder: File download action in expanded row.
 
 ![Download resource file](./images/09-resources-download.png)
 

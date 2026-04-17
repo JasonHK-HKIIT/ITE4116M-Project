@@ -20,10 +20,6 @@ You can open Student Activities from:
 - Home page quick access card: Student Activities
 - Home page service links under Campus Life
 
-> Image placeholder: Student Activities entry point from Home page.
-
-![Open student activities](./images/07-activities-open-from-home.png)
-
 ## 7.3 Activity List Page
 The Activity List page shows published student activities in a paginated table.
 
@@ -40,8 +36,6 @@ Table columns include:
 - Registration Start Date
 - Registration End Date
 - Total Amount
-
-> Image placeholder: Activity list full-page overview.
 
 ![Activity list overview](./images/07-activities-list-overview.png)
 
@@ -66,8 +60,6 @@ Actions:
 - Reset: clears all filter fields
 - Done: closes drawer
 
-> Image placeholder: Filters drawer with date controls.
-
 ![Activity filters drawer](./images/07-activities-filters.png)
 
 ## 7.5 Sort and Browse Results
@@ -90,8 +82,6 @@ The details page is organized into tabs:
 4. Descriptive
 5. Financial
 6. Supporting
-
-> Image placeholder: Activity Details page with tab layout.
 
 ![Activity details tabs](./images/07-activities-details-tabs.png)
 
@@ -158,8 +148,6 @@ Expected outcomes on success:
 - Activity event is added to your personal calendar
 - Success notification is shown
 
-> Image placeholder: Register processing screen and success return state.
-
 ![Activity register processing](./images/07-activities-register-processing.png)
 
 ## 7.10 Cancel Participation (Unregister)
@@ -172,8 +160,6 @@ Expected outcomes on success:
 - Participation record is removed
 - Related activity event is removed from your calendar
 - Success notification is shown
-
-> Image placeholder: Unregister processing screen and success return state.
 
 ![Activity unregister processing](./images/07-activities-unregister-processing.png)
 

@@ -34,8 +34,6 @@ At the top of the page, the welcome card includes:
 
 Use this to confirm you have logged in with the correct account.
 
-> Image placeholder: Welcome card close-up.
-
 ![Welcome card](./images/02-home-welcome-card.png)
 
 ## 2.5 Quick Access Cards
@@ -65,8 +63,6 @@ How to use:
 1. Wait for auto-rotation, or use carousel controls if available.
 2. Read title and description.
 3. Select the slide link when provided.
-
-> Image placeholder: Carousel section with one active slide.
 
 ![Carousel banner](./images/02-home-carousel.png)
 

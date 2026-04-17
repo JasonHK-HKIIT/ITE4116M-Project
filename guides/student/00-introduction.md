@@ -47,31 +47,21 @@ Each chapter includes:
 - Troubleshooting notes
 - Support handoff details
 
-## 0.6 Visual Placeholders
-Image placeholders are included throughout this guide.
-
-They are provided so screenshots can be inserted later for PDF publication.
-
-Example placeholder format:
-- Section screenshot
-- Form screenshot
-- Error message screenshot
-
-## 0.7 Conventions Used in This Guide
+## 0.6 Conventions Used in This Guide
 To keep instructions clear and consistent:
 - Numbered steps indicate exact action order
 - Field and button names match UI labels
 - Notes and troubleshooting are separated for quick scanning
 - Role-specific visibility behavior is stated when relevant
 
-## 0.8 Security and Good Practice Reminder
+## 0.7 Security and Good Practice Reminder
 When using MyPortal:
 - Keep account credentials private
 - Change password when needed or after potential exposure
 - Sign out on shared devices
 - Verify important dates and details before taking action
 
-## 0.9 Need Help?
+## 0.8 Need Help?
 If you cannot complete a task after following chapter instructions, contact support and include:
 - Student ID/username
 - Page or chapter name
@@ -79,7 +69,7 @@ If you cannot complete a task after following chapter instructions, contact supp
 - Error message (if any)
 - Screenshot and device/browser details
 
-## 0.10 Version and Maintenance
+## 0.9 Version and Maintenance
 This guide should be reviewed whenever portal behavior, labels, or workflows change.
 
 Maintaining alignment between the guide and system UI ensures accurate user support and training.

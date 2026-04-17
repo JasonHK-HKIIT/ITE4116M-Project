@@ -22,10 +22,6 @@ After opening Profile, use the available profile navigation to switch between:
 - Personal Particular
 - Programme and Modules
 
-> Image placeholder: Profile entry point from portal home.
-
-![Open profile from home](./images/06-profile-open-from-home.png)
-
 ## 6.3 Personal Particular Page
 The Personal Particular page displays student identity and personal records in a structured two-column layout.
 
@@ -36,8 +32,6 @@ Page header:
 
 Right-side panel:
 - Student photo/avatar
-
-> Image placeholder: Personal Particular full-page overview.
 
 ![Personal particular overview](./images/06-profile-personal-overview.png)
 
@@ -60,8 +54,6 @@ The page may include the following fields:
 
 Field behavior:
 - If data is unavailable, the page shows a placeholder dash symbol.
-
-> Image placeholder: Close-up of personal data rows.
 
 ![Personal particular fields](./images/06-profile-personal-fields.png)
 
@@ -86,8 +78,6 @@ For each module entry, the page shows:
 - Module name
 - Module Code
 
-> Image placeholder: Programme and Modules page overview.
-
 ![Programme modules overview](./images/06-profile-programmes-overview.png)
 
 ## 6.7 Empty-State Messages
@@ -96,8 +86,6 @@ You may see the following messages depending on data assignment:
 - No modules assigned for this programme.
 
 These messages indicate there is currently no mapped record for your account in that section.
-
-> Image placeholder: Empty-state examples for programme and module sections.
 
 ![Programme modules empty state](./images/06-profile-programmes-empty.png)
 

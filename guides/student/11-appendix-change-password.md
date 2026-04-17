@@ -27,8 +27,6 @@ Form fields:
 - New Password
 - Confirm New Password
 
-> Image placeholder: Full change password page for student user.
-
 ![Student change password overview](./images/11-appendix-change-password-student-overview.png)
 
 ## 11.3 How to Access This Page
@@ -47,8 +45,6 @@ Expected success behavior:
 - Password is updated for the currently signed-in account.
 - Input fields are cleared.
 - Success message is shown: Password has been updated.
-
-> Image placeholder: Completed form before submit.
 
 ![Student change password form completed](./images/11-appendix-change-password-student-form.png)
 

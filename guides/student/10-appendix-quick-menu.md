@@ -25,8 +25,6 @@ Visible profile information in the user row:
 Quick menu trigger:
 - Circular dropdown button with down-chevron icon
 
-> Image placeholder: Sidebar user row with quick menu trigger highlighted.
-
 ![Student quick menu trigger](./images/10-appendix-quick-menu-student-trigger.png)
 
 ## 10.3 Open the Quick Menu
@@ -39,8 +37,6 @@ Menu options:
 - Appearance
 - Change Password
 - Sign Out
-
-> Image placeholder: Open quick menu dropdown.
 
 ![Student quick menu dropdown](./images/10-appendix-quick-menu-student-dropdown.png)
 
@@ -58,8 +54,6 @@ How to use:
 3. Choose preferred appearance settings.
 4. Close panel when done.
 
-> Image placeholder: Appearance panel after selecting Appearance.
-
 ![Student appearance panel](./images/10-appendix-quick-menu-student-appearance.png)
 
 ## 10.5 Change Password Option
@@ -74,10 +68,6 @@ How to use:
 Recommended practice:
 - Use strong password format and do not reuse old credentials.
 
-> Image placeholder: Change password page reached from quick menu.
-
-![Student change password route](./images/10-appendix-quick-menu-student-password.png)
-
 ## 10.6 Sign Out Option
 Selecting Sign Out logs the user out.
 
@@ -87,10 +77,6 @@ How to use:
 3. Confirm you are redirected to logged-out state/login page.
 
 Use this every time on shared devices.
-
-> Image placeholder: Sign out action and post-logout screen.
-
-![Student sign out](./images/10-appendix-quick-menu-student-signout.png)
 
 ## 10.7 Mobile and Desktop Notes
 Desktop:

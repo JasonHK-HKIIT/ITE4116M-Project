@@ -18,10 +18,6 @@ Students can open News and Announcement from:
 - Home page quick access card
 - Home page Student Affairs service link
 
-> Image placeholder: Entry points from Home page.
-
-![Open news from home](./images/08-news-open-from-home.png)
-
 ## 8.3 News List Page Overview
 The News List page displays published articles as card items with cover image, title, and published date.
 
@@ -32,8 +28,6 @@ Main UI components:
 - Filter drawer
 - Article card grid
 - Pagination and per-page options
-
-> Image placeholder: News list page overview.
 
 ![News list overview](./images/08-news-list-overview.png)
 
@@ -58,8 +52,6 @@ Drawer actions:
 - Reset: clears all filter criteria
 - Done: closes the drawer
 
-> Image placeholder: Filter drawer open with published date fields.
-
 ![News filters](./images/08-news-filters.png)
 
 ## 8.5 Browse and Open Articles
@@ -81,8 +73,6 @@ The article detail page shows:
 - Full article content
 - Cover image
 - Back to News List button
-
-> Image placeholder: News detail page layout.
 
 ![News detail page](./images/08-news-detail.png)
 
