@@ -1,0 +1,18 @@
+flowchart LR
+    U[Users<br>Students/Staff] --> UI[Portal UI<br>Livewire 4 + MaryUI]
+    UI --> APP[Laravel App<br>Domain + Auth + RBAC]
+    APP --> DB[(MySQL / MariaDB)]
+
+    UI --> AC[AssistantClient<br>Laravel Service]
+    AC --> AIB[Assistant Backend<br>LangGraph + LangChain]
+    AIB --> ADB[(Postgres + Checkpoints)]
+
+    AIB --> T1[News Tool]
+    AIB --> T2[Student Activities Tool]
+    AIB --> T3[User Profile Tool]
+    AIB --> T4[Timetable Tool]
+
+    T1 --> API[Laravel API]
+    T2 --> API
+    T3 --> API
+    T4 --> API
