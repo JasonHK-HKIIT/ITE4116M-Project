@@ -25,8 +25,6 @@ After login, the Home page displays the following key areas:
 3. Carousel banner
 4. Online Student Service section
 
-> Image placeholder: Full page overview with all major sections.
-
 ![Student home page overview](./images/02-home-overview.png)
 
 ## 2.4 Welcome Card
@@ -51,8 +49,6 @@ Select **Student Activities** to browse student activity information.
 
 ### 2.5.3 News and Announcement
 Select **News and Announcement** to view latest updates.
-
-> Image placeholder: Quick access cards area.
 
 ![Quick access cards](./images/02-home-quick-access.png)
 
@@ -92,8 +88,6 @@ This section groups links by category.
 
 ### 2.7.5 Useful Links
 - **VTC Valo**
-
-> Image placeholder: Online Student Service cards and links.
 
 ![Online student service section](./images/02-home-services.png)
 

@@ -31,8 +31,6 @@ Prepare the following:
    - Login button
    - Appearance (theme) button
 
-> Image placeholder: Insert screenshot of full login page here.
-
 ![Login page overview](./images/01-login-page-overview.png)
 
 ## 1.5 Sign In Steps
@@ -40,8 +38,6 @@ Prepare the following:
 2. In **Password**, enter your password.
 3. Click **Login**.
 4. If your credentials are correct, the system signs you in and redirects you to the main page.
-
-> Image placeholder: Insert screenshot showing filled Username and Password fields.
 
 ![Filled login form](./images/01-login-form-filled.png)
 
@@ -53,8 +49,6 @@ Use this if you want to adjust the visual theme before or after login.
 1. Click the appearance icon.
 2. Select your preferred display option.
 3. Continue with normal login.
-
-> Image placeholder: Insert screenshot of appearance panel.
 
 ![Appearance settings](./images/01-login-appearance.png)
 
@@ -74,8 +68,6 @@ Check the following and try again:
 2. Password is typed correctly
 3. Caps Lock is not enabled
 4. No extra spaces were entered
-
-> Image placeholder: Insert screenshot of incorrect username/password validation message.
 
 ![Incorrect login message](./images/01-login-error-message.png)
 

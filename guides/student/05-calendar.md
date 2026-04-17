@@ -23,10 +23,6 @@ You can open Calendar from:
 1. Home page quick access card: **Calendar**
 2. Home page service links under **Student Affairs**
 
-> Image placeholder: Entry points to Calendar from Home page.
-
-![Open calendar from home](./images/05-calendar-open-from-home.png)
-
 ## 5.4 Page Layout Overview
 Top section:
 - Page title: **Calendar**
@@ -41,8 +37,6 @@ Control section:
 Main section:
 - Calendar grid based on selected view
 - Event chips/buttons by date and time
-
-> Image placeholder: Calendar page with labeled controls.
 
 ![Calendar page overview](./images/05-calendar-overview.png)
 
@@ -81,8 +75,6 @@ How to use:
 2. Use `<` and `>` arrows to move day by day.
 3. Select an event item to view details.
 
-> Image placeholder: Month, Week, and Day view comparison.
-
 ![Calendar view modes](./images/05-calendar-views.png)
 
 ## 5.6 Navigate Quickly with Today Button
@@ -100,8 +92,6 @@ Event badges/chips are color-coded by type:
 
 This helps you identify event categories quickly in dense schedules.
 
-> Image placeholder: Event color legend sample.
-
 ![Event type colors](./images/05-calendar-event-types.png)
 
 ## 5.8 Open Event Details Modal
@@ -117,8 +107,6 @@ The detail window may show:
 
 To close details:
 1. Select **Cancel**.
-
-> Image placeholder: Event details modal with fields.
 
 ![Event details modal](./images/05-calendar-event-details.png)
 

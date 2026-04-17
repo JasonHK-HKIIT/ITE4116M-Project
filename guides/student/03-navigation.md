@@ -21,8 +21,6 @@ The portal layout includes:
 2. A left sidebar menu (drawer on mobile, visible sidebar on desktop)
 3. Main content area where each page is displayed
 
-> Image placeholder: Full portal layout showing top bar, sidebar, and content area.
-
 ![Portal layout overview - student](./images/03-navigation-student-overview.png)
 
 ## 3.3 Mobile Top Navigation
@@ -36,8 +34,6 @@ How to use:
 3. Select a menu item.
 4. Drawer closes after navigation depending on UI behavior.
 
-> Image placeholder: Mobile top bar with drawer icon.
-
 ![Mobile top navigation - student](./images/03-navigation-student-mobile-topbar.png)
 
 ## 3.4 Sidebar Structure for Students
@@ -50,10 +46,6 @@ The student sidebar typically contains:
 - Student Activities
 - News and Announcement
 - Resources Centre
-
-The dashboard entry is not shown for student users.
-
-> Image placeholder: Student sidebar menu expanded.
 
 ![Student sidebar menu](./images/03-navigation-student-sidebar.png)
 
@@ -80,8 +72,6 @@ How to use:
 1. Expand Profile.
 2. Select required sub-page.
 3. Review or verify your profile details.
-
-> Image placeholder: Profile submenu open state.
 
 ![Student profile submenu](./images/03-navigation-student-profile-submenu.png)
 

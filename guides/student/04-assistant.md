@@ -40,8 +40,6 @@ The Assistant page has two main areas:
 - Input area with text box and **Send** button
 - **Delete Thread** button (shown only when viewing an existing thread)
 
-> Image placeholder: Full assistant page with sidebar and chat area labels.
-
 ![Assistant page overview](./images/04-assistant-overview.png)
 
 ## 4.5 Start a New Chat
@@ -55,8 +53,6 @@ After the first message is sent:
 - A new chat thread is created automatically.
 - The thread appears under **Chat History**.
 
-> Image placeholder: New chat state before sending first message.
-
 ![New chat state](./images/04-assistant-new-chat.png)
 
 ## 4.6 Continue an Existing Chat Thread
@@ -66,8 +62,6 @@ After the first message is sent:
 4. Enter a follow-up question and select **Send**.
 
 The message list auto-scrolls to keep recent messages visible while the assistant replies.
-
-> Image placeholder: Existing chat thread with historical messages.
 
 ![Chat history and thread](./images/04-assistant-thread-history.png)
 
@@ -98,8 +92,6 @@ Use this only when you want to permanently remove the current conversation.
 1. Open the thread you want to remove.
 2. Select **Delete Thread**.
 3. The system removes the thread and returns to the assistant entry page.
-
-> Image placeholder: Delete Thread button and post-delete state.
 
 ![Delete thread action](./images/04-assistant-delete-thread.png)
 
