@@ -1,6 +1,6 @@
 ---
 title: Profile
-author: ITE4116M Project Team
+author: VTC MyPortal Team
 language: en-HK
 ---
 

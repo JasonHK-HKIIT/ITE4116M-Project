@@ -1,12 +1,12 @@
 ---
-title: Staff and Admin User Guide - Dashboard Students
-author: ITE4116M Project Team
+title: "Dashboard: Students"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 11. Dashboard Students
+# 12. Dashboard: Students
 
-## 11.1 Purpose
+## 12.1 Purpose
 This chapter explains how staff/admin users manage student records in Dashboard.
 
 Pages covered:
@@ -14,7 +14,7 @@ Pages covered:
 2. Student Create/Edit
 3. Batch Import Students
 
-## 11.2 Navigation Overview
+## 12.2 Navigation Overview
 From Dashboard navigation, open Student Management pages through:
 - All Students
 - Create Student
@@ -22,9 +22,9 @@ From Dashboard navigation, open Student Management pages through:
 
 > Image placeholder: Dashboard navigation routes to student pages.
 
-![Dashboard students navigation](./images/11-dashboard-students-navigation.png)
+![Dashboard students navigation](./images/12-dashboard-students-navigation.png)
 
-## 11.3 Students List Page
+## 12.3 Students List Page
 The Students list page is the main workspace for searching, filtering, reviewing, editing, and deleting student records.
 
 Primary features:
@@ -44,16 +44,16 @@ Table columns:
 
 > Image placeholder: Students list page overview.
 
-![Students list overview](./images/11-dashboard-students-list-overview.png)
+![Students list overview](./images/12-dashboard-students-list-overview.png)
 
-## 11.4 Search, Filter, and Sort
-### 11.4.1 Keyword Search
+## 12.4 Search, Filter, and Sort
+### 12.4.1 Keyword Search
 Use search input to find students by:
 - Student ID
 - Family/Given/Chinese name
 - Other matching identity text
 
-### 11.4.2 Filter Drawer
+### 12.4.2 Filter Drawer
 Open Filters to apply:
 - Institute
 - Campus (scoped by selected institute)
@@ -62,7 +62,7 @@ Drawer actions:
 - Reset
 - Done
 
-### 11.4.3 Sorting and Pagination
+### 12.4.3 Sorting and Pagination
 - Sort supported by Student ID and Name columns.
 - Pagination supports multiple page sizes (5, 10, 25).
 
@@ -71,9 +71,9 @@ Operational note:
 
 > Image placeholder: Search/filter/sort controls in use.
 
-![Students filter and sort](./images/11-dashboard-students-list-filters.png)
+![Students filter and sort](./images/12-dashboard-students-list-filters.png)
 
-## 11.5 Row Actions
+## 12.5 Row Actions
 Each row provides:
 - Edit action
 - Delete action
@@ -84,7 +84,7 @@ Delete behavior:
 - Successful delete shows confirmation message.
 - If record is in use, deletion is blocked with error message.
 
-## 11.6 Student Create/Edit Page
+## 12.6 Student Create/Edit Page
 Use this page to create a new student or update an existing student profile.
 
 Page mode labels:
@@ -93,9 +93,9 @@ Page mode labels:
 
 > Image placeholder: Student create/edit page overview.
 
-![Student edit page](./images/11-dashboard-students-edit-overview.png)
+![Student edit page](./images/12-dashboard-students-edit-overview.png)
 
-## 11.7 Student Form Fields
+## 12.7 Student Form Fields
 Core identity fields:
 - Student ID
 - Chinese Name (optional)
@@ -122,7 +122,7 @@ Dependency behavior:
 - Classes list is available only when institute, campus, and programme are selected.
 - Changing higher-level selections may clear incompatible lower-level selections.
 
-## 11.8 Save Behavior and Validation
+## 12.8 Save Behavior and Validation
 Validation highlights:
 - Student ID required and unique in users table.
 - Institute, campus, and programme must match valid relationships.
@@ -132,7 +132,7 @@ Save outcomes:
 - Update mode: Student was updated.
 - Create mode: Student was created and password is auto-generated.
 
-## 11.9 Batch Import Students Page
+## 12.9 Batch Import Students Page
 Batch Import supports CSV-based bulk student creation.
 
 Key components:
@@ -143,9 +143,9 @@ Key components:
 
 > Image placeholder: Batch import page overview.
 
-![Batch import students overview](./images/11-dashboard-students-import-overview.png)
+![Batch import students overview](./images/12-dashboard-students-import-overview.png)
 
-## 11.10 CSV Requirements
+## 12.10 CSV Requirements
 Accepted upload:
 - CSV/TXT MIME-compatible file
 - Maximum upload size: 5 MB
@@ -173,7 +173,7 @@ Expected CSV columns:
 
 Use Download Sample CSV to avoid header mismatch.
 
-## 11.11 Import Processing and Results
+## 12.11 Import Processing and Results
 During import:
 - Rows are validated individually.
 - Valid rows are inserted with auto-generated password and student role.
@@ -187,7 +187,7 @@ Typical log statuses:
 - Imported
 - Skipped
 
-## 11.12 Typical Staff/Admin Workflows
+## 12.12 Typical Staff/Admin Workflows
 ### Workflow A: Find and Edit Student Record
 1. Open Students list.
 2. Search by Student ID or name.
@@ -214,7 +214,7 @@ Typical log statuses:
 2. Select Delete.
 3. Confirm removal or resolve dependency error if record is in use.
 
-## 11.13 Troubleshooting
+## 12.13 Troubleshooting
 ### Case A: Campus or Programme Not Available
 - Ensure institute is selected first.
 - Confirm campus/programme belongs to selected institute.
@@ -240,13 +240,13 @@ Typical log statuses:
 - Student record is linked to other data.
 - Resolve dependencies before deletion.
 
-## 11.14 Data and Security Notes
+## 12.14 Data and Security Notes
 - Student profiles contain personal data and must be handled according to policy.
 - Do not share import files or logs outside authorized channels.
 - Validate student identity fields before saving.
 - Keep CSV files in secure storage and remove temporary copies when done.
 
-## 11.15 Escalation Information
+## 12.15 Escalation Information
 When reporting Dashboard Students issues, include:
 - Username and role (staff/admin)
 - Page name (list/edit/import)

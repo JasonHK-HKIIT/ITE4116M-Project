@@ -1,12 +1,12 @@
 ---
-title: Staff and Admin User Guide - Dashboard System Management
-author: ITE4116M Project Team
+title: "Dashboard: System Management"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 15. Dashboard System Management
+# 16. Dashboard: System Management
 
-## 15.1 Purpose
+## 16.1 Purpose
 This chapter explains how staff/admin users manage system-level user operations in Dashboard.
 
 Pages covered:
@@ -14,7 +14,7 @@ Pages covered:
 2. Staff Members List
 3. Staff Member Create/Edit
 
-## 15.2 Navigation Overview
+## 16.2 Navigation Overview
 From Dashboard System Management area, users can access:
 - Staff Members
 - Password Reset
@@ -24,9 +24,9 @@ Password Reset allows admins/staff (with access) to reset non-admin account pass
 
 > Image placeholder: Dashboard system management navigation.
 
-![Dashboard system navigation](./images/15-dashboard-system-navigation.png)
+![Dashboard system navigation](./images/16-dashboard-system-navigation.png)
 
-## 15.3 Password Reset Page
+## 16.3 Password Reset Page
 Page title: Password Reset
 Subtitle: Reset password for non-admin users
 
@@ -44,9 +44,9 @@ Action:
 
 > Image placeholder: Password reset page with completed form.
 
-![Password reset page](./images/15-dashboard-system-password-reset.png)
+![Password reset page](./images/16-dashboard-system-password-reset.png)
 
-## 15.4 Password Reset Rules and Outcomes
+## 16.4 Password Reset Rules and Outcomes
 Validation and behavior:
 - Username must exist.
 - Password must pass password validation policy.
@@ -62,7 +62,7 @@ Success result:
 Operational note:
 - This page is designed for non-admin account reset only.
 
-## 15.5 Staff Members List Page
+## 16.5 Staff Members List Page
 Page title: Staff Members
 Subtitle: System User Management
 
@@ -87,13 +87,13 @@ Table columns:
 
 > Image placeholder: Staff members list overview.
 
-![Staff members list](./images/15-dashboard-system-staff-list-overview.png)
+![Staff members list](./images/16-dashboard-system-staff-list-overview.png)
 
-## 15.6 Search, Filters, and Sorting
-### 15.6.1 Search
+## 16.6 Search, Filters, and Sorting
+### 16.6.1 Search
 Use search field to find staff records by username or name.
 
-### 15.6.2 Filter Drawer
+### 16.6.2 Filter Drawer
 Available filters:
 - Role
 - Permission
@@ -105,7 +105,7 @@ Drawer actions:
 - Reset
 - Done
 
-### 15.6.3 Sorting
+### 16.6.3 Sorting
 Supported sort keys include:
 - Username
 - Name
@@ -117,9 +117,9 @@ Locale note:
 
 > Image placeholder: Staff filters drawer and active results.
 
-![Staff list filters](./images/15-dashboard-system-staff-list-filters.png)
+![Staff list filters](./images/16-dashboard-system-staff-list-filters.png)
 
-## 15.7 Role and Permission Display
+## 16.7 Role and Permission Display
 Role badges:
 - Admin
 - Staff
@@ -129,7 +129,7 @@ Permissions column behavior:
 - Staff: shows assigned permission badges
 - No assigned permissions: displays placeholder
 
-## 15.8 Staff List Row Actions
+## 16.8 Staff List Row Actions
 Per-row actions:
 - Edit
 - Delete
@@ -141,7 +141,7 @@ Delete safeguards:
 - You cannot delete your own account.
 - If record is in use, deletion is blocked with error message.
 
-## 15.9 Staff Member Create/Edit Page
+## 16.9 Staff Member Create/Edit Page
 Use this page to create or update staff/admin accounts.
 
 Page subtitles:
@@ -150,9 +150,9 @@ Page subtitles:
 
 > Image placeholder: Staff create/edit page overview.
 
-![Staff edit page](./images/15-dashboard-system-staff-edit-overview.png)
+![Staff edit page](./images/16-dashboard-system-staff-edit-overview.png)
 
-## 15.10 Staff Form Fields
+## 16.10 Staff Form Fields
 Identity fields:
 - Username
 - Chinese Name (optional)
@@ -167,7 +167,7 @@ Role-dependent behavior:
 - If role is Admin, permission selector is disabled and system treats account as full access.
 - If role is Staff, selected permissions are stored explicitly.
 
-## 15.11 Save and Validation Rules
+## 16.11 Save and Validation Rules
 Validation highlights:
 - Username required, unique, ASCII alpha-dash format.
 - Family Name and Given Name required.
@@ -184,7 +184,7 @@ Success messages:
 - Staff member was created. A password has been auto-generated.
 - Staff member was updated.
 
-## 15.12 Typical Staff/Admin Workflows
+## 16.12 Typical Staff/Admin Workflows
 ### Workflow A: Create New Staff Account
 1. Open Staff Members list.
 2. Select Create.
@@ -217,7 +217,7 @@ Success messages:
 3. Confirm deletion result.
 4. If blocked, review usage dependencies.
 
-## 15.13 Troubleshooting
+## 16.13 Troubleshooting
 ### Case A: Password Reset Fails
 - Verify username exists.
 - Confirm target is not admin role.
@@ -239,13 +239,13 @@ Success messages:
 - Clear filters using Reset.
 - Reapply role and permission filters step by step.
 
-## 15.14 Security and Governance Notes
+## 16.14 Security and Governance Notes
 - Restrict Password Reset access to authorized operators.
 - Apply least-privilege principle for staff permissions.
 - Avoid using Admin role unless operationally required.
 - Audit staff account changes regularly.
 
-## 15.15 Escalation Information
+## 16.15 Escalation Information
 When reporting System Management issues, include:
 - Username and role (staff/admin)
 - Page (password reset, staff list, staff edit)

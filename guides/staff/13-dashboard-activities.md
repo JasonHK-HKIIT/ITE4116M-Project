@@ -1,19 +1,19 @@
 ---
-title: Staff and Admin User Guide - Dashboard Activities
-author: ITE4116M Project Team
+title: "Dashboard: Activities"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 12. Dashboard Activities
+# 13. Dashboard: Activities
 
-## 12.1 Purpose
+## 13.1 Purpose
 This chapter explains how staff/admin users manage Student Activities in Dashboard.
 
 Pages covered:
 1. Activities List
 2. Create/Edit Activity
 
-## 12.2 Navigation Overview
+## 13.2 Navigation Overview
 From Dashboard navigation, activities management is available through:
 - All Activities
 - Create Activities
@@ -22,9 +22,9 @@ The list page is the operational index for filtering and record actions, while t
 
 > Image placeholder: Dashboard navigation to Activities module.
 
-![Dashboard activities navigation](./images/12-dashboard-activities-navigation.png)
+![Dashboard activities navigation](./images/13-dashboard-activities-navigation.png)
 
-## 12.3 Activities List Page
+## 13.3 Activities List Page
 The Activities list page displays activity records with search, filters, sorting, and row actions.
 
 Main page elements:
@@ -43,13 +43,13 @@ Table columns:
 
 > Image placeholder: Activities list overview.
 
-![Activities list overview](./images/12-dashboard-activities-list-overview.png)
+![Activities list overview](./images/13-dashboard-activities-list-overview.png)
 
-## 12.4 Search, Filter, and Sorting
-### 12.4.1 Search
+## 13.4 Search, Filter, and Sorting
+### 13.4.1 Search
 Use search to match activity title/description keywords.
 
-### 12.4.2 Filters Drawer
+### 13.4.2 Filters Drawer
 Available filters:
 - Status
 - Registration Start Date
@@ -62,7 +62,7 @@ Drawer actions:
 Filter indicator:
 - Filter button shows a badge when any date/status filter is active.
 
-### 12.4.3 Sorting
+### 13.4.3 Sorting
 List supports sorting by:
 - Title (translated ordering)
 - Instructor
@@ -74,9 +74,9 @@ Operational note:
 
 > Image placeholder: Filter drawer and active filter badge.
 
-![Activities filters and status](./images/12-dashboard-activities-list-filters.png)
+![Activities filters and status](./images/13-dashboard-activities-list-filters.png)
 
-## 12.5 Row Actions
+## 13.5 Row Actions
 Each row provides:
 - Details: opens portal activity detail view
 - Edit: opens dashboard edit form
@@ -88,7 +88,7 @@ Responsive behavior:
 Delete behavior:
 - Successful deletion shows confirmation message.
 
-## 12.6 Create/Edit Activity Page
+## 13.6 Create/Edit Activity Page
 The activity form supports multilingual fields and comprehensive event configuration.
 
 Page mode:
@@ -97,12 +97,12 @@ Page mode:
 
 > Image placeholder: Activity edit page full layout.
 
-![Activity edit overview](./images/12-dashboard-activities-edit-overview.png)
+![Activity edit overview](./images/13-dashboard-activities-edit-overview.png)
 
-## 12.7 Form Structure
+## 13.7 Form Structure
 The form is organized by language tabs and shared configuration section.
 
-### 12.7.1 Multilingual Fields
+### 13.7.1 Multilingual Fields
 Per language tab:
 - Title
 - Description
@@ -111,7 +111,7 @@ Per language tab:
 Validation note:
 - Primary locale title and description are required.
 
-### 12.7.2 Core Activity Fields
+### 13.7.2 Core Activity Fields
 - Activity Type
 - Activity Code
 - Status (Draft/Published/Archived)
@@ -121,14 +121,14 @@ Validation note:
 - Instructor
 - Responsible Staff
 
-### 12.7.3 Registration Period
+### 13.7.3 Registration Period
 - Registration Start Date
 - Registration End Date
 
 Validation rule:
 - End date must be same as or after start date.
 
-### 12.7.4 Time Slot and Duration
+### 13.7.4 Time Slot and Duration
 - Time Slot From (Date/Time)
 - Time Slot To (Date/Time)
 - Duration (hours)
@@ -136,7 +136,7 @@ Validation rule:
 Behavior:
 - Duration auto-calculates when slot fields change.
 
-### 12.7.5 Programme/Venue/Capacity/Financial
+### 13.7.5 Programme/Venue/Capacity/Financial
 - SWPD Programme (checkbox)
 - Venue
 - Capacity
@@ -148,7 +148,7 @@ Validation notes:
 - Registered cannot exceed Capacity.
 - Included Deposit cannot exceed Total Amount.
 
-## 12.8 Attachment Management
+## 13.8 Attachment Management
 Supported upload formats include office and PDF documents.
 
 Attachment workflow:
@@ -167,9 +167,9 @@ Update-mode behavior:
 
 > Image placeholder: Attachment upload and file action block.
 
-![Activity attachment management](./images/12-dashboard-activities-attachment.png)
+![Activity attachment management](./images/13-dashboard-activities-attachment.png)
 
-## 12.9 Save Behavior
+## 13.9 Save Behavior
 On save:
 - Form data is validated.
 - Localized content and scalar fields are transformed and persisted.
@@ -179,7 +179,7 @@ Success outcomes:
 - Update mode: Activity was updated.
 - Create mode: Activity was created and redirects back to list.
 
-## 12.10 Typical Staff/Admin Workflows
+## 13.10 Typical Staff/Admin Workflows
 ### Workflow A: Create New Activity Draft
 1. Open Create Activities.
 2. Complete core metadata and registration period.
@@ -211,7 +211,7 @@ Success outcomes:
 2. Select Delete from row action.
 3. Confirm removal through success message.
 
-## 12.11 Troubleshooting
+## 13.11 Troubleshooting
 ### Case A: Cannot Save Activity
 - Check required fields in active locale.
 - Verify date order and numeric constraints.
@@ -235,13 +235,13 @@ Success outcomes:
 - Switch language tab and verify content entry per locale.
 - Ensure required primary-locale fields are present.
 
-## 12.12 Operational Notes
+## 13.12 Operational Notes
 - Use Draft status for incomplete records.
 - Review registration window carefully before publishing.
 - Keep attachment versions controlled and remove obsolete files.
 - Validate financial fields against institutional policy before release.
 
-## 12.13 Escalation Information
+## 13.13 Escalation Information
 When reporting Dashboard Activities issues, provide:
 - Username and role (staff/admin)
 - Page (list or edit)

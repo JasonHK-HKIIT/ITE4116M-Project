@@ -1,12 +1,12 @@
 ---
-title: Staff and Admin User Guide - Dashboard Academic Structure
-author: ITE4116M Project Team
+title: "Dashboard: Academic Structure"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 10. Dashboard Academic Structure
+# 11. Dashboard: Academic Structure
 
-## 10.1 Purpose
+## 11.1 Purpose
 This chapter explains how staff/admin users manage academic structure data in Dashboard.
 
 Scope of this chapter:
@@ -18,7 +18,7 @@ Scope of this chapter:
 
 The chapter covers list pages, filters, create/update forms, and deletion behavior.
 
-## 10.2 Navigation Overview
+## 11.2 Navigation Overview
 Academic structure pages are accessed from Dashboard navigation under Academic Structure.
 
 Primary list pages:
@@ -35,9 +35,9 @@ Secondary pages:
 
 > Image placeholder: Dashboard Academic Structure navigation map.
 
-![Academic structure navigation](./images/10-dashboard-academic-navigation.png)
+![Academic structure navigation](./images/11-dashboard-academic-navigation.png)
 
-## 10.3 Common Interface Patterns
+## 11.3 Common Interface Patterns
 Most list pages share these UI patterns:
 - Header with title/subtitle
 - Search input
@@ -54,10 +54,10 @@ Common edit form actions:
 - Cancel
 - Save or Create
 
-## 10.4 Institutes Management
+## 11.4 Institutes Management
 Reference page: Institutes list.
 
-### 10.4.1 List and Filters
+### 11.4.1 List and Filters
 Institutes list supports:
 - Keyword search by institute name
 - Filter by associated campus
@@ -67,7 +67,7 @@ Table columns:
 - Institute
 - Campuses
 
-### 10.4.2 Create and Update Institute
+### 11.4.2 Create and Update Institute
 Institute form opens in a modal.
 
 Fields:
@@ -78,7 +78,7 @@ Modal title changes by mode:
 - Create Institute
 - Update Institute
 
-### 10.4.3 Delete Institute
+### 11.4.3 Delete Institute
 Delete action removes the selected institute.
 
 Operational note:
@@ -86,12 +86,12 @@ Operational note:
 
 > Image placeholder: Institutes list and modal form.
 
-![Institutes management](./images/10-dashboard-academic-institutes.png)
+![Institutes management](./images/11-dashboard-academic-institutes.png)
 
-## 10.5 Campuses Management
+## 11.5 Campuses Management
 Reference page: Campuses list.
 
-### 10.5.1 List and Filters
+### 11.5.1 List and Filters
 Campuses list supports:
 - Keyword search by campus name
 - Filter by associated institute
@@ -101,7 +101,7 @@ Table columns:
 - Campus
 - Institutes
 
-### 10.5.2 Create and Update Campus
+### 11.5.2 Create and Update Campus
 Campus form opens in a modal.
 
 Fields:
@@ -112,19 +112,19 @@ Modal title changes by mode:
 - Create Campus
 - Update Campus
 
-### 10.5.3 Delete Campus
+### 11.5.3 Delete Campus
 Delete action removes the selected campus.
 
 > Image placeholder: Campuses list and modal form.
 
-![Campuses management](./images/10-dashboard-academic-campuses.png)
+![Campuses management](./images/11-dashboard-academic-campuses.png)
 
-## 10.6 Programmes Management
+## 11.6 Programmes Management
 Reference pages:
 - Programmes list
 - Programme create/edit form
 
-### 10.6.1 Programmes List
+### 11.6.1 Programmes List
 Features:
 - Keyword search by programme code/name
 - Filter by institute
@@ -137,7 +137,7 @@ Table columns:
 - Institute
 - Modules
 
-### 10.6.2 Create/Edit Programme
+### 11.6.2 Create/Edit Programme
 Form fields:
 - Multilingual Name (tabbed)
 - Programme Code
@@ -149,7 +149,7 @@ Validation behavior highlights:
 - Selected modules must belong to the selected institute
 - Changing institute automatically narrows module options
 
-### 10.6.3 Delete Programme
+### 11.6.3 Delete Programme
 Delete is available on list row action.
 
 If in use:
@@ -157,14 +157,14 @@ If in use:
 
 > Image placeholder: Programmes list and edit form.
 
-![Programmes management](./images/10-dashboard-academic-programmes.png)
+![Programmes management](./images/11-dashboard-academic-programmes.png)
 
-## 10.7 Modules Management
+## 11.7 Modules Management
 Reference pages:
 - Modules list
 - Module create/edit form
 
-### 10.7.1 Modules List
+### 11.7.1 Modules List
 Features:
 - Keyword search by module code/name
 - Filter by institute
@@ -177,7 +177,7 @@ Table columns:
 - Institute
 - Programmes
 
-### 10.7.2 Create/Edit Module
+### 11.7.2 Create/Edit Module
 Form fields:
 - Multilingual Name (tabbed)
 - Module Code
@@ -189,7 +189,7 @@ Validation behavior highlights:
 - Selected programmes must belong to selected institute
 - Changing institute narrows available programmes
 
-### 10.7.3 Delete Module
+### 11.7.3 Delete Module
 Delete is available from list row action.
 
 If referenced by dependencies:
@@ -197,14 +197,14 @@ If referenced by dependencies:
 
 > Image placeholder: Modules list and edit form.
 
-![Modules management](./images/10-dashboard-academic-modules.png)
+![Modules management](./images/11-dashboard-academic-modules.png)
 
-## 10.8 Classes Management
+## 11.8 Classes Management
 Reference pages:
 - Classes list
 - Class create/edit form
 
-### 10.8.1 Classes List
+### 11.8.1 Classes List
 Features:
 - Keyword search by class code, academic year, and programme code
 - Filters for institute, campus, programme
@@ -219,7 +219,7 @@ Table columns:
 - Institute
 - Students
 
-### 10.8.2 Create/Edit Class
+### 11.8.2 Create/Edit Class
 Form fields:
 - Academic Year
 - Class Code
@@ -234,7 +234,7 @@ Validation behavior highlights:
 - Campus must be valid for selected institute
 - Programme must belong to selected institute
 
-### 10.8.3 Delete Class
+### 11.8.3 Delete Class
 Delete is available from list row actions.
 
 If class is in use:
@@ -242,9 +242,9 @@ If class is in use:
 
 > Image placeholder: Classes list and edit form.
 
-![Classes management](./images/10-dashboard-academic-classes.png)
+![Classes management](./images/11-dashboard-academic-classes.png)
 
-## 10.9 Relationship Rules to Remember
+## 11.9 Relationship Rules to Remember
 Academic data is linked hierarchically.
 
 Practical rules:
@@ -255,7 +255,7 @@ Practical rules:
 
 When changing higher-level selections, dependent fields may reset.
 
-## 10.10 Typical Staff/Admin Workflows
+## 11.10 Typical Staff/Admin Workflows
 ### Workflow A: Add New Programme with Modules
 1. Open Programmes list.
 2. Select Create.
@@ -284,7 +284,7 @@ When changing higher-level selections, dependent fields may reset.
 2. Try Delete.
 3. If blocked by in-use constraints, remove dependencies first.
 
-## 10.11 Troubleshooting
+## 11.11 Troubleshooting
 ### Case A: Filter Options Seem Missing
 - Select institute first.
 - Dependent dropdown options only load after required parent selection.
@@ -305,13 +305,13 @@ When changing higher-level selections, dependent fields may reset.
 - Use Reset in filters drawer.
 - Re-apply filters one by one.
 
-## 10.12 Data Governance Notes
+## 11.12 Data Governance Notes
 - Maintain consistent naming across languages.
 - Avoid duplicate codes for programme/module/class records.
 - Validate institute-campus-programme alignment before saving.
 - Prefer soft operational checks before destructive deletion.
 
-## 10.13 Escalation Information
+## 11.13 Escalation Information
 When escalating Academic Structure issues, include:
 - Username and role (staff/admin)
 - Target section (Institutes, Campuses, Programmes, Modules, Classes)

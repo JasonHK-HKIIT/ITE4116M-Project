@@ -1,6 +1,6 @@
 ---
 title: News and Announcement
-author: ITE4116M Project Team
+author: VTC MyPortal Team
 language: en-HK
 ---
 

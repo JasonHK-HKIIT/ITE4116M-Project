@@ -1,19 +1,19 @@
 ---
-title: Staff and Admin User Guide - Dashboard Resources Centre
-author: ITE4116M Project Team
+title: "Dashboard: Resources Centre"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 14. Dashboard Resources Centre
+# 15. Dashboard: Resources Centre
 
-## 14.1 Purpose
+## 15.1 Purpose
 This chapter explains how staff/admin users manage Resources Centre content in Dashboard.
 
 Pages covered:
 1. Resources list page
 2. Resource create/edit page
 
-## 14.2 Navigation Overview
+## 15.2 Navigation Overview
 From Dashboard navigation, resources management is accessed through:
 - All Resources
 - Create Resource
@@ -22,9 +22,9 @@ Use All Resources for discovery and maintenance. Use Create Resource to add a ne
 
 > Image placeholder: Dashboard navigation to Resources Centre management.
 
-![Dashboard resources navigation](./images/14-dashboard-resources-navigation.png)
+![Dashboard resources navigation](./images/15-dashboard-resources-navigation.png)
 
-## 14.3 Resources List Page
+## 15.3 Resources List Page
 The list page displays resource document groups and latest update date.
 
 Main features:
@@ -40,13 +40,13 @@ Table columns:
 
 > Image placeholder: Resources list page overview.
 
-![Resources list overview](./images/14-dashboard-resources-list-overview.png)
+![Resources list overview](./images/15-dashboard-resources-list-overview.png)
 
-## 14.4 Search and Filter
-### 14.4.1 Search
+## 15.4 Search and Filter
+### 15.4.1 Search
 Search matches document group titles in current locale translation.
 
-### 14.4.2 Filter Drawer
+### 15.4.2 Filter Drawer
 Filter drawer supports:
 - Latest After
 - Latest Before
@@ -60,9 +60,9 @@ Operational note:
 
 > Image placeholder: Resources filter drawer.
 
-![Resources filters](./images/14-dashboard-resources-list-filters.png)
+![Resources filters](./images/15-dashboard-resources-list-filters.png)
 
-## 14.5 Expand Row and Review Files
+## 15.5 Expand Row and Review Files
 Each resource row can be expanded to show file-level details.
 
 Expanded row displays:
@@ -75,9 +75,9 @@ If no files exist, the row shows No files uploaded.
 
 > Image placeholder: Expanded row with multilingual files.
 
-![Resources row expansion](./images/14-dashboard-resources-list-expansion.png)
+![Resources row expansion](./images/15-dashboard-resources-list-expansion.png)
 
-## 14.6 Row Actions: Edit and Delete
+## 15.6 Row Actions: Edit and Delete
 Per-row actions:
 - Edit: open resource edit page
 - Delete: remove resource and related translations/media
@@ -86,7 +86,7 @@ Delete behavior:
 - System deletes associated media files under translations.
 - Success message confirms deletion.
 
-## 14.7 Create/Edit Resource Page
+## 15.7 Create/Edit Resource Page
 The resource editor supports multilingual titles and file attachments per language.
 
 Page structure:
@@ -97,19 +97,19 @@ Page structure:
 
 > Image placeholder: Resource edit page overview.
 
-![Resource edit overview](./images/14-dashboard-resources-edit-overview.png)
+![Resource edit overview](./images/15-dashboard-resources-edit-overview.png)
 
-## 14.8 Multilingual Title Management
+## 15.8 Multilingual Title Management
 For each language tab:
 - Enter Title (required)
 
 Validation:
 - Title is required under translation rule set.
 
-## 14.9 File Management Workflow
+## 15.9 File Management Workflow
 The editor uses deferred file operations before save.
 
-### 14.9.1 Existing Files
+### 15.9.1 Existing Files
 For each language tab, existing files are listed with direct links.
 
 Actions on existing file:
@@ -119,7 +119,7 @@ Behavior:
 - Marked files are not deleted immediately.
 - Actual deletion occurs only after Save.
 
-### 14.9.2 Pending Uploads
+### 15.9.2 Pending Uploads
 Upload one or multiple files per language using Files input.
 
 Pending uploads are listed before save.
@@ -130,7 +130,7 @@ Actions on pending upload:
 Behavior:
 - Files in pending queue are uploaded only after Save.
 
-### 14.9.3 Save Operation
+### 15.9.3 Save Operation
 On save:
 - Resource and translations are persisted.
 - Pending files are uploaded to media collection.
@@ -143,9 +143,9 @@ Success outcomes:
 
 > Image placeholder: Existing files, pending delete, and pending upload states.
 
-![Resource file management states](./images/14-dashboard-resources-edit-files.png)
+![Resource file management states](./images/15-dashboard-resources-edit-files.png)
 
-## 14.10 Typical Staff/Admin Workflows
+## 15.10 Typical Staff/Admin Workflows
 ### Workflow A: Create New Document Group
 1. Open Create Resource.
 2. Enter multilingual titles.
@@ -171,7 +171,7 @@ Success outcomes:
 2. Select Delete on target row.
 3. Confirm row removal and success message.
 
-## 14.11 Troubleshooting
+## 15.11 Troubleshooting
 ### Case A: Search Returns No Results
 - Confirm current locale and title language.
 - Clear search and date filters.
@@ -194,13 +194,13 @@ Success outcomes:
 - Retry from expanded row.
 - Validate file still exists in edit page existing files section.
 
-## 14.12 Governance and Data Handling Notes
+## 15.12 Governance and Data Handling Notes
 - Maintain consistent titles across locales.
 - Keep language-specific files in matching tabs.
 - Review pending changes carefully before save.
 - Use controlled versioning and remove obsolete files to avoid confusion.
 
-## 14.13 Escalation Information
+## 15.13 Escalation Information
 When reporting Dashboard Resources issues, provide:
 - Username and role (staff/admin)
 - Page (list or edit)

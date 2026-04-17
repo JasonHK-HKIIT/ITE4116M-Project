@@ -1,12 +1,12 @@
 ---
-title: Staff and Admin User Guide - Dashboard News and Carousel
-author: ITE4116M Project Team
+title: "Dashboard: News and Carousel"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 13. Dashboard News and Carousel
+# 14. Dashboard: News and Carousel
 
-## 13.1 Purpose
+## 14.1 Purpose
 This chapter explains how staff/admin users manage:
 1. News articles
 2. Home carousel slides
@@ -16,7 +16,7 @@ Covered pages:
 - News create/edit
 - Home carousel management
 
-## 13.2 Navigation Overview
+## 14.2 Navigation Overview
 From Dashboard navigation, users can access:
 - All Articles
 - Create Article
@@ -26,9 +26,9 @@ Use All Articles for article operations and Home Carousel for homepage slide man
 
 > Image placeholder: Dashboard navigation to news and carousel pages.
 
-![Dashboard news navigation](./images/13-dashboard-news-navigation.png)
+![Dashboard news navigation](./images/14-dashboard-news-navigation.png)
 
-## 13.3 News List Page
+## 14.3 News List Page
 The News list page is the main management index for article records.
 
 Main features:
@@ -45,13 +45,13 @@ Table columns:
 
 > Image placeholder: News list page overview.
 
-![News list overview](./images/13-dashboard-news-list-overview.png)
+![News list overview](./images/14-dashboard-news-list-overview.png)
 
-## 13.4 Search, Filter, and Sorting
-### 13.4.1 Search
+## 14.4 Search, Filter, and Sorting
+### 14.4.1 Search
 Use search to match full-text content in translated article title/content.
 
-### 13.4.2 Filters Drawer
+### 14.4.2 Filters Drawer
 Available filters:
 - Status
 - Published After
@@ -61,7 +61,7 @@ Filter actions:
 - Reset
 - Done
 
-### 13.4.3 Sorting
+### 14.4.3 Sorting
 Sorting is available on table columns and influences output order.
 
 Operational note:
@@ -69,9 +69,9 @@ Operational note:
 
 > Image placeholder: News filters drawer and applied filter state.
 
-![News list filters](./images/13-dashboard-news-list-filters.png)
+![News list filters](./images/14-dashboard-news-list-filters.png)
 
-## 13.5 Row Actions
+## 14.5 Row Actions
 Per-row actions:
 - Edit
 - Delete
@@ -82,7 +82,7 @@ Responsive behavior:
 Delete behavior:
 - Successful delete shows confirmation toast.
 
-## 13.6 Create/Edit News Article
+## 14.6 Create/Edit News Article
 The article editor supports multilingual content and publication metadata.
 
 Page mode labels:
@@ -91,10 +91,10 @@ Page mode labels:
 
 > Image placeholder: News article edit page.
 
-![News article edit](./images/13-dashboard-news-edit-overview.png)
+![News article edit](./images/14-dashboard-news-edit-overview.png)
 
-## 13.7 Article Form Fields
-### 13.7.1 Multilingual Content
+## 14.7 Article Form Fields
+### 14.7.1 Multilingual Content
 Per language tab:
 - Title
 - Content
@@ -102,7 +102,7 @@ Per language tab:
 Validation:
 - Title and Content are required for configured locales per translation rule set.
 
-### 13.7.2 Core Metadata
+### 14.7.2 Core Metadata
 - Slug
 - Status (Draft/Published/Archived)
 - Published on date
@@ -112,14 +112,14 @@ Behavior rules:
 - If slug is empty, it auto-generates from English title.
 - If status is Published and date is empty, publish date auto-fills to today.
 
-### 13.7.3 Cover Image
+### 14.7.3 Cover Image
 Image upload supports preview logic:
 - Shows temporary preview for newly selected image.
 - Shows current saved image when editing existing article.
 
 Accepted image types include common web image formats.
 
-## 13.8 Save and Lifecycle Behavior
+## 14.8 Save and Lifecycle Behavior
 On save:
 - Localized content and metadata are validated and stored.
 - Cover image is updated in media collection if selected.
@@ -128,7 +128,7 @@ Success outcomes:
 - Update mode: News article was updated.
 - Create mode: News article was created and redirects to edit page.
 
-## 13.9 Home Carousel Management
+## 14.9 Home Carousel Management
 Carousel page controls homepage slide content order and visibility.
 
 Main features:
@@ -147,9 +147,9 @@ Table columns:
 
 > Image placeholder: Carousel list and ordering controls.
 
-![Carousel list management](./images/13-dashboard-news-carousel-list.png)
+![Carousel list management](./images/14-dashboard-news-carousel-list.png)
 
-## 13.10 Create/Edit Carousel Slide
+## 14.10 Create/Edit Carousel Slide
 Slide form opens in modal and supports:
 - Multilingual Title
 - Multilingual Description
@@ -167,7 +167,7 @@ On save:
 - New slide position is appended to end.
 - Slide content and metadata are saved.
 
-## 13.11 Reorder Carousel Slides
+## 14.11 Reorder Carousel Slides
 Use row actions:
 - Up arrow: move slide earlier
 - Down arrow: move slide later
@@ -176,14 +176,14 @@ System behavior:
 - Positions are swapped and then normalized to continuous sequence.
 - Success message confirms order update.
 
-## 13.12 Delete Carousel Slide
+## 14.12 Delete Carousel Slide
 Delete action removes selected slide.
 
 After deletion:
 - Positions are normalized automatically.
 - Success message confirms deletion.
 
-## 13.13 Typical Staff/Admin Workflows
+## 14.13 Typical Staff/Admin Workflows
 ### Workflow A: Publish a New Announcement
 1. Open Create Article.
 2. Fill title/content in required languages.
@@ -218,7 +218,7 @@ After deletion:
 2. Save changes.
 3. Verify expected homepage behavior.
 
-## 13.14 Troubleshooting
+## 14.14 Troubleshooting
 ### Case A: Cannot Save Article
 - Check required translated title/content fields.
 - Verify slug format and uniqueness.
@@ -244,13 +244,13 @@ After deletion:
 - Use additional move actions to correct sequence.
 - Verify position values in table.
 
-## 13.15 Content Governance Notes
+## 14.15 Content Governance Notes
 - Use Draft for in-progress editorial work.
 - Publish only after translation completeness and QA review.
 - Keep slugs stable once publicly referenced.
 - Regularly audit carousel links and image relevance.
 
-## 13.16 Escalation Information
+## 14.16 Escalation Information
 When reporting Dashboard News issues, include:
 - Username and role (staff/admin)
 - Page (list/edit/carousel)

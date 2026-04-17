@@ -1,10 +1,10 @@
 ---
-title: Staff and Admin User Guide - Dashboard Home
-author: ITE4116M Project Team
+title: "Dashboard: Home"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 8. Dashboard Home
+# 8. Dashboard: Home
 
 ## 8.1 Purpose
 This chapter explains how staff and admin users use the Dashboard Home page in VTC MyPortal.

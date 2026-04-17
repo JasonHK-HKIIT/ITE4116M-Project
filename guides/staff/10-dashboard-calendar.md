@@ -1,12 +1,12 @@
 ---
-title: Staff and Admin User Guide - Dashboard Calendar
-author: ITE4116M Project Team
+title: "Dashboard: Calendar"
+author: VTC MyPortal Team
 language: en-HK
 ---
 
-# 9. Dashboard Calendar
+# 10. Dashboard: Calendar
 
-## 9.1 Purpose
+## 10.1 Purpose
 This chapter explains how staff and admin users manage calendar records in the Dashboard Calendar module.
 
 Pages covered in this chapter:
@@ -17,7 +17,7 @@ Pages covered in this chapter:
 5. Institute Holidays management page
 6. Public Holidays management page
 
-## 9.2 Module Entry Points
+## 10.2 Module Entry Points
 From dashboard navigation, users can typically access:
 - All Events (Add Events page)
 - Calendar (Manage landing page)
@@ -30,9 +30,9 @@ The Manage landing page provides direct cards to the four management subpages:
 
 > Image placeholder: Dashboard navigation path to Calendar module.
 
-![Dashboard calendar entry points](./images/09-dashboard-calendar-entry.png)
+![Dashboard calendar entry points](./images/10-dashboard-calendar-entry.png)
 
-## 9.3 Calendar Manage Landing Page
+## 10.3 Calendar Manage Landing Page
 The landing page shows clickable management cards.
 
 Each card opens a specific workflow:
@@ -43,9 +43,9 @@ Each card opens a specific workflow:
 
 > Image placeholder: Calendar manage landing cards.
 
-![Calendar manage landing](./images/09-dashboard-calendar-manage-landing.png)
+![Calendar manage landing](./images/10-dashboard-calendar-manage-landing.png)
 
-## 9.4 Add Events Page (All Events)
+## 10.4 Add Events Page (All Events)
 The Add Events page supports creating new calendar records for:
 1. Class timetable events
 2. Institute holidays
@@ -55,12 +55,12 @@ The page begins with three selection cards, each opening a dedicated form.
 
 > Image placeholder: Add Events page with three creation cards.
 
-![Calendar add events options](./images/09-dashboard-calendar-add-events-options.png)
+![Calendar add events options](./images/10-dashboard-calendar-add-events-options.png)
 
-## 9.5 Create Class Timetable Event
+## 10.5 Create Class Timetable Event
 Select Class to open the class event form.
 
-### 9.5.1 Required Selection Flow
+### 10.5.1 Required Selection Flow
 Complete the hierarchical selectors in order:
 1. Institute
 2. Campus
@@ -70,7 +70,7 @@ Complete the hierarchical selectors in order:
 
 After selecting module, title is auto-generated from module code and name.
 
-### 9.5.2 Event Input Fields
+### 10.5.2 Event Input Fields
 Provide:
 - Title (auto-filled, read-only)
 - Start (date and time)
@@ -78,7 +78,7 @@ Provide:
 - Location (optional)
 - Instructor (optional)
 
-### 9.5.3 Save Action
+### 10.5.3 Save Action
 Select Add Class Event to create the record.
 
 Expected result:
@@ -87,9 +87,9 @@ Expected result:
 
 > Image placeholder: Class timetable event form in completed state.
 
-![Create class timetable event](./images/09-dashboard-calendar-create-class-event.png)
+![Create class timetable event](./images/10-dashboard-calendar-create-class-event.png)
 
-## 9.6 Create Institute Holiday
+## 10.6 Create Institute Holiday
 Select Institute Holiday to open institute holiday form.
 
 Fields:
@@ -107,9 +107,9 @@ Expected result:
 
 > Image placeholder: Create institute holiday form.
 
-![Create institute holiday](./images/09-dashboard-calendar-create-institute-holiday.png)
+![Create institute holiday](./images/10-dashboard-calendar-create-institute-holiday.png)
 
-## 9.7 Create Public Holiday
+## 10.7 Create Public Holiday
 Select Public Holiday to open public holiday form.
 
 Fields:
@@ -126,12 +126,12 @@ Expected result:
 
 > Image placeholder: Create public holiday form.
 
-![Create public holiday](./images/09-dashboard-calendar-create-public-holiday.png)
+![Create public holiday](./images/10-dashboard-calendar-create-public-holiday.png)
 
-## 9.8 Module Timetable Management
+## 10.8 Module Timetable Management
 Open Module Timetable from Calendar Manage landing page.
 
-### 9.8.1 Filter and Selection Flow
+### 10.8.1 Filter and Selection Flow
 Use selectors in sequence:
 1. Institute
 2. Campus
@@ -143,7 +143,7 @@ Behavior:
 - Class selection loads timetable events.
 - Module selection narrows results by module code prefix.
 
-### 9.8.2 Editable Timetable Fields
+### 10.8.2 Editable Timetable Fields
 For each event row, editable fields include:
 - Start (datetime)
 - End (time)
@@ -152,7 +152,7 @@ For each event row, editable fields include:
 
 Title is shown as reference.
 
-### 9.8.3 Delete and Save
+### 10.8.3 Delete and Save
 - Trash action marks an event for deletion.
 - Save changes applies edits and deletions together.
 
@@ -162,14 +162,14 @@ Expected result:
 
 > Image placeholder: Module timetable table with edit and delete actions.
 
-![Module timetable management](./images/09-dashboard-calendar-module-timetable.png)
+![Module timetable management](./images/10-dashboard-calendar-module-timetable.png)
 
-## 9.9 Activities Calendar Management
+## 10.9 Activities Calendar Management
 Open Activities from Calendar Manage landing page.
 
 This page manages activity-type calendar events tied to a specific student.
 
-### 9.9.1 Search Student
+### 10.9.1 Search Student
 1. Enter Student ID.
 2. Select Search.
 
@@ -180,7 +180,7 @@ On success:
 If not found:
 - Error message indicates student not found.
 
-### 9.9.2 Event Display
+### 10.9.2 Event Display
 For each activity event, table shows:
 - Title
 - Description (truncated)
@@ -192,22 +192,22 @@ Current implementation is read-focused in the table view.
 
 > Image placeholder: Activities management search and result table.
 
-![Activities calendar management](./images/09-dashboard-calendar-activities-management.png)
+![Activities calendar management](./images/10-dashboard-calendar-activities-management.png)
 
-## 9.10 Institute Holidays Management
+## 10.10 Institute Holidays Management
 Open Institute Holidays from Calendar Manage landing page.
 
-### 9.10.1 Select Institute
+### 10.10.1 Select Institute
 1. Choose institute.
 2. Existing holidays for that institute load into editable rows.
 
-### 9.10.2 Editable Fields
+### 10.10.2 Editable Fields
 Per row:
 - Title
 - Description
 - Date
 
-### 9.10.3 Delete and Save
+### 10.10.3 Delete and Save
 - Trash action marks a row for deletion.
 - Save changes applies all edits/deletions.
 
@@ -216,9 +216,9 @@ Expected result:
 
 > Image placeholder: Institute holidays editable table.
 
-![Institute holidays management](./images/09-dashboard-calendar-institute-holidays.png)
+![Institute holidays management](./images/10-dashboard-calendar-institute-holidays.png)
 
-## 9.11 Public Holidays Management
+## 10.11 Public Holidays Management
 Open Public Holidays from Calendar Manage landing page.
 
 The page displays editable rows for all public holidays.
@@ -237,9 +237,9 @@ Expected result:
 
 > Image placeholder: Public holidays editable table.
 
-![Public holidays management](./images/09-dashboard-calendar-public-holidays.png)
+![Public holidays management](./images/10-dashboard-calendar-public-holidays.png)
 
-## 9.12 Typical Staff/Admin Workflows
+## 10.12 Typical Staff/Admin Workflows
 ### Workflow A: Create New Class Session
 1. Open All Events.
 2. Select Class.
@@ -264,7 +264,7 @@ Expected result:
 2. Search by student ID.
 3. Review activity event rows for schedule validation.
 
-## 9.13 Troubleshooting
+## 10.13 Troubleshooting
 ### Case A: Dropdown Options Not Appearing
 - Ensure prior selectors are completed in required order.
 - Re-select institute/programme/class to refresh dependent options.
@@ -286,12 +286,12 @@ Expected result:
 - No records may be configured yet.
 - Use Add Events page to create initial holiday entries.
 
-## 9.14 Data and Operational Notes
+## 10.14 Data and Operational Notes
 - Class timetable edits directly affect schedule visibility downstream.
 - Holiday updates should follow institutional calendar governance.
 - Validate event time ranges carefully before saving.
 
-## 9.15 Escalation Information
+## 10.15 Escalation Information
 When reporting dashboard calendar issues, include:
 - Username and role (staff/admin)
 - Subpage name (All Events, Module Timetable, Activities, Institute Holidays, Public Holidays)
