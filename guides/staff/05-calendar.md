@@ -4,34 +4,34 @@ author: ITE4116M Project Team
 language: en-HK
 ---
 
-# 4. Calendar
+# 5. Calendar
 
-## 4.1 Purpose
+## 5.1 Purpose
 This section explains how staff and admin users use the Calendar page in VTC MyPortal.
 
 The Calendar supports date-based visibility of events through Month, Week, and Day views with a detailed event modal.
 
-## 4.2 Role-Based Visibility Notes
+## 5.2 Role-Based Visibility Notes
 Calendar content is role-dependent.
 
-### 4.2.1 Admin Users
+### 5.2.1 Admin Users
 Admin users on this portal calendar view are limited to:
 - Public holiday events
 
-### 4.2.2 Staff Users
+### 5.2.2 Staff Users
 Staff visibility may vary by account data and assigned scope.
 
 Operational recommendation:
 - If expected events are missing, verify role mapping and data association with system administrators.
 
-## 4.3 Access the Calendar
+## 5.3 Access the Calendar
 Open Calendar from portal navigation points such as Home page quick access or service links.
 
 > Image placeholder: Calendar access path from portal home.
 
-![Calendar access path](./images/04-calendar-open-from-home.png)
+![Calendar access path](./images/05-calendar-open-from-home.png)
 
-## 4.4 Page Structure
+## 5.4 Page Structure
 Top area:
 - **Calendar** title
 - Current date indicator
@@ -48,10 +48,10 @@ Main display:
 
 > Image placeholder: Calendar UI with control annotations.
 
-![Calendar structure](./images/04-calendar-overview.png)
+![Calendar structure](./images/05-calendar-overview.png)
 
-## 4.5 Calendar Views
-### 4.5.1 Month View
+## 5.5 Calendar Views
+### 5.5.1 Month View
 Features:
 - Month grid (Mon to Sun)
 - Event entries inside day cells
@@ -62,7 +62,7 @@ Steps:
 2. Use `<` and `>` to switch month.
 3. Select any event to view details.
 
-### 4.5.2 Week View
+### 5.5.2 Week View
 Features:
 - 7-day columns
 - All-day event row
@@ -74,7 +74,7 @@ Steps:
 3. Review all-day and hourly events.
 4. Select event item for details.
 
-### 4.5.3 Day View
+### 5.5.3 Day View
 Features:
 - Single date timeline
 - All-day row
@@ -87,15 +87,15 @@ Steps:
 
 > Image placeholder: Side-by-side examples of three view modes.
 
-![Month week day views](./images/04-calendar-views.png)
+![Month week day views](./images/05-calendar-views.png)
 
-## 4.6 Today Shortcut
+## 5.6 Today Shortcut
 Use **Today** to instantly return to the current date context in all views.
 
 Recommended use:
 - After browsing historical/future dates, select **Today** before continuing daily operations.
 
-## 4.7 Event Categories and Color Coding
+## 5.7 Event Categories and Color Coding
 Event entries use color classes by event type:
 - Class
 - Activity
@@ -107,9 +107,9 @@ Note:
 
 > Image placeholder: Event color coding reference.
 
-![Calendar event colors](./images/04-calendar-event-types.png)
+![Calendar event colors](./images/05-calendar-event-types.png)
 
-## 4.8 Event Details Modal
+## 5.8 Event Details Modal
 Selecting an event opens a detail modal containing available metadata:
 - Event type
 - Title
@@ -122,9 +122,9 @@ Close modal using **Cancel**.
 
 > Image placeholder: Event detail modal example.
 
-![Calendar event modal](./images/04-calendar-event-details.png)
+![Calendar event modal](./images/05-calendar-event-details.png)
 
-## 4.9 Typical Staff/Admin Workflows
+## 5.9 Typical Staff/Admin Workflows
 ### Workflow A: Verify Public Holiday Schedule (Admin)
 1. Open Calendar.
 2. Select **Month** view.
@@ -141,7 +141,7 @@ Close modal using **Cancel**.
 2. Move to required date.
 3. Open event chip and confirm time/location.
 
-## 4.10 Troubleshooting
+## 5.10 Troubleshooting
 ### Case A: Missing Expected Events
 - Confirm your role and permissions.
 - Verify date range and selected view.
@@ -159,12 +159,12 @@ Close modal using **Cancel**.
 - Retry selecting event chip.
 - Refresh page or use another supported browser.
 
-## 4.11 Security and Operational Guidance
+## 5.11 Security and Operational Guidance
 - Validate event interpretation against official academic/administrative notices.
 - Do not rely on cached screenshots for critical date decisions.
 - Report role-based visibility mismatches promptly.
 
-## 4.12 Escalation Information
+## 5.12 Escalation Information
 When escalating a calendar issue, include:
 - Username and role (staff/admin)
 - View mode and date range used

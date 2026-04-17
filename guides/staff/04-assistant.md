@@ -4,37 +4,37 @@ author: ITE4116M Project Team
 language: en-HK
 ---
 
-# 3. AI Assistant
+# 4. AI Assistant
 
-## 3.1 Purpose
+## 4.1 Purpose
 This section explains how staff and admin users operate the AI Assistant page in VTC MyPortal.
 
 The assistant provides conversational support for portal-related information retrieval and context-aware assistance across available data tools.
 
-## 3.2 Audience
+## 4.2 Audience
 This guide is for:
 - Teaching staff
 - Administrative staff
 - System or module administrators
 
-## 3.3 Prerequisites
+## 4.3 Prerequisites
 Before use:
 - Sign in with a valid staff/admin account
 - Ensure stable network connection
 - Prepare clear task-oriented prompts
 
-## 3.4 Interface Overview
+## 4.4 Interface Overview
 The page is divided into:
 1. Sidebar workspace controls
 2. Main conversation workspace
 
-### 3.4.1 Sidebar Controls
+### 4.4.1 Sidebar Controls
 - Brand area
 - **New Chat**
 - **Chat History**
 - **Back to Portal**
 
-### 3.4.2 Conversation Workspace
+### 4.4.2 Conversation Workspace
 - Header shows **New Chat** or **Chat Thread**
 - Scrollable message timeline
 - Input area with prompt textbox
@@ -43,9 +43,9 @@ The page is divided into:
 
 > Image placeholder: Assistant page UI map for staff/admin.
 
-![Assistant interface overview](./images/03-assistant-overview.png)
+![Assistant interface overview](./images/04-assistant-overview.png)
 
-## 3.5 Create a New Conversation
+## 4.5 Create a New Conversation
 1. Open the Assistant module.
 2. Confirm header displays **New Chat**.
 3. Enter a clear prompt in the text area.
@@ -58,9 +58,9 @@ System behavior:
 
 > Image placeholder: New chat before and after first send.
 
-![Create new conversation](./images/03-assistant-new-chat.png)
+![Create new conversation](./images/04-assistant-new-chat.png)
 
-## 3.6 Use Chat History
+## 4.6 Use Chat History
 1. Expand or review **Chat History**.
 2. Select a thread to reopen previous context.
 3. Continue with follow-up prompts.
@@ -69,9 +69,9 @@ This is useful for ongoing operational tasks requiring continuity.
 
 > Image placeholder: Chat history list and selected thread.
 
-![Chat history usage](./images/03-assistant-thread-history.png)
+![Chat history usage](./images/04-assistant-thread-history.png)
 
-## 3.7 Prompting Best Practices for Staff/Admin
+## 4.7 Prompting Best Practices for Staff/Admin
 For consistent output quality:
 1. Define the objective first
 2. Include scope and context
@@ -82,7 +82,7 @@ Examples:
 - "Provide a concise recap of recent announcements relevant to student affairs."
 - "List timetable-related reminders for the current week."
 
-## 3.8 Response and Streaming Behavior
+## 4.8 Response and Streaming Behavior
 After sending a prompt:
 - User message is appended immediately.
 - Assistant response is streamed progressively in the message area.
@@ -91,7 +91,7 @@ After sending a prompt:
 Operational note:
 - Avoid repeated submissions while a response is still streaming.
 
-## 3.9 Delete a Thread
+## 4.9 Delete a Thread
 Use this when a conversation is no longer needed.
 
 1. Open the target thread.
@@ -100,14 +100,14 @@ Use this when a conversation is no longer needed.
 
 > Image placeholder: Delete thread action sequence.
 
-![Delete thread flow](./images/03-assistant-delete-thread.png)
+![Delete thread flow](./images/04-assistant-delete-thread.png)
 
-## 3.10 Return to Portal Dashboard
+## 4.10 Return to Portal Dashboard
 To leave assistant mode:
 1. Select **Back to Portal** in the sidebar.
 2. Verify redirection to portal home.
 
-## 3.11 Troubleshooting
+## 4.11 Troubleshooting
 ### Case A: Service Unavailable
 - Assistant backend may be temporarily unavailable.
 - Refresh and retry later.
@@ -126,12 +126,12 @@ To leave assistant mode:
 - Refresh the page or re-enter Assistant module.
 - Verify first message submission completed successfully.
 
-## 3.12 Security and Compliance Notes
+## 4.12 Security and Compliance Notes
 - Do not submit credentials, confidential HR data, or sensitive records in prompts.
 - Validate assistant output before administrative decision-making.
 - Follow institutional data handling and access control policies.
 
-## 3.13 Escalation Information
+## 4.13 Escalation Information
 When reporting incidents, include:
 - Staff/admin username
 - Time and frequency of issue

@@ -4,30 +4,30 @@ author: ITE4116M Project Team
 language: en-HK
 ---
 
-# 4. Calendar
+# 5. Calendar
 
-## 4.1 Purpose
+## 5.1 Purpose
 This section explains how students use the Calendar page in VTC MyPortal.
 
 The Calendar helps students view class timetable items, personal activity items, and holiday events in Month, Week, and Day formats.
 
-## 4.2 What Students Can See
+## 5.2 What Students Can See
 For student users, the Calendar may include:
 - Class timetable events linked to your enrolled classes
 - Activity events assigned to your student account
 - Public holidays
 - Institute holidays for your own institute (or institute-wide entries)
 
-## 4.3 Access the Calendar Page
+## 5.3 Access the Calendar Page
 You can open Calendar from:
 1. Home page quick access card: **Calendar**
 2. Home page service links under **Student Affairs**
 
 > Image placeholder: Entry points to Calendar from Home page.
 
-![Open calendar from home](./images/04-calendar-open-from-home.png)
+![Open calendar from home](./images/05-calendar-open-from-home.png)
 
-## 4.4 Page Layout Overview
+## 5.4 Page Layout Overview
 Top section:
 - Page title: **Calendar**
 - Current date indicator (YYYY-MM-DD)
@@ -44,10 +44,10 @@ Main section:
 
 > Image placeholder: Calendar page with labeled controls.
 
-![Calendar page overview](./images/04-calendar-overview.png)
+![Calendar page overview](./images/05-calendar-overview.png)
 
-## 4.5 Use the View Modes
-### 4.5.1 Month View
+## 5.5 Use the View Modes
+### 5.5.1 Month View
 Month view displays:
 - A 7-column calendar (Mon to Sun)
 - Daily event entries in each date cell
@@ -58,7 +58,7 @@ How to use:
 2. Use `<` and `>` arrows to move between months.
 3. Select any event entry to open details.
 
-### 4.5.2 Week View
+### 5.5.2 Week View
 Week view displays:
 - 7-day week columns (Mon to Sun)
 - All-day row at the top
@@ -70,7 +70,7 @@ How to use:
 3. Review all-day and hourly events.
 4. Select an event to open details.
 
-### 4.5.3 Day View
+### 5.5.3 Day View
 Day view displays:
 - Single day header
 - All-day row
@@ -83,15 +83,15 @@ How to use:
 
 > Image placeholder: Month, Week, and Day view comparison.
 
-![Calendar view modes](./images/04-calendar-views.png)
+![Calendar view modes](./images/05-calendar-views.png)
 
-## 4.6 Navigate Quickly with Today Button
+## 5.6 Navigate Quickly with Today Button
 At any time:
 1. Select **Today**.
 2. Calendar resets to current date context.
 3. Current month/week/day is shown automatically.
 
-## 4.7 Understand Event Colors and Types
+## 5.7 Understand Event Colors and Types
 Event badges/chips are color-coded by type:
 - Class
 - Activity
@@ -102,9 +102,9 @@ This helps you identify event categories quickly in dense schedules.
 
 > Image placeholder: Event color legend sample.
 
-![Event type colors](./images/04-calendar-event-types.png)
+![Event type colors](./images/05-calendar-event-types.png)
 
-## 4.8 Open Event Details Modal
+## 5.8 Open Event Details Modal
 Select any event item from Month/Week/Day view to open the detail modal.
 
 The detail window may show:
@@ -120,9 +120,9 @@ To close details:
 
 > Image placeholder: Event details modal with fields.
 
-![Event details modal](./images/04-calendar-event-details.png)
+![Event details modal](./images/05-calendar-event-details.png)
 
-## 4.9 Typical Student Tasks
+## 5.9 Typical Student Tasks
 ### Task A: Check This Week's Class Schedule
 1. Open Calendar.
 2. Select **Week** view.
@@ -141,7 +141,7 @@ To close details:
 3. Select event entry.
 4. Read location and description in modal.
 
-## 4.10 Troubleshooting
+## 5.10 Troubleshooting
 ### Case A: No Events Displayed
 - Confirm you are in the correct date range.
 - Select **Today** to reset position.
@@ -159,12 +159,12 @@ To close details:
 - Refresh the page and try again.
 - Use a supported browser if issue persists.
 
-## 4.11 Good Practices
+## 5.11 Good Practices
 - Use Month view for planning, Week view for schedule checks, Day view for detailed timing.
 - Open event details whenever location/instructor is needed.
 - Recheck calendar periodically for updated activities and holiday notices.
 
-## 4.12 Support
+## 5.12 Support
 When reporting calendar issues, provide:
 - Student ID
 - View mode used (Month/Week/Day)

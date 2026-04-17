@@ -4,25 +4,25 @@ author: ITE4116M Project Team
 language: en-HK
 ---
 
-# 5. News and Announcement
+# 6. News and Announcement
 
-## 5.1 Purpose
+## 6.1 Purpose
 This chapter explains how staff and admin users consume published News and Announcement items in the portal-facing news pages.
 
 Pages covered:
 1. News List
 2. News View
 
-## 5.2 Accessing News and Announcement
+## 6.2 Accessing News and Announcement
 Staff/admin users can access the portal news module from the portal navigation flow.
 
 The module is intended for reading published announcements and communications.
 
 > Image placeholder: News navigation entry point.
 
-![Staff news access](./images/05-news-open-from-portal.png)
+![Staff news access](./images/06-news-open-from-portal.png)
 
-## 5.3 News List Page Structure
+## 6.3 News List Page Structure
 The list page provides:
 - Title: News and Announcement
 - Keyword search
@@ -37,13 +37,13 @@ Each card shows:
 
 > Image placeholder: News list with labeled UI elements.
 
-![Staff news list overview](./images/05-news-list-overview.png)
+![Staff news list overview](./images/06-news-list-overview.png)
 
-## 5.4 Search and Filtering
-### 5.4.1 Keyword Search
+## 6.4 Search and Filtering
+### 6.4.1 Keyword Search
 Use the search input to locate published articles by title/content keywords.
 
-### 5.4.2 Date Filters
+### 6.4.2 Date Filters
 Use Filters drawer for publication date range:
 - Published After
 - Published Before
@@ -57,9 +57,9 @@ Operational recommendation:
 
 > Image placeholder: Filters drawer with date range fields.
 
-![Staff news filters](./images/05-news-filters.png)
+![Staff news filters](./images/06-news-filters.png)
 
-## 5.5 Open and Read Article Details
+## 6.5 Open and Read Article Details
 To view full content:
 1. Select an article card.
 2. Open News View page.
@@ -68,9 +68,9 @@ To view full content:
 
 > Image placeholder: News View page.
 
-![Staff news detail](./images/05-news-detail.png)
+![Staff news detail](./images/06-news-detail.png)
 
-## 5.6 Empty Result State
+## 6.6 Empty Result State
 If no published items match current filters/search, the page shows: No news found.
 
 Recommended action:
@@ -78,7 +78,7 @@ Recommended action:
 2. Reset filters.
 3. Retry keyword search.
 
-## 5.7 Pagination and Throughput
+## 6.7 Pagination and Throughput
 Supported per-page values:
 - 5
 - 10
@@ -86,7 +86,7 @@ Supported per-page values:
 
 Use 25 for review sessions and 5 or 10 for quick operational checks.
 
-## 5.8 Typical Staff/Admin Workflows
+## 6.8 Typical Staff/Admin Workflows
 ### Workflow A: Daily Announcement Review
 1. Open News list.
 2. Sort by default latest-first ordering.
@@ -103,7 +103,7 @@ Use 25 for review sessions and 5 or 10 for quick operational checks.
 2. Cross-check matching articles.
 3. Open details for confirmation and context.
 
-## 5.9 Troubleshooting
+## 6.9 Troubleshooting
 ### Case A: Expected Article Not Visible
 - Confirm date filters and keyword specificity.
 - Reset filters and search again.
@@ -118,12 +118,12 @@ Use 25 for review sessions and 5 or 10 for quick operational checks.
 - Reapply filters manually if needed.
 - Document filter values before opening multiple articles.
 
-## 5.10 Security and Operational Notes
+## 6.10 Security and Operational Notes
 - Treat announcement content as official communication material.
 - Verify critical policy messages against authoritative institutional channels.
 - Avoid distributing screenshots that include sensitive or pre-release information.
 
-## 5.11 Escalation Information
+## 6.11 Escalation Information
 When escalating issues, provide:
 - Username and role (staff/admin)
 - Affected page (list/view)

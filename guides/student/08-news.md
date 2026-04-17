@@ -4,25 +4,25 @@ author: ITE4116M Project Team
 language: en-HK
 ---
 
-# 7. News and Announcement
+# 8. News and Announcement
 
-## 7.1 Purpose
+## 8.1 Purpose
 This chapter explains how student users browse and read News and Announcement content in VTC MyPortal.
 
 Pages covered:
 1. News List
 2. News View (article details)
 
-## 7.2 Access News and Announcement
+## 8.2 Access News and Announcement
 Students can open News and Announcement from:
 - Home page quick access card
 - Home page Student Affairs service link
 
 > Image placeholder: Entry points from Home page.
 
-![Open news from home](./images/07-news-open-from-home.png)
+![Open news from home](./images/08-news-open-from-home.png)
 
-## 7.3 News List Page Overview
+## 8.3 News List Page Overview
 The News List page displays published articles as card items with cover image, title, and published date.
 
 Main UI components:
@@ -35,10 +35,10 @@ Main UI components:
 
 > Image placeholder: News list page overview.
 
-![News list overview](./images/07-news-list-overview.png)
+![News list overview](./images/08-news-list-overview.png)
 
-## 7.4 Search and Filter
-### 7.4.1 Search by Keywords
+## 8.4 Search and Filter
+### 8.4.1 Search by Keywords
 Use the search box to find relevant articles by title or content.
 
 How to use:
@@ -46,7 +46,7 @@ How to use:
 2. Wait for list refresh.
 3. Review filtered cards.
 
-### 7.4.2 Filter Drawer
+### 8.4.2 Filter Drawer
 Select Filters to open the right-side drawer.
 
 Available filters:
@@ -60,9 +60,9 @@ Drawer actions:
 
 > Image placeholder: Filter drawer open with published date fields.
 
-![News filters](./images/07-news-filters.png)
+![News filters](./images/08-news-filters.png)
 
-## 7.5 Browse and Open Articles
+## 8.5 Browse and Open Articles
 Each news card includes:
 - Cover image
 - Article title
@@ -74,7 +74,7 @@ To open an article:
 
 If no results match your filters, the page shows: No news found.
 
-## 7.6 News View Page
+## 8.6 News View Page
 The article detail page shows:
 - Article title
 - Published date
@@ -84,14 +84,14 @@ The article detail page shows:
 
 > Image placeholder: News detail page layout.
 
-![News detail page](./images/07-news-detail.png)
+![News detail page](./images/08-news-detail.png)
 
-## 7.7 Return to List
+## 8.7 Return to List
 To return from article details:
 1. Select Back to News List.
 2. System returns to the list page.
 
-## 7.8 Pagination and Page Size
+## 8.8 Pagination and Page Size
 News list supports pagination and adjustable page size.
 
 Per-page values include:
@@ -103,7 +103,7 @@ Recommended use:
 - Use 5 or 10 on mobile or when scanning quickly.
 - Use 25 for broader review on desktop.
 
-## 7.9 Typical Student Workflows
+## 8.9 Typical Student Workflows
 ### Workflow A: Check Latest Announcements
 1. Open News and Announcement.
 2. Leave filters empty.
@@ -121,7 +121,7 @@ Recommended use:
 2. Review matching cards.
 3. Open relevant article details.
 
-## 7.10 Troubleshooting
+## 8.10 Troubleshooting
 ### Case A: No Articles Displayed
 - Confirm filters are not too restrictive.
 - Select Reset in Filters drawer.
@@ -142,12 +142,12 @@ Recommended use:
 - Use narrower date filters.
 - Retry on another supported browser.
 
-## 7.11 Good Practices
+## 8.11 Good Practices
 - Review announcements regularly from newest to oldest.
 - Use date filters for semester or event periods.
 - Keep screenshots of important announcements for reference.
 
-## 7.12 Support Information
+## 8.12 Support Information
 When reporting news page issues, provide:
 - Student ID
 - Affected page (list or view)

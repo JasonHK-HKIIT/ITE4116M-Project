@@ -4,9 +4,9 @@ author: ITE4116M Project Team
 language: en-HK
 ---
 
-# 6. Student Activities
+# 7. Student Activities
 
-## 6.1 Purpose
+## 7.1 Purpose
 This chapter explains how student users browse activity listings, view activity details, register participation, and cancel participation in VTC MyPortal.
 
 Pages covered in this chapter:
@@ -15,16 +15,16 @@ Pages covered in this chapter:
 3. Register Processing Page
 4. Unregister Processing Page
 
-## 6.2 Access Student Activities
+## 7.2 Access Student Activities
 You can open Student Activities from:
 - Home page quick access card: Student Activities
 - Home page service links under Campus Life
 
 > Image placeholder: Student Activities entry point from Home page.
 
-![Open student activities](./images/06-activities-open-from-home.png)
+![Open student activities](./images/07-activities-open-from-home.png)
 
-## 6.3 Activity List Page
+## 7.3 Activity List Page
 The Activity List page shows published student activities in a paginated table.
 
 Main elements:
@@ -43,10 +43,10 @@ Table columns include:
 
 > Image placeholder: Activity list full-page overview.
 
-![Activity list overview](./images/06-activities-list-overview.png)
+![Activity list overview](./images/07-activities-list-overview.png)
 
-## 6.4 Search and Filter Activities
-### 6.4.1 Keyword Search
+## 7.4 Search and Filter Activities
+### 7.4.1 Keyword Search
 Use the search input to find activities by title or description.
 
 How to use:
@@ -54,7 +54,7 @@ How to use:
 2. Wait for results refresh.
 3. Review filtered list.
 
-### 6.4.2 Filter Drawer
+### 7.4.2 Filter Drawer
 Select Filters to open the filter drawer.
 
 Available filters:
@@ -68,9 +68,9 @@ Actions:
 
 > Image placeholder: Filters drawer with date controls.
 
-![Activity filters drawer](./images/06-activities-filters.png)
+![Activity filters drawer](./images/07-activities-filters.png)
 
-## 6.5 Sort and Browse Results
+## 7.5 Sort and Browse Results
 Table supports sorting on key fields such as title, instructor, registration dates, and total amount.
 
 Pagination options include 5, 10, and 20 rows per page.
@@ -80,7 +80,7 @@ Recommended workflow:
 2. Sort by Registration Start Date or End Date.
 3. Open Details for a target activity.
 
-## 6.6 Open Activity Details
+## 7.6 Open Activity Details
 From the list, select Details on a row to open the Activity Details page.
 
 The details page is organized into tabs:
@@ -93,10 +93,10 @@ The details page is organized into tabs:
 
 > Image placeholder: Activity Details page with tab layout.
 
-![Activity details tabs](./images/06-activities-details-tabs.png)
+![Activity details tabs](./images/07-activities-details-tabs.png)
 
-## 6.7 Activity Details Tabs
-### 6.7.1 Administrative Tab
+## 7.7 Activity Details Tabs
+### 7.7.1 Administrative Tab
 Typical fields:
 - Activity Type
 - Activity Code
@@ -105,29 +105,29 @@ Typical fields:
 - Discipline
 - Attribute
 
-### 6.7.2 Time Tab
+### 7.7.2 Time Tab
 Typical fields:
 - Registration Period (From/To)
 - Time Slot (date/time range)
 - Duration (hours)
 
-### 6.7.3 Personnel Tab
+### 7.7.3 Personnel Tab
 Typical fields:
 - Instructor
 - Responsible Staff
 
-### 6.7.4 Descriptive Tab
+### 7.7.4 Descriptive Tab
 Typical fields:
 - Description
 - Venue
 - Venue Remark
 
-### 6.7.5 Financial Tab
+### 7.7.5 Financial Tab
 Typical fields:
 - Total Amount
 - Included Deposit
 
-### 6.7.6 Supporting Tab
+### 7.7.6 Supporting Tab
 Typical fields:
 - Attachment (if available)
 - File size
@@ -136,7 +136,7 @@ Typical fields:
 
 If no file is attached or file is missing, the page shows corresponding status text.
 
-## 6.8 Registration Status and Action Buttons
+## 7.8 Registration Status and Action Buttons
 On the Activity Details page, action buttons depend on your current status and activity conditions.
 
 Possible states:
@@ -147,7 +147,7 @@ Possible states:
 
 For student users, the primary action is Register or Cancel Participation depending on status.
 
-## 6.9 Register for an Activity
+## 7.9 Register for an Activity
 When Register is selected:
 1. System opens a processing page.
 2. Registration is performed automatically.
@@ -160,9 +160,9 @@ Expected outcomes on success:
 
 > Image placeholder: Register processing screen and success return state.
 
-![Activity register processing](./images/06-activities-register-processing.png)
+![Activity register processing](./images/07-activities-register-processing.png)
 
-## 6.10 Cancel Participation (Unregister)
+## 7.10 Cancel Participation (Unregister)
 When Cancel Participation is selected:
 1. System opens a processing page.
 2. Cancellation is performed automatically.
@@ -175,16 +175,16 @@ Expected outcomes on success:
 
 > Image placeholder: Unregister processing screen and success return state.
 
-![Activity unregister processing](./images/06-activities-unregister-processing.png)
+![Activity unregister processing](./images/07-activities-unregister-processing.png)
 
-## 6.11 Calendar Integration Note
+## 7.11 Calendar Integration Note
 Registering an activity adds an Activity-type calendar entry with date/time and venue context.
 
 Cancelling participation removes the related calendar event.
 
 After registration changes, open Calendar to verify schedule updates.
 
-## 6.12 Typical Student Workflows
+## 7.12 Typical Student Workflows
 ### Workflow A: Find and Join an Activity
 1. Open Student Activities list.
 2. Search/filter by period and keyword.
@@ -205,7 +205,7 @@ After registration changes, open Calendar to verify schedule updates.
 3. Open details pages in sequence.
 4. Decide based on time slot, venue, and financial info.
 
-## 6.13 Troubleshooting
+## 7.13 Troubleshooting
 ### Case A: Cannot Register
 Possible causes:
 - Registration period closed
@@ -232,13 +232,13 @@ Actions:
 - Retry file download.
 - If file missing message appears, contact support.
 
-## 6.14 Good Practices
+## 7.14 Good Practices
 - Review Time and Descriptive tabs before registering.
 - Verify registration window and any cost/deposit details.
 - Recheck calendar after registration or cancellation.
 - Keep screenshots of errors when reporting issues.
 
-## 6.15 Support Information
+## 7.15 Support Information
 When reporting Student Activities issues, provide:
 - Student ID
 - Activity name/code
