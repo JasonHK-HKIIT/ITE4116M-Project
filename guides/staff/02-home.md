@@ -24,8 +24,6 @@ The Home page includes four functional regions:
 3. Carousel panel
 4. Online Student Service categories
 
-> Image placeholder: Full Home page with section markers.
-
 ![Staff home page overview](./images/02-home-overview.png)
 
 ## 2.4 Welcome Card
@@ -35,8 +33,6 @@ The top card displays:
 
 Operational check:
 - Confirm the displayed name matches the current signed-in account.
-
-> Image placeholder: Welcome card detail.
 
 ![Welcome card detail](./images/02-home-welcome-card.png)
 
@@ -51,8 +47,6 @@ Navigates to activity listing and related management visibility.
 
 ### 2.5.3 News and Announcement
 Opens announcements listing for institutional updates.
-
-> Image placeholder: Quick access section.
 
 ![Quick access section](./images/02-home-quick-access.png)
 
@@ -69,8 +63,6 @@ Usage notes:
 1. Slides auto-rotate in sequence.
 2. Review key highlights from announcements or campaigns.
 3. Open linked destinations when relevant.
-
-> Image placeholder: Carousel in active state.
 
 ![Carousel panel](./images/02-home-carousel.png)
 
@@ -92,8 +84,6 @@ The lower section groups links for structured navigation.
 
 ### 2.7.5 Useful Links
 - **VTC Valo**
-
-> Image placeholder: Services categories and links.
 
 ![Service categories](./images/02-home-services.png)
 

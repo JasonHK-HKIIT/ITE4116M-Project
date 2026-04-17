@@ -22,8 +22,6 @@ The dashboard layout contains:
 - Left sidebar menu (always visible on desktop, drawer on mobile)
 - Main content area
 
-> Image placeholder: Full dashboard layout with top bar, sidebar, and content area.
-
 ![Dashboard layout overview](./images/09-dashboard-navigation-overview.png)
 
 ## 9.3 Mobile Navigation Behavior
@@ -36,8 +34,6 @@ How to use:
 1. Tap the menu icon in the top bar.
 2. Drawer opens with dashboard menu.
 3. Select a destination.
-
-> Image placeholder: Mobile top bar and drawer icon.
 
 ![Dashboard mobile top navigation](./images/09-dashboard-navigation-mobile-topbar.png)
 
@@ -52,8 +48,6 @@ The sidebar typically includes:
 
 Home link:
 - Dashboard Home is always present in this layout.
-
-> Image placeholder: Sidebar with major sections labeled.
 
 ![Dashboard sidebar structure](./images/09-dashboard-navigation-sidebar-structure.png)
 
@@ -107,8 +101,6 @@ Sub-items:
 - All Resources
 - Create Resource
 
-> Image placeholder: Example user with selected permission groups visible.
-
 ![Permission based menu groups](./images/09-dashboard-navigation-permission-groups.png)
 
 ## 9.6 Admin-Only System Management Group
@@ -120,8 +112,6 @@ Sub-items:
 
 Key role rule:
 - Staff users do not see the System Management group unless they are admin.
-
-> Image placeholder: Admin sidebar showing System Management group.
 
 ![Admin system management navigation](./images/09-dashboard-navigation-admin-system.png)
 

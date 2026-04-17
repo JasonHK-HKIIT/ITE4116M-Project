@@ -27,10 +27,6 @@ Operational recommendation:
 ## 5.3 Access the Calendar
 Open Calendar from portal navigation points such as Home page quick access or service links.
 
-> Image placeholder: Calendar access path from portal home.
-
-![Calendar access path](./images/05-calendar-open-from-home.png)
-
 ## 5.4 Page Structure
 Top area:
 - **Calendar** title
@@ -45,8 +41,6 @@ Control row:
 Main display:
 - Dynamic calendar grid according to selected view
 - Clickable event chips
-
-> Image placeholder: Calendar UI with control annotations.
 
 ![Calendar structure](./images/05-calendar-overview.png)
 
@@ -85,8 +79,6 @@ Steps:
 2. Navigate by day using `<` and `>`.
 3. Select events to open detail modal.
 
-> Image placeholder: Side-by-side examples of three view modes.
-
 ![Month week day views](./images/05-calendar-views.png)
 
 ## 5.6 Today Shortcut
@@ -105,8 +97,6 @@ Event entries use color classes by event type:
 Note:
 - Admin users may only observe public holiday category in this calendar context.
 
-> Image placeholder: Event color coding reference.
-
 ![Calendar event colors](./images/05-calendar-event-types.png)
 
 ## 5.8 Event Details Modal
@@ -119,8 +109,6 @@ Selecting an event opens a detail modal containing available metadata:
 - Description
 
 Close modal using **Cancel**.
-
-> Image placeholder: Event detail modal example.
 
 ![Calendar event modal](./images/05-calendar-event-details.png)
 

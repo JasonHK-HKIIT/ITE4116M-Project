@@ -21,8 +21,6 @@ The portal layout contains:
 2. Sidebar menu for primary navigation
 3. Main content area for selected page
 
-> Image placeholder: Portal layout with annotated sections for staff/admin.
-
 ![Portal layout overview - staff admin](./images/03-navigation-staff-overview.png)
 
 ## 3.3 Mobile Top Navigation Behavior
@@ -34,8 +32,6 @@ Use flow:
 1. Tap menu icon.
 2. Drawer opens with menu items.
 3. Select desired item.
-
-> Image placeholder: Mobile top bar and drawer trigger.
 
 ![Mobile top navigation - staff admin](./images/03-navigation-staff-mobile-topbar.png)
 
@@ -51,8 +47,6 @@ Typical staff/admin portal sidebar includes:
 
 Important role behavior:
 - Student-only entries (Profile submenu, Student Activities) are not shown to staff/admin accounts.
-
-> Image placeholder: Staff/admin sidebar menu showing Dashboard link.
 
 ![Staff admin sidebar menu](./images/03-navigation-staff-sidebar.png)
 
@@ -81,8 +75,6 @@ How to use:
 
 Operational note:
 - Dashboard visibility is role-gated and appears only for staff/admin users.
-
-> Image placeholder: Sidebar section highlighting Dashboard link.
 
 ![Dashboard menu entry](./images/03-navigation-staff-dashboard-link.png)
 

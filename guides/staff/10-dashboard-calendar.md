@@ -28,10 +28,6 @@ The Manage landing page provides direct cards to the four management subpages:
 - Institute Holidays
 - Public Holidays
 
-> Image placeholder: Dashboard navigation path to Calendar module.
-
-![Dashboard calendar entry points](./images/10-dashboard-calendar-entry.png)
-
 ## 10.3 Calendar Manage Landing Page
 The landing page shows clickable management cards.
 
@@ -40,8 +36,6 @@ Each card opens a specific workflow:
 - Activities: View activity events for a specific student
 - Institute Holidays: View and edit institute-specific holidays
 - Public Holidays: View and edit global public holidays
-
-> Image placeholder: Calendar manage landing cards.
 
 ![Calendar manage landing](./images/10-dashboard-calendar-manage-landing.png)
 
@@ -52,8 +46,6 @@ The Add Events page supports creating new calendar records for:
 3. Public holidays
 
 The page begins with three selection cards, each opening a dedicated form.
-
-> Image placeholder: Add Events page with three creation cards.
 
 ![Calendar add events options](./images/10-dashboard-calendar-add-events-options.png)
 
@@ -85,8 +77,6 @@ Expected result:
 - Success message confirms creation.
 - Start/end values reset for next entry.
 
-> Image placeholder: Class timetable event form in completed state.
-
 ![Create class timetable event](./images/10-dashboard-calendar-create-class-event.png)
 
 ## 10.6 Create Institute Holiday
@@ -105,8 +95,6 @@ Expected result:
 - Holiday is created as all-day event for selected institute.
 - Success message is displayed.
 
-> Image placeholder: Create institute holiday form.
-
 ![Create institute holiday](./images/10-dashboard-calendar-create-institute-holiday.png)
 
 ## 10.7 Create Public Holiday
@@ -123,8 +111,6 @@ Action:
 Expected result:
 - Public holiday is created as all-day global event.
 - Success message is displayed.
-
-> Image placeholder: Create public holiday form.
 
 ![Create public holiday](./images/10-dashboard-calendar-create-public-holiday.png)
 
@@ -160,8 +146,6 @@ Expected result:
 - Success confirmation appears.
 - Table reloads current saved state.
 
-> Image placeholder: Module timetable table with edit and delete actions.
-
 ![Module timetable management](./images/10-dashboard-calendar-module-timetable.png)
 
 ## 10.9 Activities Calendar Management
@@ -190,8 +174,6 @@ For each activity event, table shows:
 
 Current implementation is read-focused in the table view.
 
-> Image placeholder: Activities management search and result table.
-
 ![Activities calendar management](./images/10-dashboard-calendar-activities-management.png)
 
 ## 10.10 Institute Holidays Management
@@ -214,8 +196,6 @@ Per row:
 Expected result:
 - Success message confirms update.
 
-> Image placeholder: Institute holidays editable table.
-
 ![Institute holidays management](./images/10-dashboard-calendar-institute-holidays.png)
 
 ## 10.11 Public Holidays Management
@@ -234,8 +214,6 @@ Actions:
 
 Expected result:
 - Success message confirms update.
-
-> Image placeholder: Public holidays editable table.
 
 ![Public holidays management](./images/10-dashboard-calendar-public-holidays.png)
 

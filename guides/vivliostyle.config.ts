@@ -13,6 +13,7 @@ export default defineConfig([
         toc: true,
         entry: [
             { rel: "contents" },
+            "student/00-introduction.md",
             "student/01-login.md",
             "student/02-home.md",
             "student/03-navigation.md",
@@ -38,6 +39,7 @@ export default defineConfig([
         toc: true,
         entry: [
             { rel: "contents" },
+            "staff/00-introduction.md",
             "staff/01-login.md",
             "staff/02-home.md",
             "staff/03-navigation.md",

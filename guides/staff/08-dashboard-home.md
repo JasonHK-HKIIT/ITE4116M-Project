@@ -22,10 +22,6 @@ After signing in with a staff/admin account:
 2. Select Dashboard from the dashboard navigation.
 3. Confirm the Home badge is visible on the page.
 
-> Image placeholder: Dashboard Home entry and page landing state.
-
-![Dashboard home entry](./images/08-dashboard-home-entry.png)
-
 ## 8.4 Page Layout Overview
 Dashboard Home is structured into major sections:
 1. Welcome summary card
@@ -34,8 +30,6 @@ Dashboard Home is structured into major sections:
 4. Upcoming Events panel
 5. Latest News panel
 6. Recent Activities table
-
-> Image placeholder: Full dashboard home with section annotations.
 
 ![Dashboard home overview](./images/08-dashboard-home-overview.png)
 
@@ -59,8 +53,6 @@ The statistics area provides high-level counts:
 
 These counters help quickly assess data volume and current operational load.
 
-> Image placeholder: KPI cards close-up.
-
 ![Dashboard KPI stats](./images/08-dashboard-home-kpis.png)
 
 ## 8.7 Quick Actions Section
@@ -82,8 +74,6 @@ Each card contains:
 Behavior:
 - Only links allowed by your role/permission are displayed.
 
-> Image placeholder: Quick Actions cards with role-dependent visibility.
-
 ![Dashboard quick actions](./images/08-dashboard-home-quick-actions.png)
 
 ## 8.8 Upcoming Events Panel
@@ -97,8 +87,6 @@ Each entry may include:
 
 If no events are available, the panel shows an empty-state message.
 
-> Image placeholder: Upcoming Events panel with populated items.
-
 ![Dashboard upcoming events](./images/08-dashboard-home-upcoming-events.png)
 
 ## 8.9 Latest News Panel
@@ -111,8 +99,6 @@ Each item includes:
 Selecting an item navigates to the article edit page.
 
 If no articles exist, an empty-state message is shown.
-
-> Image placeholder: Latest News panel and item navigation.
 
 ![Dashboard latest news](./images/08-dashboard-home-latest-news.png)
 
@@ -129,8 +115,6 @@ Open action behavior:
 - Arrow icon opens the selected activity edit page.
 
 If no records exist, the section displays an empty-state message.
-
-> Image placeholder: Recent Activities table and open action.
 
 ![Dashboard recent activities](./images/08-dashboard-home-recent-activities.png)
 

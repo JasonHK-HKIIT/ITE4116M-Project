@@ -36,8 +36,6 @@ Recommended browsers:
    - Login button
    - Appearance button
 
-> Image placeholder: Insert screenshot of staff/admin login page.
-
 ![Staff login page](./images/01-login-page-overview.png)
 
 ## 1.5 Login Procedure
@@ -45,8 +43,6 @@ Recommended browsers:
 2. Enter your password in **Password**.
 3. Click **Login** to continue.
 4. On success, you are redirected to the dashboard or requested module page.
-
-> Image placeholder: Insert screenshot with completed login form.
 
 ![Completed login form](./images/01-login-form-filled.png)
 
@@ -56,8 +52,6 @@ You may adjust appearance settings through the slider icon before logging in.
 1. Click the appearance icon.
 2. Choose preferred display options.
 3. Proceed with login.
-
-> Image placeholder: Insert screenshot showing appearance options.
 
 ![Appearance panel](./images/01-login-appearance.png)
 
@@ -77,8 +71,6 @@ Perform these checks:
 2. Re-enter password carefully
 3. Check keyboard language and Caps Lock
 4. Ensure no trailing/leading spaces
-
-> Image placeholder: Insert screenshot of login error message.
 
 ![Login error message](./images/01-login-error-message.png)
 

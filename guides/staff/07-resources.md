@@ -14,10 +14,6 @@ This page provides searchable document groups with downloadable files.
 ## 7.2 Accessing Resources Centre
 Staff/admin users can open Resources Centre from portal navigation paths and service links.
 
-> Image placeholder: Staff/admin path to Resources Centre.
-
-![Staff resources access](./images/07-resources-open-from-portal.png)
-
 ## 7.3 Interface Structure
 Key interface elements:
 - Page title: Resources Centre
@@ -28,8 +24,6 @@ Key interface elements:
 - Expandable rows for file-level details
 - Download action per file
 - Pagination and per-page selector
-
-> Image placeholder: Annotated Resources Centre interface.
 
 ![Staff resources overview](./images/07-resources-overview.png)
 
@@ -51,8 +45,6 @@ Drawer actions:
 Operational recommendation:
 - Apply date range first, then keyword refinement for large result sets.
 
-> Image placeholder: Filters drawer in use.
-
 ![Staff resources filters](./images/07-resources-filters.png)
 
 ## 7.5 Expand Rows to View Files
@@ -65,8 +57,6 @@ In expanded section, each file entry provides:
 
 If a group has no files, the row displays No files uploaded.
 
-> Image placeholder: Expanded table row with file entries.
-
 ![Staff expanded resource row](./images/07-resources-expanded-row.png)
 
 ## 7.6 Download File Procedure
@@ -74,8 +64,6 @@ If a group has no files, the row displays No files uploaded.
 2. Locate the target file.
 3. Select the download icon/button.
 4. File opens/downloads in a new tab/window.
-
-> Image placeholder: File download action.
 
 ![Staff resource file download](./images/07-resources-download.png)
 

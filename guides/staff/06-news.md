@@ -18,10 +18,6 @@ Staff/admin users can access the portal news module from the portal navigation f
 
 The module is intended for reading published announcements and communications.
 
-> Image placeholder: News navigation entry point.
-
-![Staff news access](./images/06-news-open-from-portal.png)
-
 ## 6.3 News List Page Structure
 The list page provides:
 - Title: News and Announcement
@@ -34,8 +30,6 @@ Each card shows:
 - Cover image
 - Title
 - Published date
-
-> Image placeholder: News list with labeled UI elements.
 
 ![Staff news list overview](./images/06-news-list-overview.png)
 
@@ -55,8 +49,6 @@ Drawer actions:
 Operational recommendation:
 - Start with date range, then refine with keyword search.
 
-> Image placeholder: Filters drawer with date range fields.
-
 ![Staff news filters](./images/06-news-filters.png)
 
 ## 6.5 Open and Read Article Details
@@ -65,8 +57,6 @@ To view full content:
 2. Open News View page.
 3. Read title, date, content, and cover image.
 4. Use Back to News List to return.
-
-> Image placeholder: News View page.
 
 ![Staff news detail](./images/06-news-detail.png)
 

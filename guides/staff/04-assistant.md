@@ -41,8 +41,6 @@ The page is divided into:
 - **Send** action button
 - **Delete Thread** action (for active thread)
 
-> Image placeholder: Assistant page UI map for staff/admin.
-
 ![Assistant interface overview](./images/04-assistant-overview.png)
 
 ## 4.5 Create a New Conversation
@@ -56,8 +54,6 @@ System behavior:
 - A new chat thread is created on first send.
 - The new thread is listed in **Chat History**.
 
-> Image placeholder: New chat before and after first send.
-
 ![Create new conversation](./images/04-assistant-new-chat.png)
 
 ## 4.6 Use Chat History
@@ -66,8 +62,6 @@ System behavior:
 3. Continue with follow-up prompts.
 
 This is useful for ongoing operational tasks requiring continuity.
-
-> Image placeholder: Chat history list and selected thread.
 
 ![Chat history usage](./images/04-assistant-thread-history.png)
 
@@ -97,8 +91,6 @@ Use this when a conversation is no longer needed.
 1. Open the target thread.
 2. Select **Delete Thread**.
 3. Confirm thread is removed from **Chat History** and session returns to assistant root state.
-
-> Image placeholder: Delete thread action sequence.
 
 ![Delete thread flow](./images/04-assistant-delete-thread.png)
 
