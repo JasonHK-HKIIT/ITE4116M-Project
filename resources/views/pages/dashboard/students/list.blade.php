@@ -41,8 +41,8 @@ class extends Component
             ['key' => 'full_name', 'label' => trans('students.table.name'), 'class' => 'w-auto min-w-56', 'sortable' => true],
             ['key' => 'institute', 'label' => trans('students.table.institute'), 'class' => 'w-fit min-w-48 text-nowrap', 'sortable' => false],
             ['key' => 'campus', 'label' => trans('students.table.campus'), 'class' => 'w-fit min-w-36 text-nowrap', 'sortable' => false],
-            ['key' => 'classes', 'label' => trans('students.table.classes'), 'class' => 'w-fit min-w-40', 'sortable' => false],
             ['key' => 'programmes', 'label' => trans('students.table.programmes'), 'class' => 'w-fit min-w-40', 'sortable' => false],
+            ['key' => 'classes', 'label' => trans('students.table.classes'), 'class' => 'w-fit min-w-40', 'sortable' => false],
         ];
     }
 
