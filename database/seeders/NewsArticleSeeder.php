@@ -421,6 +421,317 @@ class NewsArticleSeeder extends Seeder
 <p>欢迎中六同学及家长参加，详情请浏览 InfoDay 网页。</p>',
                 ],
             ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'vtc-career-and-internship-fair-2026',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-02'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'VTC Career and Internship Fair 2026',
+                    'content' => '<p>The VTC Career and Internship Fair 2026 will be held on <strong>20 March 2026</strong> at the Multi-purpose Hall.</p>
+<p>Students can meet recruiting employers, learn about internship opportunities and submit resumes on-site.</p>
+<p>Please bring your student ID and updated CV. Business attire is recommended.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => 'VTC 就業及實習招聘展 2026',
+                    'content' => '<p>VTC 就業及實習招聘展 2026 將於<strong>2026年3月20日</strong>在多用途禮堂舉行。</p>
+<p>同學可即場與僱主交流，了解實習及就業機會，並遞交履歷。</p>
+<p>請攜帶學生證及最新履歷，建議穿著整齊商務服飾出席。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => 'VTC 就业及实习招聘展 2026',
+                    'content' => '<p>VTC 就业及实习招聘展 2026 将于<strong>2026年3月20日</strong>在多用途礼堂举行。</p>
+<p>同学可现场与雇主交流，了解实习与就业机会，并提交简历。</p>
+<p>请携带学生证及最新简历，建议穿着整齐商务服饰出席。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'career-readiness-bootcamp-for-final-year-students',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-05'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Career Readiness Bootcamp for Final-year Students',
+                    'content' => '<p>A three-session Career Readiness Bootcamp will be organised for final-year students in April 2026.</p>
+<p>Topics include CV writing, interview techniques and workplace communication.</p>
+<p>Students who complete all sessions will receive an e-certificate.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '應屆畢業生職涯準備訓練營',
+                    'content' => '<p>學院將於2026年4月為應屆畢業生舉辦三節「職涯準備訓練營」。</p>
+<p>內容涵蓋履歷撰寫、面試技巧及職場溝通。</p>
+<p>完成全部課堂的同學可獲電子證書。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '应届毕业生职涯准备训练营',
+                    'content' => '<p>学院将于2026年4月为应届毕业生举办三节「职涯准备训练营」。</p>
+<p>内容涵盖简历撰写、面试技巧及职场沟通。</p>
+<p>完成全部课程的同学可获电子证书。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'english-enhancement-workshops-summer-term-2026',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-08'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'English Enhancement Workshops (Summer Term 2026)',
+                    'content' => '<p>The Language Centre will launch English Enhancement Workshops in Summer Term 2026.</p>
+<p>Workshop themes include presentation skills, report writing and speaking confidence.</p>
+<p>Enrollment is open from 10 to 24 March via the student portal.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '英語提升工作坊（2026 夏季學期）',
+                    'content' => '<p>語文中心將於 2026 夏季學期推出英語提升工作坊。</p>
+<p>主題包括簡報技巧、報告寫作及口語自信訓練。</p>
+<p>同學可於3月10日至3月24日透過學生平台報名。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '英语提升工作坊（2026 夏季学期）',
+                    'content' => '<p>语文中心将于 2026 夏季学期推出英语提升工作坊。</p>
+<p>主题包括简报技巧、报告写作及口语自信训练。</p>
+<p>同学可于3月10日至3月24日通过学生平台报名。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'library-extended-opening-hours-before-exam',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-12'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Library Extended Opening Hours Before Examination',
+                    'content' => '<p>To support students during the revision period, campus libraries will extend opening hours from 1 to 30 April 2026.</p>
+<p>From Monday to Friday, libraries will close at 10:00 pm. Weekend opening hours remain unchanged.</p>
+<p>Please follow library rules and keep the environment quiet for all users.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '考試前圖書館延長開放時間安排',
+                    'content' => '<p>為支援同學溫習，校園圖書館將於2026年4月1日至4月30日延長開放時間。</p>
+<p>星期一至五將延長至晚上10時閉館，週末開放時間維持不變。</p>
+<p>請同學遵守圖書館規則，保持安靜學習環境。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '考试前图书馆延长开放时间安排',
+                    'content' => '<p>为支援同学温习，校园图书馆将于2026年4月1日至4月30日延长开放时间。</p>
+<p>星期一至五将延长至晚上10时闭馆，周末开放时间维持不变。</p>
+<p>请同学遵守图书馆规则，保持安静学习环境。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'student-wellness-week-mental-health-and-balance',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-15'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Student Wellness Week: Mental Health and Balance',
+                    'content' => '<p>Student Wellness Week will run from <strong>6 to 10 April 2026</strong> with talks, workshops and interactive booths.</p>
+<p>Topics include stress management, sleep quality and healthy study habits.</p>
+<p>Students are welcome to join all activities free of charge.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '學生身心健康周：關注心理與平衡生活',
+                    'content' => '<p>學生身心健康周將於<strong>2026年4月6日至10日</strong>舉行，設有講座、工作坊及互動攤位。</p>
+<p>主題包括壓力管理、睡眠質素及健康學習習慣。</p>
+<p>歡迎同學免費參與所有活動。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '学生身心健康周：关注心理与平衡生活',
+                    'content' => '<p>学生身心健康周将于<strong>2026年4月6日至10日</strong>举行，设有讲座、工作坊及互动摊位。</p>
+<p>主题包括压力管理、睡眠质量及健康学习习惯。</p>
+<p>欢迎同学免费参与所有活动。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'innovation-project-funding-scheme-2026-round-1',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-18'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Innovation Project Funding Scheme 2026 (Round 1)',
+                    'content' => '<p>The Innovation Project Funding Scheme 2026 (Round 1) is now open for student applications.</p>
+<p>Selected teams may receive seed funding for prototype development and showcase opportunities.</p>
+<p>Application deadline: <strong>12 April 2026</strong>. Please submit proposals through your department coordinator.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '2026 創新項目資助計劃（第一輪）',
+                    'content' => '<p>2026 創新項目資助計劃（第一輪）現正接受學生申請。</p>
+<p>獲選隊伍可獲種子資助，用於原型開發及成果展示。</p>
+<p>截止日期為<strong>2026年4月12日</strong>，請經學系統籌老師遞交計劃書。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '2026 创新项目资助计划（第一轮）',
+                    'content' => '<p>2026 创新项目资助计划（第一轮）现正接受学生申请。</p>
+<p>获选队伍可获种子资助，用于原型开发及成果展示。</p>
+<p>截止日期为<strong>2026年4月12日</strong>，请经学系统筹老师提交计划书。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'cybersecurity-awareness-seminar-safe-digital-campus',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-21'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Cybersecurity Awareness Seminar: Safe Digital Campus',
+                    'content' => '<p>An online Cybersecurity Awareness Seminar will be held on <strong>28 March 2026</strong>.</p>
+<p>The seminar will cover phishing prevention, password safety and account protection practices.</p>
+<p>Students are encouraged to join and strengthen their digital security awareness.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '網絡安全講座：建立安全數碼校園',
+                    'content' => '<p>網上網絡安全講座將於<strong>2026年3月28日</strong>舉行。</p>
+<p>內容包括防範釣魚詐騙、密碼安全及帳戶保護措施。</p>
+<p>歡迎同學踴躍參與，提升個人數碼安全意識。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '网络安全讲座：建立安全数字校园',
+                    'content' => '<p>线上网络安全讲座将于<strong>2026年3月28日</strong>举行。</p>
+<p>内容包括防范网络钓鱼诈骗、密码安全及账户保护措施。</p>
+<p>欢迎同学踊跃参与，提升个人数字安全意识。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'green-campus-volunteer-recruitment-drive-2026',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-24'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Green Campus Volunteer Recruitment Drive 2026',
+                    'content' => '<p>The Green Campus team is recruiting student volunteers for environmental initiatives in Semester 2.</p>
+<p>Volunteer roles include waste reduction campaigns, recycling promotion and event support.</p>
+<p>Interested students may register by 5 April 2026 through the Student Development Office.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '綠色校園義工招募 2026',
+                    'content' => '<p>綠色校園團隊現正招募第二學期環保活動學生義工。</p>
+<p>義工崗位包括減廢宣傳、回收推廣及活動支援。</p>
+<p>有興趣同學請於2026年4月5日前向學生發展處報名。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '绿色校园义工招募 2026',
+                    'content' => '<p>绿色校园团队现正招募第二学期环保活动学生义工。</p>
+<p>义工岗位包括减废宣传、回收推广及活动支援。</p>
+<p>有兴趣同学请于2026年4月5日前向学生发展处报名。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'alumni-sharing-series-industry-insights-2026',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-26'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Alumni Sharing Series: Industry Insights 2026',
+                    'content' => '<p>The Alumni Sharing Series will invite graduates from different sectors to share career journeys and industry insights.</p>
+<p>The first session starts on <strong>9 April 2026</strong> in Lecture Theatre 3.</p>
+<p>Seats are limited and registration is required.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '校友分享系列：行業發展前瞻 2026',
+                    'content' => '<p>校友分享系列將邀請不同行業畢業校友分享職涯歷程及行業趨勢。</p>
+<p>首場講座將於<strong>2026年4月9日</strong>在三號演講廳舉行。</p>
+<p>名額有限，須預先登記。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '校友分享系列：行业发展前瞻 2026',
+                    'content' => '<p>校友分享系列将邀请不同行业毕业校友分享职涯历程及行业趋势。</p>
+<p>首场讲座将于<strong>2026年4月9日</strong>在三号演讲厅举行。</p>
+<p>名额有限，须预先登记。</p>',
+                ],
+            ]);
+
+        $article = NewsArticle::create(
+            [
+                'slug' => 'graduation-photo-day-arrangements-2026',
+                'status' => NewsArticleStatus::Published,
+                'published_on' => Carbon::parse('2026-03-29'),
+            ]);
+        $article->newsArticleTranslation()->createMany(
+            [
+                [
+                    'locale' => 'en',
+                    'title' => 'Graduation Photo Day Arrangements 2026',
+                    'content' => '<p>Graduation Photo Day 2026 will take place from <strong>20 to 22 April 2026</strong>.</p>
+<p>Please check your department schedule for session time and gown collection details.</p>
+<p>Graduating students should arrive 30 minutes early for registration.</p>',
+                ],
+                [
+                    'locale' => 'zh-HK',
+                    'title' => '2026 畢業照拍攝日安排',
+                    'content' => '<p>2026 畢業照拍攝日將於<strong>2026年4月20日至22日</strong>舉行。</p>
+<p>請留意學系公布的拍攝時段及畢業袍領取安排。</p>
+<p>畢業同學請提前30分鐘到場辦理報到。</p>',
+                ],
+                [
+                    'locale' => 'zh-CN',
+                    'title' => '2026 毕业照拍摄日安排',
+                    'content' => '<p>2026 毕业照拍摄日将于<strong>2026年4月20日至22日</strong>举行。</p>
+<p>请留意学系公布的拍摄时段及毕业袍领取安排。</p>
+<p>毕业同学请提前30分钟到场办理报到。</p>',
+                ],
+            ]);
+
         NewsArticle::factory()
             ->count(2)
             ->draft()
