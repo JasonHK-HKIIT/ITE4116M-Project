@@ -259,6 +259,8 @@ class extends Component
             $this->description = LocalesHelper::buildPropertyValue();
             $this->venue_remark = LocalesHelper::buildPropertyValue();
             $this->instructor = 'Tom';
+            $this->activity_type = 'Campus Representatives';
+            $this->responsible_staff = 'Joe';
             
             // Set default campus
             $firstCampus = Campus::first();

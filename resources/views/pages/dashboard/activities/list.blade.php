@@ -208,7 +208,7 @@ class extends Component
                         </x-slot:trigger>
 
                         <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.file-lines" :link="route('portal.activities.show', ['id' => $activity->id ])" />
-                        <x-menu-item :title="__('activities.table_actions.activity_details')" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" />
+                        <x-menu-item :title="__('actions.edit')" icon="fal.pen-to-square" :link="route('dashboard.activities.edit', ['activity' => $activity->id])" />
                         <x-menu-item :title="__('actions.delete')" icon="fal.trash" wire:click.stop="deleteArticle({{ $activity->id }})" spinner />
 
                     </x-dropdown>

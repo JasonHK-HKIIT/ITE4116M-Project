@@ -110,6 +110,6 @@ return [
             'registered' => 'Registered',
         ],
         'cancel' => 'Cancel Participation',
-        'registration_closed' => 'Registration period has ended',
+        'registration_closed' => 'Registration is not currently open',
     ],
 ];

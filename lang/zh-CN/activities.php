@@ -110,6 +110,6 @@ return [
             'registered' => '已报名',
         ],
         'cancel' => '取消参与',
-        'registration_closed' => '报名期已结束',
+        'registration_closed' => '当前尚未开放报名',
     ],
 ];
