@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Campus;
+use App\Models\ClassModel;
+use App\Models\Institute;
+use App\Models\Programme;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,8 +17,9 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $institute = \App\Models\Institute::whereTranslation('name', 'Hong Kong Institute of Information Technology', 'en')->first();
-        $campus = \App\Models\Campus::whereTranslation('name', 'Lee Wai Lee', 'en')->first();
+        $institute = Institute::whereTranslation('name', 'Hong Kong Institute of Information Technology', 'en')->first();
+        $campus = Campus::whereTranslation('name', 'Lee Wai Lee', 'en')->first();
+        $programme = Programme::where('programme_code', 'IT114105')->first();
 
         /** @var User */
         $user = User::create(
@@ -36,6 +41,11 @@ class StudentSeeder extends Seeder
                 'tel_no' => null,
                 'mobile_no' => '65557890',
                 'address' => 'Flat C, 50/F, Mei Lam Court Phase 10, City One Shatin Sha Tin, New Territories, Hong Kong',
+            ]);
+        $user->student->classes()->sync(
+            [
+                ClassModel::where('academic_year', 2024)->where('class_code', '1A')->where('programme_id', $programme->id)->first()->id,
+                ClassModel::where('academic_year', 2025)->where('class_code', '2A')->where('programme_id', $programme->id)->first()->id,
             ]);
 
         /** @var User */
