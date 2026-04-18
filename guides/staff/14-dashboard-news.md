@@ -24,10 +24,6 @@ From Dashboard navigation, users can access:
 
 Use All Articles for article operations and Home Carousel for homepage slide management.
 
-> Image placeholder: Dashboard navigation to news and carousel pages.
-
-![Dashboard news navigation](./images/14-dashboard-news-navigation.png)
-
 ## 14.3 News List Page
 The News list page is the main management index for article records.
 
@@ -42,8 +38,6 @@ Table columns:
 - Title
 - Status
 - Published on
-
-> Image placeholder: News list page overview.
 
 ![News list overview](./images/14-dashboard-news-list-overview.png)
 
@@ -67,8 +61,6 @@ Sorting is available on table columns and influences output order.
 Operational note:
 - Current implementation includes repeated status-order logic in published date sorting path. Validate resulting order with actual list behavior when auditing published schedules.
 
-> Image placeholder: News filters drawer and applied filter state.
-
 ![News list filters](./images/14-dashboard-news-list-filters.png)
 
 ## 14.5 Row Actions
@@ -88,8 +80,6 @@ The article editor supports multilingual content and publication metadata.
 Page mode labels:
 - Create Article
 - Update Article
-
-> Image placeholder: News article edit page.
 
 ![News article edit](./images/14-dashboard-news-edit-overview.png)
 
@@ -144,8 +134,6 @@ Table columns:
 - Link URL
 - Status
 - Position
-
-> Image placeholder: Carousel list and ordering controls.
 
 ![Carousel list management](./images/14-dashboard-news-carousel-list.png)
 

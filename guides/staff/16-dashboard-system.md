@@ -22,10 +22,6 @@ From Dashboard System Management area, users can access:
 Staff Members controls staff/admin account records and permissions.
 Password Reset allows admins/staff (with access) to reset non-admin account passwords.
 
-> Image placeholder: Dashboard system management navigation.
-
-![Dashboard system navigation](./images/16-dashboard-system-navigation.png)
-
 ## 16.3 Password Reset Page
 Page title: Password Reset
 Subtitle: Reset password for non-admin users
@@ -41,8 +37,6 @@ Form fields:
 
 Action:
 - Reset Password button
-
-> Image placeholder: Password reset page with completed form.
 
 ![Password reset page](./images/16-dashboard-system-password-reset.png)
 
@@ -85,8 +79,6 @@ Table columns:
 - Permissions
 - Created
 
-> Image placeholder: Staff members list overview.
-
 ![Staff members list](./images/16-dashboard-system-staff-list-overview.png)
 
 ## 16.6 Search, Filters, and Sorting
@@ -114,8 +106,6 @@ Supported sort keys include:
 
 Locale note:
 - Name sort/display logic adapts to locale preference (Chinese vs non-Chinese name priority).
-
-> Image placeholder: Staff filters drawer and active results.
 
 ![Staff list filters](./images/16-dashboard-system-staff-list-filters.png)
 
@@ -147,8 +137,6 @@ Use this page to create or update staff/admin accounts.
 Page subtitles:
 - Create Staff Member
 - Update Staff Member
-
-> Image placeholder: Staff create/edit page overview.
 
 ![Staff edit page](./images/16-dashboard-system-staff-edit-overview.png)
 

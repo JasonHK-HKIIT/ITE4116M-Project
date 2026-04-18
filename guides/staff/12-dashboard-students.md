@@ -20,10 +20,6 @@ From Dashboard navigation, open Student Management pages through:
 - Create Student
 - Batch Import
 
-> Image placeholder: Dashboard navigation routes to student pages.
-
-![Dashboard students navigation](./images/12-dashboard-students-navigation.png)
-
 ## 12.3 Students List Page
 The Students list page is the main workspace for searching, filtering, reviewing, editing, and deleting student records.
 
@@ -41,8 +37,6 @@ Table columns:
 - Campus
 - Classes
 - Programmes
-
-> Image placeholder: Students list page overview.
 
 ![Students list overview](./images/12-dashboard-students-list-overview.png)
 
@@ -69,8 +63,6 @@ Drawer actions:
 Operational note:
 - Name display behavior is locale-aware (Chinese locale prioritizes Chinese name when available).
 
-> Image placeholder: Search/filter/sort controls in use.
-
 ![Students filter and sort](./images/12-dashboard-students-list-filters.png)
 
 ## 12.5 Row Actions
@@ -90,8 +82,6 @@ Use this page to create a new student or update an existing student profile.
 Page mode labels:
 - Create Student
 - Update Student
-
-> Image placeholder: Student create/edit page overview.
 
 ![Student edit page](./images/12-dashboard-students-edit-overview.png)
 
@@ -140,8 +130,6 @@ Key components:
 - Download Sample CSV button
 - Import summary stats (Processed/Imported/Skipped)
 - Import log table (row-level result)
-
-> Image placeholder: Batch import page overview.
 
 ![Batch import students overview](./images/12-dashboard-students-import-overview.png)
 

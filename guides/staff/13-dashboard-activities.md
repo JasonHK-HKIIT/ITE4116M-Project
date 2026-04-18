@@ -20,10 +20,6 @@ From Dashboard navigation, activities management is available through:
 
 The list page is the operational index for filtering and record actions, while the edit page handles full activity configuration.
 
-> Image placeholder: Dashboard navigation to Activities module.
-
-![Dashboard activities navigation](./images/13-dashboard-activities-navigation.png)
-
 ## 13.3 Activities List Page
 The Activities list page displays activity records with search, filters, sorting, and row actions.
 
@@ -40,8 +36,6 @@ Table columns:
 - Instructor
 - Registration Start Date
 - Registration End Date
-
-> Image placeholder: Activities list overview.
 
 ![Activities list overview](./images/13-dashboard-activities-list-overview.png)
 
@@ -72,8 +66,6 @@ List supports sorting by:
 Operational note:
 - Date sorting logic is toggled by sort direction and can appear inverted compared with typical ascending/descending expectations.
 
-> Image placeholder: Filter drawer and active filter badge.
-
 ![Activities filters and status](./images/13-dashboard-activities-list-filters.png)
 
 ## 13.5 Row Actions
@@ -94,8 +86,6 @@ The activity form supports multilingual fields and comprehensive event configura
 Page mode:
 - Create Activity
 - Update Activity
-
-> Image placeholder: Activity edit page full layout.
 
 ![Activity edit overview](./images/13-dashboard-activities-edit-overview.png)
 
@@ -164,8 +154,6 @@ Create-mode behavior:
 
 Update-mode behavior:
 - Existing file can be replaced or deleted.
-
-> Image placeholder: Attachment upload and file action block.
 
 ![Activity attachment management](./images/13-dashboard-activities-attachment.png)
 

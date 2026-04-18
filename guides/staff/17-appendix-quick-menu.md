@@ -30,8 +30,6 @@ Dropdown actions:
 - Change Password
 - Sign Out
 
-> Image placeholder: Sidebar user row and quick menu trigger for staff/admin.
-
 ![Staff admin quick menu trigger](./images/17-appendix-quick-menu-staff-trigger.png)
 
 ## 17.3 Open the Quick Menu
@@ -39,8 +37,6 @@ Dropdown actions:
 2. Locate the user profile row.
 3. Select the quick menu icon.
 4. Review the dropdown options.
-
-> Image placeholder: Open quick menu dropdown.
 
 ![Staff admin quick menu dropdown](./images/17-appendix-quick-menu-staff-dropdown.png)
 
@@ -56,8 +52,6 @@ How to use:
 2. Select Appearance.
 3. Apply desired appearance settings.
 
-> Image placeholder: Appearance panel after quick menu action.
-
 ![Staff admin appearance panel](./images/17-appendix-quick-menu-staff-appearance.png)
 
 ## 17.5 Change Password Option
@@ -72,10 +66,6 @@ Operational recommendation:
 - Rotate staff/admin passwords periodically.
 - Use strong passwords with institutional policy compliance.
 
-> Image placeholder: Change password page opened from quick menu.
-
-![Staff admin change password](./images/17-appendix-quick-menu-staff-password.png)
-
 ## 17.6 Sign Out Option
 Selecting Sign Out ends the current session.
 
@@ -85,10 +75,6 @@ How to use:
 3. Confirm return to unauthenticated/login state.
 
 This is required when using shared office workstations.
-
-> Image placeholder: Sign out action and post-sign-out screen.
-
-![Staff admin sign out](./images/17-appendix-quick-menu-staff-signout.png)
 
 ## 17.7 Usage Context Across Layouts
 The same sidebar-user quick menu component is reused in both:

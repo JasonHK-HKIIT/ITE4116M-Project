@@ -20,10 +20,6 @@ From Dashboard navigation, resources management is accessed through:
 
 Use All Resources for discovery and maintenance. Use Create Resource to add a new document group.
 
-> Image placeholder: Dashboard navigation to Resources Centre management.
-
-![Dashboard resources navigation](./images/15-dashboard-resources-navigation.png)
-
 ## 15.3 Resources List Page
 The list page displays resource document groups and latest update date.
 
@@ -37,8 +33,6 @@ Main features:
 Table columns:
 - Document Group
 - Latest Release
-
-> Image placeholder: Resources list page overview.
 
 ![Resources list overview](./images/15-dashboard-resources-list-overview.png)
 
@@ -58,8 +52,6 @@ Drawer actions:
 Operational note:
 - Filtered results are sorted by latest update descending.
 
-> Image placeholder: Resources filter drawer.
-
 ![Resources filters](./images/15-dashboard-resources-list-filters.png)
 
 ## 15.5 Expand Row and Review Files
@@ -72,8 +64,6 @@ Expanded row displays:
 - Download action
 
 If no files exist, the row shows No files uploaded.
-
-> Image placeholder: Expanded row with multilingual files.
 
 ![Resources row expansion](./images/15-dashboard-resources-list-expansion.png)
 
@@ -94,8 +84,6 @@ Page structure:
 - Title field per language
 - Existing files block per language
 - Pending upload list per language
-
-> Image placeholder: Resource edit page overview.
 
 ![Resource edit overview](./images/15-dashboard-resources-edit-overview.png)
 
@@ -140,8 +128,6 @@ On save:
 Success outcomes:
 - Update mode: Resource was updated.
 - Create mode: Resource was created and redirects to edit page.
-
-> Image placeholder: Existing files, pending delete, and pending upload states.
 
 ![Resource file management states](./images/15-dashboard-resources-edit-files.png)
 

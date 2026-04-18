@@ -27,8 +27,6 @@ Form fields:
 - New Password
 - Confirm New Password
 
-> Image placeholder: Change Password page in staff/admin context.
-
 ![Staff admin change password overview](./images/18-appendix-change-password-staff-overview.png)
 
 ## 18.3 Access Path
@@ -49,8 +47,6 @@ On successful update:
 - Current account password is changed.
 - Form fields are reset.
 - Success message appears: Password has been updated.
-
-> Image placeholder: Password form with all fields completed.
 
 ![Staff admin change password form](./images/18-appendix-change-password-staff-form.png)
 

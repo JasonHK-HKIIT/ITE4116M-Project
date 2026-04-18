@@ -55,26 +55,21 @@ This guide indicates visibility differences such as:
 
 Always verify account role before assuming access behavior.
 
-## 0.7 Visual Placeholders and PDF Build
-Image placeholders are included to support screenshot insertion before generating final PDFs.
-
-Placeholder images are intentionally referenced in each chapter and should be replaced with current UI captures.
-
-## 0.8 Conventions Used in This Guide
+## 0.7 Conventions Used in This Guide
 For consistency and auditability:
 - Numbered procedures define required sequence
 - UI labels match on-screen text
 - Workflow sections focus on operational tasks
 - Troubleshooting is grouped by common failure scenarios
 
-## 0.9 Security and Governance Reminder
+## 0.8 Security and Governance Reminder
 Staff/admin users should apply strict operational controls:
 - Use least-privilege access practices
 - Protect account credentials and session security
 - Validate critical data updates before save/publish
 - Sign out from shared or unattended devices
 
-## 0.10 Support and Escalation Baseline
+## 0.9 Support and Escalation Baseline
 When raising issues, prepare:
 - Username and role
 - Module/page and task attempted
@@ -84,7 +79,7 @@ When raising issues, prepare:
 
 Providing complete context improves issue triage speed and resolution quality.
 
-## 0.11 Version and Change Management
+## 0.10 Version and Change Management
 This guide should be reviewed after system updates, workflow changes, or role policy adjustments.
 
 Keeping documentation synchronized with live behavior is essential for stable operations and training quality.

@@ -33,10 +33,6 @@ Secondary pages:
 - Create/Edit Module
 - Create/Edit Class
 
-> Image placeholder: Dashboard Academic Structure navigation map.
-
-![Academic structure navigation](./images/11-dashboard-academic-navigation.png)
-
 ## 11.3 Common Interface Patterns
 Most list pages share these UI patterns:
 - Header with title/subtitle
@@ -84,8 +80,6 @@ Delete action removes the selected institute.
 Operational note:
 - Ensure institute dependency checks are completed before deletion.
 
-> Image placeholder: Institutes list and modal form.
-
 ![Institutes management](./images/11-dashboard-academic-institutes.png)
 
 ## 11.5 Campuses Management
@@ -114,8 +108,6 @@ Modal title changes by mode:
 
 ### 11.5.3 Delete Campus
 Delete action removes the selected campus.
-
-> Image placeholder: Campuses list and modal form.
 
 ![Campuses management](./images/11-dashboard-academic-campuses.png)
 
@@ -155,8 +147,6 @@ Delete is available on list row action.
 If in use:
 - System shows an error message and deletion is blocked.
 
-> Image placeholder: Programmes list and edit form.
-
 ![Programmes management](./images/11-dashboard-academic-programmes.png)
 
 ## 11.7 Modules Management
@@ -194,8 +184,6 @@ Delete is available from list row action.
 
 If referenced by dependencies:
 - System blocks deletion and shows error message.
-
-> Image placeholder: Modules list and edit form.
 
 ![Modules management](./images/11-dashboard-academic-modules.png)
 
@@ -239,8 +227,6 @@ Delete is available from list row actions.
 
 If class is in use:
 - System blocks deletion and shows message indicating in-use constraints.
-
-> Image placeholder: Classes list and edit form.
 
 ![Classes management](./images/11-dashboard-academic-classes.png)
 
