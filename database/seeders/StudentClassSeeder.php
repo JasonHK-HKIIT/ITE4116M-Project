@@ -12,6 +12,7 @@ class StudentClassSeeder extends Seeder
      */
     public function run(): void
     {
+
         $user = \App\Models\User::where('username', '240155170')->first();
         $programme = \App\Models\Programme::where('programme_code', 'IT114105')->first();// Higher Diploma in Software Engineering
         if ($user) {
