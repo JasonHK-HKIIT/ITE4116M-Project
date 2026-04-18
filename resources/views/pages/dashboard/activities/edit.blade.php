@@ -93,12 +93,6 @@ class extends Component
 
     public ?string $attachment_display = null;
 
-    public function configExecutionFrom(): array
-    {
-        return [
-            'minDate' => 'today'
-        ];
-    }
 
     #[Computed]
     public function types(): array
@@ -447,7 +441,6 @@ class extends Component
             'statuses' => $this->statuses(),
             'instructors' => $this->instructors(),
             'staff' => $this->staff(),
-            'configExecutionFrom' => $this->configExecutionFrom(),
 
         ];
     }
@@ -487,13 +480,13 @@ class extends Component
                         <x-select :label="__('activities.form.responsible_staff')" wire:model="responsible_staff" :options="$staff" option-value="id" option-label="name" />
                         
                         <!-- Execution Period -->
-                        <x-datepicker :label="__('activities.form.execution_from')" wire:model="execution_from" :config="$configExecutionFrom" />
-                        <x-datepicker :label="__('activities.form.execution_to')" wire:model="execution_to" :config="$configExecutionFrom" />
+                        <x-datepicker :label="__('activities.form.execution_from')" wire:model="execution_from" />
+                        <x-datepicker :label="__('activities.form.execution_to')" wire:model="execution_to"  />
                         
                         <!-- Time Slot -->
-                        <x-datepicker :label="__('activities.form.time_slot_from_date')" wire:model.live="time_slot_from_date" :config="$configExecutionFrom"/>
+                        <x-datepicker :label="__('activities.form.time_slot_from_date')" wire:model.live="time_slot_from_date"/>
                         <x-input type="time" :label="__('activities.form.time_slot_from_time')" wire:model.live="time_slot_from_time" />
-                        <x-datepicker :label="__('activities.form.time_slot_to_date')" wire:model.live="time_slot_to_date" :config="$configExecutionFrom" />
+                        <x-datepicker :label="__('activities.form.time_slot_to_date')" wire:model.live="time_slot_to_date" />
                         <x-input type="time" :label="__('activities.form.time_slot_to_time')" wire:model.live="time_slot_to_time" />
                         <x-input type="number" :label="__('activities.form.duration_hours')" wire:model="duration_hours" min="0" step="0.5"  />
 
