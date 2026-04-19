@@ -1,0 +1,137 @@
+classDiagram
+
+class StudentsEditPageComponent {
+  <<Livewire Anonymous Component>>
+  +bool exists
+  +Student student
+  +string username
+  +string family_name
+  +string given_name
+  +string? chinese_name
+  +string? gender
+  +string? date_of_birth
+  +string? nationality
+  +string? mother_tongue
+  +string? tel_no
+  +string? mobile_no
+  +string? address
+  +int|string|null institute_id
+  +int|string|null campus_id
+  +int|string|null programme_id
+  +array class_ids
+  +mount(user) void
+  +institutes() Collection
+  +campuses() Collection
+  +programmes() Collection
+  +classes() Collection
+  +rules() array
+  +updatedInstituteId(value) void
+  +updatedCampusId() void
+  +updatedProgrammeId() void
+  +pruneClassIds() void
+  +save() void
+  +with() array
+}
+
+class Student {
+  +int id
+  +int user_id
+  +int institute_id
+  +int campus_id
+  +string? gender
+  +date? date_of_birth
+  +string? nationality
+  +string? mother_tongue
+  +string? tel_no
+  +string? mobile_no
+  +string? address
+  +user() BelongsTo
+  +classes() BelongsToMany
+  +institute() BelongsTo
+  +campus() BelongsTo
+}
+
+class User {
+  +int id
+  +string username
+  +string family_name
+  +string given_name
+  +string? chinese_name
+  +string password
+  +Role role
+  +student() HasOne
+}
+
+class ClassModel {
+  <<table: classes>>
+  +int id
+  +string class_code
+  +int academic_year
+  +int institute_id
+  +int campus_id
+  +int programme_id
+  +programme() BelongsTo
+  +students() BelongsToMany
+}
+
+class Programme {
+  +int id
+  +int institute_id
+  +string programme_code
+  +institute() BelongsTo
+}
+
+class Institute {
+  +int id
+  +campuses() BelongsToMany
+}
+
+class Campus {
+  +int id
+  +institutes() BelongsToMany
+}
+
+class Role {
+  <<enum>>
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+class StudentClass {
+  +int student_id
+  +int class_id
+}
+
+class InstituteCampus {
+  +int institute_id
+  +int campus_id
+}
+
+StudentsEditPageComponent ..> Student : create/update
+StudentsEditPageComponent ..> User : create/update
+StudentsEditPageComponent ..> ClassModel : filter/select/sync
+StudentsEditPageComponent ..> Programme : filter/select
+StudentsEditPageComponent ..> Institute : filter/select
+StudentsEditPageComponent ..> Campus : filter/select
+StudentsEditPageComponent ..> Role : assign STUDENT
+
+Student "*" --> "1" User : belongsTo
+User "1" --> "0..1" Student : hasOne
+Student "*" --> "0..1" Institute : belongsTo
+Student "*" --> "0..1" Campus : belongsTo
+Student "*" -- "*" ClassModel : student_classes
+
+ClassModel "*" --> "1" Programme : belongsTo
+ClassModel "*" --> "1" Institute : belongsTo
+ClassModel "*" --> "1" Campus : belongsTo
+
+Programme "*" --> "1" Institute : belongsTo
+Institute "*" -- "*" Campus : institute_campus
+
+StudentClass .. Student : pivot
+StudentClass .. ClassModel : pivot
+InstituteCampus .. Institute : pivot
+InstituteCampus .. Campus : pivot
+
+User ..> Role : role cast

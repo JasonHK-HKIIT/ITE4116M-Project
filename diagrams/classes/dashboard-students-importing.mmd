@@ -1,0 +1,112 @@
+classDiagram
+
+class StudentsImportPageComponent {
+  <<Livewire Anonymous Component>>
+  +TemporaryUploadedFile? csv
+  +array logs
+  +int processedRows
+  +int importedRows
+  +int skippedRows
+  +render()
+  +import() void
+  +downloadSample()
+  +resetImportStats() void
+  +readCsv(file) array
+  +isEmptyCsvRow(data) bool
+  +normalizeRow(row) array
+  +validateRow(row) array
+  +addLog(row, username, status, message) void
+  +expectedHeaders() array
+}
+
+class User {
+  +int id
+  +string username
+  +string password
+  +string family_name
+  +string given_name
+  +string? chinese_name
+  +Role role
+  +student() HasOne
+}
+
+class Student {
+  +int id
+  +int user_id
+  +string? gender
+  +date? date_of_birth
+  +string? nationality
+  +string? mother_tongue
+  +string? tel_no
+  +string? mobile_no
+  +string? address
+  +int institute_id
+  +int campus_id
+  +user() BelongsTo
+  +classes() BelongsToMany
+}
+
+class ClassModel {
+  <<table: classes>>
+  +int id
+  +int institute_id
+  +int campus_id
+  +int programme_id
+}
+
+class Institute {
+  +int id
+}
+
+class Campus {
+  +int id
+}
+
+class Programme {
+  +int id
+  +int institute_id
+}
+
+class Role {
+  <<enum>>
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+class StudentClass {
+  +int student_id
+  +int class_id
+}
+
+class InstituteCampus {
+  +int institute_id
+  +int campus_id
+}
+
+class ImportLogEntry {
+  +int row
+  +string username
+  +string status
+  +string message
+}
+
+StudentsImportPageComponent ..> User : creates account per row
+StudentsImportPageComponent ..> Student : creates profile per row
+StudentsImportPageComponent ..> Role : assigns STUDENT role
+StudentsImportPageComponent ..> ImportLogEntry : appends result logs
+StudentsImportPageComponent ..> Institute : validates institute_id exists
+StudentsImportPageComponent ..> Campus : validates campus_id exists
+StudentsImportPageComponent ..> Programme : validates programme_id exists
+StudentsImportPageComponent ..> ClassModel : validates class_ids exist
+
+User "1" --> "0..1" Student : hasOne
+Student "*" --> "1" User : belongsTo
+Student "*" -- "*" ClassModel : student_classes
+
+StudentClass .. Student : pivot
+StudentClass .. ClassModel : pivot
+InstituteCampus .. Institute : pivot validation
+InstituteCampus .. Campus : pivot validation
+
+User ..> Role : role cast

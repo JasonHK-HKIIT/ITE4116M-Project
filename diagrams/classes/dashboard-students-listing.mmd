@@ -1,0 +1,126 @@
+classDiagram
+
+class StudentsListPageComponent {
+  <<Livewire Anonymous Component>>
+  +array sortBy
+  +int perPage
+  +bool isDrawerOpened
+  +string? keywords
+  +int|string|null institute_id
+  +int|string|null campus_id
+  +headers() array
+  +institutes() array
+  +campuses() array
+  +students() LengthAwarePaginator
+  +updatedInstituteId(value) void
+  +deleteStudent(id) void
+  +clear() void
+  +with() array
+}
+
+class Student {
+  +int id
+  +int user_id
+  +int institute_id
+  +int campus_id
+  +user() BelongsTo
+  +classes() BelongsToMany
+  +modules() BelongsToMany
+  +programmes()
+  +institute() BelongsTo
+  +campus() BelongsTo
+}
+
+class User {
+  +int id
+  +string username
+  +string family_name
+  +string given_name
+  +string chinese_name
+  +student() HasOne
+}
+
+class ClassModel {
+  <<table: classes>>
+  +int id
+  +string class_code
+  +int academic_year
+  +int institute_id
+  +int campus_id
+  +int programme_id
+  +programme() BelongsTo
+  +students() BelongsToMany
+}
+
+class Programme {
+  +int id
+  +int institute_id
+  +string programme_code
+  +institute() BelongsTo
+  +modules() BelongsToMany
+  +programmeTranslation() HasMany
+}
+
+class Institute {
+  +int id
+  +instituteTranslation() HasMany
+  +campuses() BelongsToMany
+}
+
+class Campus {
+  +int id
+  +campusTranslation() HasMany
+  +institutes() BelongsToMany
+}
+
+class StudentClass {
+  +int student_id
+  +int class_id
+}
+
+class InstituteCampus {
+  +int institute_id
+  +int campus_id
+}
+
+class ProgrammeTranslation {
+  +int programme_id
+  +string locale
+  +string name
+}
+
+class InstituteTranslation {
+  +int institute_id
+  +string locale
+  +string name
+}
+
+class CampusTranslation {
+  +int campus_id
+  +string locale
+  +string name
+}
+
+StudentsListPageComponent ..> Student : query/filter/sort/paginate
+StudentsListPageComponent ..> Institute : filter options
+StudentsListPageComponent ..> Campus : filter options
+StudentsListPageComponent ..> User : joined for sorting/search
+StudentsListPageComponent ..> ClassModel : eager load classes.programme
+
+Student "*" --> "1" User : belongsTo
+User "1" --> "0..1" Student : hasOne
+Student "*" --> "0..1" Institute : belongsTo
+Student "*" --> "0..1" Campus : belongsTo
+Student "*" -- "*" ClassModel : student_classes
+ClassModel "*" --> "0..1" Programme : belongsTo
+
+Institute "*" -- "*" Campus : institute_campus
+Programme "*" --> "1" Institute : belongsTo
+Programme "1" --> "*" ProgrammeTranslation : hasMany
+Institute "1" --> "*" InstituteTranslation : hasMany
+Campus "1" --> "*" CampusTranslation : hasMany
+
+StudentClass .. Student : pivot
+StudentClass .. ClassModel : pivot
+InstituteCampus .. Institute : pivot
+InstituteCampus .. Campus : pivot

@@ -1,0 +1,106 @@
+classDiagram
+
+class ClassesListPageComponent {
+  <<Livewire Anonymous Component>>
+  +array sortBy
+  +int perPage
+  +bool isDrawerOpened
+  +string? keywords
+  +int|string|null institute_id
+  +int|string|null campus_id
+  +int|string|null programme_id
+  +headers() array
+  +institutes() array
+  +campuses() array
+  +programmes() array
+  +classes() LengthAwarePaginator
+  +updatedInstituteId(value) void
+  +deleteClass(id) void
+  +clear() void
+  +with() array
+}
+
+class ClassModel {
+  <<table: classes>>
+  +int id
+  +string class_code
+  +string academic_year
+  +int institute_id
+  +int campus_id
+  +int programme_id
+  +institute() BelongsTo
+  +campus() BelongsTo
+  +programme() BelongsTo
+  +students() BelongsToMany
+}
+
+class Institute {
+  +int id
+  +instituteTranslation() HasMany
+  +campuses() BelongsToMany
+}
+
+class Campus {
+  +int id
+  +campusTranslation() HasMany
+  +institutes() BelongsToMany
+}
+
+class Programme {
+  +int id
+  +int institute_id
+  +string programme_code
+  +institute() BelongsTo
+  +modules() BelongsToMany
+  +programmeTranslation() HasMany
+}
+
+class Student {
+  +int id
+  +int user_id
+  +classes() BelongsToMany
+  +institute() BelongsTo
+  +campus() BelongsTo
+}
+
+class InstituteCampus {
+  +int institute_id
+  +int campus_id
+}
+
+class CampusTranslation {
+  +int campus_id
+  +string locale
+  +string name
+}
+
+class InstituteTranslation {
+  +int institute_id
+  +string locale
+  +string name
+}
+
+class ProgrammeTranslation {
+  +int programme_id
+  +string locale
+  +string name
+}
+
+ClassesListPageComponent ..> ClassModel : query/filter/sort/paginate
+ClassesListPageComponent ..> Institute : institute filter options
+ClassesListPageComponent ..> Campus : campus filter options
+ClassesListPageComponent ..> Programme : programme filter options
+
+ClassModel "*" --> "0..1" Institute : belongsTo
+ClassModel "*" --> "0..1" Campus : belongsTo
+ClassModel "*" --> "0..1" Programme : belongsTo
+ClassModel "*" -- "*" Student : student_classes
+
+Institute "*" -- "*" Campus : institute_campus
+Institute "1" --> "*" InstituteTranslation : hasMany
+Campus "1" --> "*" CampusTranslation : hasMany
+Programme "1" --> "*" ProgrammeTranslation : hasMany
+Programme "*" --> "1" Institute : belongsTo
+
+InstituteCampus .. Institute : pivot
+InstituteCampus .. Campus : pivot

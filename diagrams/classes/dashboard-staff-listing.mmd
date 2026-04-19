@@ -1,0 +1,65 @@
+classDiagram
+
+class StaffListPageComponent {
+  <<Livewire Anonymous Component>>
+  +array sortBy
+  +int perPage
+  +bool isDrawerOpened
+  +string? keywords
+  +string? role
+  +string? permission
+  +headers() array
+  +roleOptions() array
+  +permissionOptions() array
+  +staffMembers() LengthAwarePaginator
+  +deleteStaff(id) void
+  +clear() void
+  +permissionLabel(permission) string
+  +with() array
+}
+
+class User {
+  +int id
+  +string username
+  +string family_name
+  +string given_name
+  +string? chinese_name
+  +Role role
+  +datetime created_at
+  +permissions() HasMany
+  +hasRole(role) bool
+  +hasPermission(permission) bool
+}
+
+class UserPermission {
+  +int user_id
+  +Permission permission
+  +user() BelongsTo
+}
+
+class Role {
+  <<enum>>
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+class Permission {
+  <<enum>>
+  Calendar
+  AcademicStructure
+  StudentsManagement
+  StudentActivities
+  NewsAnnouncement
+  ResourcesCentre
+}
+
+StaffListPageComponent ..> User : query/filter/sort/paginate
+StaffListPageComponent ..> Role : role filters and labels
+StaffListPageComponent ..> Permission : permission filters and labels
+StaffListPageComponent ..> UserPermission : eager load and filter via whereHas
+
+User "1" --> "*" UserPermission : hasMany
+UserPermission "*" --> "1" User : belongsTo
+User ..> Role : role cast
+UserPermission ..> Permission : permission cast

@@ -1,0 +1,78 @@
+classDiagram
+
+class ModulesListPageComponent {
+  <<Livewire Anonymous Component>>
+  +array sortBy
+  +int perPage
+  +bool isDrawerOpened
+  +string? keywords
+  +int|string|null institute_id
+  +headers() array
+  +institutes() array
+  +modules() LengthAwarePaginator
+  +deleteModule(id) void
+  +clear() void
+  +with() array
+}
+
+class Module {
+  +int id
+  +int institute_id
+  +string module_code
+  +institute() BelongsTo
+  +programmes() BelongsToMany
+  +moduleTranslation() HasMany
+}
+
+class Institute {
+  +int id
+  +instituteTranslation() HasMany
+  +campuses() BelongsToMany
+}
+
+class Programme {
+  +int id
+  +int institute_id
+  +string programme_code
+  +institute() BelongsTo
+  +modules() BelongsToMany
+  +programmeTranslation() HasMany
+}
+
+class ModuleTranslation {
+  +int module_id
+  +string locale
+  +string name
+}
+
+class ProgrammeTranslation {
+  +int programme_id
+  +string locale
+  +string name
+}
+
+class ProgrammeModule {
+  +int programme_id
+  +int module_id
+}
+
+class InstituteTranslation {
+  +int institute_id
+  +string locale
+  +string name
+}
+
+ModulesListPageComponent ..> Module : query/filter/sort/paginate
+ModulesListPageComponent ..> Institute : filter options
+ModulesListPageComponent ..> ModuleTranslation : translated name search/sort
+
+Module "*" --> "1" Institute : belongsTo
+Module "*" -- "*" Programme : belongsToMany via programme_modules
+Module "1" --> "*" ModuleTranslation : hasMany
+
+Programme "*" --> "1" Institute : belongsTo
+Programme "1" --> "*" ProgrammeTranslation : hasMany
+Institute "1" --> "*" InstituteTranslation : hasMany
+
+ProgrammeModule .. Module : pivot
+ProgrammeModule .. Programme : pivot

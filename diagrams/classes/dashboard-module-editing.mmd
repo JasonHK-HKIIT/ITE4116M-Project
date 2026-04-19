@@ -1,0 +1,90 @@
+classDiagram
+
+class ModulesEditPageComponent {
+  <<Livewire Anonymous Component>>
+  +string selectedLanguage
+  +bool exists
+  +Module module
+  +array name
+  +string module_code
+  +int|string|null institute_id
+  +array programme_ids
+  +mount(module) void
+  +render()
+  +institutes() Collection
+  +programmes() Collection
+  +rules() array
+  +validationAttributes() array
+  +updatedInstituteId(value) void
+  +save() void
+  +with() array
+}
+
+class Module {
+  +int id
+  +int institute_id
+  +string module_code
+  +array translatedAttributes
+  +institute()
+  +programmes()
+  +moduleTranslation()
+  +getTranslationsArray() array
+}
+
+class Programme {
+  +int id
+  +int institute_id
+  +string programme_code
+  +institute()
+  +modules()
+  +programmeTranslation()
+}
+
+class Institute {
+  +int id
+  +instituteTranslation()
+  +campuses()
+}
+
+class ModuleTranslation {
+  +int module_id
+  +string locale
+  +string name
+}
+
+class ProgrammeTranslation {
+  +int programme_id
+  +string locale
+  +string name
+}
+
+class ProgrammeModule {
+  +int programme_id
+  +int module_id
+}
+
+class LocalesHelper {
+  <<helper>>
+  +locales() array
+  +buildPropertyValue() array
+  +buildRules(field, rules) array
+  +buildValidationAttributes(field) array
+  +transformToProperties(translations) array
+  +transformToModelFields(validated, translatedAttributes) array
+}
+
+ModulesEditPageComponent ..> Module : load/edit/save
+ModulesEditPageComponent ..> Institute : list for select
+ModulesEditPageComponent ..> Programme : list/filter by institute
+ModulesEditPageComponent ..> LocalesHelper : i18n mapping and validation
+ModulesEditPageComponent ..> ModuleTranslation : translated name persistence
+
+Module "*" --> "1" Institute : belongsTo
+Module "*" -- "*" Programme : belongsToMany via programme_modules
+Module "1" --> "*" ModuleTranslation : hasMany
+
+Programme "*" --> "1" Institute : belongsTo
+Programme "1" --> "*" ProgrammeTranslation : hasMany
+
+ProgrammeModule .. Module : pivot
+ProgrammeModule .. Programme : pivot

@@ -1,0 +1,126 @@
+classDiagram
+direction LR
+
+class CalendarViewComponent {
+  +string view
+  +int year
+  +int month
+  +string weekStart
+  +string selectedDay
+  +int selectedEventId
+  +bool showEventModal
+  +mount()
+  +setView(view, date)
+  +prevMonth()
+  +nextMonth()
+  +prevWeek()
+  +nextWeek()
+  +prevDay()
+  +nextDay()
+  +goToday()
+  +openEvent(eventId)
+  +closeEvent()
+}
+
+class CalendarEvent {
+  +int id
+  +int class_id
+  +int student_id
+  +int institute_id
+  +CalendarEventType type
+  +string title
+  +string description
+  +string location
+  +string instructor
+  +datetime start_at
+  +datetime end_at
+  +classModel()
+  +student()
+  +institute()
+}
+
+class Module {
+  +int id
+  +int institute_id
+  +string module_code
+  +translate(locale)
+  +moduleTranslation()
+  +institute()
+  +programmes()
+}
+
+class User {
+  +int id
+  +string username
+  +Role role
+  +student()
+  +permissions()
+  +hasRole(role)
+  +hasAnyRole(roles)
+}
+
+class Student {
+  +int id
+  +int user_id
+  +int institute_id
+  +int campus_id
+  +user()
+  +classes()
+  +modules()
+  +institute()
+  +campus()
+}
+
+class ClassModel {
+  <<table: classes>>
+  +int id
+  +string class_code
+  +int programme_id
+  +students()
+  +programme()
+  +institute()
+  +campus()
+}
+
+class ModuleTranslation {
+  +int module_id
+  +string locale
+  +string name
+}
+
+class Institute {
+  +int id
+}
+
+class CalendarEventType {
+  <<enum>>
+  CLASS_TYPE
+  ACTIVITY
+  INSTITUTE_HOLIDAY
+  PUBLIC_HOLIDAY
+}
+
+class Role {
+  <<enum>>
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+CalendarViewComponent ..> CalendarEvent : query and display
+CalendarViewComponent ..> Module : module names
+CalendarViewComponent ..> User : current user
+CalendarViewComponent ..> Role : admin check
+CalendarViewComponent ..> CalendarEventType : type logic
+
+User "1" --> "0..1" Student : hasOne
+Student "*" --> "1" User : belongsTo
+Student "*" -- "*" ClassModel : student_classes
+CalendarEvent "*" --> "0..1" ClassModel : belongsTo(class_id)
+CalendarEvent "*" --> "0..1" Student : belongsTo(student_id)
+CalendarEvent "*" --> "0..1" Institute : belongsTo(institute_id)
+
+Module "*" --> "1" Institute : belongsTo
+Module "1" --> "*" ModuleTranslation : hasMany
+CalendarEvent ..> CalendarEventType : type cast
+User ..> Role : role cast

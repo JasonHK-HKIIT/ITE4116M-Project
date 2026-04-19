@@ -1,0 +1,88 @@
+classDiagram
+
+class ProgrammeEditPageComponent {
+  <<Livewire Anonymous Component>>
+  +string selectedLanguage
+  +bool exists
+  +Programme programme
+  +array name
+  +string programme_code
+  +int|string|null institute_id
+  +array module_ids
+  +mount(programme) void
+  +render()
+  +institutes() Collection
+  +modules() Collection
+  +rules() array
+  +validationAttributes() array
+  +updatedInstituteId(value) void
+  +save() void
+  +with() array
+}
+
+class Programme {
+  +int id
+  +int institute_id
+  +string programme_code
+  +array translatedAttributes
+  +institute() BelongsTo
+  +modules() BelongsToMany
+  +programmeTranslation() HasMany
+  +getTranslationsArray() array
+}
+
+class Institute {
+  +int id
+  +instituteTranslation() HasMany
+  +campuses() BelongsToMany
+}
+
+class Module {
+  +int id
+  +int institute_id
+  +string module_code
+  +institute() BelongsTo
+  +programmes() BelongsToMany
+  +moduleTranslation() HasMany
+}
+
+class ProgrammeTranslation {
+  +int programme_id
+  +string locale
+  +string name
+}
+
+class ModuleTranslation {
+  +int module_id
+  +string locale
+  +string name
+}
+
+class ProgrammeModule {
+  +int programme_id
+  +int module_id
+}
+
+class LocalesHelper {
+  <<helper>>
+  +locales() array
+  +buildPropertyValue() array
+  +buildRules(field, rules) array
+  +buildValidationAttributes(field) array
+  +transformToProperties(translations) array
+  +transformToModelFields(validated, translatedAttributes) array
+}
+
+ProgrammeEditPageComponent ..> Programme : load/edit/save
+ProgrammeEditPageComponent ..> Institute : list for select
+ProgrammeEditPageComponent ..> Module : list/filter by institute
+ProgrammeEditPageComponent ..> LocalesHelper : i18n field mapping and rules
+ProgrammeEditPageComponent ..> ProgrammeTranslation : localized name validation/persistence
+
+Programme "*" --> "1" Institute : belongsTo
+Programme "*" -- "*" Module : belongsToMany via programme_modules
+Programme "1" --> "*" ProgrammeTranslation : hasMany
+Module "1" --> "*" ModuleTranslation : hasMany
+
+ProgrammeModule .. Programme : pivot
+ProgrammeModule .. Module : pivot

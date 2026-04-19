@@ -1,0 +1,68 @@
+classDiagram
+
+class StaffEditPageComponent {
+  <<Livewire Anonymous Component>>
+  +bool exists
+  +User staff
+  +string username
+  +string family_name
+  +string given_name
+  +string? chinese_name
+  +string role
+  +array permission_keys
+  +mount(staff) void
+  +render()
+  +roleOptions() array
+  +permissionOptions() array
+  +rules() array
+  +updatedRole(value) void
+  +save() void
+  +permissionLabel(permission) string
+  +with() array
+}
+
+class User {
+  +int id
+  +string username
+  +string family_name
+  +string given_name
+  +string? chinese_name
+  +string password
+  +Role role
+  +permissions() HasMany
+  +hasRole(role) bool
+  +hasPermission(permission) bool
+}
+
+class UserPermission {
+  +int user_id
+  +Permission permission
+  +user() BelongsTo
+}
+
+class Role {
+  <<enum>>
+  STUDENT
+  STAFF
+  ADMIN
+}
+
+class Permission {
+  <<enum>>
+  Calendar
+  AcademicStructure
+  StudentsManagement
+  StudentActivities
+  NewsAnnouncement
+  ResourcesCentre
+}
+
+StaffEditPageComponent ..> User : load/create/update staff member
+StaffEditPageComponent ..> Role : role options and validation
+StaffEditPageComponent ..> Permission : permission options and validation
+StaffEditPageComponent ..> UserPermission : create/delete per selected permissions
+
+User "1" --> "*" UserPermission : hasMany
+UserPermission "*" --> "1" User : belongsTo
+User ..> Role : role cast
+UserPermission ..> Permission : permission cast
