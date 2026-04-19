@@ -1,0 +1,33 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Staff List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open staff list page
+    UI->>LW: Initial request
+    LW->>DB: Query staff/admin users with role and permissions
+    DB-->>LW: Paginated staff result
+    LW-->>UI: Render table and filters
+
+    User->>UI: Search/filter/role/permission/sort/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated page result
+    LW-->>UI: Re-render table
+
+    User->>UI: Delete staff account
+    UI->>LW: deleteStaff(id)
+    alt Attempt self-delete
+        LW-->>UI: Error toast
+    else Valid delete
+        LW->>DB: Delete target staff user
+        alt Success
+            DB-->>LW: Deleted
+            LW-->>UI: Success toast
+        else In use
+            DB-->>LW: QueryException
+            LW-->>UI: Error toast
+        end
+    end

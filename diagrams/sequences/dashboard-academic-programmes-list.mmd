@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Programmes List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open programmes page
+    UI->>LW: Initial request
+    LW->>DB: Query programmes (+ institute, modules)
+    DB-->>LW: Paginated result set
+    LW-->>UI: Render table, filters, pagination
+
+    User->>UI: Search/filter/sort/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated paginated result
+    LW-->>UI: Re-render table
+
+    User->>UI: Delete programme
+    UI->>LW: deleteProgramme(id)
+    LW->>DB: Delete record
+    alt Success
+        DB-->>LW: Deleted
+        LW-->>UI: Success toast + refresh
+    else In use
+        DB-->>LW: QueryException
+        LW-->>UI: Error toast
+    end

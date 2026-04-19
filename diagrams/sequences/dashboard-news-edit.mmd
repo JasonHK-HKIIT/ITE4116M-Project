@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as News Edit Page
+    participant LW as Livewire Component
+    participant FS as Media Storage
+    participant DB as Database
+
+    User->>UI: Open create/update news page
+    UI->>LW: mount(article)
+    LW->>DB: Load article and translations (if existing)
+    DB-->>LW: Existing content
+    LW-->>UI: Render multilingual form
+
+    User->>UI: Edit title/content/status/date
+    UI->>LW: Update bound properties
+    LW-->>UI: Keep form state
+
+    User->>UI: Save article
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update article + translations
+    LW->>FS: Replace cover image if uploaded
+    DB-->>LW: Persisted article
+    LW-->>UI: Success toast (new: redirect to edit page)

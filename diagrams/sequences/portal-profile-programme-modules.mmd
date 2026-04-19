@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Programme Modules Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open programme modules page
+    UI->>LW: Initial request
+    LW->>DB: Load student's classes with programmes
+    DB-->>LW: Programmes for student
+    loop For each programme
+        LW->>DB: Load programme modules + translations
+        DB-->>LW: Modules list
+    end
+    LW-->>UI: Render programmes and module cards
+
+    User->>UI: Refresh page
+    UI->>LW: New request
+    LW->>DB: Re-fetch classes/programmes/modules
+    DB-->>LW: Latest data
+    LW-->>UI: Re-render page

@@ -1,0 +1,27 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Students Import Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open students import page
+    UI->>LW: Initial request
+    LW-->>UI: Render CSV upload form
+
+    User->>UI: Upload CSV and start import
+    UI->>LW: import()
+    LW->>LW: Validate file and CSV headers
+    alt Invalid file/header
+        LW-->>UI: Error toast
+    else Valid CSV
+        loop For each row
+            LW->>DB: Validate row and run transaction (create user/student + sync classes)
+            alt Row valid
+                DB-->>LW: Row imported
+            else Row invalid/conflict
+                DB-->>LW: Validation error
+            end
+        end
+        LW-->>UI: Show summary logs (processed/imported/skipped)
+    end

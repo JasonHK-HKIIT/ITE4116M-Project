@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Activities List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open activities list
+    UI->>LW: Initial request
+    LW->>DB: Query activities (paged, sorted, localized)
+    DB-->>LW: Paginated activities
+    LW-->>UI: Render table and filters
+
+    User->>UI: Search/filter/status/date/sort/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated paginated result
+    LW-->>UI: Re-render list
+
+    User->>UI: Delete activity
+    UI->>LW: deleteArticle(id)
+    LW->>DB: Delete activity
+    DB-->>LW: Delete result
+    LW-->>UI: Success toast + refresh

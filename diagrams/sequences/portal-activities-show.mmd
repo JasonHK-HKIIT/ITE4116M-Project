@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Activity Details Page
+    participant LW as Livewire Component
+    participant FS as Storage
+    participant DB as Database
+
+    User->>UI: Open activity details
+    UI->>LW: mount(id)
+    LW->>DB: Find activity by id
+    DB-->>LW: Activity record
+    LW-->>UI: Render tabs and metadata
+
+    User->>UI: View attachment
+    UI->>LW: getAttachmentUrl()
+    LW->>FS: Check public file exists
+    alt File exists
+        FS-->>LW: Exists + URL
+        LW-->>UI: Render attachment link
+    else Missing file
+        FS-->>LW: Not found
+        LW-->>UI: Hide/disable attachment link
+    end
+
+    User->>UI: Change language/tab
+    UI->>LW: changeLanguage(lang) / tab switch
+    LW-->>UI: Re-render localized content

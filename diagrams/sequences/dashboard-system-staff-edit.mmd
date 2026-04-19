@@ -1,0 +1,23 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Staff Edit Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open create/update staff page
+    UI->>LW: mount(staff)
+    LW->>DB: Load staff user and permissions (if existing)
+    DB-->>LW: Existing values
+    LW-->>UI: Render role/permission form
+
+    User->>UI: Change role
+    UI->>LW: updatedRole(value)
+    LW-->>UI: Adjust permission defaults/options
+
+    User->>UI: Save staff account
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update user
+    LW->>DB: Replace permission rows for user
+    DB-->>LW: Persist completed
+    LW-->>UI: Success toast (new: redirect to edit page)

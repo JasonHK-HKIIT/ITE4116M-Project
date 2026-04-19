@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Student Edit Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open create/update student page
+    UI->>LW: mount(user?)
+    LW->>DB: Load student, classes, and related options
+    DB-->>LW: Existing values and option lists
+    LW-->>UI: Render student form
+
+    User->>UI: Change institute/campus/programme
+    UI->>LW: updatedInstituteId()/updatedCampusId()/updatedProgrammeId()
+    LW->>DB: Re-query valid dependent options
+    DB-->>LW: Filtered classes/programmes/campuses
+    LW-->>UI: Re-render dependent fields
+
+    User->>UI: Save student
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update user + student + class links
+    DB-->>LW: Persist completed
+    LW-->>UI: Success toast (new: redirect to edit page)

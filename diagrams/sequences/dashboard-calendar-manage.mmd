@@ -1,0 +1,12 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Calendar Manage Page
+    participant LW as Livewire Component
+
+    User->>UI: Open calendar manage page
+    UI->>LW: Initial request
+    LW-->>UI: Render management cards (classes, activities, institute holidays, public holidays)
+
+    User->>UI: Click one management card
+    UI-->>UI: Navigate to selected calendar management page

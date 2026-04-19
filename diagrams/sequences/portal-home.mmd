@@ -1,78 +1,18 @@
 sequenceDiagram
+    autonumber
     actor User
-    participant View as View Layer<br/>(home.blade.php)
-    participant Controller as Controller Layer<br/>(Livewire Component)
-    participant Auth as Auth Facade
-    participant UserModel as User Model
+    participant UI as Home Page
+    participant LW as Livewire Component
     participant DB as Database
 
-    User->>View: Access /portal/home
-    View->>Controller: Component initialization
-    Controller->>Controller: Component mount (default)
-    
-    Controller-->>View: Render home page
-    
-    View->>Auth: auth()->user()
-    Auth->>DB: Retrieve authenticated user session
-    DB-->>Auth: User session data
-    Auth-->>View: Current user instance
-    
-    View->>UserModel: $user->given_name
-    UserModel-->>View: User's given name
-    
-    View->>View: now()->format('d F Y (l)')
-    View-->>View: Current date formatted
-    
-    View->>View: Build static content:<br/>- Welcome card<br/>- Quick access cards<br/>- Carousel slides<br/>- Service sections
-    
-    View-->>User: Display portal home with:<br/>- Welcome message<br/>- Date display<br/>- Message notification<br/>- Quick access cards<br/>- Image carousel<br/>- Service links
+    User->>UI: Open home page
+    UI->>LW: Initial request
+    LW->>DB: Query active carousel slides
+    DB-->>LW: Slides ordered by position
+    LW-->>UI: Render welcome card and carousel
 
-    User->>View: Click "Calendar" card
-    View->>Controller: wire:navigate to route('portal.calendar')
-    Controller-->>View: Navigate to calendar page
-    View-->>User: Redirect to calendar
-
-    User->>View: Click "Student Activities" card
-    View->>Controller: wire:navigate to route('portal.activities.list')
-    Controller-->>View: Navigate to activities list
-    View-->>User: Redirect to activities
-
-    User->>View: Click "News & Announcement" card
-    View->>Controller: wire:navigate to route('portal.news.list')
-    Controller-->>View: Navigate to news list
-    View-->>User: Redirect to news
-
-    User->>View: Carousel auto-advance (8s interval)
-    View->>View: Update active slide index
-    View-->>User: Display next carousel slide
-
-    User->>View: Click carousel slide
-    View-->>User: Navigate to slide URL
-
-    User->>View: Click "Profile" link
-    View->>Controller: wire:navigate to route('portal.profile.personal-particular')
-    Controller-->>View: Navigate to profile page
-    View-->>User: Redirect to personal particulars
-
-    User->>View: Click "News and Announcement" link
-    View->>Controller: Navigate to route('portal.news.list')
-    Controller-->>View: Navigate to news list
-    View-->>User: Redirect to news
-
-    User->>View: Click "Calendar" link (Student Affairs)
-    View->>Controller: Navigate to route('portal.calendar')
-    Controller-->>View: Navigate to calendar
-    View-->>User: Redirect to calendar
-
-    User->>View: Click "Student Activity" link
-    View->>Controller: Navigate to route('portal.activities.list')
-    Controller-->>View: Navigate to activities
-    View-->>User: Redirect to activities
-
-    User->>View: Click "Resources Centre" link
-    View->>Controller: wire:navigate to route('portal.resources-centre')
-    Controller-->>View: Navigate to resources
-    View-->>User: Redirect to resources centre
-
-    User->>View: Click "VTC Valo" external link
-    View-->>User: Open external URL
+    User->>UI: Refresh / revisit page
+    UI->>LW: New page request
+    LW->>DB: Re-query active slides
+    DB-->>LW: Latest slides
+    LW-->>UI: Re-render home content

@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Classes List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open classes page
+    UI->>LW: Initial request
+    LW->>DB: Query classes (+ institute, campus, programme, students_count)
+    DB-->>LW: Paginated result set
+    LW-->>UI: Render table, filters, pagination
+
+    User->>UI: Search/filter/sort/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated paginated result
+    LW-->>UI: Re-render table
+
+    User->>UI: Delete class
+    UI->>LW: deleteClass(id)
+    LW->>DB: Delete class row
+    alt Success
+        DB-->>LW: Deleted
+        LW-->>UI: Success toast + refresh
+    else In use
+        DB-->>LW: QueryException
+        LW-->>UI: Error toast
+    end

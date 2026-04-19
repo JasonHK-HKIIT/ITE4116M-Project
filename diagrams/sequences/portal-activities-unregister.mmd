@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Activity Unregister Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open unregister URL for activity
+    UI->>LW: mount(id)
+    LW->>DB: Load activity
+    DB-->>LW: Activity record
+    LW->>LW: unregister() auto-run
+
+    LW->>DB: Resolve current student profile
+    alt No student profile
+        DB-->>LW: Student not found
+        LW-->>UI: Error toast
+    else Student exists
+        LW->>DB: Delete activity calendar events
+        LW->>DB: Delete activity registration
+        alt Success
+            DB-->>LW: Rows deleted
+            LW-->>UI: Success toast + redirect to details
+        else Failure
+            DB-->>LW: Exception
+            LW-->>UI: Error toast
+        end
+    end

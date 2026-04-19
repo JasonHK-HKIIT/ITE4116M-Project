@@ -1,0 +1,22 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as News List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open news list
+    UI->>LW: Initial request
+    LW->>DB: Query published news (paged, desc by date)
+    DB-->>LW: Paginated published articles
+    LW-->>UI: Render list and filter drawer
+
+    User->>UI: Search/filter/paginate
+    UI->>LW: Update URL-bound/filter properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated paginated result
+    LW-->>UI: Re-render article list
+
+    User->>UI: Open one article
+    UI->>LW: Navigate to article slug route
+    LW-->>UI: Load article view page

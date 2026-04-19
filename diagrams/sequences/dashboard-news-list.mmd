@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as News List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open news list page
+    UI->>LW: Initial request
+    LW->>DB: Query articles (keywords, status, date range, sort)
+    DB-->>LW: Paginated articles
+    LW-->>UI: Render table and filters
+
+    User->>UI: Search/filter/sort/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated page result
+    LW-->>UI: Re-render list
+
+    User->>UI: Delete article
+    UI->>LW: deleteArticle(id)
+    LW->>DB: Delete article row
+    DB-->>LW: Deleted
+    LW-->>UI: Success toast + refresh

@@ -1,0 +1,19 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Personal Particular Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open personal particular page
+    UI->>LW: Initial request
+    LW->>DB: Load authenticated user's student profile
+    LW->>DB: Load latest class, institute, campus
+    DB-->>LW: Student and related records
+    LW-->>UI: Render personal details table
+
+    User->>UI: Refresh page
+    UI->>LW: New request
+    LW->>DB: Re-fetch latest profile data
+    DB-->>LW: Current records
+    LW-->>UI: Re-render details

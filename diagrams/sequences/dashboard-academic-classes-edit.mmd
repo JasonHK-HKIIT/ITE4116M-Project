@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Class Edit Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open create/update class page
+    UI->>LW: mount(class)
+    LW->>DB: Load class (if existing) + institutes
+    DB-->>LW: Existing values and options
+    LW-->>UI: Render class form
+
+    User->>UI: Choose institute
+    UI->>LW: updatedInstituteId(value)
+    LW->>DB: Query campus and programme options
+    DB-->>LW: Filtered options
+    LW-->>UI: Re-render dependent selects
+
+    User->>UI: Save form
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update class
+    DB-->>LW: Persisted class
+    LW-->>UI: Success toast (new: redirect to edit page)

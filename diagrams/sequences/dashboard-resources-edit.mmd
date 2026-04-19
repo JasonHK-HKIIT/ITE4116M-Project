@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Resource Edit Page
+    participant LW as Livewire Component
+    participant FS as Media Storage
+    participant DB as Database
+
+    User->>UI: Open create/update resource page
+    UI->>LW: mount(resource)
+    LW->>DB: Load resource with translations/media (if existing)
+    DB-->>LW: Existing data
+    LW-->>UI: Render multilingual form and file inputs
+
+    User->>UI: Upload files / mark files for deletion
+    UI->>LW: updatedPendingFiles() / markDeleteMedia()
+    LW-->>UI: Update pending state
+
+    User->>UI: Save resource
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update resource + translations
+    LW->>FS: Add new media and delete marked media
+    DB-->>LW: Persisted resource
+    LW-->>UI: Success toast (new: redirect to edit page)

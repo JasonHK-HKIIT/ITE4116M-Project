@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Programme Edit Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open create/update programme page
+    UI->>LW: mount(programme)
+    LW->>DB: Load programme (if existing) + institute/module options
+    DB-->>LW: Existing values and options
+    LW-->>UI: Render programme form
+
+    User->>UI: Change institute
+    UI->>LW: updatedInstituteId(value)
+    LW->>DB: Filter available modules by institute
+    DB-->>LW: Allowed modules
+    LW-->>UI: Re-render module multiselect
+
+    User->>UI: Save programme
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update programme + module links
+    DB-->>LW: Persisted programme
+    LW-->>UI: Success toast (new: redirect to edit page)

@@ -1,0 +1,34 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Login Page
+    participant LW as Livewire Component
+    participant Auth as Auth Guard
+    participant DB as Database
+
+    User->>UI: Open login page
+    UI->>LW: mount()
+    LW->>Auth: Check existing authenticated user
+    alt Already logged in
+        Auth-->>LW: Authenticated
+        LW-->>UI: Redirect to portal home
+    else Not logged in
+        Auth-->>LW: Guest
+        LW-->>UI: Render login form
+    end
+
+    User->>UI: Submit username and password
+    UI->>LW: login()
+    LW->>LW: Validate required fields
+    LW->>Auth: attempt(credentials)
+    alt Success
+        Auth->>DB: Verify credentials
+        DB-->>Auth: Valid user
+        Auth-->>LW: Authenticated
+        LW-->>UI: Regenerate session + redirect intended page
+    else Failed
+        Auth->>DB: Verify credentials
+        DB-->>Auth: Invalid credentials
+        Auth-->>LW: Failed
+        LW-->>UI: Show username/password error messages
+    end

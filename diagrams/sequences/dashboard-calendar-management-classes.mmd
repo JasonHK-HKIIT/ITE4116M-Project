@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Class Timetable Management Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open class timetable management page
+    UI->>LW: Initial request
+    LW->>DB: Load institute/campus/programme/module/class options
+    DB-->>LW: Option lists
+    LW-->>UI: Render filters and timetable editor
+
+    User->>UI: Change filters (institute/campus/programme/class/module)
+    UI->>LW: updated* handlers
+    LW->>DB: Re-query valid options and current events
+    DB-->>LW: Filtered options + events
+    LW-->>UI: Re-render event rows
+
+    User->>UI: Save timetable changes
+    UI->>LW: save()
+    LW->>DB: Upsert submitted events + delete removed events
+    DB-->>LW: Persist completed
+    LW-->>UI: Success toast

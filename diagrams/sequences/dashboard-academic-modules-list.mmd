@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Modules List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open modules page
+    UI->>LW: Initial request
+    LW->>DB: Query modules (+ institute/programme relations)
+    DB-->>LW: Paginated modules
+    LW-->>UI: Render table and filters
+
+    User->>UI: Search/filter/sort/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated page result
+    LW-->>UI: Re-render table
+
+    User->>UI: Delete module
+    UI->>LW: deleteModule(id)
+    LW->>DB: Delete module row
+    alt Success
+        DB-->>LW: Deleted
+        LW-->>UI: Success toast
+    else In use
+        DB-->>LW: QueryException
+        LW-->>UI: Error toast
+    end

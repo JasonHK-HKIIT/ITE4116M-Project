@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Calendar Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open calendar page
+    UI->>LW: mount()
+    LW-->>UI: Initialize month/week/day state
+    LW->>DB: Query calendar events for current range
+    DB-->>LW: Events for student and modules
+    LW-->>UI: Render calendar grid/list
+
+    User->>UI: Change view (month/week/day)
+    UI->>LW: setView(view, date)
+    LW->>DB: Query events for selected range
+    DB-->>LW: Filtered events
+    LW-->>UI: Re-render selected view
+
+    User->>UI: Navigate prev/next period
+    UI->>LW: prevMonth/nextMonth (or week/day navigation)
+    LW->>DB: Query events for new period
+    DB-->>LW: Updated events
+    LW-->>UI: Re-render calendar
+
+    User->>UI: Click event
+    UI->>LW: select event id
+    LW-->>UI: Open event modal with details

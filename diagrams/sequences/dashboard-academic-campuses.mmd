@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Campuses Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open campuses page
+    UI->>LW: Initial request
+    LW->>DB: Query campuses with linked institutes
+    DB-->>LW: Campus collection
+    LW-->>UI: Render table and form modal state
+
+    User->>UI: Search/filter/reset
+    UI->>LW: Update filter properties / clear()
+    LW->>DB: Re-query campuses
+    DB-->>LW: Filtered campuses
+    LW-->>UI: Re-render table
+
+    User->>UI: Create/update/delete campus
+    UI->>LW: save() / deleteCampus(id)
+    LW->>DB: Insert/update/delete campus and relations
+    DB-->>LW: Persist result
+    LW-->>UI: Success toast + refresh list

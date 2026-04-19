@@ -1,0 +1,30 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Institute Holidays Management Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open institute holidays page
+    UI->>LW: Initial request
+    LW->>DB: Query institutes and current institute holiday events
+    DB-->>LW: Options and event list
+    LW-->>UI: Render institute selector and events
+
+    User->>UI: Change institute / edit holiday rows
+    UI->>LW: updatedInstituteId() and form changes
+    LW->>DB: Re-query events for selected institute
+    DB-->>LW: Filtered holiday list
+    LW-->>UI: Re-render event rows
+
+    User->>UI: Save changes
+    UI->>LW: save()
+    LW->>DB: Upsert holiday events + delete removed rows
+    DB-->>LW: Persist completed
+    LW-->>UI: Success toast
+
+    User->>UI: Delete one event
+    UI->>LW: deleteEvent(id)
+    LW->>DB: Delete event row
+    DB-->>LW: Deleted
+    LW-->>UI: Refresh list

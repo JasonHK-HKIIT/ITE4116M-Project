@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Calendar Events Create Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open calendar events page
+    UI->>LW: mount()
+    LW->>DB: Query institute options
+    DB-->>LW: Institutes list
+    LW-->>UI: Render create event forms
+
+    User->>UI: Select institute/campus/programme/module
+    UI->>LW: updatedClass* handlers
+    LW->>DB: Query dependent options (campus, class, module)
+    DB-->>LW: Filtered options
+    LW-->>UI: Re-render chained selects
+
+    User->>UI: Save class/institute/public event
+    UI->>LW: saveClassEvent() / saveInstituteHoliday() / savePublicHoliday()
+    LW->>DB: Validate and insert calendar event row
+    DB-->>LW: Event created
+    LW-->>UI: Success toast + reset form

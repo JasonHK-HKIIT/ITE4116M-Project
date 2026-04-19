@@ -1,0 +1,20 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Dashboard Home Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open dashboard home
+    UI->>LW: Initial request
+    LW->>DB: Count totals (students, activities, news, resources, staff, upcoming events)
+    LW->>DB: Query upcoming calendar events
+    LW->>DB: Query latest news and activities
+    DB-->>LW: Aggregated counts and recent items
+    LW-->>UI: Render stats cards and quick overview
+
+    User->>UI: Refresh page
+    UI->>LW: New request
+    LW->>DB: Re-query latest totals and items
+    DB-->>LW: Updated data
+    LW-->>UI: Re-render dashboard widgets

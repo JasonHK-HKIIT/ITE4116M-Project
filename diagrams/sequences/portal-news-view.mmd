@@ -1,0 +1,18 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as News Article Page
+    participant LW as Livewire Component
+    participant DB as Database
+    participant FS as Media Storage
+
+    User->>UI: Open article by slug URL
+    UI->>LW: Route model binding request
+    LW->>DB: Resolve article by slug
+    DB-->>LW: Article record
+    LW->>FS: Resolve cover image URL
+    FS-->>LW: Image URL
+    LW-->>UI: Render title, date, content, image
+
+    User->>UI: Back to list
+    UI-->>UI: Navigate to news list page

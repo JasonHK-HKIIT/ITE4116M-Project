@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Student Activity Calendar Management Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open activity calendar management page
+    UI->>LW: Initial request
+    LW-->>UI: Render student search form
+
+    User->>UI: Search student by username/id
+    UI->>LW: searchStudent()
+    LW->>DB: Query student and related profile
+    alt Found
+        DB-->>LW: Student record
+        LW->>DB: Query current activity calendar events
+        DB-->>LW: Existing events
+        LW-->>UI: Render editable activity event list
+    else Not found
+        DB-->>LW: No record
+        LW-->>UI: Error toast
+    end
+
+    User->>UI: Save event changes
+    UI->>LW: save()
+    LW->>DB: Upsert submitted activity events
+    DB-->>LW: Persist completed
+    LW-->>UI: Success toast

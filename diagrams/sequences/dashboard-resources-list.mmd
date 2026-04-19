@@ -1,0 +1,24 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Resources List Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open resources list
+    UI->>LW: Initial request
+    LW->>DB: Query resources with translation/media relations
+    DB-->>LW: Paginated resources
+    LW-->>UI: Render table and filters
+
+    User->>UI: Search/filter/date/paginate
+    UI->>LW: Update bound properties
+    LW->>DB: Re-query with conditions
+    DB-->>LW: Updated paginated result
+    LW-->>UI: Re-render list
+
+    User->>UI: Delete resource
+    UI->>LW: deleteResource(id)
+    LW->>DB: Delete translations/media/resource rows
+    DB-->>LW: Deleted
+    LW-->>UI: Success toast + refresh

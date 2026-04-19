@@ -1,0 +1,33 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Carousel Management Page
+    participant LW as Livewire Component
+    participant FS as Media Storage
+    participant DB as Database
+
+    User->>UI: Open carousel page
+    UI->>LW: Initial request
+    LW->>DB: Query slides ordered by position
+    DB-->>LW: Slide list
+    LW-->>UI: Render table and slide form
+
+    User->>UI: Create/update slide
+    UI->>LW: save()
+    LW->>DB: Insert/update slide metadata and position
+    LW->>FS: Store/replace slide image
+    DB-->>LW: Persisted slide
+    LW-->>UI: Success toast + refresh list
+
+    User->>UI: Move slide up/down
+    UI->>LW: moveUp(id) / moveDown(id)
+    LW->>DB: Swap positions with adjacent slide
+    DB-->>LW: Updated ordering
+    LW-->>UI: Success toast + re-render order
+
+    User->>UI: Delete slide
+    UI->>LW: deleteSlide(id)
+    LW->>DB: Delete slide
+    LW->>FS: Remove media
+    DB-->>LW: Deleted
+    LW-->>UI: Success toast

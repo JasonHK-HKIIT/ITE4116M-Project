@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Activity Register Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open register URL for activity
+    UI->>LW: mount(id)
+    LW->>DB: Load activity
+    DB-->>LW: Activity record
+    LW->>LW: register() auto-run
+
+    LW->>DB: Resolve current student profile
+    alt No student profile
+        DB-->>LW: Student not found
+        LW-->>UI: Error toast
+    else Student exists
+        LW->>DB: Check existing registration
+        alt Already registered
+            DB-->>LW: Existing row found
+            LW-->>UI: Error toast
+        else Not registered
+            LW->>DB: Create activity registration
+            LW->>DB: Create related calendar events
+            DB-->>LW: Saved
+            LW-->>UI: Success toast + redirect to details
+        end
+    end

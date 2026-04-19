@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Public Holidays Management Page
+    participant LW as Livewire Component
+    participant DB as Database
+
+    User->>UI: Open public holidays page
+    UI->>LW: Initial request
+    LW->>DB: Query current public holiday events
+    DB-->>LW: Event list
+    LW-->>UI: Render editable rows
+
+    User->>UI: Edit holiday rows
+    UI->>LW: Update bound row fields
+    LW-->>UI: Keep draft state
+
+    User->>UI: Save changes
+    UI->>LW: save()
+    LW->>DB: Upsert public holiday events + delete removed rows
+    DB-->>LW: Persist completed
+    LW-->>UI: Success toast
+
+    User->>UI: Delete one event
+    UI->>LW: deleteEvent(id)
+    LW->>DB: Delete event row
+    DB-->>LW: Deleted
+    LW-->>UI: Refresh list

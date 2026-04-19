@@ -1,0 +1,26 @@
+sequenceDiagram
+    autonumber
+    actor User
+    participant UI as Activity Edit Page
+    participant LW as Livewire Component
+    participant FS as File Storage
+    participant DB as Database
+
+    User->>UI: Open create/update activity page
+    UI->>LW: mount(activity?)
+    LW->>DB: Load activity (if existing) + options (types, campus, staff, status)
+    DB-->>LW: Existing data and option lists
+    LW-->>UI: Render activity form
+
+    User->>UI: Upload/replace attachment
+    UI->>LW: updatedAttachment() / uploadAttachment()
+    LW->>FS: Store file (delete old if needed)
+    FS-->>LW: File path/filename
+    LW-->>UI: Upload success or error toast
+
+    User->>UI: Save activity
+    UI->>LW: save()
+    LW->>DB: Validate and insert/update activity
+    LW->>FS: Cleanup replaced file if needed
+    DB-->>LW: Persisted activity
+    LW-->>UI: Success toast + redirect/list update
