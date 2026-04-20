@@ -1,0 +1,4 @@
+username,family_name,given_name,chinese_name,gender,date_of_birth,nationality,mother_tongue,tel_no,mobile_no,address,institute_id,campus_id,programme_id,class_ids
+260155170,Chan,Tai Man,陳大文,Male,2006-01-15,Chinese,Cantonese,25250000,91234567,"Flat A, 1/F, Kowloon",3,1,2,"7"
+260155171,Lee,Ka Yan,李家欣,Female,2005-11-03,Chinese,Cantonese,25250001,92345678,"Room 1203, Sha Tin",3,1,2,"7"
+260155172,Wong,Chi Ho,,Other,2006-05-20,Chinese,English,,93456789,Tsuen Wan,3,1,2,"7"
