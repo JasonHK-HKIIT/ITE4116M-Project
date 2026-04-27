@@ -193,55 +193,6 @@ class CalendarEventSeeder extends Seeder
             'end_at'       => $weekBase->copy()->addDays(7)->endOfDay(),
         ]);
 
-
-        // This activity not a real data
-        CalendarEvent::create([
-            'student_id'  => $student->id,
-            'type'        => CalendarEventType::ACTIVITY,
-            'title'       => 'Student Orientation Day',
-            'description' => 'Welcome and orientation session for students.',
-            'location'    => 'LW001',
-            'instructor'  => 'Mr. Hui',
-            'start_at'    => $weekBase->copy()->addDays(3)->setTime(17, 0),
-            'end_at'      => $weekBase->copy()->addDays(3)->setTime(18, 0),
-        ]);
-
-        // This activity not a real data
-        CalendarEvent::create([
-            'student_id'  => $student->id,
-            'type'        => CalendarEventType::ACTIVITY,
-            'title'       => 'Career Talk: IT Industry',
-            'description' => 'Industry sharing session about careers in IT.',
-            'location'    => 'LW001',
-            'instructor'  => 'Mr. Ho',
-            'start_at'    => $weekBase->copy()->addDays(4)->setTime(17, 0),
-            'end_at'      => $weekBase->copy()->addDays(4)->setTime(18, 0),
-        ]);
-
-        // This activity not a real data
-        CalendarEvent::create([
-            'student_id'  => $student->id,
-            'type'        => CalendarEventType::ACTIVITY,
-            'title'       => 'Campus Open Day',
-            'description' => 'Guided tours and introduction to campus facilities.',
-            'location'    => 'LW002',
-            'instructor'  => 'Ms. Wong',
-            'start_at'    => $weekBase->copy()->addDays(7)->setTime(17, 0),
-            'end_at'      => $weekBase->copy()->addDays(7)->setTime(18, 0),
-        ]);
-
-        // This activity not a real data
-        CalendarEvent::create([
-            'student_id'  => $student->id,
-            'type'        => CalendarEventType::ACTIVITY,
-            'title'       => 'Alumni Sharing Session',
-            'description' => 'Alumni share their study and career experience.',
-            'location'    => 'LW003',
-            'instructor'  => 'Ms. Chung',
-            'start_at'    => $weekBase->copy()->addDays(7)->setTime(18, 0),
-            'end_at'      => $weekBase->copy()->addDays(7)->setTime(19, 0),
-        ]);
-
         $activity = Activity::where('activity_code', 'ACT-003-REG')->first();
 
         if ($activity) {
